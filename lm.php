@@ -14,7 +14,6 @@ echo '<!DOCTYPE html>
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 <meta name="format-detection" content="telephone=no" />
 <meta content="text/html;charset=UTF-8" http-equiv="Content-Type" />
-<link rel="canonical" href="'.$url.'" />';
 
 // 取得搜索词
 
