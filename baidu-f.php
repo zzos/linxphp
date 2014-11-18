@@ -10215,7 +10215,7 @@ echo"
 	<a class=\"noa\" href=\"http://www.weixingon.com/baidusp-lm.php?s=".$queryfilter.$connectpn.$pn.$connectrn."100".$connectlm."7\"  target=\"_blank\">百度快照更新时间限制工具</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baidusp-hot.php?s=".$queryfilter."\" target=\"_blank\">百度相关热门词</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baidusp-srcid.php\" target=\"_blank\">百度搜索产品资源</a>
-	<a class=\"noa\" href=\"http://pan.baidu.com/s/1i3yyWfF\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.07</a>
+	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.08</a>
 </p>
 ";
 }
