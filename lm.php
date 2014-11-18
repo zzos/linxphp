@@ -2,7 +2,7 @@
 <?php
 // 请手动修改 url 对应网址、标题后缀和词库，并给予词库读写权限
 
-$url = 'http://127.0.0.1/baidusp-lm.php';
+$url = 'http://127.0.0.1/lm.php';
 $pt = '百度快照更新时间限定(lm)';
 $stock = '/appserv/www/stock/';
 
