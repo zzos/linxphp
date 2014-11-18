@@ -136,17 +136,9 @@ ol,ul{list-style-position:inside;}
 				<input class="submit" type="submit" value="百度一下" />
 			</form>
 <?php
-header ('Cache-Control: max-age=1800');
 $startTime = microtime(true);
 
 $u = ' itemprop="url" ';
-
-// 打开空白网页显示"经常访问的网站"
-
-if (is_null($s)) {
-echo '<h2 itemprop="name" class="center">经常访问的网站</h2>
-<p class="center"><a'.$u.'href="'.$url.'?pre=site%253A&amp;lm=7&s=zhihu.com">知乎</a>&nbsp;&nbsp;&nbsp;&nbsp;<a'.$u.'href="'.$url.'?pre=site%253A&amp;lm=7&s=douban.com">豆瓣</a>&nbsp;&nbsp;&nbsp;&nbsp;<a'.$u.'href="'.$url.'?pre=site%253A&amp;lm=7&s=ask.seowhy.com">搜问</a></p>';
-}
 
 if (strlen($s) > 0) {
 // 取得搜索词
