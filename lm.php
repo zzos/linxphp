@@ -1,5 +1,7 @@
 <!--这是百度快照更新时间限定(lm)工具 PHP 源码，若不知如何在浏览器打开，可加入百度参数QQ交流群(255363059)，或请直接访问在线版 weixingon.com/lm.php。如果你有更多的宝贵意见，也欢迎发送邮件至邮箱 maasdruck@gmail.com-->
 <?php
+header ('Cache-Control: max-age=1800');
+
 // 请手动修改 url 对应网址、标题后缀和词库，并给予词库读写权限
 
 $url = 'http://127.0.0.1/lm.php';
@@ -134,7 +136,17 @@ ol,ul{list-style-position:inside;}
 				<input class="submit" type="submit" value="百度一下" />
 			</form>
 <?php
+header ('Cache-Control: max-age=1800');
 $startTime = microtime(true);
+
+$u = ' itemprop="url" ';
+
+// 打开空白网页显示"经常访问的网站"
+
+if (is_null($s)) {
+echo '<h2 itemprop="name" class="center">经常访问的网站</h2>
+<p class="center"><a'.$u.'href="'.$url.'?pre=site%253A&amp;lm=7&s=zhihu.com">知乎</a>&nbsp;&nbsp;&nbsp;&nbsp;<a'.$u.'href="'.$url.'?pre=site%253A&amp;lm=7&s=douban.com">豆瓣</a>&nbsp;&nbsp;&nbsp;&nbsp;<a'.$u.'href="'.$url.'?pre=site%253A&amp;lm=7&s=ask.seowhy.com">搜问</a></p>';
+}
 
 if (strlen($s) > 0) {
 // 取得搜索词
@@ -192,13 +204,13 @@ if (preg_match("/(?<=百度为您找到相关结果)([\x80-\xff]{0,3})([0-9,]{1,
 // 冇收录
 
 if (preg_match("/(?<=<p>抱歉，没有找到与<span style=\"font-family:宋体\">“<\/span><em>)(.+)(?=<\/em><span style\=\"font\-family:宋体\">”<\/span>相关的网页。<\/p>)/", @$serp, $mno))
-echo '<p><a itemprop="url" href="http://'.$mno[1].'" target="_blank" rel="external nofollow" title="直接访问&nbsp;'.@$mno[2].'">抱歉，没有找到与“<span class="red">'.$mno[1].'</span>”相关的网页。</a></p>
-<p>如网页存在，请<a itemprop="url" href="http://zhanzhang.baidu.com/sitesubmit/index?sitename=http%3A%2F%2F'.$mno[1].'" target="_blank" rel="external nofollow" title="您可以提交想被百度收录的url">提交网址</a>给我们</p>';
+echo '<p><a'.$u.'href="http://'.$mno[1].'" target="_blank" rel="external nofollow" title="直接访问&nbsp;'.@$mno[2].'">抱歉，没有找到与“<span class="red">'.$mno[1].'</span>”相关的网页。</a></p>
+<p>如网页存在，请<a'.$u.'href="http://zhanzhang.baidu.com/sitesubmit/index?sitename=http%3A%2F%2F'.$mno[1].'" target="_blank" rel="external nofollow" title="您可以提交想被百度收录的url">提交网址</a>给我们</p>';
 
 // 冇收录，但有其他搜索结果
 
 if (preg_match("/(?<=<font class=\"c-gray\">没有找到该URL。您可以直接访问&nbsp;<\/font><a href=\")(.+)(?=\" target=\"_blank\" onmousedown)/", @$serp, $mno2))
-echo '<p>没有找到该URL。您可以直接访问&nbsp;<span class="red"><a itemprop="url" href="'.$mno2[1].'" target="_blank" rel="external nofollow" title="直接访问 '.$mno2[1].'">'.$mno2[1].'</a></span>，还可<a href="http://zhanzhang.baidu.com/sitesubmit/index?sitename=http%3A%2F%2F'.$mno2[1].'" target="_blank" rel="external nofollow" title="您可以提交想被百度收录的url">提交网址</a>给我们。</p>';
+echo '<p>没有找到该URL。您可以直接访问&nbsp;<span class="red"><a'.$u.'href="'.$mno2[1].'" target="_blank" rel="external nofollow" title="直接访问 '.$mno2[1].'">'.$mno2[1].'</a></span>，还可<a href="http://zhanzhang.baidu.com/sitesubmit/index?sitename=http%3A%2F%2F'.$mno2[1].'" target="_blank" rel="external nofollow" title="您可以提交想被百度收录的url">提交网址</a>给我们。</p>';
 
 // 字数限制
 
@@ -213,12 +225,12 @@ echo '<p>'.$mcensor[1].'</p>';
 // 推销电话
 
 if (preg_match("/(?<=<div class\=\"op\_liarphone2_word\">被)(\d+)(?=个&nbsp;<a href\=\"http:\/\/shoujiweishi.baidu.com\/\" target\=\"\_blank\">百度手机卫士<\/a>&nbsp;用户标记为<strong>\"广告推销\"<\/strong>,供您参考。<\/div>)/", @$serp, $mliarphone))
-echo '<p>被'.$mliarphone[1].'个<a itemprop="url" href="http://shoujiweishi.baidu.com/" rel="external nofollow" target="_blank">百度手机卫士</a>用户标记为<strong>"骚扰电话"</strong>,供您参考。</p>';
+echo '<p>被'.$mliarphone[1].'个<a'.$u.'href="http://shoujiweishi.baidu.com/" rel="external nofollow" target="_blank">百度手机卫士</a>用户标记为<strong>"骚扰电话"</strong>,供您参考。</p>';
 
 // 诈骗电话
 
 if (preg_match("/(?<=<div class\=\"op\_liarphone2_word\">被)(\d+)(?=个&nbsp;<a href\=\"http:\/\/haoma.sogou.com\" target\=\"\_blank\">搜狗号码通<\/a>&nbsp;用户标记为<strong>\"诈骗\"<\/strong>,请谨防受骗。<\/div>)/", @$serp, $mliarphone2))
-echo '<p>被'.$mliarphone2[1].'个<a itemprop="url" href="http://haoma.sogou.com" rel="external nofollow" target="_blank">搜狗号码通</a>用户标记为<strong>"诈骗"</strong>,请谨防受骗。</p>';
+echo '<p>被'.$mliarphone2[1].'个<a'.$u.'href="http://haoma.sogou.com" rel="external nofollow" target="_blank">搜狗号码通</a>用户标记为<strong>"诈骗"</strong>,请谨防受骗。</p>';
 
 // site 特型
 
@@ -283,95 +295,97 @@ if (preg_match_all("/(?<=F1':)(\s?)(')([0-9A-F]{2})([0-9A-F]{1})(?=([0-9A-F]{1})
 			unset($mf1[4][$i]);
 			continue;
 		}
-		echo '<tr><td><a itemprop="url" href="'.$mserp[3][$i].'" rel="external nofollow" target="_blank">'.stripslashes($mserp[1][$i]).'</a><br />';
+		echo '<tr><td><a'.$u.'href="'.$mserp[3][$i].'" rel="external nofollow" target="_blank">'.stripslashes($mserp[1][$i]).'</a><br />';
+		$short = smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES)));
 		$srcid = $msrcid[5][$i];
+		$id = $msrcid[3][$i];
 		{
 		if ($srcid == 1599)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;普通结果&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;普通结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1548)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;影评&nbsp;结构化数据『201408添加』&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;影评&nbsp;结构化数据『201408添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1547)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度百科『201407添加』&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度百科『201407添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1543)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;面包屑导航&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;面包屑导航&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1542)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度学术&nbsp;-&nbsp;查看更多相关论文&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度学术&nbsp;-&nbsp;查看更多相关论文&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1539)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;带&nbsp;0－6&nbsp;个子链结果&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;带&nbsp;0－6&nbsp;个子链结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1538)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;软件下载摘要|小说作者状态类型&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载摘要|小说作者状态类型&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1537)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;组图&nbsp;百度经验&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;组图&nbsp;百度经验&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1536)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;一般答案&nbsp;百度知道&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;一般答案&nbsp;百度知道&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1533)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;论坛帖子&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;论坛帖子&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1532)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;最佳答案&nbsp;百度知道&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;最佳答案&nbsp;百度知道&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1531)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;查询词扩展&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;查询词扩展&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1530)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度贴吧&nbsp;更多贴吧相关帖子&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度贴吧&nbsp;更多贴吧相关帖子&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1529)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;权威问答网站结果&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;权威问答网站结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1528)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度知道阿拉丁&nbsp;更多知道相关问题&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度知道阿拉丁&nbsp;更多知道相关问题&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1527)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度文库标签&nbsp;更多文库相关文档>>&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库标签&nbsp;更多文库相关文档>>&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1526)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度文库阿拉丁&nbsp;更多文库相关文档&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库阿拉丁&nbsp;更多文库相关文档&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1525)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度文库&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1524)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;缩略图结果，但非每个查询词展现图片&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;缩略图结果，但非每个查询词展现图片&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1523)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;robots.txt&nbsp;文件存在限制指令的结果&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;robots.txt&nbsp;文件存在限制指令的结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1522)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度经验带相册&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度经验带相册&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1521)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;图片_百度百科(可能与查询词内容相关度较高)&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;图片_百度百科(可能与查询词内容相关度较高)&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1520)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;期刊文献&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;期刊文献&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1519)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;维基百科&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;维基百科&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1518)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;软件下载&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1517)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;[图文]，但并非每个查询词显示 [图文]&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[图文]，但并非每个查询词显示 [图文]&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1516)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;宗教&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;宗教&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1515)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;电影&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;电影&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1514)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;在线文档&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;在线文档&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1513)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;软件下载&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1512)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;单视频&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1511)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;[原创]&nbsp;星火计划&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[原创]&nbsp;星火计划&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1510)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;子链&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;子链&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1509)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;官网&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;官网&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1508)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;单视频&nbsp;站点&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;站点&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1507)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;微博&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;微博&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1506)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;单视频&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1505)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度知道&nbsp;高品质(知道达人|权威专家|官方机构)&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度知道&nbsp;高品质(知道达人|权威专家|官方机构)&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1504)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;自动问答&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;自动问答&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1503)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;图片&nbsp;单视频&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;图片&nbsp;单视频&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1502)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度百科&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度百科&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1501)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;评分&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;评分&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		else
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;'.$srcid.'&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;'.$srcid.'&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		}
 		echo '</tr>';
 	}
@@ -399,95 +413,97 @@ if (preg_match_all("/(?<=F1':)(\s?)(')([0-9A-F]{2})([0-9A-F]{1})(?=([0-9A-F]{1})
 			unset($mf1[4][$i]);
 			continue;
 		}
-		echo '<tr><td><a itemprop="url" href="'.$mserp[3][$i].'" rel="external nofollow" target="_blank">'.stripslashes($mserp[1][$i]).'</a><br />';
+		echo '<tr><td><a'.$u.'href="'.$mserp[3][$i].'" rel="external nofollow" target="_blank">'.stripslashes($mserp[1][$i]).'</a><br />';
+		$short = smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES)));
 		$srcid = $msrcid[5][$i];
+		$id = $msrcid[3][$i];
 		{
 		if ($srcid == 1599)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;普通结果&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;普通结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1548)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;影评&nbsp;结构化数据『201408添加』&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;影评&nbsp;结构化数据『201408添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1547)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度百科『201407添加』&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度百科『201407添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1543)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;面包屑导航&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;面包屑导航&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1542)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度学术&nbsp;-&nbsp;查看更多相关论文&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度学术&nbsp;-&nbsp;查看更多相关论文&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1539)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;带&nbsp;0－6&nbsp;个子链结果&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;带&nbsp;0－6&nbsp;个子链结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1538)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;软件下载摘要|小说作者状态类型&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载摘要|小说作者状态类型&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1537)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;组图&nbsp;百度经验&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;组图&nbsp;百度经验&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1536)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;一般答案&nbsp;百度知道&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;一般答案&nbsp;百度知道&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1533)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;论坛帖子&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;论坛帖子&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1532)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;最佳答案&nbsp;百度知道&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;最佳答案&nbsp;百度知道&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1531)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;查询词扩展&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;查询词扩展&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1530)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度贴吧&nbsp;更多贴吧相关帖子&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度贴吧&nbsp;更多贴吧相关帖子&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1529)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;权威问答网站结果&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;权威问答网站结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1528)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度知道阿拉丁&nbsp;更多知道相关问题&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度知道阿拉丁&nbsp;更多知道相关问题&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1527)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度文库标签&nbsp;更多文库相关文档>>&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库标签&nbsp;更多文库相关文档>>&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1526)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度文库阿拉丁&nbsp;更多文库相关文档&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库阿拉丁&nbsp;更多文库相关文档&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1525)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度文库&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1524)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;缩略图结果，但非每个查询词展现图片&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;缩略图结果，但非每个查询词展现图片&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1523)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;robots.txt&nbsp;文件存在限制指令的结果&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;robots.txt&nbsp;文件存在限制指令的结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1522)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度经验带相册&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度经验带相册&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1521)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;图片_百度百科(可能与查询词内容相关度较高)&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;图片_百度百科(可能与查询词内容相关度较高)&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1520)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;期刊文献&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;期刊文献&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1519)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;维基百科&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;维基百科&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1518)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;软件下载&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1517)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;[图文]，但并非每个查询词显示 [图文]&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[图文]，但并非每个查询词显示 [图文]&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1516)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;宗教&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;宗教&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1515)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;电影&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;电影&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1514)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;在线文档&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;在线文档&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1513)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;软件下载&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1512)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;单视频&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1511)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;[原创]&nbsp;星火计划&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[原创]&nbsp;星火计划&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1510)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;子链&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;子链&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1509)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;官网&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;官网&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1508)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;单视频&nbsp;站点&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;站点&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1507)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;微博&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;微博&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1506)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;单视频&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1505)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度知道&nbsp;高品质(知道达人|权威专家|官方机构)&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度知道&nbsp;高品质(知道达人|权威专家|官方机构)&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1504)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;自动问答&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;自动问答&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1503)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;图片&nbsp;单视频&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;图片&nbsp;单视频&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1502)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度百科&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度百科&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1501)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;评分&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;评分&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		else
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;'.$srcid.'&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;'.$srcid.'&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		}
 		echo '</tr>';
 	}
@@ -515,95 +531,97 @@ if (preg_match_all("/(?<=F1':)(\s?)(')([0-9A-F]{2})([0-9A-F]{1})(?=([0-9A-F]{1})
 			unset($mf1[4][$i]);
 			continue;
 		}
-		echo '<tr><td><a itemprop="url" href="'.$mserp[3][$i].'" rel="external nofollow" target="_blank">'.stripslashes($mserp[1][$i]).'</a><br />';
+		echo '<tr><td><a'.$u.'href="'.$mserp[3][$i].'" rel="external nofollow" target="_blank">'.stripslashes($mserp[1][$i]).'</a><br />';
+		$short = smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES)));
 		$srcid = $msrcid[5][$i];
+		$id = $msrcid[3][$i];
 		{
 		if ($srcid == 1599)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;普通结果&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;普通结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1548)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;影评&nbsp;结构化数据『201408添加』&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;影评&nbsp;结构化数据『201408添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1547)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度百科『201407添加』&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度百科『201407添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1543)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;面包屑导航&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;面包屑导航&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1542)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度学术&nbsp;-&nbsp;查看更多相关论文&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度学术&nbsp;-&nbsp;查看更多相关论文&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1539)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;带&nbsp;0－6&nbsp;个子链结果&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;带&nbsp;0－6&nbsp;个子链结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1538)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;软件下载摘要|小说作者状态类型&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载摘要|小说作者状态类型&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1537)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;组图&nbsp;百度经验&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;组图&nbsp;百度经验&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1536)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;一般答案&nbsp;百度知道&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;一般答案&nbsp;百度知道&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1533)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;论坛帖子&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;论坛帖子&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1532)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;最佳答案&nbsp;百度知道&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;最佳答案&nbsp;百度知道&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1531)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;查询词扩展&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;查询词扩展&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1530)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度贴吧&nbsp;更多贴吧相关帖子&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度贴吧&nbsp;更多贴吧相关帖子&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1529)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;权威问答网站结果&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;权威问答网站结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1528)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度知道阿拉丁&nbsp;更多知道相关问题&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度知道阿拉丁&nbsp;更多知道相关问题&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1527)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度文库标签&nbsp;更多文库相关文档>>&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库标签&nbsp;更多文库相关文档>>&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1526)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度文库阿拉丁&nbsp;更多文库相关文档&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库阿拉丁&nbsp;更多文库相关文档&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1525)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度文库&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1524)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;缩略图结果，但非每个查询词展现图片&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;缩略图结果，但非每个查询词展现图片&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1523)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;robots.txt&nbsp;文件存在限制指令的结果&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;robots.txt&nbsp;文件存在限制指令的结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1522)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度经验带相册&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度经验带相册&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1521)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;图片_百度百科(可能与查询词内容相关度较高)&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;图片_百度百科(可能与查询词内容相关度较高)&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1520)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;期刊文献&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;期刊文献&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1519)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;维基百科&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;维基百科&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1518)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;软件下载&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1517)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;[图文]，但并非每个查询词显示 [图文]&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[图文]，但并非每个查询词显示 [图文]&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1516)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;宗教&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;宗教&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1515)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;电影&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;电影&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1514)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;在线文档&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;在线文档&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1513)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;软件下载&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1512)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;单视频&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1511)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;[原创]&nbsp;星火计划&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[原创]&nbsp;星火计划&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1510)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;子链&nbsp;国际化&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;子链&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1509)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;官网&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;官网&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1508)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;单视频&nbsp;站点&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;站点&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1507)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;微博&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;微博&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1506)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;单视频&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1505)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度知道&nbsp;高品质(知道达人|权威专家|官方机构)&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度知道&nbsp;高品质(知道达人|权威专家|官方机构)&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1504)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;自动问答&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;自动问答&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1503)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;图片&nbsp;单视频&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;图片&nbsp;单视频&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1502)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;百度百科&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度百科&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		elseif ($srcid == 1501)
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;评分&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;评分&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		else
-			echo '<span class="wheat">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($mserp[1][$i], ENT_QUOTES))).'&nbsp;字节&nbsp;'.$srcid.'&nbsp;第&nbsp;'.$msrcid[3][$i].'&nbsp;名</span></td>';
+			echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;'.$srcid.'&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
 		}
 		echo '</tr>';
 	}
@@ -615,84 +633,84 @@ echo '</tbody></table></div>';
 echo '<div itemprop="articleSection"><table><thead><tr><th>翻页</th></tr></thead><tbody><tr><td>';
 
 if ($pn==100) {
-	echo '<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat" itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 elseif ($pn==200) {
-	echo '<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat" itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 elseif ($pn==300) {
-	echo '<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat" itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 elseif ($pn==400) {
-	echo '<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat" itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 elseif ($pn==500) {
-	echo '<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat" itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 elseif ($pn==600) {
-	echo '<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat" itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 elseif ($pn==700) {
-	echo '<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat" itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 else {
-	echo '<strong><a class="wheat" itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a itemprop="url" href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 echo '</td></tr></tbody></table></div>';
 
@@ -707,11 +725,11 @@ if (!is_numeric($f136) && !is_numeric($f135) && !is_numeric($f134)) {
 	if (strlen($mnews[3][0]) > 0) {
 		echo '<div itemprop="articleSection"><table><thead><tr><th>最新相关消息</th></tr></thead><tbody>';
 
-		// GBK 转 UTF-8 解码
+		// GBK转 UTF-8 解码
 
 		foreach ($mnews[3] as $key => $value) {
 			$title=iconv("GBK","UTF-8//IGNORE",urldecode($mnews[3][$key]));
-			echo '<tr><td><a itemprop="url" href="'.$url.'?s='.strip_tags($title).'&amp;rn=100&amp;lm=7">'.strip_tags($title).'</a></td></tr>';
+			echo '<tr><td><a'.$u.'href="'.$url.'?s='.strip_tags($title).'&amp;rn=100&amp;lm=7">'.strip_tags($title).'</a></td></tr>';
 		}
 	echo '</tbody></table></div>';
 	}
@@ -723,7 +741,7 @@ if (!is_numeric($f136) && !is_numeric($f135) && !is_numeric($f134)) {
 	echo '<div itemprop="articleSection"><table><caption>百度风云榜</caption><thead><tr><th>实时热点</th><th>搜索指数</th></tr></thead><tbody>';
 
 	foreach (@$jsonhot[data][0][bdlist] as $key => $value) {
-		echo '<tr><td><a itemprop="url" href="'.$url.'?s='.@$jsonhot[data][0][bdlist][$key][content].'&amp;rn=100&amp;lm=7">'.@$jsonhot[data][0][bdlist][$key][content].'</a></td><td class="center">'.@$jsonhot[data][0][bdlist][$key][num].'</td></tr>';
+		echo '<tr><td><a'.$u.'href="'.$url.'?s='.@$jsonhot[data][0][bdlist][$key][content].'&amp;rn=100&amp;lm=7">'.@$jsonhot[data][0][bdlist][$key][content].'</a></td><td class="center">'.@$jsonhot[data][0][bdlist][$key][num].'</td></tr>';
 	}
 	echo '</tbody></table></div>';
 }
@@ -732,9 +750,9 @@ $costTime = microtime(true) - $startTime;
 
 // 页脚
 
-echo '<p><a itemprop="url" href="https://github.com/ausdruck/baidu-prm/blob/master/lm.php" target="_blank" rel="external nofollow">百度快照更新时间限定工具v1.00</a>
+echo '<p><a'.$u.'href="https://github.com/ausdruck/baidu-prm/blob/master/lm.php" target="_blank" rel="external nofollow">百度快照更新时间限定工具v1.00</a>
 本次查询耗时&nbsp;'.sprintf("%.2f",($costTime*1000)).'&nbsp;毫秒&nbsp;
-<a itemprop="url" href="http://www.baidu.com/s?wd='.$pre.$query.$connectpn.$pn.$connectrn.$rn.$connectlm.$lm.'" target="_blank" rel="external nofollow">点击查看“<span class="red">'.$s.'</span>”</a></p></div>';
+<a'.$u.'href="http://www.baidu.com/s?wd='.$pre.$query.$connectpn.$pn.$connectrn.$rn.$connectlm.$lm.'" target="_blank" rel="external nofollow">点击查看“<span class="red">'.$s.'</span>”</a></p></div>';
 }
 ?>
 			<div class="qr_code_pc_outer" style="display: block;">
