@@ -13,7 +13,7 @@ echo '<!DOCTYPE html>
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
 <meta name="format-detection" content="telephone=no" />
-<meta content="text/html;charset=UTF-8" http-equiv="Content-Type" />
+<meta content="text/html;charset=UTF-8" http-equiv="Content-Type" />';
 
 // 取得搜索词
 
@@ -658,7 +658,7 @@ if (!is_numeric($f136) && !is_numeric($f135) && !is_numeric($f134)) {
 	if (strlen($mnews[3][0]) > 0) {
 		echo '<div itemprop="articleSection"><table><thead><tr><th>最新相关消息</th></tr></thead><tbody>';
 
-		//GBK转UTF-8解码
+		// GBK 转 UTF-8 解码
 
 		foreach ($mnews[3] as $key => $value) {
 			$title=iconv("GBK","UTF-8//IGNORE",urldecode($mnews[3][$key]));
