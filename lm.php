@@ -51,18 +51,6 @@ echo '<meta content="'.htmlspecialchars(@$z, ENT_QUOTES).',百度搜索结果参
 <meta content="百度限定要搜索的网页的时间是'.htmlspecialchars(@$z, ENT_QUOTES).'" name="description" />';
 ?>
 
-<!--百度统计异步代码-->
-<script>
-var _hmt=_hmt || [];
-(function() {
-	var hm=document.createElement("script");
-		hm.src="//hm.baidu.com/hm.js?7cf4d0f651a8933d3c13cf70a0d7d30a";
-	var s=document.getElementsByTagName("script")[0];
-		s.parentNode.insertBefore(hm, s);
-	}
-)
-();
-</script>
 <!--css-->
 <link rel="stylesheet" type="text/css" href="http://www.weixingon.com/style/w.css" />
 <style>
@@ -696,7 +684,8 @@ $costTime = microtime(true) - $startTime;
 
 // 页脚
 
-echo '<p>本次查询耗时&nbsp;'.sprintf("%.2f",($costTime*1000)).'&nbsp;毫秒&nbsp;
+echo '<p><a itemprop="url" href="https://github.com/ausdruck/baidu-prm/blob/master/lm.php" target="_blank" rel="external nofollow">百度快照更新时间限定工具v1.00</a>
+本次查询耗时&nbsp;'.sprintf("%.2f",($costTime*1000)).'&nbsp;毫秒&nbsp;
 <a itemprop="url" href="http://www.baidu.com/s?wd='.$pre.$query.$connectpn.$pn.$connectrn.$rn.$connectlm.$lm.'" target="_blank" rel="external nofollow">点击查看“<span class="red">'.$s.'</span>”</a></p></div>';
 }
 ?>
