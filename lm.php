@@ -68,8 +68,8 @@ $f16 = file_get_contents('http://www.weixingon.com/re/?s='.$query);
 
 echo '<title>';
 if (strlen($s) > 0) {
-	if (strlen($sug1[1][0]) > 0) {
-		echo $sug1[1][0].'_';
+	if (strlen($sug) > 0) {
+		echo $sug.'_';
 	}
 	echo htmlspecialchars($z, ENT_QUOTES).' - ';
 }
@@ -82,8 +82,8 @@ echo $pt.'</title>';
 
 echo '<meta content="';
 if (strlen($s) > 0) {
-	if (strlen($sug1[1][0]) > 0) {
-		echo $sug1[1][0].',';
+	if (strlen($sug) > 0) {
+		echo $sug.',';
 	}
 	echo htmlspecialchars($z, ENT_QUOTES).',';
 }
@@ -91,8 +91,8 @@ if (strlen($s) > 0) {
 echo '百度搜索结果参数,时间限制,F1,lm,site,inurl,rn" name="keywords" />
 <meta content="限定';
 if (strlen($s) > 0) {
-	if (strlen($sug1[1][0]) > 0) {
-		echo $sug1[1][0].'与';
+	if (strlen($sug) > 0) {
+		echo $sug.'与';
 	}
 	echo htmlspecialchars($z, ENT_QUOTES);
 }
@@ -108,7 +108,7 @@ ol,ul{list-style-position:inside;}
 <body itemscope itemtype="http://schema.org/TechArticle">
 <div class="rich_media">
 	<div class="rich_media_inner">
-		<h1 class="rich_media_title" itemprop="name"><a itemprop="url" href="<?php echo $url;?>">百度快照更新时间限定(lm)</a></h1>
+		<h1 class="rich_media_title" itemprop="name"><a itemprop="url" href="<?php echo $url;?>" rel="nofollow">百度快照更新时间限定(lm)</a></h1>
 		<div class="rich_media_meta_list">
 			<meta itemprop="datePublished" content="2014-11-17"><time class="rich_media_meta text">2014-11-17</time>
 			<a class="rich_media_meta link nickname" itemprop="author url" href="http://www.weixingon.com" target="_blank">吴星</a>
