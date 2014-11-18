@@ -1,9 +1,10 @@
 <!--这是百度快照更新时间限定(lm)工具 PHP 源码，若不知如何在浏览器打开，可加入百度参数QQ交流群(255363059)，或请直接访问在线版 weixingon.com/lm.php。如果你有更多的宝贵意见，也欢迎发送邮件至邮箱 maasdruck@gmail.com-->
 <?php
-// 请手动修改 url 对应网址和标题后缀
+// 请手动修改 url 对应网址、标题后缀和词库，并给予词库读写权限
 
-$url = 'http://127.0.0.1/lm.php';
+$url = 'http://127.0.0.1/baidusp-lm.php';
 $pt = '百度快照更新时间限定(lm)';
+$stock = '/appserv/www/stock/';
 
 echo '<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
@@ -44,16 +45,22 @@ $f16 = file_get_contents('http://www.weixingon.com/re/?s='.$query);
 
 	// 下拉框提示模式 I
 
-		$sugip = array (
-		'115.239.211.11',
-		'115.239.211.12',
-		'180.97.33.72',
-		'180.97.33.73',
-		'220.181.111.109',
-		);
-	shuffle ($sugip);
-	$sug1 = json_decode(file_get_contents('http://'.$sugip[0].'/su?action=opensearch&ie=UTF-8&wd='.$query));
-	$sug = @$sug1[1][0];
+		if (file_exists($stock.urlencode($z).'.txt')) {
+			$sug = file_get_contents($stock.urlencode($z).'.txt');
+		}
+		else {
+			$sugip = array (
+			'115.239.211.11',
+			'115.239.211.12',
+			'180.97.33.72',
+			'180.97.33.73',
+			'220.181.111.109',
+			);
+			shuffle ($sugip);
+			$sug1 = json_decode(file_get_contents('http://'.$sugip[0].'/su?action=opensearch&ie=UTF-8&wd='.$query));
+			$sug = @$sug1[1][0];
+			@file_put_contents($stock.urlencode($z).'.txt', $sug);
+		}
 	}
 }
 
