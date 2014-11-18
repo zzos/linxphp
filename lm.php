@@ -15,7 +15,7 @@ echo '<!DOCTYPE html>
 <meta name="format-detection" content="telephone=no" />
 <meta content="text/html;charset=UTF-8" http-equiv="Content-Type" />';
 
-// 自动生成标题 v1.1
+// 自动生成标题 v2.1
 // 取得搜索词
 
 $s = @$_GET['s'];
@@ -34,17 +34,27 @@ $r = array(
 $z = preg_replace($p[1], $r[1], $s);
 $query = htmlspecialchars(preg_replace($p, $r, $s));
 
-// 下拉框提示模式 I
+// F1-6
 
-$sugip = array (
-	'115.239.211.11',
-	'115.239.211.12',
-	'180.97.33.72',
-	'180.97.33.73',
-	'220.181.111.109',
-);
-shuffle ($sugip);
-$sug1 = json_decode(file_get_contents('http://'.$sugip[0].'/su?action=opensearch&ie=UTF-8&wd='.$query));
+$f16 = file_get_contents('http://www.weixingon.com/re/?s='.$query);
+	if (strlen($f16) > 0) {
+		$sug = $f16;
+	}
+	else {
+
+	// 下拉框提示模式 I
+
+		$sugip = array (
+		'115.239.211.11',
+		'115.239.211.12',
+		'180.97.33.72',
+		'180.97.33.73',
+		'220.181.111.109',
+		);
+	shuffle ($sugip);
+	$sug1 = json_decode(file_get_contents('http://'.$sugip[0].'/su?action=opensearch&ie=UTF-8&wd='.$query));
+	$sug = @$sug1[1][0];
+	}
 }
 
 // 标题前缀
@@ -72,14 +82,14 @@ if (strlen($s) > 0) {
 }
 
 echo '百度搜索结果参数,时间限制,F1,lm,site,inurl,rn" name="keywords" />
-<meta content="百度限定要搜索的网页的时间是';
+<meta content="限定';
 if (strlen($s) > 0) {
 	if (strlen($sug1[1][0]) > 0) {
 		echo $sug1[1][0].'与';
 	}
 	echo htmlspecialchars($z, ENT_QUOTES);
 }
-echo '" name="description" />';
+echo '在时间段内搜索" name="description" />';
 ?>
 
 <!--css-->
