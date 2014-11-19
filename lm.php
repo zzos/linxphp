@@ -622,89 +622,89 @@ echo '</tbody></table></div>';
 
 // 翻页
 
-echo '<div itemprop="articleSection"><table><thead><tr><th>翻页</th></tr></thead><tbody><tr><td>';
+echo '<table><thead><tr><th>翻页</th></tr></thead><tbody><tr><td>';
 
 if ($pn==100) {
-	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat" href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 elseif ($pn==200) {
-	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat" href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 elseif ($pn==300) {
-	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat" href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 elseif ($pn==400) {
-	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat" href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 elseif ($pn==500) {
-	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat" href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 elseif ($pn==600) {
-	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat" href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 elseif ($pn==700) {
-	echo '<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a class="wheat" href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
 else {
-	echo '<strong><a class="wheat"'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
-<strong><a'.$u.'href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
+	echo '<strong><a class="wheat" href="'.$url.'?s='.$pre.$query.'&amp;rn=100&amp;lm=7">&nbsp;&nbsp;1&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=100&amp;rn=100&amp;lm=7">&nbsp;&nbsp;2&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=200&amp;rn=100&amp;lm=7">&nbsp;&nbsp;3&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=300&amp;rn=100&amp;lm=7">&nbsp;&nbsp;4&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=400&amp;rn=100&amp;lm=7">&nbsp;&nbsp;5&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=500&amp;rn=100&amp;lm=7">&nbsp;&nbsp;6&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=600&amp;rn=100&amp;lm=7">&nbsp;&nbsp;7&nbsp;&nbsp;&nbsp;</a></strong>
+<strong><a href="'.$url.'?s='.$pre.$query.'&amp;pn=700&amp;rn=100&amp;lm=7">&nbsp;&nbsp;8&nbsp;&nbsp;</a></strong>';
 }
-echo '</td></tr></tbody></table></div>';
+echo '</td></tr></tbody></table>';
 
 if (!is_numeric($f136) && !is_numeric($f135) && !is_numeric($f134)) {
 
