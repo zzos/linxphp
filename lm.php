@@ -744,7 +744,7 @@ $costTime = microtime(true) - $startTime;
 
 echo '<p><a'.$u.'href="https://github.com/ausdruck/baidu-prm/blob/master/lm.php" target="_blank" rel="external nofollow">百度快照更新时间限定工具v1.00</a>
 本次查询耗时&nbsp;'.sprintf("%.2f",($costTime*1000)).'&nbsp;毫秒&nbsp;
-<a'.$u.'href="http://www.baidu.com/s?wd='.$pre.$query.$connectpn.$pn.$connectrn.$rn.$connectlm.$lm.'" target="_blank" rel="external nofollow">点击查看“<span class="red">'.$s.'</span>”</a></p></div>';
+<a href="http://www.baidu.com/s?wd='.$pre.$query.$connectpn.$pn.$connectrn.$rn.$connectlm.$lm.'" target="_blank" rel="external nofollow">点击查看“<span class="red">'.$s.'</span>”</a></p></div>';
 }
 ?>
 			<div class="qr_code_pc_outer" style="display: block;">
