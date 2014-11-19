@@ -189,14 +189,10 @@ $serp = file_get_contents($baidu.$pre.$query.$connectpn.$pn.$connectrn.$rn.$conn
 date_default_timezone_set('PRC');
 clearstatcache();
 
-// 搜索结果数量
-
-if (preg_match("/(?<=百度为您找到相关结果)([\x80-\xff]{0,3})([0-9,]{1,11})(?=个<\/div>)/", @$serp, $mnumbers))
-
 // 冇收录
 
 if (preg_match("/(?<=<p>抱歉，没有找到与<span style=\"font-family:宋体\">“<\/span><em>)(.+)(?=<\/em><span style\=\"font\-family:宋体\">”<\/span>相关的网页。<\/p>)/", @$serp, $mno))
-echo '<p><a'.$u.'href="http://'.$mno[1].'" target="_blank" rel="external nofollow" title="直接访问&nbsp;'.@$mno[2].'">抱歉，没有找到与“<span class="red">'.$mno[1].'</span>”相关的网页。</a></p>
+echo '<p><a'.$u.'href="http://'.$mno[1].'" target="_blank" rel="external nofollow" title="直接访问&nbsp;'.@$mno[1].'">抱歉，没有找到与“<span class="red">'.$mno[1].'</span>”相关的网页。</a></p>
 <p>如网页存在，请<a'.$u.'href="http://zhanzhang.baidu.com/sitesubmit/index?sitename=http%3A%2F%2F'.$mno[1].'" target="_blank" rel="external nofollow" title="您可以提交想被百度收录的url">提交网址</a>给我们</p>';
 
 // 冇收录，但有其他搜索结果
@@ -223,6 +219,10 @@ echo '<p>被'.$mliarphone[1].'个<a'.$u.'href="http://shoujiweishi.baidu.com/" r
 
 if (preg_match("/(?<=<div class\=\"op\_liarphone2_word\">被)(\d+)(?=个&nbsp;<a href\=\"http:\/\/haoma.sogou.com\" target\=\"\_blank\">搜狗号码通<\/a>&nbsp;用户标记为<strong>\"诈骗\"<\/strong>,请谨防受骗。<\/div>)/", @$serp, $mliarphone2))
 echo '<p>被'.$mliarphone2[1].'个<a'.$u.'href="http://haoma.sogou.com" rel="external nofollow" target="_blank">搜狗号码通</a>用户标记为<strong>"诈骗"</strong>,请谨防受骗。</p>';
+
+// 搜索结果数量
+
+if (preg_match("/(?<=百度为您找到相关结果)([\x80-\xff]{0,3})([0-9,]{1,11})(?=个<\/div>)/", @$serp, $mnumbers))
 
 // site 特型
 
@@ -717,7 +717,7 @@ if (!is_numeric($f136) && !is_numeric($f135) && !is_numeric($f134)) {
 	if (strlen($mnews[3][0]) > 0) {
 		echo '<div itemprop="articleSection"><table><thead><tr><th>最新相关消息</th></tr></thead><tbody>';
 
-		// GBK转 UTF-8 解码
+		// GBK 转 UTF-8 解码
 
 		foreach ($mnews[3] as $key => $value) {
 			$title=iconv("GBK","UTF-8//IGNORE",urldecode($mnews[3][$key]));
