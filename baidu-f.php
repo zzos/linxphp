@@ -1,52 +1,94 @@
-<!--这是百度搜索结果参数分析工具 PHP 源码，若不知如何在浏览器打开，可加入百度参数QQ交流群(255363059)，或请直接访问在线版 weixingon.com/baidusp-f.php。如果你有更多的宝贵意见，也欢迎发送邮件至邮箱 maasdruck@gmail.com-->
-<?php
-echo '<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-CN" xml:lang="zh-CN">
+<!--这是百度搜索结果参数分析工具 PHP 源码，若不知如何在浏览器打开，可加入百度参数QQ交流群(255363059)-->
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cmn-Hans" xml:lang="zh-cmn-Hans">
 <head>
-<meta content="text/html;charset=UTF-8" http-equiv="Content-Type" />
-<meta content="initial-scale=1,maximum-scale=1,user-scalable=0,width=device-width" name="viewport" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0,minimal-ui" />
+<meta name="apple-mobile-web-app-title" content="百度搜索结果参数" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
 <meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<meta name="format-detection" content="telephone=no" />';
+<meta name="format-detection" content="telephone=no" />
+<meta content="text/html;charset=UTF-8" http-equiv="Content-Type" />
+<?php
 
-// 自动生成标题 v2.0
+// 自动生成标题 v2.1
+
+// 请手动修改 url 对应网址、标题后缀
+$url = 'http://'.$_SERVER['HTTP_HOST'].'/baidu-f.php';
+$pt = '百度搜索结果参数';
+
 // 取得搜索词
 $s = @$_GET['s'];
 
 // 过滤字符串
-$patternsuggestion = array();
-$patternsuggestion[0] = '/(\s+)/';
-$patternsuggestion[1] = '/(http:\/\/)/';
-$replacementsuggestion = array();
-$replacementsuggestion[0] = '%20';
-$replacementsuggestion[1] = '';
-$searchfilter = preg_replace($patternsuggestion[1], $replacementsuggestion[1], $s);
-$queryfilter = htmlspecialchars(preg_replace($patternsuggestion, $replacementsuggestion, $s));
+if (strlen($s) > 0) {
+    $p = array(
+        '/(\s+)/',
+        '/(http:\/\/)/',
+    );
+    $r = array(
+        '%20',
+        '',
+    );
+    $z = preg_replace($p[1], $r[1], $s);
+    $query = htmlspecialchars(preg_replace($p, $r, $s));
 
-$title2 = file_get_contents('http://www.weixingon.com/re/?s='.$queryfilter);
-// 下拉框提示词第 1 位作为主标题
-echo "\r\n<title>";
-if (strlen($title2) > 0) {
-	echo $title2.'_';
-	}
+    // 下拉框提示模式 I 第 1 位查询扩展作为主标题
 
-// 引号转换为 HTML 实体的查询词作为副标题
-if (!is_null($s)) {
-	echo htmlspecialchars($searchfilter, ENT_QUOTES).' - ';
-	}
+    $sugip = array (
+        '115.239.211.11',
+        '115.239.211.12',
+        '180.97.33.72',
+        '180.97.33.73',
+        );
+    shuffle ($sugip);
+
+    // 1. 初始化
+    $ch = curl_init();
+
+    // 2. 设置选项，包括 URL
+    curl_setopt($ch, CURLOPT_URL, 'http://'.$sugip[0].'/su?action=opensearch&ie=UTF-8&wd='.$query);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30); // 设置超时限制防止死循环
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']); // 模拟用户使用的浏览器
+
+    // 3. 执行并获取 HTML 文档内容
+    $output = curl_exec ($ch);
+    if ($output === FALSE) {
+        echo "cURL Error: " . curl_error($ch);
+    }
+    $sug1 = json_decode($output);
+
+    // 4. 释放 curl 句柄
+    curl_close ($ch);
+    $sug = @$sug1[1][0];
+
+}
+
+echo '<title>';
+if (strlen($s) > 0) {
+    if (strlen($sug) > 0) {
+        echo $sug.'_';
+    }
+    // 引号转换为 HTML 实体的查询词作为副标题
+    echo htmlspecialchars($z, ENT_QUOTES).'_';
+}
 
 // 标题后缀，品牌名
-echo "百度搜索结果参数</title>\r\n";
+echo $pt."</title>\r\n";
 
 // 下拉框提示词第 1 位，查询词作为 meta keywords
 echo '<meta content="';
-if (strlen($title2) > 0) {
-	echo $title2.',';
-	}
-echo htmlspecialchars($searchfilter, ENT_QUOTES);
+if (strlen($s) > 0) {
+    echo $sug.',';
+   }
+echo htmlspecialchars($z, ENT_QUOTES);
 ?>
 ,百度搜索结果参数,F,F1,F2,F3" name="keywords" />
 <meta content="还你一个没有百度推广、产品的搜索结果页。" name="description" />
+<meta name="author" content="吴星, maasdruck@gmail.com" />
 
 <!--css-->
 
@@ -128,13 +170,13 @@ border-right:0.0625em solid #CCCCCC;
 background:url(
 <?php
 $wallpaper = array (
-	"aurora",
-	"gobi",
-	"mountains",
-	"sea",
-	"snow-mountain",
-	"starry-sky",
-	);
+    "aurora",
+    "gobi",
+    "mountains",
+    "sea",
+    "snow-mountain",
+    "starry-sky",
+    );
 shuffle ($wallpaper);
 echo "http://www.weixingon.com/pic/".$wallpaper[0];
 ?>
@@ -387,26 +429,18 @@ background-color:#FFDDAA;
 <body>
 
 <!--拖放-->
-<div class="dustbin center"><br />按住表格<br />拖曳到这</div>
+<div class="dustbin center"><br>按住表格<br>拖曳到这</div>
 
 <div class="detail">
 
 <!--搜索框-->
 <div class="header center">
 
-<!--请手动修改 action 的网址-->
-	<form method="get" action="http://127.0.0.1/baidu-f.php">
-		<input class="text" type="text" value="<?php echo htmlspecialchars(@$_GET['s'] ,ENT_QUOTES);?>" name="s" title="解析" autocomplete="off" maxlength="76" baiduSug="1" autofocus="autofocus" placeholder="请输入查询词" />
-		<input class="other" type="number" name="pn" title="从第几位开始取结果" min="0" max="760" value="<?php echo @$_GET['pn'];?>" placeholder="取第几位" />
-		<input class="other" type="number" name="rn" title="搜索结果数量" min="0" max="100" value="<?php echo @$_GET['rn'];?>" placeholder="返回数量" />
-		<select title="搜索结果时间限制" name="lm">
-			<option value="">全部时间</option>
-			<option value="1" <?PHP if(@$_GET['lm'] == "1") echo "selected";?>>最近1天</option>
-			<option value="7" <?PHP if(@$_GET['lm'] == "7") echo "selected";?>>最近1週</option>
-			<option value="30" <?PHP if(@$_GET['lm'] == "30") echo "selected";?>>最近1月</option>
-			<option value="360" <?PHP if(@$_GET['lm'] == "360") echo "selected";?>>最近1年</option>
-		</select>
-		<input class="submit" type="submit" value="百度一下" />
+	<form method="get" action="<?php echo $url;?>">
+		<input class="text" type="text" value="<?php echo htmlspecialchars(@$_GET['s'] ,ENT_QUOTES);?>" name="s" title="解析" autocomplete="off" maxlength="76" baiduSug="1" autofocus="autofocus" placeholder="请输入查询词">
+		<input class="other" type="number" name="pn" title="从第几位开始取结果" min="0" max="760" step="10" value="<?php echo @$_GET['pn'];?>" placeholder="取第几位">
+		<input class="other" type="number" name="rn" title="搜索结果数量" min="0" max="100" value="<?php echo @$_GET['rn'];?>" placeholder="返回数量">
+		<input class="submit" type="submit" value="百度一下">
 	</form>
 </div>
 <?php
@@ -418,13 +452,16 @@ $lm = @$_GET['lm'];
 $connectpn = "&pn=";
 $connectrn = "&rn=";
 $connectlm = "&lm=";
-$patternsuggestion = array();
-$patternsuggestion[0] = '/(\s+)/';
-$patternsuggestion[1] = '/(http:\/\/)/';
-$replacementsuggestion = array();
-$replacementsuggestion[0] = '%20';
-$replacementsuggestion[1] = '';
-$queryfilter = htmlspecialchars(preg_replace($patternsuggestion, $replacementsuggestion, $s));
+$p = array(
+    '/(\s+)/',
+    '/(http:\/\/)/',
+);
+$r = array(
+    '%20',
+    '',
+);
+$z = preg_replace($p[1], $r[1], $s);
+$query = htmlspecialchars(preg_replace($p, $r, $s));
 $srcid1 = "<a href=\"http://ask.seowhy.com/question/8677\" rel=\"external nofollow\" target=\"_blank\" title=\"搜索结果页源代码 F - F3、Srcid 的问题\">搜索结果页资源</a>";
 $srcid2 = "<a href=\"http://ask.seowhy.com/question/8254\" rel=\"external nofollow\" target=\"_blank\" title=\"[百家观点]你心中的百度知心搜索，集思广益\">搜索结果页资源&nbsp;resource_id</a>";
 $srcid3 = "<a href=\"http://ask.seowhy.com/question/9186\" rel=\"external nofollow\" target=\"_blank\" title=\"为什么有的搜索结果会没有百度参数，这样的现象原因是什么\">搜索结果页资源&nbsp;resource_id</a>";
@@ -465,12 +502,9 @@ $F3[6] = "第&nbsp;6&nbsp;位";
 $F3[7] = "第&nbsp;7&nbsp;位";
 $F3[8] = "[猜]&nbsp;相似度";
 $y = "<a href=\"http://ask.seowhy.com/article/53\" rel=\"external nofollow\" target=\"_blank\" title=\"百度搜索结果页参数y - 验证码与工具\">y&nbsp;验证码&nbsp;nonce</a>";
-$urltime = "<a href=\"http://ask.seowhy.com/question/9082\" rel=\"external nofollow\" target=\"_blank\" title=\"明明是最近发表的文章，百度收录为何显示2013年？\">百度快照</a>";
 
 if (!is_null($s))
 {
-// 个人网站使用的是浙江杭州阿里云服务器，所以直接使用接近的杭州百度 IP，提升抓取速度。
-// 增加百度网页搜索 IP 数量，检测能否减少被屏蔽次数。
 // 随机更换 IP
 $ip = array (
 	'58.217.200.13',
@@ -480,7 +514,6 @@ $ip = array (
 	'61.135.185.31',
 	'61.135.185.32',
 	'61.135.169.103',
-	'61.135.169.105',
 	'61.135.169.107',
 	'61.135.169.113',
 	'61.135.169.114',
@@ -494,14 +527,12 @@ $ip = array (
 	'115.239.210.27',
 	'115.239.210.28',
 	'115.239.211.109',
-	'115.239.211.110',
 	'115.239.211.112',
 	'115.239.211.113',
 	'115.239.211.114',
 	'119.75.213.50',
 	'119.75.213.51',
 	'119.75.213.61',
-	'119.75.215.3',
 	'119.75.216.20',
 	'119.75.217.11',
 	'119.75.217.26',
@@ -554,20 +585,8 @@ $ip = array (
 	);
 shuffle ($ip);
 $baidu = "http://".$ip[0]."/s?wd=";
-$baiduserp = file_get_contents($baidu.$queryfilter.$connectpn.$pn.$connectrn.$rn.$connectlm.$lm);
+$baiduserp = file_get_contents($baidu.$query.$connectpn.$pn.$connectrn.$rn.$connectlm.$lm);
 }
-
-// 打开网页显示"开发的其他产品"
-
-if (is_null($s))
-echo "<h1 class=\"center bold white\">2013&nbsp;-&nbsp;2014&nbsp;开发的其他产品</h1>
-	<p class=\"center\"><a class=\"noa\" href=\"http://www.weixingon.com/baidusp-srcid.php\" target=\"_blank\">百度搜索产品资源</a></p>
-	<p class=\"center\"><a class=\"noa\" href=\"http://www.weixingon.com/baidusp-hot.php\" target=\"_blank\">百度相关热门词</a></p>
-	<p class=\"center\"><a class=\"noa\" href=\"http://www.weixingon.com/baidusp-lm.php?lm=7&amp;rn=100\" target=\"_blank\">百度收录更新时间限制工具</a></p>
-	<p class=\"center\"><a class=\"noa\" href=\"http://www.weixingon.com/wechat/\" target=\"_blank\">微信营销书籍(PC&nbsp;+&nbsp;移动端)</a></p>
-	<p class=\"center\"><a class=\"noa\" href=\"http://www.weixingon.com/mp/mate.php\" target=\"_blank\">择偶要求问卷调查(移动端)</a></p>
-	<p class=\"center\"><a class=\"noa\" href=\"http://www.weixingon.com/tool/\" target=\"_blank\">百度搜索引擎搜索结果网址参数(PC)</a></p>
-";
 
 // 确定时间
 
@@ -587,24 +606,10 @@ if (preg_match("/(?<='T':')(\d{10})(?=',)/", $baiduserp, $matchservertime))
 
 if (preg_match("/([\d\.]+)(?=;<\/script><\/html>)/", $baiduserp, $matchsrvt))
 
-// 搜索结果链接，数量，查询时间，音乐
+// 搜索结果链接，数量，查询时间
 
 if (!is_null($s))
 {
-// 随机播放音乐
-$music = array (
-	"%b2%cc%b4%be%bc%d1-%b0%ae%c8%e7%b3%b1%cb%ae",
-	"%D2%B9%D2%B9%D2%B9%D2%B9",
-	"%ce%d2%d2%d4%ce%aa",
-	"%cf%b2%d4%c3",
-	"way-back-into-love",
-	"oppositeoflove",
-	"lift-thine-eyes",
-	"disturbance-in-agustria",
-	"become-the-wind",
-	"sanguo",
-	);
-shuffle ($music);
 // 随机下载壁纸
 $wallpapers = array (
 	"dlsw.br.baidu.com/original/201406/qianxun_wallpage_620.zip",
@@ -613,7 +618,7 @@ $wallpapers = array (
 shuffle ($wallpapers);
 echo "
 	<p class=\"center white\">
-		<a class=\"noa\" href=\"http://www.baidu.com/s?wd=".$queryfilter.$connectpn.$pn.$connectrn.$rn.$connectlm.$lm."\" target=\"_blank\" rel=\"external nofollow\">
+		<a class=\"noa\" href=\"http://www.baidu.com/s?wd=".$query.$connectpn.$pn.$connectrn.$rn.$connectlm.$lm."\" target=\"_blank\" rel=\"external nofollow\">
 			点击查看“<span class=\"red\">$s</span>”的百度搜索结果页
 		</a>
 		$matchnumbers[2]&nbsp;个<a class=\"noa\" href=\"http://ask.seowhy.com/question/8376\" rel=\"external nofollow\" target=\"_blank\" title=\"百度搜索结果onmousedown事件对排名有什么影响？\">结果</a>
@@ -622,13 +627,7 @@ echo "
 		."</a>
 		<a class=\"noa\" href=\"http://".$wallpapers[0]."\" rel=\"external nofollow\" target=\"_blank\">
 			下载壁纸
-		</a>
-		<button type=\"button\" id=\"music_button\" onclick=\"toggleSound()\">
-			随机播放音乐
-		</button>
-		<audio src=\"http://www.weixingon.com/mp/".$music[0].".mp3\" preload=\"none\" id=\"music\">
-			<span class=\"red\" title=\"请升级或更换浏览器\">您的浏览器不支持&nbsp;HTML&nbsp;5</span>
-		</audio></p>";
+		</a></p>";
 }
 
 // 冇收录
@@ -760,30 +759,80 @@ function smarty_modifier_wordcount($str,$encoding = 'UTF-8')
 				<td>
 					普通结果
 				</td>";
+		elseif ($resourceid == 1581)
+			echo "
+				<td>
+					更多同站相关结果&gt;&gt;[201412添加]
+				</td>";
 		elseif ($resourceid == 1548)
 			echo "
 				<td>
-					结构化数据&nbsp;评分
+					评分－结构化数据[201408添加]
+				</td>";
+		elseif ($resourceid == 1547)
+			echo "
+				<td>
+					百度百科[201407添加]
+				</td>";
+		elseif ($resourceid == 1545)
+			echo "
+				<td>
+					非正规相册[201412添加]
 				</td>";
 		elseif ($resourceid == 1543)
 			echo "
 				<td>
-					面包屑导航&nbsp;-&nbsp;结构化数据
+					面包屑导航－结构化数据
+				</td>";
+		elseif ($resourceid == 1542)
+			echo "
+				<td>
+					百度学术&nbsp;查看更多相关论文
 				</td>";
 		elseif ($resourceid == 1539)
 			echo "
 				<td>
-					<span title=\"百度搜索赶集网出现\">带 0 - 6 个子链结果</span>
+					[官网]&nbsp;0－6&nbsp;个子链结果[201405添加]
 				</td>";
 		elseif ($resourceid == 1538)
 			echo "
 				<td>
-					软件下载摘要|小说作者状态类型&nbsp;结构化数据
+					软件下载摘要|小说作者状态类型－结构化数据
+				</td>";
+		elseif ($resourceid == 1537)
+			echo "
+				<td>
+					组图&nbsp;百度经验
+				</td>";
+		elseif ($resourceid == 1536)
+			echo "
+				<td>
+					一般答案&nbsp;百度知道
+				</td>";
+		elseif ($resourceid == 1535)
+			echo "
+				<td>
+					未知，模版采用&nbsp;se_com_image_s
+				</td>";
+		elseif ($resourceid == 1534)
+			echo "
+				<td>
+					[猜]&nbsp;化妆品，模版采用&nbsp;se_com_cosmetic
 				</td>";
 		elseif ($resourceid == 1533)
 			echo "
 				<td>
 					论坛帖子
+				</td>";
+		elseif ($resourceid == 1532)
+			echo "
+				<td>
+					最佳答案&nbsp;百度知道
+				</td>";
+		elseif ($resourceid == 1531)
+			echo "
+				<td>
+					查询扩展 // 在原用户查询词的基础上，通过一定的方法和策略把与原查询词相关的词、词组添加到原查询中，组成新的、更能准确表达用户查询意图的查询词序列，然后用新查询对文档重新检索，从而提高信息检索中的查全率和查准率。 李晓明; 闫宏飞; 王继民. 附录 术语//搜索引擎——原理、技术与系统(第二版). 2013年5月第9次印刷. 北京: 科学. 2012.5: 第322–323页 ISBN 7-03-034258-4 (简体中文)
 				</td>";
 		elseif ($resourceid == 1530)
 				echo "
@@ -798,12 +847,17 @@ function smarty_modifier_wordcount($str,$encoding = 'UTF-8')
 		elseif ($resourceid == 1528)
 				echo "
 				<td>
-					百度知道&nbsp;更多知道相关问题
+					百度知道阿拉丁&nbsp;更多知道相关问题
+				</td>";
+		elseif ($resourceid == 1527)
+				echo "
+				<td>
+					百度文库标签&nbsp;更多文库相关文档&gt;&gt;
 				</td>";
 		elseif ($resourceid == 1526)
 			echo "
 				<td>
-					百度文库&nbsp;更多文库相关文档
+					百度文库阿拉丁&nbsp;更多文库相关文档
 				</td>";
 		elseif ($resourceid == 1525)
 			echo "
@@ -825,37 +879,82 @@ function smarty_modifier_wordcount($str,$encoding = 'UTF-8')
 				<td>
 					百度经验带相册
 				</td>";
+		elseif ($resourceid == 1521)
+				echo "
+				<td>
+					图片&nbsp;百度百科(可能与查询词内容相关度较高)
+				</td>";
 		elseif ($resourceid == 1520)
 			echo "
 				<td>
-					<span title=\"百度搜索无序的新世界出现\">期刊文献</span>
+					<span title=\"2015-01-08 百度搜索 无序的新世界 出现\">期刊文献</span>
+				</td>";
+		elseif ($resourceid == 1519)
+			echo "
+				<td>
+					维基百科&nbsp;国际化
+				</td>";
+		elseif ($resourceid == 1518)
+			echo "
+				<td>
+					软件下载&nbsp;国际化
 				</td>";
 		elseif ($resourceid == 1517)
 			echo "
 				<td>
 					[图文]，但并非每个查询词显示&nbsp;[图文]
 				</td>";
+		elseif ($resourceid == 1516)
+			echo "
+				<td>
+					宗教&nbsp;国际化
+				</td>";
+		elseif ($resourceid == 1515)
+			echo "
+				<td>
+					电影&nbsp;国际化
+				</td>";
 		elseif ($resourceid == 1514)
 			echo "
 				<td>
-					[猜]&nbsp;在线文档&nbsp;结构化数据
+					在线文档－结构化数据
 				</td>";
 		elseif ($resourceid == 1513)
 			echo "
 				<td>
-					软件下载&nbsp;-&nbsp;结构化数据
+					软件下载－结构化数据
+				</td>";
+		elseif ($resourceid == 1512)
+			echo "
+				<td>
+					单视频&nbsp;国际化
 				</td>";
 		elseif ($resourceid == 1511)
 			echo "
 				<td>
 					[原创]&nbsp;星火计划
 				</td>";
+		elseif ($resourceid == 1510)
+			echo "
+				<td>
+					子链&nbsp;国际化
+				</td>";
 		elseif ($resourceid == 1509)
 			echo "
 				<td>
-					官网
+					[官网]
 				</td>";
 		elseif ($resourceid == 1508)
+			echo "
+				<td>
+					单视频&nbsp;站点
+				</td>";
+		elseif ($resourceid == 1507)
+			echo "
+				<td>
+					微博
+				</td>";
+		elseif ($resourceid == 1506)
 			echo "
 				<td>
 					单视频
@@ -863,7 +962,17 @@ function smarty_modifier_wordcount($str,$encoding = 'UTF-8')
 		elseif ($resourceid == 1505)
 			echo "
 				<td>
-					百度知道(知道达人|权威专家|官方机构)
+					百度知道&nbsp;高品质(知道达人|权威专家|官方机构)
+				</td>";
+		elseif ($resourceid == 1504)
+			echo "
+				<td>
+					自动问答
+				</td>";
+		elseif ($resourceid == 1503)
+			echo "
+				<td>
+					图片&nbsp;单视频
 				</td>";
 		elseif ($resourceid == 1502)
 			echo "
@@ -873,7 +982,7 @@ function smarty_modifier_wordcount($str,$encoding = 'UTF-8')
 		elseif ($resourceid == 1501)
 			echo "
 				<td>
-					评分&nbsp;-&nbsp;结构化数据
+					评分－结构化数据
 				</td>";
 		else
 			echo "
@@ -6182,7 +6291,7 @@ echo"
 		elseif ($matchfk[1][$i] == 6827)
 			echo "
 				<td>
-					<a href=\"http://www.baidu.com/#wd=".$queryfilter." 失信被执行人\" rel=\"external nofollow\" target=\"_blank\">".$queryfilter."由于失信已被列入国家失信被执行人名单</a>
+					<a href=\"http://www.baidu.com/#wd=".$query." 失信被执行人\" rel=\"external nofollow\" target=\"_blank\">".$query."由于失信已被列入国家失信被执行人名单</a>
 				</td>
 				<td class=\"center\">
 					<a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
@@ -6522,7 +6631,7 @@ echo"
 		elseif ($matchfk[1][$i] == 6006)
 			echo "
 				<td>
-					<a href=\"http://www.ip138.com/ips138.asp?ip=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">IP地址查询</a>
+					<a href=\"http://www.ip138.com/ips138.asp?ip=".$query."\" rel=\"external nofollow\" target=\"_blank\">IP地址查询</a>
 				</td>
 				<td class=\"center\">
 					<a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
@@ -6668,7 +6777,7 @@ echo"
 			($matchapp[1] == 35)
 			echo "
 			<td>
-				<a href=\"http://m.baidu.com/s?st=10a001&amp;tn=webmkt&amp;word=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">百度移动应用</a>
+				<a href=\"http://m.baidu.com/s?st=10a001&amp;tn=webmkt&amp;word=".$query."\" rel=\"external nofollow\" target=\"_blank\">百度移动应用</a>
 			</td>
 			<td class=\"center\">
 			</td>
@@ -6750,7 +6859,7 @@ echo"
 				".$matchzxlrt[1][$i]."
 			</td>
 			<td>
-				<a href=\"http://www.baidu.com/s?tn=baidurt&amp;rtt=1&amp;bsst=1&amp;wd=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">最新相关消息</a>
+				<a href=\"http://www.baidu.com/s?tn=baidurt&amp;rtt=1&amp;bsst=1&amp;wd=".$query."\" rel=\"external nofollow\" target=\"_blank\">最新相关消息</a>
 			</td>
 			<td class=\"center\">
 			</td>
@@ -6799,7 +6908,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://jiankang.baidu.com/healthStar/index?wd=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">十二星座健康运势&nbsp;百度健康</a>
+					<a href=\"http://jiankang.baidu.com/healthStar/index?wd=".$query."\" rel=\"external nofollow\" target=\"_blank\">十二星座健康运势&nbsp;百度健康</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -6812,7 +6921,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://jiaoyu.baidu.com/query/exam?classId=2007&amp;originQuery=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">高等教育自学考试&nbsp;百度教育</a>
+					<a href=\"http://jiaoyu.baidu.com/query/exam?classId=2007&amp;originQuery=".$query."\" rel=\"external nofollow\" target=\"_blank\">高等教育自学考试&nbsp;百度教育</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -6825,7 +6934,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://jiaoyu.baidu.com/query/exam?originQuery=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">考试&nbsp;百度教育</a>
+					<a href=\"http://jiaoyu.baidu.com/query/exam?originQuery=".$query."\" rel=\"external nofollow\" target=\"_blank\">考试&nbsp;百度教育</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -6838,7 +6947,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://jiaoyu.baidu.com/query/exam?originQuery=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">考试&nbsp;百度教育</a>
+					<a href=\"http://jiaoyu.baidu.com/query/exam?originQuery=".$query."\" rel=\"external nofollow\" target=\"_blank\">考试&nbsp;百度教育</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -6864,7 +6973,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://iwan.baidu.com/search?query=".$queryfilter."&searchquery=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">页游&nbsp;开始游戏&nbsp;百度爱玩</a>
+					<a href=\"http://iwan.baidu.com/search?query=".$query."&searchquery=".$query."\" rel=\"external nofollow\" target=\"_blank\">页游&nbsp;开始游戏&nbsp;百度爱玩</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -6916,7 +7025,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://iwan.baidu.com/search?searchquery=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">百度爱玩</a>
+					<a href=\"http://iwan.baidu.com/search?searchquery=".$query."\" rel=\"external nofollow\" target=\"_blank\">百度爱玩</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -6994,7 +7103,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://jiaoyu.baidu.com/query/abroad?originQuery=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">留学图片资讯&nbsp;百度教育</a>
+					<a href=\"http://jiaoyu.baidu.com/query/abroad?originQuery=".$query."\" rel=\"external nofollow\" target=\"_blank\">留学图片资讯&nbsp;百度教育</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7033,7 +7142,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://jiankang.baidu.com/juhe/index?aType=1&amp;wd=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">百度健康</a>
+					<a href=\"http://jiankang.baidu.com/juhe/index?aType=1&amp;wd=".$query."\" rel=\"external nofollow\" target=\"_blank\">百度健康</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7072,7 +7181,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://yao.xywy.com/so/?q=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">药品频道&nbsp;寻医问药网&nbsp;百度健康</a>
+					<a href=\"http://yao.xywy.com/so/?q=".$query."\" rel=\"external nofollow\" target=\"_blank\">药品频道&nbsp;寻医问药网&nbsp;百度健康</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7085,7 +7194,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://jiankang.baidu.com/shoushu/base?wd=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">手术&nbsp;百度健康</a>
+					<a href=\"http://jiankang.baidu.com/shoushu/base?wd=".$query."\" rel=\"external nofollow\" target=\"_blank\">手术&nbsp;百度健康</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7111,7 +7220,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://iwan.baidu.com/yeyou?query=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">网页游戏&nbsp;百度爱玩</a>
+					<a href=\"http://iwan.baidu.com/yeyou?query=".$query."\" rel=\"external nofollow\" target=\"_blank\">网页游戏&nbsp;百度爱玩</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7124,7 +7233,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://weigou.baidu.com/search?q=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">百度微购</a>
+					<a href=\"http://weigou.baidu.com/search?q=".$query."\" rel=\"external nofollow\" target=\"_blank\">百度微购</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7215,7 +7324,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://zhidao.baidu.com/search?word=".$queryfilter."\" target=\"_blank\" rel=\"external nofollow\">疾病&nbsp;百度知道</a>
+					<a href=\"http://zhidao.baidu.com/search?word=".$query."\" target=\"_blank\" rel=\"external nofollow\">疾病&nbsp;百度知道</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7280,7 +7389,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://map.baidu.com/?newmap=1&amp;ie=utf-8&amp;s=s%26wd%3D".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">百度地图</a>
+					<a href=\"http://map.baidu.com/?newmap=1&amp;ie=utf-8&amp;s=s%26wd%3D".$query."\" rel=\"external nofollow\" target=\"_blank\">百度地图</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7293,7 +7402,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://map.baidu.com/?newmap=1&amp;ie=utf-8&amp;s=s%26wd%3D".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">百度地图&nbsp;城市</a>
+					<a href=\"http://map.baidu.com/?newmap=1&amp;ie=utf-8&amp;s=s%26wd%3D".$query."\" rel=\"external nofollow\" target=\"_blank\">百度地图&nbsp;城市</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7306,7 +7415,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://map.baidu.com/?newmap=1&amp;ie=utf-8&amp;s=s%26wd%3D".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">百度地图</a>
+					<a href=\"http://map.baidu.com/?newmap=1&amp;ie=utf-8&amp;s=s%26wd%3D".$query."\" rel=\"external nofollow\" target=\"_blank\">百度地图</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7322,8 +7431,8 @@ echo"
 					携程攻略
 				</td>
 				<td class=\"center\">
-					<a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchsp[1][$i]."&s=".$queryfilter."\" target=\"_blank\" rel=\"external nofollow\">"
-						.$queryfilter
+					<a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchsp[1][$i]."&s=".$query."\" target=\"_blank\" rel=\"external nofollow\">"
+						.$query
 					."</a>
 				</td>
 				<td class=\"center\">
@@ -7348,11 +7457,11 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://gouwu.baidu.com/s?wd=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">百度购物搜索</a>
+					<a href=\"http://gouwu.baidu.com/s?wd=".$query."\" rel=\"external nofollow\" target=\"_blank\">百度购物搜索</a>
 				</td>
 				<td class=\"center\">
-					<a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchsp[1][$i]."&s=".$queryfilter."\" target=\"_blank\" rel=\"external nofollow\">"
-						.$queryfilter
+					<a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchsp[1][$i]."&s=".$query."\" target=\"_blank\" rel=\"external nofollow\">"
+						.$query
 					."</a>
 				</td>
 				<td class=\"center\">
@@ -7403,7 +7512,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					百度百科
+					百度百科[201407添加]
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7468,7 +7577,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					百度文库&nbsp;更多文库相关文档&gt;&gt;
+					百度文库标签&nbsp;更多文库相关文档&gt;&gt;
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7481,7 +7590,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://baike.baidu.com/search?word=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">与查询词内容相关度较高的百度百科</a>
+					<a href=\"http://baike.baidu.com/search?word=".$query."\" rel=\"external nofollow\" target=\"_blank\">图片&nbsp;百度百科(可能与查询词内容相关度较高)</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7497,8 +7606,8 @@ echo"
 					当当|一淘|英语四六级查询&nbsp;考试吧
 				</td>
 				<td class=\"center\">
-					<a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchsp[1][$i]."&s=".$queryfilter."\" target=\"_blank\" rel=\"external nofollow\">"
-						.$queryfilter
+					<a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchsp[1][$i]."&s=".$query."\" target=\"_blank\" rel=\"external nofollow\">"
+						.$query
 					."</a>
 				</td>
 				<td class=\"center\">
@@ -7510,7 +7619,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://zhidao.baidu.com/new?ie=utf8&word=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">去百度知道提问</a>
+					<a href=\"http://zhidao.baidu.com/new?ie=utf8&word=".$query."\" rel=\"external nofollow\" target=\"_blank\">去百度知道提问</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7536,7 +7645,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://www.baidu.com/s?rtt=2&tn=baiduwb&cl=2&wd=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">最新微博结果</a>
+					<a href=\"http://www.baidu.com/s?rtt=2&tn=baiduwb&cl=2&wd=".$query."\" rel=\"external nofollow\" target=\"_blank\">最新微博结果</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7549,7 +7658,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://fanyi.baidu.com/#en/zh/".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">百度翻译</a>
+					<a href=\"http://fanyi.baidu.com/#en/zh/".$query."\" rel=\"external nofollow\" target=\"_blank\">百度翻译</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7562,10 +7671,10 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://www.baidu.com/s?tn=baidurt&amp;rtt=1&amp;bsst=1&amp;wd=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">最新相关消息</a>
+					<a href=\"http://www.baidu.com/s?tn=baidurt&amp;rtt=1&amp;bsst=1&amp;wd=".$query."\" rel=\"external nofollow\" target=\"_blank\">最新相关消息</a>
 				</td>
 				<td class=\"center\">
-					<a href=\"http://www.weixingon.com/baidusp-news.php?s=".$queryfilter."\" target=\"_blank\">".htmlspecialchars_decode($s)."</a>
+					<a href=\"http://www.weixingon.com/baidusp-news.php?s=".$query."\" target=\"_blank\">".htmlspecialchars_decode($s)."</a>
 				</td>
 				<td class=\"center\">
 					".$matchsp[3][$i]."
@@ -7576,7 +7685,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://music.baidu.com/search?key=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">百度音乐</a>
+					<a href=\"http://music.baidu.com/search?key=".$query."\" rel=\"external nofollow\" target=\"_blank\">百度音乐</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7589,7 +7698,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://image.baidu.com/i?ie=utf-8&amp;tn=baiduimage&amp;ct=201326592&amp;word=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">百度图片</a>
+					<a href=\"http://image.baidu.com/i?ie=utf-8&amp;tn=baiduimage&amp;ct=201326592&amp;word=".$query."\" rel=\"external nofollow\" target=\"_blank\">百度图片</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7602,7 +7711,7 @@ echo"
 					".$matchsp[1][$i]."
 				</td>
 				<td>
-					<a href=\"http://v.baidu.com/v?ie=utf-8&amp;word=".$queryfilter."\" rel=\"external nofollow\" target=\"_blank\">百度视频</a>
+					<a href=\"http://v.baidu.com/v?ie=utf-8&amp;word=".$query."\" rel=\"external nofollow\" target=\"_blank\">百度视频</a>
 				</td>
 				<td class=\"center\">
 				</td>
@@ -7634,89 +7743,32 @@ echo"
 
 // 相关搜索
 
-if (preg_match_all("/(?<=&rs_src\=)([01]{1}\">)([\x80-\xff\w\s\.#\:\/]{0,32})(?=<\/a><\/th><)/", @$baiduserp, $matchrelated))
+if (!is_null($s)) {
+$matchrelated = explode(',', file_get_contents('http://www.baidu.com/s?tn=baidurs2top&wd='.$query));
 
-if (!is_null($s))
-{
 // 随机更换下拉框提示 IP
 $sugip = array (
-	'115.239.211.11',
-	'115.239.211.12',
-	'180.97.33.72',
-	'180.97.33.73',
-	'220.181.111.109',
+	'http://115.239.211.11',
+	'http://115.239.211.12',
+	'http://180.97.33.72',
+	'http://180.97.33.73',
 	);
 shuffle ($sugip);
 
- function Curl_http($array,$timeout){
- 	$res = array();
- 	$mh = curl_multi_init();//创建多个curl语柄
- 	foreach($array as $k=>$url){
- 		$conn[$k]=curl_init($url);
- 
-        curl_setopt($conn[$k], CURLOPT_TIMEOUT, $timeout);//设置超时时间
-        curl_setopt($conn[$k], CURLOPT_USERAGENT, 'Mozilla/5.0 (compatible; MSIE 5.01; Windows NT 5.0)');
-        curl_setopt($conn[$k], CURLOPT_MAXREDIRS, 7);//HTTp定向级别
-        curl_setopt($conn[$k], CURLOPT_HEADER, 0);//这里不要header，加块效率
-        curl_setopt($conn[$k], CURLOPT_FOLLOWLOCATION, 1); // 302 redirect
-        curl_setopt($conn[$k],CURLOPT_RETURNTRANSFER,1);
-        curl_multi_add_handle ($mh,$conn[$k]);
- 	}
-	 //防止死循环耗死cpu 这段是根据网上的写法
-		do {
-			$mrc = curl_multi_exec($mh,$active);//当无数据，active=true
-		} while ($mrc == CURLM_CALL_MULTI_PERFORM);//当正在接受数据时
-		while ($active and $mrc == CURLM_OK) {//当无数据时或请求暂停时，active=true
-			if (curl_multi_select($mh) != -1) {
-				do {
-					$mrc = curl_multi_exec($mh, $active);
-				} while ($mrc == CURLM_CALL_MULTI_PERFORM);
-			}
-		}
- 	
- 	foreach ($array as $k => $url) {
- 		  curl_error($conn[$k]);
-    	  $res[$k]=curl_multi_getcontent($conn[$k]);//获得返回信息
-    	  curl_close($conn[$k]);//关闭语柄
-    	  curl_multi_remove_handle($mh  , $conn[$k]);   //释放资源 
-		}
-		
-		curl_multi_close($mh);
-		$cache = '缓冲，防止取不到数据';
-
-		return array($res);
- 	
- }
-
-$suggestion1 = "http://".$sugip[0]."/su?action=opensearch&ie=UTF-8&wd=";
-$suggestion2 = "http://".$sugip[0]."/su?action=opensearch&ie=UTF-8&sugmode=2&wd=";
-$suggestion3 = "http://".$sugip[0]."/su?ie=UTF-8&sugmode=3&p=1&wd=";
-
-	$array = array(
-				$suggestion1.$queryfilter,
-				$suggestion2.$queryfilter,
-				$suggestion3.$queryfilter
-				);
-
-	$data = Curl_http($array,'10');//调用
 // 匹配百度搜索3种下拉框提示词
-$jsonsuggestion1 = json_decode($data[0][0]);
-$jsonsuggestion2 = json_decode($data[0][1]);
-
-$baidusuggestion3 = $data[0][2];
-$pattern3 = array();
-$pattern3[0] = '/window\.baidu\.sug\({q:/';
-$pattern3[1] = '/p:false,s:/';
-$pattern3[2] = '/}\);/';
-$replacement3 = array();
-$replacement3[0] = '[';
-$replacement3[1] = '';
-$replacement3[2] = ']';
-$jsonsuggestion3 = json_decode(preg_replace($pattern3, $replacement3, $baidusuggestion3));
-}
-
-if (!is_null(@$baidusuggestion3))
-{
+$p3 = array(
+	'/window\.baidu\.sug\({q:/',
+	'/p:false,s:\[/',
+	'/}\);/',
+	);
+$r3 = array(
+	'[',
+	'',
+	'',
+);
+$sug1 = json_decode(file_get_contents($sugip[0].'/su?action=opensearch&ie=UTF-8&wd='.$query));
+$sug2 = json_decode(file_get_contents($sugip[0].'/su?action=opensearch&ie=UTF-8&sugmode=2&wd='.$query));
+$sug3 = json_decode(preg_replace($p3, $r3, file_get_contents($sugip[0].'/su?ie=UTF-8&sugmode=3&p=1&wd='.$query)));
 echo"
 <div class=\"draglist\" draggable=\"true\">
 <table>
@@ -7731,35 +7783,28 @@ echo"
 		</thead>
 		<tbody>";
 
-	{
-	if
-	(count($matchrelated[1]) > count($jsonsuggestion3[1]))
-	$counts = count($matchrelated[1]);
-	else
-	$counts = count($jsonsuggestion3[1]);
-	}
-	for ($i = 0; $i <= $counts - 1; $i++)
+	for ($i = 0; $i <= 9; $i++)
 	{
 		echo "
 			<tr class=\"back-azure\">
 				<td>
-					<a href=\"http://127.0.0.1/baidu-f.php?s=".@$matchrelated[2][$i]."\" target=\"_blank\">"
-						.@$matchrelated[2][$i]."
+					<a href=\"".$url."?s=".@$matchrelated[$i]."\" target=\"_blank\">"
+						.@$matchrelated[$i]."
 					</a>
 				</td>
 				<td>
-					<a href=\"http://127.0.0.1/baidu-f.php?s=".@$jsonsuggestion1[1][$i]."\" target=\"_blank\">"
-						.@$jsonsuggestion1[1][$i]."
+					<a href=\"".$url."?s=".@$sug1[1][$i]."\" target=\"_blank\">"
+						.@$sug1[1][$i]."
 					</a>
 				</td>
 				<td>
-					<a href=\"http://127.0.0.1/baidu-f.php?s=".@$jsonsuggestion2[1][$i]."\" target=\"_blank\">"
-						.@$jsonsuggestion2[1][$i]."
+					<a href=\"".$url."?s=".@$sug2[1][$i]."\" target=\"_blank\">"
+						.@$sug2[1][$i]."
 					</a>
 				</td>
 				<td>
-					<a href=\"http://127.0.0.1/baidu-f.php?s=".@$jsonsuggestion3[1][$i]."\" target=\"_blank\">"
-						.@$jsonsuggestion3[1][$i]."
+					<a href=\"".$url."?s=".@$sug3[$i+1]."\" target=\"_blank\">"
+						.@$sug3[$i+1]."
 					</a>
 				</td>
 				<td class=\"center\">"
@@ -7798,7 +7843,7 @@ if (!is_null(@$mcrq))
 			$kz = (explode('&nbsp;', $mcrq[5][$g]));
 			array_pop($kz);
 			echo "
-					<a href=\"http://127.0.0.1/baidu-f.php?s=".@$kz[$f]."\" target=\"_blank\">"
+					<a href=\"".$url."?s=".@$kz[$f]."\" target=\"_blank\">"
 						.@$kz[$f]
 					.'</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
 		}
@@ -7900,7 +7945,7 @@ echo"
 		if 	($fvalue3 == "A")
 			echo "
 				<td class=\"unit-aquamarine\">
-					1.&nbsp;分类信息<br />
+					1.&nbsp;分类信息<br>
 					2.&nbsp;[猜]&nbsp;非正规
 				</td>";
 		elseif 	($fvalue3 == "8")
@@ -7971,7 +8016,7 @@ echo"
 		elseif 	($fvalue6 == "3")
 			echo "
 				<td class=\"unit-violet\">
-					[猜]&nbsp;不基于&nbsp;IP&nbsp;地理位置更换结果<br />
+					[猜]&nbsp;不基于&nbsp;IP&nbsp;地理位置更换结果<br>
 					但进入目标网站自会选择地域
 				</td>";
 		else
@@ -8119,17 +8164,17 @@ echo"
 		elseif ($f1value3 == "6")
 			echo "
 				<td class=\"unit-silver\">
-					<a href=\"http://www.weixingon.com/baidusp-lm.php?s=$queryfilter&rn=100&lm=7\" target=\"_blank\" title=\"yyyy年MM月dd日|hh小时前|mm分钟前|ss秒前\">0-24小时前更新快照的网页</a>
+					<a href=\"http://www.weixingon.com/baidusp-lm.php?s=$query&rn=100&lm=7\" target=\"_blank\" title=\"yyyy年MM月dd日|hh小时前|mm分钟前|ss秒前\">0-24小时前更新快照的网页</a>
 				</td>";
 		elseif ($f1value3 == "5")
 			echo "
 				<td class=\"unit-lavender\">
-					<a href=\"http://www.weixingon.com/baidusp-lm.php?s=$queryfilter&rn=100&lm=7\" target=\"_blank\" title=\"yyyy年MM月dd日\">24-48小时前更新快照的网页</a>
+					<a href=\"http://www.weixingon.com/baidusp-lm.php?s=$query&rn=100&lm=7\" target=\"_blank\" title=\"yyyy年MM月dd日\">24-48小时前更新快照的网页</a>
 				</td>";
 		elseif ($f1value3 == "4")
 			echo "
 				<td class=\"unit-tomato\">
-					<a href=\"http://www.weixingon.com/baidusp-lm.php?s=$queryfilter&rn=100&lm=7\" target=\"_blank\" title=\"yyyy年MM月dd日\">2-7天前更新快照的网页</a>
+					<a href=\"http://www.weixingon.com/baidusp-lm.php?s=$query&rn=100&lm=7\" target=\"_blank\" title=\"yyyy年MM月dd日\">2-7天前更新快照的网页</a>
 				</td>";
 		else
 			echo "
@@ -8179,12 +8224,12 @@ echo"
 		if ($f1value6 == "5")
 			echo "
 				<td class=\"unit-lavender\">
-					<a href=\"http://www.weixingon.com/baidusp-hot.php?s=".$queryfilter."\" target=\"_blank\" title=\"百度搜索热门词\">新热门</a>
+					<a href=\"http://www.weixingon.com/baidusp-hot.php?s=".$query."\" target=\"_blank\" title=\"百度搜索热门词\">新热门</a>
 				</td>";
 		elseif ($f1value6 == "3")
 			echo "
 				<td class=\"unit-violet\">
-					<a href=\"http://www.weixingon.com/baidusp-hot.php?s=".$queryfilter."\" target=\"_blank\" title=\"百度搜索热门词\">中热门</a>
+					<a href=\"http://www.weixingon.com/baidusp-hot.php?s=".$query."\" target=\"_blank\" title=\"百度搜索热门词\">中热门</a>
 				</td>";
 		elseif ($f1value6 == "1")
 			echo "
@@ -8194,7 +8239,7 @@ echo"
 		elseif ($f1value6 == "0")
 			echo "
 				<td class=\"unit-honeydew\">
-					<a href=\"http://www.weixingon.com/baidusp-hot.php?s=".$queryfilter."\" target=\"_blank\" title=\"百度搜索热门词\">老热门</a>
+					<a href=\"http://www.weixingon.com/baidusp-hot.php?s=".$query."\" target=\"_blank\" title=\"百度搜索热门词\">老热门</a>
 				</td>";
 		else
 			echo "
@@ -8333,7 +8378,7 @@ echo"
 		elseif ($f2value2 == "8")
 			echo "
 				<td class=\"unit-darkseagreen\">
-					1.&nbsp;更多贴吧相关帖子&gt;&gt;<br />
+					1.&nbsp;更多贴吧相关帖子&gt;&gt;<br>
 					2.&nbsp;未知
 				</td>";
 		else
@@ -8424,13 +8469,13 @@ echo"
 		if ($f2value7 == "E")
 			echo "
 				<td class=\"unit-deepskyblue\">
-					链接锚文本<br />
+					链接锚文本<br>
 					anchor-text
 				</td>";
 		elseif ($f2value7 == "6")
 			echo "
 				<td class=\"unit-silver\">
-					无<br />
+					无<br>
 					no
 				</td>";
 		else
@@ -8446,25 +8491,25 @@ echo"
 		elseif ($f2value8 == "E")
 			echo "
 				<td class=\"unit-deepskyblue\">
-					标题标签<br />
+					标题标签<br>
 					heading
 				</td>";
 		elseif ($f2value8 == "B")
 			echo "
 				<td class=\"unit-springgreen\">
-					网页标题<br />
+					网页标题<br>
 					title
 				</td>";
 		elseif ($f2value8 == "A")
 			echo "
 				<td class=\"unit-aquamarine\">
-					无<br />
+					无<br>
 					no
 				</td>";
 		elseif ($f2value8 == "8")
 			echo "
 				<td class=\"unit-mediumpurple\">
-					网址<br />
+					网址<br>
 					url
 				</td>";
 		else
@@ -8564,7 +8609,7 @@ echo"
 		if ($f3value4 == "7")
 			echo "
 				<td class=\"unit-darkseagreen\">
-					最低<br />
+					最低<br>
 					8 级
 				</td>";
 		elseif ($f3value4 == "6")
@@ -8575,32 +8620,32 @@ echo"
 		elseif ($f3value4 == "5")
 			echo "
 				<td class=\"unit-lavender\">
-					默认<br />
+					默认<br>
 					6 级
 				</td>";
 		elseif ($f3value4 == "3")
 			echo "
 				<td class=\"unit-violet\">
-					星火计划 [原创]<br />
+					星火计划 [原创]<br>
 					4 级
 				</td>";
 		elseif ($f3value4 == "2")
 			echo "
 				<td class=\"unit-orange\">
-					星火计划 [原创]<br />
+					星火计划 [原创]<br>
 					3 级
 				</td>";
 		elseif ($f3value4 == "1")
 			echo "
 				<td class=\"unit-gold\">
-					星火计划 [原创]<br />
+					星火计划 [原创]<br>
 					2 级
 				</td>";
 		elseif ($f3value4 == "0")
 			echo "
 				<td class=\"unit-honeydew\">
-					星火计划 [原创]<br />
-					最高<br />
+					星火计划 [原创]<br>
+					最高<br>
 					1 级
 				</td>";
 		else
@@ -8611,14 +8656,14 @@ echo"
 		if ($f3value5 == "B")
 			echo "
 				<td class=\"unit-springgreen\">
-					目录|详情页<br />
+					目录|详情页<br>
 					优先级较高
 				</td>";
 		elseif ($f3value5 == "A")
 			echo "
 				<td class=\"unit-aquamarine\">
-					主域名、子域名<br />
-					优先级较高<br />
+					主域名、子域名<br>
+					优先级较高<br>
 					或内容相对充实的目录、详情页
 				</td>";
 		elseif ($f3value5 == "6")
@@ -8629,14 +8674,14 @@ echo"
 		elseif ($f3value5 == "3")
 			echo "
 				<td class=\"unit-violet\">
-					目录|详情页<br />
+					目录|详情页<br>
 					优先级较低
 				</td>";
 		elseif ($f3value5 == "2")
 			echo "
 				<td class=\"unit-orange\">
-					主域名、子域名<br />
-					优先级较低<br />
+					主域名、子域名<br>
+					优先级较低<br>
 					或内容相对充实的目录、详情页
 				</td>";
 		elseif ($f3value5 == "1")
@@ -8677,7 +8722,7 @@ echo"
 		elseif ($f3value6 == "0")
 			echo "
 				<td class=\"unit-honeydew\">
-					<span title=\"百度搜索杨澜爸爸|第一女神出现\">在大有同义词的搜索结果页<br />完全匹配查询词</span>
+					<span title=\"百度搜索杨澜爸爸|第一女神出现\">在大有同义词的搜索结果页<br>完全匹配查询词</span>
 				</td>";
 		else
 			echo "
@@ -8757,10 +8802,6 @@ echo"
 // y
 if (preg_match_all("/(?<='y':')([0-9A-F]{8})(?=')/", @$baiduserp, $matchy))
 
-// 百度快照
-
-if (preg_match_all("/(?<= class=\"g\">)([\x80-\xff\w\-\/\.<>]+)(&nbsp;)([\d\-\x80-\xff]+)(?=&nbsp;<)/", $baiduserp, $matchurltime))
-
 // template
 
 if (preg_match_all("/(?<=\" tpl\=\")([0-9a-z_]{3,28})(?=\")/", $baiduserp, $matchtemplate))
@@ -8777,7 +8818,6 @@ echo"
 				<th>解释模版</th>
 				<th>模版 template</th>
 				<th>$y</th>
-				<th>$urltime</th>
 				<th>排序</th>
 			</tr>
 		</thead>
@@ -10131,7 +10171,6 @@ echo"
 			echo "
 				<td>$template</td>
 				<td class=\"center\">".@$matchy[1][$i]."</td>
-				<td class=\"center\">".@$matchurltime[3][$i]."</td>
 				<td class=\"center\">".($i+1)."</td>
 			</tr>";
 	}
@@ -10154,7 +10193,7 @@ echo"
 	<table>
 		<thead>
 			<tr>
-				<th>摘要<br />abstract</th>
+				<th>摘要<br>abstract</th>
 				<th>排序</th>
 			</tr>
 		</thead>
@@ -10196,7 +10235,7 @@ echo "
 	foreach ($matchename[1] as $i => $position)
 	{
 		echo "
-					<a href=\"http://127.0.0.1/baidu-f.php?s=".$matchename[1][$i]."\" target=\"_blank\">".$matchename[1][$i]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+					<a href=\"".$url."?s=".$matchename[1][$i]."\" target=\"_blank\">".$matchename[1][$i]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
 	}
 	echo "
 				</td>
@@ -10210,12 +10249,9 @@ if (!is_null($s))
 {
 echo"
 <p>
-	<a class=\"noa\" href=\"http://www.weixingon.com/tool/\"  target=\"_blank\">更多百度搜索结果网址参数</a>
 	<a class=\"noa\" href=\"http://top.baidu.com/buzz?b=1\"  target=\"_blank\" rel=\"external nofollow\">百度实时热点排行榜</a>
-	<a class=\"noa\" href=\"http://www.weixingon.com/baidusp-lm.php?s=".$queryfilter.$connectpn.$pn.$connectrn."100".$connectlm."7\"  target=\"_blank\">百度快照更新时间限制工具</a>
-	<a class=\"noa\" href=\"http://www.weixingon.com/baidusp-hot.php?s=".$queryfilter."\" target=\"_blank\">百度相关热门词</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baidusp-srcid.php\" target=\"_blank\">百度搜索产品资源</a>
-	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.08</a>
+	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.09</a>
 </p>
 ";
 }
