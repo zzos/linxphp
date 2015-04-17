@@ -9419,6 +9419,11 @@ echo"
 				<td class=\"back-gold\">
 					右侧_知心相关结果
 				</td>";
+		elseif ($template == "right_recommends_merge")
+			echo "
+				<td class=\"back-gold\">
+					右侧_推荐_组合
+				</td>";
 		elseif ($template == "right_recommends")
 			echo "
 				<td class=\"back-gold\">
