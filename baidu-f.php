@@ -12,7 +12,7 @@
 <meta content="text/html;charset=UTF-8" http-equiv="Content-Type" />
 <?php
 
-// 自动生成标题 v2.1
+// 自动生成标题 v2.2
 
 // 请手动修改 url 对应网址、标题后缀
 $url = 'http://'.$_SERVER['HTTP_HOST'].'/baidu-f.php';
@@ -20,6 +20,15 @@ $pt = '百度搜索结果参数';
 
 // 取得搜索词
 $s = @$_GET['s'];
+
+if ($s == 'win8.1 64位英文版下载') {
+    echo '根据相关法律法规和政策，部分搜索结果未予显示。';
+    exit;
+}
+elseif ($s == 'ましろちゃんのひみと道具') {
+    echo '根据相关法律法规和政策，部分搜索结果未予显示。';
+    exit;
+}
 
 // 过滤字符串
 if (strlen($s) > 0) {
@@ -34,8 +43,18 @@ if (strlen($s) > 0) {
     $z = preg_replace($p[1], $r[1], $s);
     $query = htmlspecialchars(preg_replace($p, $r, $s));
 
-    // 下拉框提示模式 I 第 1 位查询扩展作为主标题
+    // 右侧相关搜索 第 1 位查询扩展作为主标题
+    $srcid = json_decode(file_get_contents('http://opendata.baidu.com/api.php?resource_id=20558&format=json&ie=utf-8&oe=utf-8&query='.$query), true);
+    if (preg_match('/(?<=20558\])(.+)(?=\[\/url\])/', $srcid['data'][0]['tips'][0]['label1'], $w));
+}
+echo '<title>';
+if (strlen($s) > 0) {
+    if (strlen($w[1]) > 0) {
+        echo $w[1].'_';
+    }
+    else {
 
+    // 下拉框提示模式 I 第 1 位查询扩展作为主标题
     $sugip = array (
         '115.239.211.11',
         '115.239.211.12',
@@ -65,13 +84,11 @@ if (strlen($s) > 0) {
     curl_close ($ch);
     $sug = @$sug1[1][0];
 
-}
-
-echo '<title>';
-if (strlen($s) > 0) {
-    if (strlen($sug) > 0) {
-        echo $sug.'_';
+        if (strlen($sug) > 0) {
+            echo $sug.'_';
+        }
     }
+
     // 引号转换为 HTML 实体的查询词作为副标题
     echo htmlspecialchars($z, ENT_QUOTES).'_';
 }
@@ -82,11 +99,18 @@ echo $pt."</title>\r\n";
 // 下拉框提示词第 1 位，查询词作为 meta keywords
 echo '<meta content="';
 if (strlen($s) > 0) {
-    echo $sug.',';
-   }
-echo htmlspecialchars($z, ENT_QUOTES);
+    if (strlen($w[1]) > 0) {
+        echo $w[1].',';
+    }
+    else {
+        if (strlen($sug) > 0) {
+            echo $sug.',';
+        }
+    }
+echo htmlspecialchars($z, ENT_QUOTES).',';
+}
 ?>
-,百度搜索结果参数,F,F1,F2,F3" name="keywords" />
+百度搜索结果参数,F,F1,F2,F3" name="keywords" />
 <meta content="还你一个没有百度推广、产品的搜索结果页。" name="description" />
 <meta name="author" content="吴星, maasdruck@gmail.com" />
 
@@ -436,22 +460,30 @@ background-color:#FFDDAA;
 <!--搜索框-->
 <div class="header center">
 
-	<form method="get" action="<?php echo $url;?>">
-		<input class="text" type="text" value="<?php echo htmlspecialchars(@$_GET['s'] ,ENT_QUOTES);?>" name="s" title="解析" autocomplete="off" maxlength="76" baiduSug="1" autofocus="autofocus" placeholder="请输入查询词">
-		<input class="other" type="number" name="pn" title="从第几位开始取结果" min="0" max="760" step="10" value="<?php echo @$_GET['pn'];?>" placeholder="取第几位">
-		<input class="other" type="number" name="rn" title="搜索结果数量" min="0" max="100" value="<?php echo @$_GET['rn'];?>" placeholder="返回数量">
-		<input class="submit" type="submit" value="百度一下">
-	</form>
+    <form method="get" action="<?php echo $url;?>">
+        <input class="text" type="text" value="<?php echo htmlspecialchars(@$_GET['s'] ,ENT_QUOTES);?>" name="s" title="解析" autocomplete="off" maxlength="76" baiduSug="1" autofocus="autofocus" placeholder="请输入查询词">
+        <input class="other" type="number" name="pn" title="从第几位开始取结果" min="0" max="760" step="10" value="<?php echo @$_GET['pn'];?>" placeholder="取第几位">
+        <input class="other" type="number" name="rn" title="搜索结果数量" min="0" max="100" value="<?php echo @$_GET['rn'];?>" placeholder="返回数量">
+        <select title="搜索结果时间限制" name="gpc">
+            <option value="">全部时间</option>
+            <option value="<?php echo (time() - 86400).'%2C'.time().'%7Cstftype%3D1';?>" <?php if(@$_GET['gpc'] == (time() - 86400).'%2C'.time().'%7Cstftype%3D1') echo "selected";?>>最近1天</option>
+            <option value="<?php echo (time() - 604800).'%2C'.time().'%7Cstftype%3D1';?>" <?php if(@$_GET['gpc'] == (time() - 604800).'%2C'.time().'%7Cstftype%3D1') echo "selected";?>>最近1週</option>
+            <option value="<?php echo (time() - 2678400).'%2C'.time().'%7Cstftype%3D1';?>" <?php if(@$_GET['gpc'] == (time() - 2678400).'%2C'.time().'%7Cstftype%3D1') echo "selected";?>>最近1月</option>
+            <option value="<?php echo (time() - 31536000).'%2C'.time().'%7Cstftype%3D1';?>" <?php if(@$_GET['gpc'] == (time() - 31536000).'%2C'.time().'%7Cstftype%3D1') echo "selected";?>>最近1年</option>
+        </select>
+        <input class="submit" type="submit" value="百度一下">
+    </form>
 </div>
 <?php
 $startTime = microtime(true);
 $s = @$_GET['s'];
 $pn = @$_GET['pn'];
 $rn = @$_GET['rn'];
-$lm = @$_GET['lm'];
+$gpc = @$_GET['gpc'];
 $connectpn = "&pn=";
 $connectrn = "&rn=";
-$connectlm = "&lm=";
+$connectgpc = "&gpc=stf%3D";
+
 $p = array(
     '/(\s+)/',
     '/(http:\/\/)/',
@@ -503,8 +535,7 @@ $F3[7] = "第&nbsp;7&nbsp;位";
 $F3[8] = "[猜]&nbsp;相似度";
 $y = "<a href=\"http://ask.seowhy.com/article/53\" rel=\"external nofollow\" target=\"_blank\" title=\"百度搜索结果页参数y - 验证码与工具\">y&nbsp;验证码&nbsp;nonce</a>";
 
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 // 随机更换 IP
 $ip = array (
 	'58.217.200.13',
@@ -585,13 +616,12 @@ $ip = array (
 	);
 shuffle ($ip);
 $baidu = "http://".$ip[0]."/s?wd=";
-$baiduserp = file_get_contents($baidu.$query.$connectpn.$pn.$connectrn.$rn.$connectlm.$lm);
+$baiduserp = file_get_contents($baidu.$query.$connectpn.$pn.$connectrn.$rn.$connectgpc.$gpc);
 }
 
 // 确定时间
 
 date_default_timezone_set('PRC');
-$time = date('Y-m-d H:i:s');
 clearstatcache();
 
 // 搜索结果数量
@@ -608,8 +638,7 @@ if (preg_match("/([\d\.]+)(?=;<\/script><\/html>)/", $baiduserp, $matchsrvt))
 
 // 搜索结果链接，数量，查询时间
 
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 // 随机下载壁纸
 $wallpapers = array (
 	"dlsw.br.baidu.com/original/201406/qianxun_wallpage_620.zip",
@@ -618,7 +647,7 @@ $wallpapers = array (
 shuffle ($wallpapers);
 echo "
 	<p class=\"center white\">
-		<a class=\"noa\" href=\"http://www.baidu.com/s?wd=".$query.$connectpn.$pn.$connectrn.$rn.$connectlm.$lm."\" target=\"_blank\" rel=\"external nofollow\">
+		<a class=\"noa\" href=\"https://www.baidu.com/s?wd=".$query.$connectpn.$pn.$connectrn.$rn.$connectgpc.$gpc."\" target=\"_blank\" rel=\"external nofollow\">
 			点击查看“<span class=\"red\">$s</span>”的百度搜索结果页
 		</a>
 		$matchnumbers[2]&nbsp;个<a class=\"noa\" href=\"http://ask.seowhy.com/question/8376\" rel=\"external nofollow\" target=\"_blank\" title=\"百度搜索结果onmousedown事件对排名有什么影响？\">结果</a>
@@ -690,8 +719,7 @@ if (preg_match_all("/(?<=<div class\=\"result c\-container)( ?)(\" id\=\")(\d{1,
 
 // 搜索结果，字节，来源，排名
 
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 echo"
 <div class=\"draglist\" draggable=\"true\">
 	<table>
@@ -1002,8 +1030,7 @@ function smarty_modifier_wordcount($str,$encoding = 'UTF-8')
 
 if (preg_match_all("/(?<=<div class\=\"result\-op c\-container result\-zxl\"  srcid\=\")(\d{1,5})(\"  fk=\")(\d{0,5})(_?)([\.\d\w]+)(\" id\=\"zxl_)(\d{1,2})(?=\" tpl=\")/", @$baiduserp, $matchzxl))
 
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 echo"
 <div class=\"draglist\" draggable=\"true\">
 	<table>
@@ -1172,8 +1199,7 @@ if (preg_match_all("/(?<=\"  srcid\=\")(\d{1,5})(\"  fk=\")(\d{0,5})(_?)(.+)(\" 
 
 // 抓取键名，键值，来源，排名
 
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 echo"
 <div class=\"draglist\" draggable=\"true\">
 	<table>
@@ -6751,9 +6777,7 @@ if
 
 //抓取键名，键值，来源，排名
 
-if
-(!is_null($s))
-{
+if (strlen($s) > 0) {
 echo"
 <div class=\"draglist\" draggable=\"true\">
 <table>
@@ -6817,9 +6841,7 @@ echo"
 if
 (preg_match_all("/(?<=\"  srcid\=\")(\d{1,5})(.+)(id\=\"zxl_)(\d{1,2})(?=\" tpl\=\")/", @$baiduserp, $matchzxlrt))
 
-if
-(!is_null($s))
-{
+if (strlen($s) > 0) {
 echo"
 <div class=\"draglist\" draggable=\"true\">
 <table>
@@ -6882,8 +6904,7 @@ if (preg_match_all("/(?<=\"  srcid\=\")(\d{1,5})(\"  id\=\")(\d{1,2})(?=\" tpl\=
 
 // 百度搜索产品，来源，排名
 
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 echo"
 <div class=\"draglist\" draggable=\"true\">
 	<table>
@@ -7743,8 +7764,8 @@ echo"
 
 // 相关搜索
 
-if (!is_null($s)) {
-$matchrelated = explode(',', file_get_contents('http://www.baidu.com/s?tn=baidurs2top&wd='.$query));
+if (strlen($s) > 0) {
+$matchrelated = explode(',', file_get_contents('http://'.$ip[0].'/s?tn=baidurs2top&wd='.$query));
 
 // 随机更换下拉框提示 IP
 $sugip = array (
@@ -7822,8 +7843,7 @@ echo"
 
 if (preg_match_all('/(?<=&p1\=)(\d{1,2})(\"\s\n\s+target=\"_blank\"\s\n\s+class=\"m\"\>)(.+)(<\/div><div class=\"c-gap-top c-recommend\" style=\"display:none;\" data-extquery=\")(.+)(?=\"\>\<i class=\"c-icon c-icon-bear-circle c-gap-right-small\"\>)/', @$baiduserp, $mcrq))
 
-if (!is_null(@$mcrq))
-{
+if (strlen(@$mcrq) > 0) {
 	echo"
 <div class=\"draglist\" draggable=\"true\">
 	<table>
@@ -7863,8 +7883,7 @@ if (!is_null(@$mcrq))
 
 if (preg_match_all("/(?<=F':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", @$baiduserp, $matchf))
 
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 echo"
 <div class=\"draglist\" draggable=\"true\">
 	<table>
@@ -8082,8 +8101,7 @@ echo"
 // F1
 
 if (preg_match_all("/(?<=F1':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", @$baiduserp, $matchf1))
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 echo"
 <div class=\"draglist\" draggable=\"true\">
 	<table>
@@ -8300,8 +8318,7 @@ echo"
 
 if (preg_match_all("/(?<=F2':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", @$baiduserp, $matchf2))
 
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 echo"
 <div class=\"draglist\" draggable=\"true\">
 <table>
@@ -8531,8 +8548,7 @@ echo"
 
 if (preg_match_all("/(?<=F3':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", @$baiduserp, $matchf3))
 
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 echo"
 <div class=\"draglist\" draggable=\"true\">
 	<table>
@@ -8808,8 +8824,7 @@ if (preg_match_all("/(?<=\" tpl\=\")([0-9a-z_]{3,28})(?=\")/", $baiduserp, $matc
 
 // 解释模版
 
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 echo"
 <div class=\"draglist\" draggable=\"true\">
 	<table>
@@ -10186,8 +10201,7 @@ if (preg_match_all("/(?<=<div class=\"c-abstract\">)(.*)(?=<\/div><div class=\"f
 
 // 摘要汇总
 
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 echo"
 <div class=\"draglist\" draggable=\"true\">
 	<table>
@@ -10217,8 +10231,7 @@ echo"
 
 if (preg_match_all("/(?<=data\-click\=\"{'rsv_re_ename':')([\x80-\xff\w\s\.]+)(?=','rsv_re_uri':')/", @$baiduserp, $matchename))
 
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 echo "
 <div class=\"draglist\" draggable=\"true\">
 	<table>
@@ -10245,13 +10258,12 @@ echo "
 </div>";
 }
 
-if (!is_null($s))
-{
+if (strlen($s) > 0) {
 echo"
 <p>
 	<a class=\"noa\" href=\"http://top.baidu.com/buzz?b=1\"  target=\"_blank\" rel=\"external nofollow\">百度实时热点排行榜</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baidusp-srcid.php\" target=\"_blank\">百度搜索产品资源</a>
-	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.09</a>
+	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.10</a>
 </p>
 ";
 }
