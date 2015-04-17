@@ -45,11 +45,11 @@ if (strlen($s) > 0) {
 
     // 右侧相关搜索 第 1 位查询扩展作为主标题
     $srcid = json_decode(file_get_contents('http://opendata.baidu.com/api.php?resource_id=20558&format=json&ie=utf-8&oe=utf-8&query='.$query), true);
-    if (preg_match('/(?<=20558\])(.+)(?=\[\/url\])/', $srcid['data'][0]['tips'][0]['label1'], $w));
+    if (preg_match('/(?<=20558\])(.+)(?=\[\/url\])/', @$srcid['data'][0]['tips'][0]['label1'], $w));
 }
 echo '<title>';
 if (strlen($s) > 0) {
-    if (strlen($w[1]) > 0) {
+    if (strlen(@$w[1]) > 0) {
         echo $w[1].'_';
     }
     else {
@@ -99,7 +99,7 @@ echo $pt."</title>\r\n";
 // 下拉框提示词第 1 位，查询词作为 meta keywords
 echo '<meta content="';
 if (strlen($s) > 0) {
-    if (strlen($w[1]) > 0) {
+    if (strlen(@$w[1]) > 0) {
         echo $w[1].',';
     }
     else {
@@ -7843,7 +7843,7 @@ echo"
 
 if (preg_match_all('/(?<=&p1\=)(\d{1,2})(\"\s\n\s+target=\"_blank\"\s\n\s+class=\"m\"\>)(.+)(<\/div><div class=\"c-gap-top c-recommend\" style=\"display:none;\" data-extquery=\")(.+)(?=\"\>\<i class=\"c-icon c-icon-bear-circle c-gap-right-small\"\>)/', @$baiduserp, $mcrq))
 
-if (strlen(@$mcrq) > 0) {
+if (!is_null(@$mcrq)) {
 	echo"
 <div class=\"draglist\" draggable=\"true\">
 	<table>
