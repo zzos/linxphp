@@ -463,22 +463,38 @@ background-color:#FFDDAA;
 
 <!--搜索框-->
 <div class="header center">
-
-    <form method="get" action="<?php echo $url;?>">
-        <input class="text" type="text" value="<?php echo htmlspecialchars(@$_GET['s'] ,ENT_QUOTES);?>" name="s" title="解析" autocomplete="off" maxlength="76" baiduSug="1" autofocus="autofocus" placeholder="请输入查询词">
-        <input class="other" type="number" name="pn" title="从第几位开始取结果" min="0" max="760" step="10" value="<?php echo @$_GET['pn'];?>" placeholder="取第几位">
-        <input class="other" type="number" name="rn" title="搜索结果数量" min="0" max="100" value="<?php echo @$_GET['rn'];?>" placeholder="返回数量">
-        <select title="搜索结果时间限制" name="gpc">
-            <option value="">全部时间</option>
-            <option value="<?php echo (time() - 86400).'%2C'.time().'%7Cstftype%3D1';?>" <?php if(@$_GET['gpc'] == (time() - 86400).'%2C'.time().'%7Cstftype%3D1') echo "selected";?>>最近1天</option>
-            <option value="<?php echo (time() - 604800).'%2C'.time().'%7Cstftype%3D1';?>" <?php if(@$_GET['gpc'] == (time() - 604800).'%2C'.time().'%7Cstftype%3D1') echo "selected";?>>最近1週</option>
-            <option value="<?php echo (time() - 2678400).'%2C'.time().'%7Cstftype%3D1';?>" <?php if(@$_GET['gpc'] == (time() - 2678400).'%2C'.time().'%7Cstftype%3D1') echo "selected";?>>最近1月</option>
-            <option value="<?php echo (time() - 31536000).'%2C'.time().'%7Cstftype%3D1';?>" <?php if(@$_GET['gpc'] == (time() - 31536000).'%2C'.time().'%7Cstftype%3D1') echo "selected";?>>最近1年</option>
-        </select>
-        <input class="submit" type="submit" value="百度一下">
-    </form>
-</div>
 <?php
+echo '    <form method="get" action="'.$url.'">'."\r\n";
+echo '        <input class="text" type="text" value="'.htmlspecialchars(@$_GET['s'] ,ENT_QUOTES).'" name="s" title="解析" autocomplete="off" maxlength="76" baiduSug="1" autofocus="autofocus" placeholder="请输入查询词">'."\r\n";
+echo '        <input class="other" type="number" name="pn" title="从第几位开始取结果" min="0" max="760" step="10" value="'.@$_GET['pn'].'" placeholder="取第几位">'."\r\n";
+echo '        <input class="other" type="number" name="rn" title="搜索结果数量" min="0" max="100" value="'.@$_GET['rn'].'" placeholder="返回数量">'."\r\n";
+echo '        <select title="搜索结果时间限制" name="gpc">'."\r\n";
+echo '            <option value="">全部时间</option>'."\r\n";
+echo '            <option value="stf%3D'.(time() - 86400).'%2C'.time().'%7Cstftype%3D1"';
+if(@$_GET['gpc'] == 'stf%3D'.(time() - 86400).'%2C'.time().'%7Cstftype%3D1') {
+    echo 'selected';
+}
+echo '">最近1天</option>'."\r\n";
+echo '            <option value="stf%3D'.(time() - 604800).'%2C'.time().'%7Cstftype%3D1"';
+if(@$_GET['gpc'] == 'stf%3D'.(time() - 604800).'%2C'.time().'%7Cstftype%3D1') {
+    echo 'selected"';
+}
+echo '">最近1週</option>'."\r\n";
+echo '            <option value="stf%3D'.(time() - 2678400).'%2C'.time().'%7Cstftype%3D1"';
+if(@$_GET['gpc'] == 'stf%3D'.(time() - 2678400).'%2C'.time().'%7Cstftype%3D1') {
+    echo 'selected"';
+}
+echo '>最近1月</option>'."\r\n";
+echo '            <option value="stf%3D'.(time() - 31536000).'%2C'.time().'%7Cstftype%3D1"';
+if(@$_GET['gpc'] == 'stf%3D'.(time() - 31536000).'%2C'.time().'%7Cstftype%3D1') {
+    echo 'selected"';
+}
+echo '>最近1年</option>'."\r\n";
+echo '        </select>'."\r\n";
+echo '        <input class="submit" type="submit" value="百度一下">'."\r\n";
+echo '    </form>'."\r\n";
+echo '</div>';
+
 $startTime = microtime(true);
 $s = @$_GET['s'];
 $pn = @$_GET['pn'];
@@ -486,7 +502,7 @@ $rn = @$_GET['rn'];
 $gpc = @$_GET['gpc'];
 $connectpn = "&pn=";
 $connectrn = "&rn=";
-$connectgpc = "&gpc=stf%3D";
+$connectgpc = "&gpc=";
 
 $p = array(
     '/(\s+)/',
