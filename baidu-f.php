@@ -571,6 +571,8 @@ $ip = array (
 	'61.135.169.115',
 	'61.135.169.121',
 	'61.135.169.125',
+	'111.13.12.139',
+	'111.13.12.142',
 	'111.13.100.91',
 	'111.13.100.92',
 	'115.239.210.25',
@@ -610,6 +612,8 @@ $ip = array (
 	'180.149.132.168',
 	'180.76.2.183',
 	'180.76.3.151',
+	'180.97.33.67',
+	'180.97.33.71',
 	'180.97.33.107',
 	'180.97.33.108',
 	'202.108.22.5',
@@ -10288,6 +10292,7 @@ echo"
 <p>
 	<a class=\"noa\" href=\"http://top.baidu.com/buzz?b=1\"  target=\"_blank\" rel=\"external nofollow\">百度实时热点排行榜</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baidusp-srcid.php\" target=\"_blank\">百度搜索产品资源</a>
+	<a class=\"noa\" href=\"http://www.weixingon.com/baiduip.php\" target=\"_blank\">百度的IP地址是多少</a>
 	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.10</a>
 </p>
 ";
