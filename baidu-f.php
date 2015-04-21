@@ -643,6 +643,18 @@ $baidu = "http://".$ip[0]."/s?wd=";
 $baiduserp = file_get_contents($baidu.$query.$connectpn.$pn.$connectrn.$rn.$connectgpc.$gpc);
 }
 
+// 打开网页显示相关资料
+
+if (strlen($s) == 0) {
+    echo '
+<h1 class="center bold white">相关资料</h1>
+<p class="center"><a class="noa" href="http://www.weixingon.com/baiduip.php" target="_blank">百度的IP地址是多少</a></p>
+<p class="center"><a class="noa" href="http://www.weixingon.com/wordcount/" target="_blank">百度搜索结果标题长度研究</a></p>
+<p class="center"><a class="noa" href="http://www.weixingon.com/par.html" target="_blank">百度 HTTP 接口参数</a></p>
+<p class="center"><a class="noa" href="http://www.weixingon.com/chaolianfenxi.html" target="_blank">超链分析</a></p>
+';
+}
+
 // 确定时间
 
 date_default_timezone_set('PRC');
@@ -10293,7 +10305,7 @@ echo"
 	<a class=\"noa\" href=\"http://top.baidu.com/buzz?b=1\"  target=\"_blank\" rel=\"external nofollow\">百度实时热点排行榜</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baidusp-srcid.php\" target=\"_blank\">百度搜索产品资源</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baiduip.php\" target=\"_blank\">百度的IP地址是多少</a>
-	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.10</a>
+	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.11</a>
 </p>
 ";
 }
