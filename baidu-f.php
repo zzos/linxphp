@@ -467,7 +467,7 @@ background-color:#FFDDAA;
 echo '    <form method="get" action="'.$url.'">'."\r\n";
 echo '        <input class="text" type="text" value="'.htmlspecialchars(@$_GET['s'] ,ENT_QUOTES).'" name="s" title="解析" autocomplete="off" maxlength="76" baiduSug="1" autofocus="autofocus" placeholder="请输入查询词">'."\r\n";
 echo '        <input class="other" type="number" name="pn" title="从第几位开始取结果" min="0" max="750" step="10" value="'.@$_GET['pn'].'" placeholder="取第几位">'."\r\n";
-echo '        <input class="other" type="number" name="rn" title="搜索结果数量" min="0" max="100" value="'.@$_GET['rn'].'" placeholder="返回数量">'."\r\n";
+echo '        <input class="other" type="number" name="rn" title="搜索结果数量" min="0" max="50" value="'.@$_GET['rn'].'" placeholder="返回数量">'."\r\n";
 echo '        <select title="搜索结果时间限制" name="gpc">'."\r\n";
 echo '            <option value="">全部时间</option>'."\r\n";
 echo '            <option value="stf%3D'.(time() - 86400).'%2C'.time().'%7Cstftype%3D1"';
