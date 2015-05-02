@@ -440,7 +440,7 @@ color:#333333;
 
 .dustbin {
 margin-top:3em;
-width:6.985em;
+width:6.25em;
 height:19.25em;
 background-color:#E6E6E6;
 font-size:1.3em;
@@ -767,7 +767,7 @@ echo"
 					</a>
 				</th>
 				<th>
-					<a href=\"http://ask.seowhy.com/question/10425\" rel=\"external nofollow\" target=\"_blank\" title=\"搜索结果标题字节 <= 64\">
+					<a href=\"http://www.weixingon.com/wordcount/\" target=\"_blank\" title=\"百度搜索结果标题长度 <= 64 字节\">
 						字节
 					</a>
 				</th>
