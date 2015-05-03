@@ -1,4 +1,4 @@
-<!--这是这是百度快照更新时间限定工具1.01 PHP 源码，若不知如何在浏览器打开，可加入百度参数QQ交流群(255363059)-->
+<!--这是百度快照更新时间限定工具 1.01 PHP 源码，百度参数QQ交流群(255363059)-->
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cmn-Hans" xml:lang="zh-cmn-Hans">
 <head>
@@ -1073,24 +1073,23 @@ if (!is_numeric($f136) && !is_numeric($f135) && !is_numeric($f134)) {
     // 最新相关消息
 
     // $news = 'http://'.$ip[0].'/s?tn=newsxml&wd='.$query;
-    $news = 'http://www.baidu.com/s?tn=newsxml&wd='.$query;
 
             // 1. 初始化
             $ch = curl_init();
             // 2. 设置选项，包括 URL
-            curl_setopt($ch, CURLOPT_URL, $news);
+            curl_setopt($ch, CURLOPT_URL, 'http://www.baidu.com/s?tn=newsxml&wd='.$query);
             curl_setopt($ch, CURLOPT_TIMEOUT, 30); // 设置超时限制防止死循环
             curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($ch, CURLOPT_HEADER, 0);
             curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']); // 模拟用户使用的浏览器
 
             // 3. 执行并获取 HTML 文档内容
-            $baidunews = curl_exec ($ch);
-            if ($baidunews === FALSE) {
+            $news = curl_exec ($ch);
+            if ($news === FALSE) {
             echo "cURL Error: " . curl_error($ch);
             }
 
-    if (preg_match_all("/(?<=\<subnewstlurl\>\<\!\[CDATA\[  )(.*)( \]\]\>\<\/subnewstlurl\>\n\s+\<subnewstitle\><\!\[CDATA\[  )(.*)(?= \]\]\>\<\/subnewstitle\>)/", @$baidunews, $mnews))
+    if (preg_match_all("/(?<=\<subnewstlurl\>\<\!\[CDATA\[  )(.*)( \]\]\>\<\/subnewstlurl\>\n\s+\<subnewstitle\><\!\[CDATA\[  )(.*)(?= \]\]\>\<\/subnewstitle\>)/", @$news, $mnews))
     if (strlen($mnews[3][0]) > 0) {
         echo '<div itemprop="articleSection"><table><thead><tr><th>最新相关消息</th></tr></thead><tbody>';
 
