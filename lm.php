@@ -163,7 +163,7 @@ echo '        </select>';
 echo '        <select name="gpc">';
 echo '        <option value="stf%3D'.(time() - 86400).'%2C'.time().'%7Cstftype%3D1">最近1天</option>';
 echo '        </select>';
-echo '        <input class="submit" type="submit" value="最近一天">'."\r\n";
+echo '        <input class="submit" type="submit" value="百度一下">'."\r\n";
 echo '        <input class="kw" type="text" value="'.htmlspecialchars(@$_GET['s'] ,ENT_QUOTES).'" name="s" title="解析" autocomplete="off" maxlength="76" baiduSug="1" autofocus="autofocus" placeholder="请输入查询词">'."\r\n";
 echo '    </form>'."\r\n";
 
@@ -287,8 +287,7 @@ $ip = array (
     '220.181.6.175',
     );
 shuffle ($ip);
-$baidu = "http://".$ip[0]."/s?wd=";
-$serp = file_get_contents($baidu.$pre.$query.$connectpn.$pn.$connectrn.$rn.$connectgpc.$gpc);
+$serp = file_get_contents('http://'.$ip[0].'/s?wd='.$pre.$query.$connectpn.$pn.$connectrn.$rn.$connectgpc.$gpc);
 
 // 确定时间
 
@@ -400,32 +399,40 @@ if (preg_match_all("/(?<=F1':)(\s?)(')([0-9A-F]{2})([0-9A-F]{1})(?=([0-9A-F]{1})
         {
         if ($srcid == 1599)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;普通结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+        elseif ($srcid == 1581)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;更多同站相关结果&gt;&gt;『201412添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1548)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;影评&nbsp;结构化数据『201408添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;评分－结构化数据『201408添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1547)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度百科『201407添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+        elseif ($srcid == 1545)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;非正规相册『201412添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1543)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;面包屑导航&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;面包屑导航－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1542)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度学术&nbsp;-&nbsp;查看更多相关论文&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度学术&nbsp;查看更多相关论文&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1539)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;带&nbsp;0－6&nbsp;个子链结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[官网]&nbsp;0－6&nbsp;个子链结果[201405添加]&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1538)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载摘要|小说作者状态类型&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载摘要|小说作者状态类型－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1537)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;组图&nbsp;百度经验&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1536)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;一般答案&nbsp;百度知道&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+        elseif ($srcid == 1535)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;未知，模版采用&nbsp;se_com_image_s&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+        elseif ($srcid == 1534)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[猜]&nbsp;化妆品，模版采用&nbsp;se_com_cosmetic&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1533)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;论坛帖子&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1532)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;最佳答案&nbsp;百度知道&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1531)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;查询词扩展&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;查询扩展&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>'; // 在原用户查询词的基础上，通过一定的方法和策略把与原查询词相关的词、词组添加到原查询中，组成新的、更能准确表达用户查询意图的查询词序列，然后用新查询对文档重新检索，从而提高信息检索中的查全率和查准率。 李晓明; 闫宏飞; 王继民. 附录 术语//搜索引擎——原理、技术与系统(第二版). 2013年5月第9次印刷. 北京: 科学. 2012.5: 第322–323页 ISBN 7-03-034258-4 (简体中文)
         elseif ($srcid == 1530)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度贴吧&nbsp;更多贴吧相关帖子&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1529)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;权威问答网站结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;权威问答网站结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>'; //百度知道|搜狗问问(搜搜问问)|爱问知识人|39问医生|寻医问药网有问必答
         elseif ($srcid == 1528)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度知道阿拉丁&nbsp;更多知道相关问题&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1527)
@@ -455,9 +462,9 @@ if (preg_match_all("/(?<=F1':)(\s?)(')([0-9A-F]{2})([0-9A-F]{1})(?=([0-9A-F]{1})
         elseif ($srcid == 1515)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;电影&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1514)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;在线文档&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;在线文档－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1513)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1512)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1511)
@@ -481,7 +488,7 @@ if (preg_match_all("/(?<=F1':)(\s?)(')([0-9A-F]{2})([0-9A-F]{1})(?=([0-9A-F]{1})
         elseif ($srcid == 1502)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度百科&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         elseif ($srcid == 1501)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;评分&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;评分－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         else
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;'.$srcid.'&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         }
@@ -516,92 +523,100 @@ if (preg_match_all("/(?<=F1':)(\s?)(')([0-9A-F]{2})([0-9A-F]{1})(?=([0-9A-F]{1})
         $srcid = $msrcid[5][$i];
         $id = $msrcid[3][$i];
         {
-        if ($srcid == 1599)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;普通结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1548)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;影评&nbsp;结构化数据『201408添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1547)
+            if ($srcid == 1599)
+                echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;普通结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1581)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;更多同站相关结果&gt;&gt;『201412添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1548)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;评分－结构化数据『201408添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1547)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度百科『201407添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1543)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;面包屑导航&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1542)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度学术&nbsp;-&nbsp;查看更多相关论文&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1539)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;带&nbsp;0－6&nbsp;个子链结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1538)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载摘要|小说作者状态类型&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1537)
+            elseif ($srcid == 1545)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;非正规相册『201412添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1543)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;面包屑导航－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1542)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度学术&nbsp;查看更多相关论文&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1539)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[官网]&nbsp;0－6&nbsp;个子链结果[201405添加]&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1538)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载摘要|小说作者状态类型－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1537)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;组图&nbsp;百度经验&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1536)
+            elseif ($srcid == 1536)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;一般答案&nbsp;百度知道&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1533)
+            elseif ($srcid == 1535)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;未知，模版采用&nbsp;se_com_image_s&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1534)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[猜]&nbsp;化妆品，模版采用&nbsp;se_com_cosmetic&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1533)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;论坛帖子&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1532)
+            elseif ($srcid == 1532)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;最佳答案&nbsp;百度知道&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1531)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;查询词扩展&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1530)
+            elseif ($srcid == 1531)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;查询扩展&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>'; // 在原用户查询词的基础上，通过一定的方法和策略把与原查询词相关的词、词组添加到原查询中，组成新的、更能准确表达用户查询意图的查询词序列，然后用新查询对文档重新检索，从而提高信息检索中的查全率和查准率。 李晓明; 闫宏飞; 王继民. 附录 术语//搜索引擎——原理、技术与系统(第二版). 2013年5月第9次印刷. 北京: 科学. 2012.5: 第322–323页 ISBN 7-03-034258-4 (简体中文)
+            elseif ($srcid == 1530)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度贴吧&nbsp;更多贴吧相关帖子&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1529)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;权威问答网站结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1528)
+            elseif ($srcid == 1529)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;权威问答网站结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>'; //百度知道|搜狗问问(搜搜问问)|爱问知识人|39问医生|寻医问药网有问必答
+            elseif ($srcid == 1528)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度知道阿拉丁&nbsp;更多知道相关问题&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1527)
+            elseif ($srcid == 1527)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库标签&nbsp;更多文库相关文档>>&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1526)
+            elseif ($srcid == 1526)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库阿拉丁&nbsp;更多文库相关文档&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1525)
+            elseif ($srcid == 1525)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1524)
+            elseif ($srcid == 1524)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;缩略图结果，但非每个查询词展现图片&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1523)
+            elseif ($srcid == 1523)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;robots.txt&nbsp;文件存在限制指令的结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1522)
+            elseif ($srcid == 1522)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度经验带相册&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1521)
+            elseif ($srcid == 1521)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;图片_百度百科(可能与查询词内容相关度较高)&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1520)
+            elseif ($srcid == 1520)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;期刊文献&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1519)
+            elseif ($srcid == 1519)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;维基百科&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1518)
+            elseif ($srcid == 1518)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1517)
+            elseif ($srcid == 1517)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[图文]，但并非每个查询词显示 [图文]&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1516)
+            elseif ($srcid == 1516)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;宗教&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1515)
+            elseif ($srcid == 1515)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;电影&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1514)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;在线文档&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1513)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1512)
+            elseif ($srcid == 1514)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;在线文档－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1513)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1512)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1511)
+            elseif ($srcid == 1511)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[原创]&nbsp;星火计划&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1510)
+            elseif ($srcid == 1510)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;子链&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1509)
+            elseif ($srcid == 1509)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;官网&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1508)
+            elseif ($srcid == 1508)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;站点&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1507)
+            elseif ($srcid == 1507)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;微博&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1506)
+            elseif ($srcid == 1506)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1505)
+            elseif ($srcid == 1505)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度知道&nbsp;高品质(知道达人|权威专家|官方机构)&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1504)
+            elseif ($srcid == 1504)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;自动问答&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1503)
+            elseif ($srcid == 1503)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;图片&nbsp;单视频&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1502)
+            elseif ($srcid == 1502)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度百科&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1501)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;评分&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        else
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;'.$srcid.'&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1501)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;评分－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            else
+                echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;'.$srcid.'&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         }
         echo '</tr>';
     }
@@ -634,92 +649,100 @@ if (preg_match_all("/(?<=F1':)(\s?)(')([0-9A-F]{2})([0-9A-F]{1})(?=([0-9A-F]{1})
         $srcid = $msrcid[5][$i];
         $id = $msrcid[3][$i];
         {
-        if ($srcid == 1599)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;普通结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1548)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;影评&nbsp;结构化数据『201408添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1547)
+            if ($srcid == 1599)
+                echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;普通结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1581)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;更多同站相关结果&gt;&gt;『201412添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1548)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;评分－结构化数据『201408添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1547)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度百科『201407添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1543)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;面包屑导航&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1542)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度学术&nbsp;-&nbsp;查看更多相关论文&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1539)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;带&nbsp;0－6&nbsp;个子链结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1538)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载摘要|小说作者状态类型&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1537)
+            elseif ($srcid == 1545)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;非正规相册『201412添加』&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1543)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;面包屑导航－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1542)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度学术&nbsp;查看更多相关论文&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1539)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[官网]&nbsp;0－6&nbsp;个子链结果[201405添加]&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1538)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载摘要|小说作者状态类型－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1537)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;组图&nbsp;百度经验&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1536)
+            elseif ($srcid == 1536)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;一般答案&nbsp;百度知道&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1533)
+            elseif ($srcid == 1535)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;未知，模版采用&nbsp;se_com_image_s&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1534)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[猜]&nbsp;化妆品，模版采用&nbsp;se_com_cosmetic&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1533)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;论坛帖子&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1532)
+            elseif ($srcid == 1532)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;最佳答案&nbsp;百度知道&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1531)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;查询词扩展&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1530)
+            elseif ($srcid == 1531)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;查询扩展&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>'; // 在原用户查询词的基础上，通过一定的方法和策略把与原查询词相关的词、词组添加到原查询中，组成新的、更能准确表达用户查询意图的查询词序列，然后用新查询对文档重新检索，从而提高信息检索中的查全率和查准率。 李晓明; 闫宏飞; 王继民. 附录 术语//搜索引擎——原理、技术与系统(第二版). 2013年5月第9次印刷. 北京: 科学. 2012.5: 第322–323页 ISBN 7-03-034258-4 (简体中文)
+            elseif ($srcid == 1530)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度贴吧&nbsp;更多贴吧相关帖子&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1529)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;权威问答网站结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1528)
+            elseif ($srcid == 1529)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;权威问答网站结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>'; //百度知道|搜狗问问(搜搜问问)|爱问知识人|39问医生|寻医问药网有问必答
+            elseif ($srcid == 1528)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度知道阿拉丁&nbsp;更多知道相关问题&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1527)
+            elseif ($srcid == 1527)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库标签&nbsp;更多文库相关文档>>&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1526)
+            elseif ($srcid == 1526)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库阿拉丁&nbsp;更多文库相关文档&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1525)
+            elseif ($srcid == 1525)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度文库&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1524)
+            elseif ($srcid == 1524)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;缩略图结果，但非每个查询词展现图片&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1523)
+            elseif ($srcid == 1523)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;robots.txt&nbsp;文件存在限制指令的结果&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1522)
+            elseif ($srcid == 1522)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度经验带相册&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1521)
+            elseif ($srcid == 1521)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;图片_百度百科(可能与查询词内容相关度较高)&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1520)
+            elseif ($srcid == 1520)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;期刊文献&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1519)
+            elseif ($srcid == 1519)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;维基百科&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1518)
+            elseif ($srcid == 1518)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1517)
+            elseif ($srcid == 1517)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[图文]，但并非每个查询词显示 [图文]&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1516)
+            elseif ($srcid == 1516)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;宗教&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1515)
+            elseif ($srcid == 1515)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;电影&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1514)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;在线文档&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1513)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1512)
+            elseif ($srcid == 1514)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;在线文档－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1513)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;软件下载－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1512)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1511)
+            elseif ($srcid == 1511)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;[原创]&nbsp;星火计划&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1510)
+            elseif ($srcid == 1510)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;子链&nbsp;国际化&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1509)
+            elseif ($srcid == 1509)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;官网&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1508)
+            elseif ($srcid == 1508)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;站点&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1507)
+            elseif ($srcid == 1507)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;微博&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1506)
+            elseif ($srcid == 1506)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;单视频&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1505)
+            elseif ($srcid == 1505)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度知道&nbsp;高品质(知道达人|权威专家|官方机构)&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1504)
+            elseif ($srcid == 1504)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;自动问答&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1503)
+            elseif ($srcid == 1503)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;图片&nbsp;单视频&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1502)
+            elseif ($srcid == 1502)
             echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;百度百科&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        elseif ($srcid == 1501)
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;评分&nbsp;-&nbsp;结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
-        else
-            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;'.$srcid.'&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            elseif ($srcid == 1501)
+            echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;评分－结构化数据&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
+            else
+                echo '<span class="wheat">'.$short.'&nbsp;字节&nbsp;'.$srcid.'&nbsp;第&nbsp;'.$id.'&nbsp;名</span></td>';
         }
         echo '</tr>';
     }
@@ -1072,22 +1095,21 @@ if (!is_numeric($f136) && !is_numeric($f135) && !is_numeric($f134)) {
 
     // 最新相关消息
 
-    // $news = 'http://'.$ip[0].'/s?tn=newsxml&wd='.$query;
+    // 1. 初始化
+    $ch = curl_init();
 
-            // 1. 初始化
-            $ch = curl_init();
-            // 2. 设置选项，包括 URL
-            curl_setopt($ch, CURLOPT_URL, 'http://www.baidu.com/s?tn=newsxml&wd='.$query);
-            curl_setopt($ch, CURLOPT_TIMEOUT, 30); // 设置超时限制防止死循环
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_HEADER, 0);
-            curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']); // 模拟用户使用的浏览器
+    // 2. 设置选项，包括 URL
+    curl_setopt($ch, CURLOPT_URL, 'http://www.baidu.com/s?tn=newsxml&wd='.$query);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 30); // 设置超时限制防止死循环
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+    curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']); // 模拟用户使用的浏览器
 
-            // 3. 执行并获取 HTML 文档内容
-            $news = curl_exec ($ch);
-            if ($news === FALSE) {
-            echo "cURL Error: " . curl_error($ch);
-            }
+    // 3. 执行并获取 HTML 文档内容
+    $news = curl_exec ($ch);
+    if ($news === FALSE) {
+        echo "cURL Error: " . curl_error($ch);
+    }
 
     if (preg_match_all("/(?<=\<subnewstlurl\>\<\!\[CDATA\[  )(.*)( \]\]\>\<\/subnewstlurl\>\n\s+\<subnewstitle\><\!\[CDATA\[  )(.*)(?= \]\]\>\<\/subnewstitle\>)/", @$news, $mnews))
     if (strlen($mnews[3][0]) > 0) {
@@ -1096,7 +1118,7 @@ if (!is_numeric($f136) && !is_numeric($f135) && !is_numeric($f134)) {
         // GBK 转 UTF-8 解码
 
         foreach ($mnews[3] as $key => $value) {
-            $title=iconv("GBK","UTF-8//IGNORE",urldecode($mnews[3][$key]));
+            $title=iconv("GBK", "UTF-8//IGNORE", urldecode($mnews[3][$key]));
             echo '<tr><td><a'.$u.'href="'.$url.'?s='.strip_tags($title).'&amp;rn=50&amp;gpc=stf%3D'.(time() - 86400).'%2C'.time().'%7Cstftype%3D1">'.strip_tags($title).'</a></td></tr>';
         }
     echo '</tbody></table></div>';
@@ -1106,8 +1128,10 @@ if (!is_numeric($f136) && !is_numeric($f135) && !is_numeric($f134)) {
     curl_close ($ch);
 
     // 百度风云榜
+
     // 1. 初始化
     $ch = curl_init();
+
     // 2. 设置选项，包括 URL
     curl_setopt($ch, CURLOPT_URL, 'http://opendata.baidu.com/api.php?resource_id=6698&format=json&ie=UTF-8&oe=UTF-8&query=random');
     curl_setopt($ch, CURLOPT_TIMEOUT, 30); // 设置超时限制防止死循环
