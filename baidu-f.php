@@ -474,12 +474,12 @@ echo '            <option value="stf%3D'.(time() - 86400).'%2C'.time().'%7Cstfty
 if(@$_GET['gpc'] == 'stf%3D'.(time() - 86400).'%2C'.time().'%7Cstftype%3D1') {
     echo 'selected';
 }
-echo '">最近1天</option>'."\r\n";
+echo '>最近1天</option>'."\r\n";
 echo '            <option value="stf%3D'.(time() - 604800).'%2C'.time().'%7Cstftype%3D1"';
 if(@$_GET['gpc'] == 'stf%3D'.(time() - 604800).'%2C'.time().'%7Cstftype%3D1') {
     echo 'selected"';
 }
-echo '">最近1週</option>'."\r\n";
+echo '>最近1週</option>'."\r\n";
 echo '            <option value="stf%3D'.(time() - 2678400).'%2C'.time().'%7Cstftype%3D1"';
 if(@$_GET['gpc'] == 'stf%3D'.(time() - 2678400).'%2C'.time().'%7Cstftype%3D1') {
     echo 'selected"';
