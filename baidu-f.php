@@ -440,7 +440,7 @@ color:#333333;
 
 .dustbin {
 margin-top:3em;
-width:6.25em;
+width:5em;
 height:19.25em;
 background-color:#E6E6E6;
 font-size:1.3em;
