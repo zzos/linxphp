@@ -8457,7 +8457,8 @@ echo"
 		elseif ($f2value3 == "2")
 			echo "
 				<td class=\"unit-gold\">
-					[猜]&nbsp;直接使用网页标题
+					标语<br>
+					slogan
 				</td>";
 		else
 			echo "
@@ -8523,7 +8524,7 @@ echo"
 			echo "
 				<td class=\"unit-deepskyblue\">
 					链接锚文本<br>
-					anchor-text
+					anchor_text
 				</td>";
 		elseif ($f2value7 == "6")
 			echo "
@@ -8539,13 +8540,13 @@ echo"
 		if ($f2value8 == "F")
 			echo "
 				<td class=\"unit-lightskyblue\">
-					<a href=\"http://www.zhihu.com/question/22939567/answer/24259154\" rel=\"external nofollow\" target=\"_blank\" title=\"《seo深度解析》怎么样？\">自动判断可作标题的文本&nbsp;(-)&nbsp;网页标题</a>
+					<a href=\"http://www.weixingon.com/wordcount/#exp\" rel=\"nofollow\" target=\"_blank\" title=\"名词解释\">权值标签里的文本&nbsp;(-)&nbsp;网页标题</a>
 				</td>";
 		elseif ($f2value8 == "E")
 			echo "
 				<td class=\"unit-deepskyblue\">
-					标题标签<br>
-					heading
+					权值标签<br>
+					tag
 				</td>";
 		elseif ($f2value8 == "B")
 			echo "
