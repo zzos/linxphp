@@ -10300,13 +10300,43 @@ echo "
 </div>";
 }
 
+// 周围人都在搜
+
+if (strlen($s) > 0) {
+    if (preg_match_all('/(?<=&r_type\=text&r_key\=hot-1&r_wd\=)(.{1,50})(?=\" class\=link data-type\=hl-mod-link target\=)/', file_get_contents("http://entry.baidu.com/ur/scun?di=contentunion4170"), $maround))
+
+    echo "
+<div class=\"draglist\" draggable=\"true\">
+	<table>
+		<thead>
+			<tr>
+				<th>周围人都在搜</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr class=\"back-azure\">
+				<td>";
+
+		foreach ($maround[0] as $i => $position)
+	{
+		echo "
+					<a href=\"".$url."?s=".$maround[0][$i]."\" target=\"_blank\">".$maround[0][$i]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
+	}
+	echo "
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>";
+}
+
 if (strlen($s) > 0) {
 echo"
 <p>
 	<a class=\"noa\" href=\"http://top.baidu.com/buzz?b=1\"  target=\"_blank\" rel=\"external nofollow\">百度实时热点排行榜</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baidusp-srcid.php\" target=\"_blank\">百度搜索产品资源</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baiduip.php\" target=\"_blank\">百度的IP地址是多少</a>
-	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.11</a>
+	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.12</a>
 </p>
 ";
 }
