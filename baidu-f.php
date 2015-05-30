@@ -8837,6 +8837,11 @@ echo"
 				<td class=\"unit-lavender\">
 					近似匹配
 				</td>";
+		elseif ($f3value8 == "4")
+			echo "
+				<td class=\"unit-tomato\">
+					<span title=\"百度搜索bj.baidu后台维护出现\">4</span>
+				</td>";
 		else
 			echo "
 				<td>".$f3value8."</td>";
