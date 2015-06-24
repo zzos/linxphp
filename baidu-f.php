@@ -737,8 +737,8 @@ echo "<p class=\"noa\">被".$matchliarphone2[1]."个<a class=\"white\" href=\"ht
 // site 特型
 $indextime = date('Y-m-d',strtotime("-1 day"));
 
-if (preg_match("/(?<=<span>该网站共有<b style=\"color:#333\">)([0-9,\x80-\xff]{1,32})(?=<\/b>个网页被百度收录<\/span>)/", @$baiduserp, $matchsite))
-echo "\r\n<p class=\"white\">".$indextime."&nbsp;百度索引量&nbsp;".$matchsite[1]."&nbsp;(site&nbsp;&divide;&nbsp;索引量)&nbsp;=&nbsp;".sprintf("%.3f",((str_replace(",","",$matchnumbers[2]) / str_replace("," ,"" ,$matchsite[1])) * 100))."%</p>";
+if (preg_match("/(?<=该网站共有)(\s{16})(<b style=\"color:#333\">)([0-9,\x80-\xff]{1,32})(?=<\/b>)/", @$baiduserp, $matchsite))
+echo "\r\n<p class=\"white\">".$indextime."&nbsp;百度索引量&nbsp;".$matchsite[3]."&nbsp;(site&nbsp;&divide;&nbsp;索引量)&nbsp;=&nbsp;".sprintf("%.3f",((str_replace(",","",$matchnumbers[2]) / str_replace("," ,"" ,$matchsite[3])) * 100))."%</p>";
 
 // 搜索结果
 if (preg_match_all("/(?<=\" data\-tools\=\'{\"title\":\")([^\"]+)(\",\"url\":\"http:)(\/\/www.baidu.com\/link\?url\=[a-zA-Z0-9_\-]+)(?=\"}'><a class=\"c-tip-icon\"><i class=\"c-icon c-icon-triangle-down-g\"><\/i><\/a><\/div>)/", @$baiduserp, $matchserp))
@@ -825,6 +825,11 @@ function smarty_modifier_wordcount($str,$encoding = 'UTF-8')
 			echo "
 				<td>
 					更多同站相关结果&gt;&gt;[201412添加]
+				</td>";
+		elseif ($resourceid == 1551)
+			echo "
+				<td>
+					列表－摘要[201411添加]
 				</td>";
 		elseif ($resourceid == 1548)
 			echo "
@@ -10339,7 +10344,7 @@ echo"
 	<a class=\"noa\" href=\"http://top.baidu.com/buzz?b=1\"  target=\"_blank\" rel=\"external nofollow\">百度实时热点排行榜</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baidusp-srcid.php\" target=\"_blank\">百度搜索产品资源</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baiduip.php\" target=\"_blank\">百度的IP地址是多少</a>
-	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.12</a>
+	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.13</a>
 </p>
 ";
 }
