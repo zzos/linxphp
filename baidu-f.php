@@ -804,6 +804,70 @@ function smarty_modifier_wordcount($str,$encoding = 'UTF-8')
 	return $subLen;
 }
 
+// seo 可控资源号
+$srcidas = array
+    (
+    array(1599, '默认(普通结果)', '模版名2数据策略', ''),
+    array(1581, '更多同站相关结果&gt;&gt;[201412添加]', '', ''),
+    // 2015-06-23 如何在中国办理留学生学历认证 RED SCARF http://www.honglingjin.co.uk/3023.html
+    array(1551, '列表－模版[201411添加]', '', 'QQ&nbsp;751476'),
+    array(1550, '未知', '', ''),
+    array(1549, '未知', '', ''),
+    array(1548, '评分－结构化数据[201408添加]', '', ''),
+    array(1547, '百度百科[201407添加]', '', ''),
+    array(1546, '未知', '', ''),
+    array(1545, '非正规相册[201412添加]', '', 'QQ&nbsp;1724102740'),
+    array(1544, '未知', '', ''),
+    array(1543, '面包屑导航－结构化数据', '', ''),
+    array(1542, '百度学术&nbsp;查看更多相关论文', '', ''),
+    array(1541, '未知', '', ''),
+    array(1540, '未知', '', ''),
+    // 2015-01-08 搜外 搜外网 http://www.seowhy.com/
+    array(1539, '[官网]&nbsp;0－6&nbsp;个子链结果[201405添加]', '', ''),
+    array(1538, '软件下载摘要|小说作者状态类型－结构化数据', '', ''),
+    array(1537, '组图&nbsp;百度经验', '', ''),
+    array(1536, '一般答案&nbsp;百度知道', '', ''),
+    array(1535, '未知，模版采用&nbsp;se_com_image_s', '模版', ''),
+    array(1534, '未知，模版采用&nbsp;se_com_default', '模版', ''),
+    array(1533, '论坛帖子', '', ''),
+    array(1532, '最佳答案&nbsp;百度知道', '', ''),
+    // 在原用户查询词的基础上，通过一定的方法和策略把与原查询词相关的词、词组添加到原查询中，组成新的、更能准确表达用户查询意图的查询词序列，然后用新查询对文档重新检索，从而提高信息检索中的查全率和查准率。 李晓明; 闫宏飞; 王继民. 附录 术语//搜索引擎——原理、技术与系统(第二版). 2013年5月第9次印刷. 北京: 科学. 2012.5: 第322–323页 ISBN 7-03-034258-4 (简体中文)
+    array(1531, '查询扩展', '', ''),
+    array(1530, '百度贴吧&nbsp;更多贴吧相关帖子', '', ''),
+    // 百度知道|搜狗问问(搜搜问问)|爱问知识人|39问医生|寻医问药网有问必答
+    array(1529, '权威问答网站结果', '', ''),
+    array(1528, '百度知道阿拉丁&nbsp;更多知道相关问题', '', ''),
+    array(1527, '百度文库标签&nbsp;更多文库相关文档&gt;&gt;', '', ''),
+    array(1526, '百度文库阿拉丁&nbsp;更多文库相关文档', '', ''),
+    array(1525, '百度文库', '', ''),
+    array(1524, '缩略图结果，但非每个查询词展现图片', '', ''),
+    array(1523, 'robots.txt&nbsp;文件存在限制指令的结果', '', ''),
+    array(1522, '百度经验带相册', '', ''),
+    array(1521, '图片&nbsp;百度百科(可能与查询词内容相关度较高)', '', ''),
+    // 2015-01-08 无序的新世界 维普网 http://www.cqvip.com/qk/95355X/200106/15044983.html
+    array(1520, '期刊文献', '', ''),
+    array(1519, '维基百科&nbsp;国际化', '', ''),
+    array(1518, '软件下载&nbsp;国际化', '', ''),
+    array(1517, '[图文]，但并非每个查询词显示&nbsp;[图文]', '', ''),
+    array(1516, '宗教&nbsp;国际化', '', ''),
+    array(1515, '电影&nbsp;国际化', '', ''),
+    array(1514, '在线文档－结构化数据', '', ''),
+    array(1513, '软件下载－结构化数据', '', ''),
+    array(1512, '单视频&nbsp;国际化', '', ''),
+    array(1511, '[原创]&nbsp;星火计划', '', ''),
+    array(1510, '子链&nbsp;国际化', '', ''),
+    array(1509, '[官网]', '', ''),
+    array(1508, '单视频&nbsp;站点', '', ''),
+    array(1507, '微博', '', ''),
+    array(1506, '单视频', '', ''),
+    array(1505, '百度知道&nbsp;高品质(知道达人|权威专家|官方机构)', '', ''),
+    array(1504, '自动问答', '', ''),
+    array(1503, '图片&nbsp;单视频', '', ''),
+    array(1502, '百度百科', '', ''),
+    array(1501, '评分－结构化数据', '', ''),
+    array(1500, '无', '', '')
+    );
+
 	foreach ($matchsrcid[3] as $i => $position)
 	{
 		echo "
@@ -814,255 +878,23 @@ function smarty_modifier_wordcount($str,$encoding = 'UTF-8')
 					."</a>
 				</td>
 				<td class=\"center\">".smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($matchserp[1][$i], ENT_QUOTES)))."</td>";
-		$resourceid = $matchsrcid[5][$i];
-		{
-		if ($resourceid == 1599)
-			echo "
-				<td>
-					普通结果
-				</td>";
-		elseif ($resourceid == 1581)
-			echo "
-				<td>
-					更多同站相关结果&gt;&gt;[201412添加]
-				</td>";
-		elseif ($resourceid == 1551)
-			echo "
-				<td>
-					列表－摘要[201411添加]
-				</td>";
-		elseif ($resourceid == 1548)
-			echo "
-				<td>
-					评分－结构化数据[201408添加]
-				</td>";
-		elseif ($resourceid == 1547)
-			echo "
-				<td>
-					百度百科[201407添加]
-				</td>";
-		elseif ($resourceid == 1545)
-			echo "
-				<td>
-					非正规相册[201412添加]
-				</td>";
-		elseif ($resourceid == 1543)
-			echo "
-				<td>
-					面包屑导航－结构化数据
-				</td>";
-		elseif ($resourceid == 1542)
-			echo "
-				<td>
-					百度学术&nbsp;查看更多相关论文
-				</td>";
-		elseif ($resourceid == 1539)
-			echo "
-				<td>
-					[官网]&nbsp;0－6&nbsp;个子链结果[201405添加]
-				</td>";
-		elseif ($resourceid == 1538)
-			echo "
-				<td>
-					软件下载摘要|小说作者状态类型－结构化数据
-				</td>";
-		elseif ($resourceid == 1537)
-			echo "
-				<td>
-					组图&nbsp;百度经验
-				</td>";
-		elseif ($resourceid == 1536)
-			echo "
-				<td>
-					一般答案&nbsp;百度知道
-				</td>";
-		elseif ($resourceid == 1535)
-			echo "
-				<td>
-					未知，模版采用&nbsp;se_com_image_s
-				</td>";
-		elseif ($resourceid == 1534)
-			echo "
-				<td>
-					[猜]&nbsp;化妆品，模版采用&nbsp;se_com_cosmetic
-				</td>";
-		elseif ($resourceid == 1533)
-			echo "
-				<td>
-					论坛帖子
-				</td>";
-		elseif ($resourceid == 1532)
-			echo "
-				<td>
-					最佳答案&nbsp;百度知道
-				</td>";
-		elseif ($resourceid == 1531)
-			echo "
-				<td>
-					查询扩展 // 在原用户查询词的基础上，通过一定的方法和策略把与原查询词相关的词、词组添加到原查询中，组成新的、更能准确表达用户查询意图的查询词序列，然后用新查询对文档重新检索，从而提高信息检索中的查全率和查准率。 李晓明; 闫宏飞; 王继民. 附录 术语//搜索引擎——原理、技术与系统(第二版). 2013年5月第9次印刷. 北京: 科学. 2012.5: 第322–323页 ISBN 7-03-034258-4 (简体中文)
-				</td>";
-		elseif ($resourceid == 1530)
-				echo "
-				<td>
-					百度贴吧&nbsp;更多贴吧相关帖子
-				</td>";
-		elseif ($resourceid == 1529)
-				echo "
-				<td>
-					<span title=\"百度知道|搜狗问问(搜搜问问)|爱问知识人|39问医生|寻医问药网有问必答\">权威问答网站结果</span>
-				</td>";
-		elseif ($resourceid == 1528)
-				echo "
-				<td>
-					百度知道阿拉丁&nbsp;更多知道相关问题
-				</td>";
-		elseif ($resourceid == 1527)
-				echo "
-				<td>
-					百度文库标签&nbsp;更多文库相关文档&gt;&gt;
-				</td>";
-		elseif ($resourceid == 1526)
-			echo "
-				<td>
-					百度文库阿拉丁&nbsp;更多文库相关文档
-				</td>";
-		elseif ($resourceid == 1525)
-			echo "
-				<td>
-					百度文库
-				</td>";
-		elseif ($resourceid == 1524)
-			echo "
-				<td>
-					<a href=\"http://ask.seowhy.com/question/8491\" rel=\"external nofollow\" target=\"_blank\" title=\"探讨：搜索引擎可以识别文章中的图片和文章内容是否相关吗？\">缩略图结果，但非每个查询词展现图片</a>
-				</td>";
-		elseif ($resourceid == 1523)
-			echo "
-				<td>
-					robots.txt&nbsp;文件存在限制指令的结果
-				</td>";
-		elseif ($resourceid == 1522)
-				echo "
-				<td>
-					百度经验带相册
-				</td>";
-		elseif ($resourceid == 1521)
-				echo "
-				<td>
-					图片&nbsp;百度百科(可能与查询词内容相关度较高)
-				</td>";
-		elseif ($resourceid == 1520)
-			echo "
-				<td>
-					<span title=\"2015-01-08 百度搜索 无序的新世界 出现\">期刊文献</span>
-				</td>";
-		elseif ($resourceid == 1519)
-			echo "
-				<td>
-					维基百科&nbsp;国际化
-				</td>";
-		elseif ($resourceid == 1518)
-			echo "
-				<td>
-					软件下载&nbsp;国际化
-				</td>";
-		elseif ($resourceid == 1517)
-			echo "
-				<td>
-					[图文]，但并非每个查询词显示&nbsp;[图文]
-				</td>";
-		elseif ($resourceid == 1516)
-			echo "
-				<td>
-					宗教&nbsp;国际化
-				</td>";
-		elseif ($resourceid == 1515)
-			echo "
-				<td>
-					电影&nbsp;国际化
-				</td>";
-		elseif ($resourceid == 1514)
-			echo "
-				<td>
-					在线文档－结构化数据
-				</td>";
-		elseif ($resourceid == 1513)
-			echo "
-				<td>
-					软件下载－结构化数据
-				</td>";
-		elseif ($resourceid == 1512)
-			echo "
-				<td>
-					单视频&nbsp;国际化
-				</td>";
-		elseif ($resourceid == 1511)
-			echo "
-				<td>
-					[原创]&nbsp;星火计划
-				</td>";
-		elseif ($resourceid == 1510)
-			echo "
-				<td>
-					子链&nbsp;国际化
-				</td>";
-		elseif ($resourceid == 1509)
-			echo "
-				<td>
-					[官网]
-				</td>";
-		elseif ($resourceid == 1508)
-			echo "
-				<td>
-					单视频&nbsp;站点
-				</td>";
-		elseif ($resourceid == 1507)
-			echo "
-				<td>
-					微博
-				</td>";
-		elseif ($resourceid == 1506)
-			echo "
-				<td>
-					单视频
-				</td>";
-		elseif ($resourceid == 1505)
-			echo "
-				<td>
-					百度知道&nbsp;高品质(知道达人|权威专家|官方机构)
-				</td>";
-		elseif ($resourceid == 1504)
-			echo "
-				<td>
-					自动问答
-				</td>";
-		elseif ($resourceid == 1503)
-			echo "
-				<td>
-					图片&nbsp;单视频
-				</td>";
-		elseif ($resourceid == 1502)
-			echo "
-				<td>
-					百度百科
-				</td>";
-		elseif ($resourceid == 1501)
-			echo "
-				<td>
-					评分－结构化数据
-				</td>";
-		else
-			echo "
-			<td>".$resourceid."</td>";
-		}
-			echo "
-				<td class=\"center\">".$matchsrcid[3][$i]."</td>
-			</tr>";
+
+        $resourceid = $matchsrcid[5][$i];
+        foreach ($srcidas as $ii => $positioni)
+        {
+            if ($resourceid == $srcidas[$ii][0]) {
+                echo '
+                <td>'.$srcidas[$ii][1].'</td>';
+                }
+            }
+            echo '
+                <td class="center">'.$matchsrcid[3][$i].'</td>
+            </tr>';
 	}
-	echo"
-		</tbody>
-	</table>
-</div>";
+	echo '
+        </tbody>
+    </table>
+</div>';
 }
 
 // 百度知心左侧卡片框
@@ -10308,6 +10140,41 @@ echo "
 </div>";
 }
 
+// 右侧知心打分
+
+// if (preg_match_all("/(?<=\"rsv_stl\"\:\"0\",\"rsv_srcid\"\:)(\d{4,5})/", @$baiduserp, $srcidright))
+
+$score = json_decode(file_get_contents('http://opendata.baidu.com/api.php?resource_id=21028&format=json&ie=utf-8&oe=utf-8&query='.$query), true);
+
+if (strlen($s) > 0) {
+echo '
+<div class="draglist" draggable="true">
+    <table>
+        <thead>
+            <tr>
+                <th>右侧知心推荐词</th>
+                <th>打分</th>
+            </tr>
+        </thead>
+        <tbody>';
+
+foreach ($score['data'][0]['card'] as $i => $position)
+{
+    foreach ($score['data'][0]['card'][$i]['unit'] as $j => $position)
+    {
+        echo '
+        <tr class="back-egg">
+            <td>'.$score['data'][0]['card'][$i]['unit'][$j]['name'].'</td>
+            <td class="center">'.$score['data'][0]['card'][$i]['unit'][$j]['uri_drsv'].'</td>
+        </tr>';
+    }
+}
+	echo '
+        </tbody>
+    </table>
+</div>';
+}
+
 // 周围人都在搜
 
 if (strlen($s) > 0) {
@@ -10344,7 +10211,7 @@ echo"
 	<a class=\"noa\" href=\"http://top.baidu.com/buzz?b=1\"  target=\"_blank\" rel=\"external nofollow\">百度实时热点排行榜</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baidusp-srcid.php\" target=\"_blank\">百度搜索产品资源</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baiduip.php\" target=\"_blank\">百度的IP地址是多少</a>
-	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.13</a>
+	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.14</a>
 </p>
 ";
 }
