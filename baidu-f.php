@@ -130,11 +130,15 @@ background-color:#F8F7F5;
 font-family:"STHeiti STXihei","Lucida Grande","Microsoft JhengHei","Microsoft Yahei",Helvetica,Tohoma,Arial,Verdana,sans-serif;
 height:100%;
 }
+img {
+    height: auto!important;
+}
 table {
-width:61.25em;
+width:46。.25em;
 border-collapse:collapse;
 border:0.0625em solid #390BDE;
 margin-bottom:1.75em;
+width: 100%!important;
 }
 thead {
 color:#0080FF;
@@ -187,8 +191,10 @@ font-weight:bold;
 word-break:normal;
 word-wrap:break-word
 }
+
+@media screen and (min-width: 1024px) {
 .detail {
-width:61.25em;
+width:46.25em;
 margin:0 auto;
 padding:1.25em;
 padding-top:0;
@@ -209,6 +215,7 @@ shuffle ($wallpaper);
 echo "http://www.weixingon.com/pic/".$wallpaper[0];
 ?>
 .jpg) repeat-y;
+}
 }
 .header {
 padding-top:1.25em;
@@ -420,6 +427,7 @@ filter:alpha(opacity=85);
 opacity:0.85;
 }
 
+@media screen and (min-width: 1024px) {
 a#go-top {
 filter:alpha(opacity=60);
 -moz-opacity:0.6;
@@ -450,6 +458,7 @@ float:left;
 .draglist:hover {
 border-color:#FFFFBB;
 background-color:#FFDDAA;
+}
 }
 </style>
 
@@ -514,9 +523,9 @@ $r = array(
 );
 $z = preg_replace($p[1], $r[1], $s);
 $query = htmlspecialchars(preg_replace($p, $r, $s));
-$srcid1 = "<a href=\"http://ask.seowhy.com/question/8677\" rel=\"external nofollow\" target=\"_blank\" title=\"搜索结果页源代码 F - F3、Srcid 的问题\">搜索结果页资源</a>";
-$srcid2 = "<a href=\"http://ask.seowhy.com/question/8254\" rel=\"external nofollow\" target=\"_blank\" title=\"[百家观点]你心中的百度知心搜索，集思广益\">搜索结果页资源&nbsp;resource_id</a>";
-$srcid3 = "<a href=\"http://ask.seowhy.com/question/9186\" rel=\"external nofollow\" target=\"_blank\" title=\"为什么有的搜索结果会没有百度参数，这样的现象原因是什么\">搜索结果页资源&nbsp;resource_id</a>";
+$srcid1 = "<a href=\"http://ask.seowhy.com/question/8677\" rel=\"external nofollow\" target=\"_blank\" title=\"搜索结果页源代码 F - F3、Srcid 的问题\">as&nbsp;结果</a>";
+$srcid2 = "sp&nbsp;阿拉丁";
+$srcid3 = "<a href=\"http://ask.seowhy.com/question/9186\" rel=\"external nofollow\" target=\"_blank\" title=\"为什么有的搜索结果会没有百度参数，这样的现象原因是什么\">ecom 知心商业&nbsp;|&nbsp;时效性</a>";
 $fk1 = "<a href=\"http://ask.seowhy.com/article/64\" rel=\"external nofollow\" target=\"_blank\" title=\"百度搜索结果参数fk - 抓取键名\">抓取键名&nbsp;fetch key</a>";
 $fk2 = "<a href=\"http://ask.seowhy.com/question/8111\" rel=\"external nofollow\" target=\"_blank\" title=\"为什么百度搜索结果首页1个网站出现14个自然点击链接？\">键值&nbsp;value</a>";
 $nofk = "<a href=\"http://ask.seowhy.com/question/9486\" rel=\"external nofollow\" target=\"_blank\" title=\"净水器百度排名175，能做上去吗？\">无&nbsp;F,&nbsp;fk&nbsp;(百度汇、实时、面包屑导航条)</a>";
@@ -771,9 +780,8 @@ echo"
 				</th>
 				<th>
 					<a href=\"http://ask.seowhy.com/article/79\" target=\"_blank\" rel=\"external nofollow\" title=\"百度左侧搜索结果来源分类srcid - 教你精准区分百度搜索产品\">
-						第&nbsp;1&nbsp;类
 					</a>
-					&nbsp;$srcid1
+					$srcid1
 				</th>
 				<th>
 					<span title=\"排名为百度杭州服务器缓存结果，可能因实时或地域而不同，刷新后返回最新结果\">排名</span>
@@ -807,7 +815,7 @@ function smarty_modifier_wordcount($str,$encoding = 'UTF-8')
 // seo 可控资源号
 $srcidas = array
     (
-    array(1599, '默认(普通结果)', '模版名2数据策略', ''),
+    array(1599, '普通结果', '模版名2数据策略', ''),
     array(1581, '更多同站相关结果&gt;&gt;[201412添加]', '', ''),
     // 2015-06-23 如何在中国办理留学生学历认证 RED SCARF http://www.honglingjin.co.uk/3023.html
     array(1551, '列表－模版[201411添加]', '', 'QQ&nbsp;751476'),
@@ -1078,7 +1086,7 @@ echo"
 			<tr>
 				<th>$fk1</th>
 				<th>$fk2</th>
-				<th><span title=\"百度搜索产品、合作伙伴\">第&nbsp;2&nbsp;类</span>&nbsp;$srcid2</th>
+				<th><span title=\"百度搜索产品、合作伙伴\">$srcid2</span></th>
 				<th>$openapi</th>
 				<th>排名</th>
 			</tr>
@@ -6656,7 +6664,7 @@ echo"
 		<tr>
 			<th>$fk1</th>
 			<th>$fk2</th>
-			<th><span title=\"百度搜索产品、合作伙伴\">第&nbsp;2&nbsp;类</span>&nbsp;$srcid2</th>
+			<th><span title=\"百度搜索产品、合作伙伴\">$srcid2</span></th>
 			<th>$openapi</th>
 			<th>排名</th>
 		</tr>
@@ -6782,7 +6790,7 @@ echo"
 		<thead>
 				<tr>
 						<th>$nofk</th>
-						<th><span title=\"百度汇、实时、面包屑导航条\">第&nbsp;3&nbsp;类</span>&nbsp;$srcid3</th>
+						<th>$srcid3</th>
 						<th>$openapi</th>
 						<th>排名</th>
 				</tr>
