@@ -10154,18 +10154,20 @@ echo '
             <tr>
                 <th>右侧知心推荐词</th>
                 <th>打分</th>
+                <th>排名</th>
             </tr>
         </thead>
         <tbody>';
 
-foreach ($score['data'][0]['card'] as $i => $position)
+foreach (@$score['data'][0]['card'] as $i => $position)
 {
-    foreach ($score['data'][0]['card'][$i]['unit'] as $j => $position)
+    foreach (@$score['data'][0]['card'][$i]['unit'] as $j => $position)
     {
         echo '
         <tr class="back-egg">
             <td>'.$score['data'][0]['card'][$i]['unit'][$j]['name'].'</td>
             <td class="center">'.$score['data'][0]['card'][$i]['unit'][$j]['uri_drsv'].'</td>
+            <td class="center">'.($j+1).'</td>
         </tr>';
     }
 }
