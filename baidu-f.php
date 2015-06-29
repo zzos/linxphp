@@ -10146,7 +10146,7 @@ echo "
 
 $score = json_decode(file_get_contents('http://opendata.baidu.com/api.php?resource_id=21028&format=json&ie=utf-8&oe=utf-8&query='.$query), true);
 
-if (strlen($s) > 0) {
+if (strlen($s) > 0 && is_array(@$score['data'][0]['card'])) {
 echo '
 <div class="draglist" draggable="true">
     <table>
@@ -10165,8 +10165,8 @@ foreach (@$score['data'][0]['card'] as $i => $position)
     {
         echo '
         <tr class="back-egg">
-            <td>'.$score['data'][0]['card'][$i]['unit'][$j]['name'].'</td>
-            <td class="center">'.$score['data'][0]['card'][$i]['unit'][$j]['uri_drsv'].'</td>
+            <td>'.@$score['data'][0]['card'][$i]['unit'][$j]['name'].'</td>
+            <td class="center">'.@$score['data'][0]['card'][$i]['unit'][$j]['uri_drsv'].'</td>
             <td class="center">'.($j+1).'</td>
         </tr>';
     }
