@@ -10267,7 +10267,7 @@ echo"
 	<a class=\"noa\" href=\"http://top.baidu.com/buzz?b=1\"  target=\"_blank\" rel=\"external nofollow\">百度实时热点排行榜</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baidusp-srcid.php\" target=\"_blank\">百度搜索产品资源</a>
 	<a class=\"noa\" href=\"http://www.weixingon.com/baiduip.php\" target=\"_blank\">百度的IP地址是多少</a>
-	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.14</a>
+	<a class=\"noa\" href=\"https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php\" target=\"_blank\" rel=\"external nofollow\">百度参数分析工具v1.15</a>
 </p>
 ";
 }
