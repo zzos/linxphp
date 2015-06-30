@@ -10154,7 +10154,7 @@ echo "
 
 $score = json_decode(file_get_contents('http://opendata.baidu.com/api.php?resource_id=21028&format=json&ie=utf-8&oe=utf-8&query='.$query), true);
 
-if (strlen($s) > 0 && is_array(@$score['data'][0]['card'])) {
+if (strlen($s) > 0 && is_array(@$score['data'][0]['card'][0]['unit'])) {
 echo '
 <div class="draglist" draggable="true">
     <table>
