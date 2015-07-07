@@ -8664,7 +8664,7 @@ echo"
 		elseif ($f3value6 == "0")
 			echo "
 				<td class=\"unit-honeydew\">
-					<span title=\"百度搜索杨澜爸爸|第一女神出现\">在大有同义词的搜索结果页<br>完全匹配查询词</span>
+					<span title=\"百度搜索杨澜爸爸|第一女神出现\">在有同义词的搜索结果页<br>完全匹配查询词</span>
 				</td>";
 		else
 			echo "
