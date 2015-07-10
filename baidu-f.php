@@ -55,7 +55,7 @@ if (strlen($s) > 0) {
         public $cache_path = 'stock/';
         public $cache_time = 86400;
         public $cache_extension = '.stk';
-    
+
         public function __construct($cache_path = 'stock/', $cache_time = 86400, $cache_exttension = '.stk') {
             $this->cache_path = $cache_path;
             $this->cache_time = $cache_time;
@@ -64,17 +64,17 @@ if (strlen($s) > 0) {
                 mkdir($this->cache_path, 0777);
             }
         }
-    
+
         public function add($key, $value) {
             $filename = $this->_get_cache_file($key);
             file_put_contents($filename, serialize($value), LOCK_EX);
         }
-    
+
         public function delete($key) {
             $filename = $this->_get_cache_file($key);
             unlink($filename);
         }
-    
+
         public function get($key) {
             if ($this->_has_cache($key)) {
                 $filename = $this->_get_cache_file($key);
@@ -85,7 +85,7 @@ if (strlen($s) > 0) {
                 return unserialize($value);
             }
         }
-    
+
         public function flush() {
             $fp = opendir($this->cache_path);
             while(!false == ($fn = readdir($fp))) {
@@ -95,7 +95,7 @@ if (strlen($s) > 0) {
                 unlink($this->cache_path . $fn);
             }
         }
-    
+
         private function _has_cache($key) {
             $filename = $this->_get_cache_file($key);
             if(file_exists($filename) && (filemtime($filename) + $this->cache_time >= time())) {
@@ -103,21 +103,21 @@ if (strlen($s) > 0) {
             }
             return false;
         }
-    
+
         private function _is_valid_key($key) {
             if ($key != null) {
                 return true;
             }
             return false;
         }
-    
+
         private function _safe_filename($key) {
             if ($this->_is_valid_key($key)) {
                 return md5($key);
             }
             return 'unvalid_cache_key';
         }
-    
+
         private function _get_cache_file($key) {
             return $this->cache_path . $this->_safe_filename($key) . $this->cache_extension;
         }
@@ -10223,43 +10223,12 @@ echo"
 	foreach ($matchabstract[1] as $i => $position)
 	{
 		echo "
-			<tr class=\"back-egg\">
+			<tr class=\"back-gold\">
 				<td>".$matchabstract[1][$i]."</td>
 				<td class=\"center\">".($i+1)."</td>
 			</tr>";
 	}
 	echo"
-		</tbody>
-	</table>
-</div>";
-}
-
-// 知心搜索
-
-if (preg_match_all("/(?<=data\-click\=\"{'rsv_re_ename':')([\x80-\xff\w\s\.]+)(?=','rsv_re_uri':')/", @$baiduserp, $matchename))
-
-if (strlen($s) > 0) {
-echo "
-<div class=\"draglist\" draggable=\"true\">
-	<table>
-		<thead>
-			<tr>
-				<th>知心搜索相关名&nbsp;ename</th>
-			</tr>
-		</thead>
-		<tbody>
-			<tr class=\"back-gold\">
-				<td>";
-
-	// 百度网址采用百度极速搜索模式
-	foreach ($matchename[1] as $i => $position)
-	{
-		echo "
-					<a href=\"".$url."?s=".$matchename[1][$i]."\" target=\"_blank\">".$matchename[1][$i]."</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;";
-	}
-	echo "
-				</td>
-			</tr>
 		</tbody>
 	</table>
 </div>";
@@ -10290,7 +10259,7 @@ foreach (@$score['data'][0]['card'] as $i => $position)
     {
         echo '
         <tr class="back-egg">
-            <td>'.@$score['data'][0]['card'][$i]['unit'][$j]['name'].'</td>
+            <td class="center"><a href="'.$url.'?s='.@$score['data'][0]['card'][$i]['unit'][$j]['name'].'" target="_blank">'.@$score['data'][0]['card'][$i]['unit'][$j]['name'].'</a></td>
             <td class="center">'.(preg_replace('/(score=)/', '', $score['data'][0]['card'][$i]['unit'][$j]['uri_drsv'])).'</td>
             <td class="center">'.($j+1).'</td>
         </tr>';
@@ -10348,7 +10317,7 @@ echo "<p class=\"white\">本次查询耗时&nbsp;".sprintf("%.2f",($costTime*100
 </div>
 <script charset="gbk" src="http://www.baidu.com/js/opensug.js"></script>
 <script src="http://www.weixingon.com/javascript/j.js"></script>
-<script>(new GoTop()).init({pageWidth:1022,nodeId:'go-top',nodeWidth:100,distanceToBottom:200,distanceToPage:0,hideRegionHeight:130,text:'回到顶部'})
+<script>(new GoTop()).init({pageWidth:1022,nodeId:'go-top',nodeWidth:100,distanceToBottom:200,distanceToPage:0,hideRegionHeight:130,text:'&nbsp;&nbsp;顶&nbsp;部&nbsp;&nbsp;'})
 // 拖放功能
 var $ = function(selector) {
 	if (!selector) {return [];}
