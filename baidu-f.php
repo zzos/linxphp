@@ -10291,7 +10291,7 @@ foreach (@$score['data'][0]['card'] as $i => $position)
         echo '
         <tr class="back-egg">
             <td>'.@$score['data'][0]['card'][$i]['unit'][$j]['name'].'</td>
-            <td class="center">'.@$score['data'][0]['card'][$i]['unit'][$j]['uri_drsv'].'</td>
+            <td class="center">'.(preg_replace('/(score=)/', '', $score['data'][0]['card'][$i]['unit'][$j]['uri_drsv'])).'</td>
             <td class="center">'.($j+1).'</td>
         </tr>';
     }
