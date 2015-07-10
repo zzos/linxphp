@@ -10260,7 +10260,25 @@ foreach (@$score['data'][0]['card'] as $i => $position)
         echo '
         <tr class="back-egg">
             <td class="center"><a href="'.$url.'?s='.@$score['data'][0]['card'][$i]['unit'][$j]['name'].'" target="_blank">'.@$score['data'][0]['card'][$i]['unit'][$j]['name'].'</a></td>
-            <td class="center">'.(preg_replace('/(score=)/', '', $score['data'][0]['card'][$i]['unit'][$j]['uri_drsv'])).'</td>
+            <td class="center">';
+            // 对齐分值
+            $scores = ((preg_replace('/(score=)/', '', $score['data'][0]['card'][$i]['unit'][$j]['uri_drsv'])) * 10000);
+            if (preg_match("/(\d){4}/", $scores)) {
+                echo $scores;
+            }
+            elseif (preg_match("/(\d){3}/", $scores)) {
+                echo '0'.$scores;
+            }
+            elseif (preg_match("/(\d){2}/", $scores)) {
+                echo '00'.$scores;
+            }
+            elseif (preg_match("/(\d){1}/", $scores)) {
+                echo '000'.$scores;
+            }
+            else {
+                echo $scores;
+            }
+           echo '</td>
             <td class="center">'.($j+1).'</td>
         </tr>';
     }
