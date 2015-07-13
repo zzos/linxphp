@@ -20,6 +20,7 @@ $pt = '百度搜索结果参数';
 
 // 取得搜索词
 $s = @$_GET['s'];
+$rn = @$_GET['rn'];
 
 if (preg_match("/(.*)(ed2k)(.*)/", $s)) {
     echo '<p>根据相关法律法规和政策，部分搜索结果未予显示, <a href="'.$url.'">回首页</a>或者到别处看看吧。</p>';
@@ -31,6 +32,18 @@ elseif ($s == 'win8.1 64位英文版下载') {
 }
 elseif ($s == 'ましろちゃんのひみと道具') {
     echo '<p>根据相关法律法规和政策，部分搜索结果未予显示, <a href="'.$url.'">回首页</a>或者到别处看看吧。</p>';
+    exit;
+}
+elseif (preg_match("/(?<=<script\>alert\()(.*)(?=\)<\/script\>)/", $s)) {
+    echo '<p>已过滤跨站脚本攻击漏洞, <a href="'.$url.'">回首页</a>或者到别处看看吧。</p>';
+    exit;
+}
+elseif (preg_match("/(?<=<script\>alert\()(.*)(?=\)<\/script\>)/", $rn)) {
+    echo '<p>已过滤跨站脚本攻击漏洞, <a href="'.$url.'">回首页</a>或者到别处看看吧。</p>';
+    exit;
+}
+elseif (preg_match("/(?<=<img src\=1 onerror\=alert\()(.*)(?=\)\>)/", $s)) {
+    echo '<p>已过滤跨站脚本攻击漏洞, <a href="'.$url.'">回首页</a>或者到别处看看吧。</p>';
     exit;
 }
 
