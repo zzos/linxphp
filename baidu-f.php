@@ -7653,79 +7653,92 @@ echo"
 
 // 相关搜索
 
+if (preg_match_all("/(?<=&rs_src\=)([01]{1}&rsv_pq=[a-z0-9]{16}&rsv_t=[\w\%]{50,64}\">)([\x80-\xff\w\s\.#\:\/]{0,32})(?=<\/a><\/th><)/", @$baiduserp, $matchrelated))
+
 if (strlen($s) > 0) {
-$matchrelated = explode(',', file_get_contents('http://'.$ip[0].'/s?tn=baidurs2top&wd='.$query));
 
-// 随机更换下拉框提示 IP
-$sugip = array (
-    'http://115.239.211.11',
-    'http://115.239.211.12',
-    'http://180.97.33.72',
-    'http://180.97.33.73',
-    );
-shuffle ($sugip);
+    // 随机更换下拉框提示 IP
+    $sugip = array (
+        'http://115.239.211.11',
+        'http://115.239.211.12',
+        'http://180.97.33.72',
+        'http://180.97.33.73',
+        );
+    shuffle ($sugip);
 
-// 匹配百度搜索3种下拉框提示词
-$p3 = array(
-    '/window\.baidu\.sug\({q:/',
-    '/p:false,s:\[/',
-    '/}\);/',
+    // 匹配百度搜索3种下拉框提示词
+    $p3 = array (
+        '/window\.baidu\.sug\({q:/',
+        '/p:false,s:\[/',
+        '/}\);/',
+        );
+    $r3 = array (
+        '[',
+        '',
+        '',
     );
-$r3 = array(
-    '[',
-    '',
-    '',
-);
-$sug1 = json_decode(file_get_contents($sugip[0].'/su?action=opensearch&ie=UTF-8&wd='.$query));
-$sug2 = json_decode(file_get_contents($sugip[0].'/su?action=opensearch&ie=UTF-8&sugmode=2&wd='.$query));
-$sug3 = json_decode(preg_replace($p3, $r3, file_get_contents($sugip[0].'/su?ie=UTF-8&sugmode=3&p=1&wd='.$query)));
-echo"
-<div class=\"draglist\" draggable=\"true\">
+    $sug1 = json_decode(file_get_contents($sugip[0].'/su?action=opensearch&ie=UTF-8&wd='.$query));
+    $sug2 = json_decode(file_get_contents($sugip[0].'/su?action=opensearch&ie=UTF-8&sugmode=2&wd='.$query));
+    $sug3 = json_decode(preg_replace($p3, $r3, file_get_contents($sugip[0].'/su?ie=UTF-8&sugmode=3&p=1&wd='.$query)));
+
+    echo '
+<div class="draglist" draggable="true">
 <table>
         <thead>
                 <tr>
                     <th>相关搜索</th>
                     <th>下拉框提示模式&nbsp;I</th>
                     <th>下拉框提示模式&nbsp;II</th>
-                    <th><a href=\"http://ask.seowhy.com/article/109\" rel=\"external nofollow\" target=\"_blank\" title=\"百度相关提示与搜索结果标题\">下拉框提示模式&nbsp;III</a></th>
+                    <th><a href="http://ask.seowhy.com/article/109" rel="external nofollow noreferrer" target="_blank" title="百度相关提示与搜索结果标题">下拉框提示模式&nbsp;III</a></th>
                     <th>排名</th>
                 </tr>
         </thead>
-        <tbody>";
+        <tbody>';
 
-    for ($i = 0; $i <= 9; $i++)
-    {
-        echo "
-            <tr class=\"back-azure\">
+    for ($i = 0; $i <= 9; $i++) {
+        echo '
+            <tr class="back-azure">
                 <td>
-                    <a href=\"".$url."?s=".@$matchrelated[$i]."\" target=\"_blank\">"
-                        .@$matchrelated[$i]."
+                    <a href="'.$url.'?s='.@$matchrelated[2][$i].'" target="_blank">'
+                        .@$matchrelated[2][$i].'
                     </a>
                 </td>
-                <td>
-                    <a href=\"".$url."?s=".@$sug1[1][$i]."\" target=\"_blank\">"
-                        .@$sug1[1][$i]."
-                    </a>
+                <td>';
+        if (strlen(@$sug1[1][$i]) > 0) {
+            echo '
+                    <a href="'.$url.'?s='.@$sug1[1][$i].'" target="_blank">'
+                        .@$sug1[1][$i].'
+                    </a>';
+        }
+        echo '
                 </td>
-                <td>
-                    <a href=\"".$url."?s=".@$sug2[1][$i]."\" target=\"_blank\">"
-                        .@$sug2[1][$i]."
-                    </a>
+                <td>';
+        if (strlen(@$sug2[1][$i]) > 0) {
+            echo '
+                    <a href="'.$url.'?s='.@$sug2[1][$i].'" target="_blank">'
+                        .@$sug2[1][$i].'
+                    </a>';
+        }
+        echo '
                 </td>
-                <td>
-                    <a href=\"".$url."?s=".@$sug3[$i+1]."\" target=\"_blank\">"
-                        .@$sug3[$i+1]."
-                    </a>
+                <td>';
+        if (strlen(@$sug3[1][$i]) > 0) {
+            echo '
+                    <a href="'.$url.'?s='.@$sug3[$i+1].'" target="_blank">'
+                        .@$sug3[$i+1].'
+                    </a>';
+        }
+        echo '
                 </td>
-                <td class=\"center\">"
+                <td class="center">'
                     .($i+1)
-                ."</td>
-            </tr>";
+                .'</td>
+            </tr>';
     }
-    echo"
+    echo '
         </tbody>
     </table>
-</div>";
+</div>';
 }
 
 // 为您推荐
@@ -7733,8 +7746,8 @@ echo"
 if (preg_match_all('/(?<=&p1\=)(\d{1,2})(\"\s\n\s+target=\"_blank\"\s\n\s+class=\"m\"\>)(.+)(<\/div><div class=\"c-gap-top c-recommend\" style=\"display:none;\" data-extquery=\")(.+)(?=\"\>\<i class=\"c-icon c-icon-bear-circle c-gap-right-small\"\>)/', @$baiduserp, $mcrq))
 
 if (!is_null(@$mcrq)) {
-    echo"
-<div class=\"draglist\" draggable=\"true\">
+    echo '
+<div class="draglist" draggable="true">
     <table>
         <thead>
                 <tr>
@@ -7742,22 +7755,22 @@ if (!is_null(@$mcrq)) {
                     <th>排名</th>
                 </tr>
         </thead>
-        <tbody>";
+        <tbody>';
 
     foreach ($mcrq[1] as $g => $position) {
-        echo "
-            <tr class=\"back-azure\">
-                <td>";
+        echo '
+            <tr class="back-azure">
+                <td>';
         foreach ($mcrq[1] as $f => $position) {
             $kz = (explode('&nbsp;', $mcrq[5][$g]));
             array_pop($kz);
-            echo "
-                    <a href=\"".$url."?s=".@$kz[$f]."\" target=\"_blank\">"
+            echo '
+                    <a href="'.$url.'?s='.@$kz[$f].'" target="_blank">'
                         .@$kz[$f]
                     .'</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
         }
-        echo "</td>
-                <td class=\"center\">"
+        echo '</td>
+                <td class="center">'
                     .@$mcrq[1][$g]
                 .'</td>
             </tr>';
@@ -10216,7 +10229,7 @@ if (strlen($s) > 0) {
     <a class="noa" href="http://top.baidu.com/buzz?b=1" target="_blank" rel="external nofollow noreferrer">百度实时热点排行榜</a>
     <a class="noa" href="http://www.weixingon.com/baidusp-srcid.php" target="_blank">百度搜索产品资源</a>
     <a class="noa" href="http://www.weixingon.com/baiduip.php" target="_blank">百度的IP地址是多少</a>
-    <a class="noa" href="https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php" target="_blank" rel="external nofollow noreferrer">百度参数分析工具v1.16</a>
+    <a class="noa" href="https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php" target="_blank" rel="external nofollow noreferrer">百度参数分析工具v1.17</a>
 </p>'."\r\n";
 }
 
