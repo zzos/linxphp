@@ -659,14 +659,14 @@ $fk1 = '<a href="http://ask.seowhy.com/article/64" target="_blank" rel="external
 $fk2 = '<a href="http://ask.seowhy.com/question/8111" target="_blank" rel="external nofollow noreferrer" title="为什么百度搜索结果首页1个网站出现14个自然点击链接？">键值&nbsp;value</a>';
 $nofk = '<a href="http://ask.seowhy.com/question/9486" target="_blank" rel="external nofollow noreferrer" title="净水器百度排名175，能做上去吗？">无&nbsp;F,&nbsp;fk&nbsp;(百度汇、实时、面包屑导航条)</a>';
 $openapi = '百度开放平台&nbsp;api';
-$F[1] = '<span title="搜索结果标题|摘要与查询词的语义关联度">语义关联性</span>';
+$F[1] = '<span title="搜索结果标题|摘要与查询词的语义关联度">语义关联</span>';
 $F[2] = '同音词';
 $F[3] = '[猜]&nbsp;正规性';
 $F[4] = '[猜]&nbsp;更新';
 $F[5] = '[猜]&nbsp;实时度';
-$F[6] = '<a href="http://ask.seowhy.com/article/121" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果参数F第6位基于IP位置">基于&nbsp;IP&nbsp;位置</a>';
+$F[6] = '<a href="http://ask.seowhy.com/article/121" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果参数F第6位基于IP位置">基于IP位置</a>';
 $F[7] = '<a href="http://ask.seowhy.com/question/9058" target="_blank" rel="external nofollow noreferrer" title="搜索文章url能够搜索出来，但是site网站域名的时候却没有，什么原因造成的呢？">网址</a>';
-$F[8] = '标题或网址或摘要';
+$F[8] = '标题|网址|摘要';
 $F1[1] = '第&nbsp;1&nbsp;位';
 $F1[2] = '第&nbsp;2&nbsp;位';
 $F1[3] = '<a href="http://ask.seowhy.com/question/8958" target="_blank" rel="external nofollow noreferrer" title="快照时间显示，以小时为单位">时间限制</a>';
@@ -1013,7 +1013,7 @@ $srcidas = array (
     array(40, '未知', '', ''),
     // 2015-01-08 搜外 搜外网 http://www.seowhy.com/
     array(39, '[官网]&nbsp;0－6&nbsp;个子链结果', '201405添加', ''),
-    array(38, '软件下载摘要|小说作者状态类型－结构化数据', '', ''),
+    array(38, '摘要－结构化数据', '', ''),
     array(37, '组图&nbsp;百度经验', '', ''),
     array(36, '一般答案&nbsp;百度知道', '', ''),
     array(35, '未知，模版采用&nbsp;se_com_image_s', '模版', ''),
@@ -1084,8 +1084,7 @@ $srcidas = array (
 </div>';
 }
 
-// fetch key
-
+// fetch key 逻辑有问题
 if (preg_match_all("/(?<=\"  srcid\=\")(\d{1,5})(\"  fk=\")(\d{0,5})(_?)(.+)(\" id\=\")(\d{1,2})(?=\" tpl\=\")/", @$baiduserp, $matchfk))
 
 // 抓取键名，键值，来源，排名
@@ -1106,11 +1105,11 @@ if (strlen($s) > 0) {
         <tbody>";
 
     foreach ($matchfk[7] as $i => $position) {
-        $fk = explode(".",$matchfk[5][$i],5);
-        echo "
-            <tr class=\"back-egg\">
-                <td class=\"center\">".$matchfk[1][$i]."</td>
-                <td class=\"center\">";
+        $fk = explode('.',$matchfk[5][$i],5);
+        echo '
+            <tr class="back-egg">
+                <td class="center">'.$matchfk[1][$i].'</td>
+                <td class="center">';
             {
             if ($fk[0] == "tv")
             echo "电视剧";
@@ -1339,17 +1338,13 @@ if (strlen($s) > 0) {
             else
             echo $fk[2];
             }
-            if (!is_null(@$fk[3]))
-            {
-            echo "&nbsp;"
-                    ."<span title=\"创建时间\">"
+            if (!is_null(@$fk[3])) {
+                echo '&nbsp;<span title="创建时间">'
                         .date("Y-m-d H:i:s",$fk[3])
-                    ."</span>"
-                    ."&nbsp;"
-                    ."<span title=\"[猜] 生成的第".(@$fk[4]+1)."个资源\">"
+                    .'</span>&nbsp;<span title="[猜] 生成的第'.(@$fk[4]+1).'个资源">'
                         .@$fk[4]
-                    ."</span>
-                </td>";
+                    .'</span>
+                </td>';
             }
         {
  
@@ -7786,27 +7781,26 @@ if (!is_null(@$mcrq)) {
 if (preg_match_all("/(?<=F':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", @$baiduserp, $matchf))
 
 if (strlen($s) > 0) {
-echo"
-<div class=\"draglist\" draggable=\"true\">
+    echo '
+<div class="draglist" draggable="true">
     <table>
         <thead>
             <tr>
-                <th>$F[1]</th>
-                <th>$F[2]</th>
-                <th>$F[3]</th>
-                <th>$F[4]</th>
-                <th>$F[5]</th>
-                <th>$F[6]</th>
-                <th>$F[7]</th>
-                <th>$F[8]</th>
+                <th>'.$F[1].'</th>
+                <th>'.$F[2].'</th>
+                <th>'.$F[3].'</th>
+                <th>'.$F[4].'</th>
+                <th>'.$F[5].'</th>
+                <th>'.$F[6].'</th>
+                <th>'.$F[7].'</th>
+                <th>'.$F[8].'</th>
                 <th>F</th>
                 <th>排名</th>
             </tr>
         </thead>
-        <tbody class=\"center\">";
+        <tbody class="center">';
 
-    foreach ($matchf[3] as $i => $position)
-    {
+    foreach ($matchf[3] as $i => $position) {
         $fvalue1 = $matchf[3][$i];
         $fvalue2 = $matchf[4][$i];
         $fvalue3 = $matchf[5][$i];
@@ -7815,189 +7809,171 @@ echo"
         $fvalue6 = $matchf[8][$i];
         $fvalue7 = $matchf[9][$i];
         $fvalue8 = $matchf[10][$i];
-        echo "
-            <tr>";
-        {
-        if ($fvalue1 == "F")
-            echo "
-                <td class=\"unit-lightskyblue\">
-                    低
-                </td>";
-        elseif ($fvalue1 == "7")
-            echo "
-                <td class=\"unit-darkseagreen\">
-                    中
-                </td>";
-        elseif ($fvalue1 == "5")
-            echo "
-                <td class=\"unit-lavender\">
-                    较高
-                </td>";
-        elseif ($fvalue1 == "3")
-            echo "
-                <td class=\"unit-violet\">
-                    高
-                </td>";
-        else
-            echo "
-                <td>".$fvalue1."</td>";
+        echo '
+            <tr>';
+
+        if ($fvalue1 == '7') {
+            echo '
+                <td class="unit-darkseagreen">默认</td>';
         }
-        {
-        if ($fvalue2 == "F")
-            echo "
-                <td class=\"unit-lightskyblue\">
-                    <span title=\"百度搜索302，第一出现\">[猜]&nbsp;日本汉字</span>
-                </td>";
-        elseif ($fvalue2 == "7")
-            echo "
-                <td class=\"unit-darkseagreen\">
-                    不纠正
-                </td>";
-        elseif     ($fvalue2 == "3")
-            echo "
-                <td class=\"unit-violet\">
-                    显示纠正搜索结果
-                </td>";
-        else
-            echo "
-                <td>".$fvalue2."</td>";
+        elseif ($fvalue1 == 'F') {
+            echo '
+                <td class="unit-lightskyblue">低</td>';
         }
-        {
-        if     ($fvalue3 == "A")
-            echo "
-                <td class=\"unit-aquamarine\">
+        elseif ($fvalue1 == '5') {
+            echo '
+                <td class="unit-lavender">中</td>';
+        }
+        elseif ($fvalue1 == '3') {
+            echo '
+                <td class="unit-violet">高</td>';
+        }
+        else {
+            echo '
+                <td>'.$fvalue1.'</td>';
+        }
+
+        if ($fvalue2 == '7') {
+            echo '
+                <td class="unit-darkseagreen">默认</td>';
+        }
+        elseif ($fvalue2 == 'F') {
+            echo '
+                <td class="unit-lightskyblue">
+                    <span title="百度搜索302">[猜]&nbsp;多义词</span>
+                </td>';
+        }
+        elseif ($fvalue2 == '3') {
+            echo '
+                <td class="unit-violet">显示纠正搜索结果</td>';
+        }
+        else {
+            echo '
+                <td>'.$fvalue2.'</td>';
+        }
+
+        if ($fvalue3 == '8') {
+            echo '
+                <td class="unit-mediumpurple">默认</td>';
+        }
+        elseif ($fvalue3 == 'A') {
+            echo '
+                <td class="unit-aquamarine">
                     1.&nbsp;分类信息<br>
                     2.&nbsp;[猜]&nbsp;非正规
-                </td>";
-        elseif     ($fvalue3 == "8")
-            echo "
-                <td class=\"unit-mediumpurple\">
-                    默认
-                </td>";
-        elseif     ($fvalue3 == "0")
-            echo "
-                <td class=\"unit-honeydew\">
-                    [猜]&nbsp;正规影音书籍游戏软件资源
-                </td>";
-        else
-            echo "
-                <td>".$fvalue3."</td>";
+                </td>';
         }
-        {
-        if     ($fvalue4 == "F")
-            echo "
-                <td class=\"unit-lightskyblue\">
-                    快
-                </td>";
-        elseif     ($fvalue4 == "B")
-            echo "
-                <td class=\"unit-springgreen\">
-                    较快
-                </td>";
-        elseif     ($fvalue4 == "7")
-            echo "
-                <td class=\"unit-darkseagreen\">
-                    中
-                </td>";
-        elseif     ($fvalue4 == "3")
-            echo "
-                <td class=\"unit-violet\">
-                    默认
-                </td>";
-        else
-            echo "
-                <td>".$fvalue4."</td>";
+        elseif ($fvalue3 == '0') {
+            echo '
+                <td class="unit-honeydew">[猜]&nbsp;影音书籍游戏软件资源</td>';
         }
-        {
-        if     ($fvalue5 == "3")
-            echo "
-                <td class=\"unit-violet\">
-                    最新资讯
-                </td>";
-        elseif     ($fvalue5 == "1")
-            echo "
-                <td class=\"unit-gold\">
-                    1
-                </td>";
-        else
-            echo "
-                <td>".$fvalue5."</td>";
+        else {
+            echo '
+                <td>'.$fvalue3.'</td>';
         }
-        {
-        if     ($fvalue6 == "7")
-            echo "
-                <td class=\"unit-darkseagreen\">
-                    不限地域
-                </td>";
-        elseif     ($fvalue6 == "5")
-            echo "
-                <td class=\"unit-lavender\">
-                    基于&nbsp;IP&nbsp;地理位置更换结果
-                </td>";
-        elseif     ($fvalue6 == "3")
-            echo "
-                <td class=\"unit-violet\">
+
+        if ($fvalue4 == '3') {
+            echo '
+                <td class="unit-violet">默认</td>';
+        }
+        elseif ($fvalue4 == 'F') {
+            echo '
+                <td class="unit-lightskyblue">快</td>';
+        }
+        elseif ($fvalue4 == 'B') {
+            echo '
+                <td class="unit-springgreen">较快</td>';
+        }
+        elseif ($fvalue4 == '7') {
+            echo '
+                <td class="unit-darkseagreen">中</td>';
+        }
+        else {
+            echo '
+                <td>'.$fvalue4.'</td>';
+        }
+
+        if ($fvalue5 == '1') {
+            echo '
+                <td class="unit-gold">默认</td>';
+        }
+        elseif ($fvalue5 == '3') {
+            echo '
+                <td class="unit-violet">最新资讯</td>';
+        }
+        else {
+            echo '
+                <td>'.$fvalue5.'</td>';
+        }
+
+        if ($fvalue6 == '7') {
+            echo '
+                <td class="unit-darkseagreen">默认</td>';
+        }
+        elseif ($fvalue6 == '5') {
+            echo '
+                <td class="unit-lavender">基于&nbsp;IP&nbsp;地理位置更换结果</td>';
+        }
+        elseif ($fvalue6 == '3')
+            echo '
+                <td class="unit-violet">
                     [猜]&nbsp;不基于&nbsp;IP&nbsp;地理位置更换结果<br>
                     但进入目标网站自会选择地域
-                </td>";
-        else
-            echo "
-                <td>".$fvalue6."</td>";
+                </td>';
+        else {
+            echo '
+                <td>'.$fvalue6.'</td>';
         }
-        {
-        if     ($fvalue7 == "F")
-            echo "
-                <td class=\"unit-lightskyblue\">
-                    <span title=\"“以下是网页中包含".$s."的结果”之上的结果\">精确匹配</span>
-                </td>";
-        elseif     ($fvalue7 == "E")
-            echo "
-                <td class=\"unit-deepskyblue\">
-                    不限网址
-                </td>";
-        elseif     ($fvalue7 == "A")
-            echo "
-                <td class=\"unit-aquamarine\">
-                    A
-                </td>";
-        else
-            echo "
-                <td>".$fvalue7."</td>";
+
+        if ($fvalue7 == 'E') {
+            echo '
+                <td class="unit-deepskyblue">默认</td>';
         }
-        {
-        if     ($fvalue8 == "B")
-            echo "
-                <td class=\"unit-springgreen\">
-                    近义词匹配
-                </td>";
-        elseif     ($fvalue8 == "A")
-            echo "
-                <td class=\"unit-aquamarine\">
-                    精确匹配
-                </td>";
-        elseif     ($fvalue8 == "9")
-            echo "
-                <td class=\"unit-burlywood\">
-                    9
-                </td>";
-        elseif     ($fvalue8 == "8")
-            echo "
-                <td class=\"unit-mediumpurple\">
-                    部分匹配
-                </td>";
-        else
-            echo "
-                <td>".$fvalue8."</td>";
+        elseif ($fvalue7 == 'F') {
+            echo '
+                <td class="unit-lightskyblue">
+                    <span title="“以下是网页中包含'.$s.'的结果”之上的结果">精确匹配</span>
+                </td>';
         }
-            echo"
-                <td class=\"back-pink\">".$fvalue1.$fvalue2.$fvalue3.$fvalue4.$fvalue5.$fvalue6.$fvalue7.$fvalue8."</td>
-                <td class=\"back-pink\">".@$matchsrcid[3][$i]."</td>
-            </tr>";
+        elseif ($fvalue7 == 'A') {
+            echo '
+                <td class="unit-aquamarine">A</td>';
+        }
+        else {
+            echo '
+                <td>'.$fvalue7.'</td>';
+        }
+
+        if ($fvalue8 == 'A') {
+            echo '
+                <td class="unit-aquamarine">默认</td>';
+        }
+        elseif ($fvalue8 == 'B') {
+            echo '
+                <td class="unit-springgreen">近义词匹配</td>';
+        }
+        elseif ($fvalue8 == '9') {
+            echo '
+                <td class="unit-burlywood">9</td>';
+        }
+        elseif ($fvalue8 == '8') {
+            echo '
+                <td class="unit-mediumpurple">部分匹配</td>';
+        }
+        else {
+            echo '
+                <td>'.$fvalue8.'</td>';
+        }
+
+        echo '
+                <td class="back-pink">'.$fvalue1.$fvalue2.$fvalue3.$fvalue4.$fvalue5.$fvalue6.$fvalue7.$fvalue8.'</td>
+                <td class="back-pink">'.@$matchsrcid[3][$i].'</td>
+            </tr>';
     }
-    echo"
+    echo '
         </tbody>
     </table>
-</div>";
+</div>';
 }
 
 // F1
