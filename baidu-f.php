@@ -882,7 +882,7 @@ if (preg_match('/(?<=该网站共有)(\s{16})(<b style="color:#333">)([0-9,\x80-
 echo "\r\n<p class=\"white\">".$indextime.'&nbsp;百度索引量&nbsp;'.$matchsite[3].'&nbsp;(site&nbsp;&divide;&nbsp;索引量)&nbsp;=&nbsp;'.sprintf('%.3f',((str_replace(',', '', $matchnumbers[2]) / str_replace(',' ,'' ,$matchsite[3])) * 100)).'%</p>';
 
 // 搜索结果
-if (preg_match_all("/(?<=\" data\-tools=\'{\"title\":\")([^\"]+)(\",\"url\":\"http:)(\/\/www.baidu.com\/link\?url=[a-zA-Z0-9_\-]{43,214})(?=\"}'><a class=\"c-tip-icon\"><i class=\"c-icon c-icon-triangle-down-g\"><\/i><\/a><\/div>)/", @$baiduserp, $matchserp))
+if (preg_match_all("/(?<=\" data\-tools=\'{\"title\":\")([^\"]+)(\",\"url\":\"http:)(\/\/www.baidu.com\/link\?url=[a-zA-Z0-9_\-]{43,299})(?=\"}'><a class=\"c-tip-icon\"><i class=\"c-icon c-icon-triangle-down-g\"><\/i><\/a><\/div>)/", @$baiduserp, $matchserp))
 
 // F1
 
