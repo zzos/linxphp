@@ -798,7 +798,7 @@ clearstatcache();
 
 // 搜索结果数量
 
-if (preg_match("/(?<=百度为您找到相关结果)([\x80-\xff]{0,3})([0-9,]{1,11})(?=个<\/div>)/", @$baiduserp, $matchnumbers))
+if (preg_match('/(?<=百度为您找到相关结果)([\x80-\xff]{0,3})([0-9,]{1,11})(?=个<\/div>)/', @$baiduserp, $matchnumbers))
 
 // 百度服务器返回的 Unix 时间戳
 
@@ -806,7 +806,7 @@ if (preg_match("/(?<='T':')(\d{10})(?=',)/", $baiduserp, $matchservertime))
 
 // 百度搜索结果展现耗时
 
-if (preg_match("/([\d\.]+)(?=;<\/script><\/html>)/", $baiduserp, $matchsrvt))
+if (preg_match('/([\d\.]+)(?=;<\/script><\/html>)/', $baiduserp, $matchsrvt))
 
 // 搜索结果链接，数量，查询时间
 
@@ -836,11 +836,11 @@ if (strlen($s) > 0) {
 
 // 冇收录
 
-if (preg_match("/(?<=<p>抱歉，没有找到与<span style=\"font-family:宋体\">“<\/span><em>)(.+)(?=<\/em><span style\=\"font\-family:宋体\">”<\/span>相关的网页。<\/p>)/", @$baiduserp, $matchno))
+if (preg_match('/(?<=<p>很抱歉，没有找到与<span style="font-family:宋体">“<\/span><em>)(.+)(?=<\/em><span style="font-family:宋体">”<\/span>相关的网页。<\/p>)/', @$baiduserp, $matchno))
     echo '
 <p>
     <a class="noa" href="http://'.$matchno[1].'" target="_blank" rel="external nofollow noreferrer" title="直接访问&nbsp;'.@$matchno[2].'">
-        抱歉，没有找到与“<span class="red">'.$matchno[1].'</span>”相关的网页。
+        很抱歉，没有找到与“<span class="red">'.$matchno[1].'</span>”相关的网页。
     </a>
 </p>
 <p class="white">
@@ -849,40 +849,40 @@ if (preg_match("/(?<=<p>抱歉，没有找到与<span style=\"font-family:宋体
 
 // 冇收录，但有其他搜索结果
 
-if (preg_match("/(?<=<font class=\"c-gray\">没有找到该URL。您可以直接访问&nbsp;<\/font><a href=\")(.+)(?=\" target=\"_blank\" onmousedown)/", @$baiduserp, $matchno2))
-echo "
-<p class=\"white\">
-    没有找到该URL。您可以直接访问&nbsp;<span class=\"red\"><a class=\"noa\" href=\"".$matchno2[1]."\" target=\"_blank\" rel=\"external nofollow\" title=\"直接访问 ".$matchno2[1]."\">".$matchno2[1]."</a></span>，还可<a class=\"noa\" href=\"http://zhanzhang.baidu.com/sitesubmit/index?sitename=http%3A%2F%2F".$matchno2[1]."\" target=\"_blank\" rel=\"external nofollow\" title=\"您可以提交想被百度收录的url\">提交网址</a>给我们。
-</p>";
+if (preg_match('/(?<=<font class="c-gray">没有找到该URL。您可以直接访问&nbsp;<\/font><a href=")(.+)(?=" target="_blank" onmousedown)/', @$baiduserp, $matchno2))
+echo '
+<p class="white">
+    没有找到该URL。您可以直接访问&nbsp;<span class="red"><a class="noa" href="'.$matchno2[1].'" target="_blank" rel="external nofollow noreferrer" title="直接访问 '.$matchno2[1].'">'.$matchno2[1].'</a></span>，还可<a class="noa" href="http://zhanzhang.baidu.com/sitesubmit/index?sitename=http%3A%2F%2F'.$matchno2[1].'" target="_blank" rel="external nofollow noreferrer" title="您可以提交想被百度收录的url">提交网址</a>给我们。
+</p>';
 
 // 字数限制
 
-if (preg_match("/(?<=<font class\=f14><b>)(.+)(?=&nbsp;及其后面的字词均被忽略，因为百度的查询限制在38个汉字以内。<\/b><\/font>)/", @$baiduserp, $matchlimit))
-echo "<p class=\"white\">".$matchlimit[1]."&nbsp;及其后面的字词均被忽略，因为百度的查询限制在38个汉字以内。</p>";
+if (preg_match('/(?<=<font class=f14><b>)(.+)(?=&nbsp;及其后面的字词均被忽略，因为百度的查询限制在38个汉字以内。<\/b><\/font>)/', @$baiduserp, $matchlimit))
+echo '<p class="white">'.$matchlimit[1].'&nbsp;及其后面的字词均被忽略，因为百度的查询限制在38个汉字以内。</p>';
 
 // 屏蔽词
 
-if (preg_match("/(?<=<div class\=\"boldline se\_common\_hint c\-gap\-bottom c\-container\" data\-id\=\"40400\" data\-tpl\=\"hint\_boldline\"><strong>)(.+)(?=<\/strong><\/div>)/", @$baiduserp, $matchcensor))
-echo "<p class=\"white\">".$matchcensor[1]."</p>";
+if (preg_match('/(?<=<div class="boldline se_common_hint c-gap-bottom c-container" data-id="40400" data-tpl="hint_boldline"><strong>)(.+)(?=<\/strong><\/div>)/', @$baiduserp, $matchcensor))
+echo '<p class="white">'.$matchcensor[1].'</p>';
 
 // 推销电话
 
-if (preg_match("/(?<=<div class\=\"op\_liarphone2_word\">被)(\d+)(?=个&nbsp;<a href\=\"http:\/\/shoujiweishi.baidu.com\/\" target\=\"\_blank\">百度手机卫士<\/a>&nbsp;用户标记为<strong>\"广告推销\"<\/strong>,供您参考。<\/div>)/", @$baiduserp, $matchliarphone))
-echo "<p class=\"white\">被".$matchliarphone[1]."个<a class=\"noa\" href=\"http://shoujiweishi.baidu.com/\" rel=\"external nofollow\" target=\"_blank\">百度手机卫士</a>用户标记为<strong>\"骚扰电话\"</strong>,供您参考。</p>";
+if (preg_match('/(?<=<div class="op_liarphone2_word">被)(\d+)(?=个&nbsp;<a href="http:\/\/shoujiweishi.baidu.com\/" target="_blank">百度手机卫士<\/a>&nbsp;用户标记为<strong>"广告推销"<\/strong>,供您参考。<\/div>)/', @$baiduserp, $matchliarphone))
+echo '<p class="white">被'.$matchliarphone[1].'个<a class="noa" href="http://shoujiweishi.baidu.com/" rel="external nofollow noreferrer" target="_blank">百度手机卫士</a>用户标记为<strong>"骚扰电话"</strong>,供您参考。</p>';
 
 // 诈骗电话
 
-if (preg_match("/(?<=<div class\=\"op\_liarphone2_word\">被)(\d+)(?=个&nbsp;<a href\=\"http:\/\/haoma.sogou.com\" target\=\"\_blank\">搜狗号码通<\/a>&nbsp;用户标记为<strong>\"诈骗\"<\/strong>,请谨防受骗。<\/div>)/", @$baiduserp, $matchliarphone2))
-echo "<p class=\"noa\">被".$matchliarphone2[1]."个<a class=\"white\" href=\"http://haoma.sogou.com\" rel=\"external nofollow\" target=\"_blank\">搜狗号码通</a>用户标记为<strong>\"诈骗\"</strong>,请谨防受骗。</p>";
+if (preg_match('/(?<=<div class="op_liarphone2_word">被)(\d+)(?=个&nbsp;<a href="http:\/\/haoma.sogou.com" target="_blank">搜狗号码通<\/a>&nbsp;用户标记为<strong>"诈骗"<\/strong>,请谨防受骗。<\/div>)/', @$baiduserp, $matchliarphone2))
+echo '<p class="noa">被'.$matchliarphone2[1].'个<a class="white" href="http://haoma.sogou.com" rel="external nofollow noreferrer" target="_blank">搜狗号码通</a>用户标记为<strong>"诈骗"</strong>,请谨防受骗。</p>';
 
 // site 特型
-$indextime = date('Y-m-d',strtotime("-1 day"));
+$indextime = date('Y-m-d',strtotime('-1 day'));
 
-if (preg_match("/(?<=该网站共有)(\s{16})(<b style=\"color:#333\">)([0-9,\x80-\xff]{1,32})(?=<\/b>)/", @$baiduserp, $matchsite))
-echo "\r\n<p class=\"white\">".$indextime."&nbsp;百度索引量&nbsp;".$matchsite[3]."&nbsp;(site&nbsp;&divide;&nbsp;索引量)&nbsp;=&nbsp;".sprintf("%.3f",((str_replace(",","",$matchnumbers[2]) / str_replace("," ,"" ,$matchsite[3])) * 100))."%</p>";
+if (preg_match('/(?<=该网站共有)(\s{16})(<b style="color:#333">)([0-9,\x80-\xff]{1,32})(?=<\/b>)/', @$baiduserp, $matchsite))
+echo "\r\n<p class=\"white\">".$indextime.'&nbsp;百度索引量&nbsp;'.$matchsite[3].'&nbsp;(site&nbsp;&divide;&nbsp;索引量)&nbsp;=&nbsp;'.sprintf('%.3f',((str_replace(',', '', $matchnumbers[2]) / str_replace(',' ,'' ,$matchsite[3])) * 100)).'%</p>';
 
 // 搜索结果
-if (preg_match_all("/(?<=\" data\-tools\=\'{\"title\":\")([^\"]+)(\",\"url\":\"http:)(\/\/www.baidu.com\/link\?url\=[a-zA-Z0-9_\-]+)(?=\"}'><a class=\"c-tip-icon\"><i class=\"c-icon c-icon-triangle-down-g\"><\/i><\/a><\/div>)/", @$baiduserp, $matchserp))
+if (preg_match_all("/(?<=\" data\-tools=\'{\"title\":\")([^\"]+)(\",\"url\":\"http:)(\/\/www.baidu.com\/link\?url=[a-zA-Z0-9_\-]{43,214})(?=\"}'><a class=\"c-tip-icon\"><i class=\"c-icon c-icon-triangle-down-g\"><\/i><\/a><\/div>)/", @$baiduserp, $matchserp))
 
 // F1
 
@@ -890,7 +890,7 @@ $search_res1 = preg_match_all("/(?<=F1':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9
 
 // 搜索结果页资源
 
-if (preg_match_all("/(?<=<div class\=\"result c\-container)( ?)(\" id\=\")(\d{1,3})(\" srcid\=\"15)(\d{2})(?=\" tpl\=\")/", @$baiduserp, $matchsrcid))
+if (preg_match_all('/(?<=<div class="result c-container)( ?)(" id=")(\d{1,3})(" srcid="15)(\d{2})(?=" tpl=")/', @$baiduserp, $matchsrcid))
 
 // 搜索结果，字节，来源，排名
 
@@ -1089,19 +1089,19 @@ if (preg_match_all('/(?<="  srcid=")(\d{1,5})("  fk=")([\d_]{0,6}?)([^_]{1,32})(
 // 抓取键名，键值，来源，排名
 
 if (strlen($s) > 0) {
-    echo "
-<div class=\"draglist\" draggable=\"true\">
+    echo '
+<div class="draglist" draggable="true">
     <table>
         <thead>
             <tr>
-                <th>$fk1</th>
-                <th>$fk2</th>
-                <th><span title=\"百度搜索产品、合作伙伴\">$srcid2</span></th>
-                <th>$openapi</th>
+                <th>'.$fk1.'</th>
+                <th>'.$fk2.'</th>
+                <th><span title="百度搜索产品、合作伙伴">'.$srcid2.'</span></th>
+                <th>'.$openapi.'</th>
                 <th>排名</th>
             </tr>
         </thead>
-        <tbody>";
+        <tbody>';
 
     foreach ($matchfk[6] as $i => $position) {
         $fk = explode('.',$matchfk[4][$i],5);
@@ -6292,7 +6292,7 @@ if (strlen($s) > 0) {
         elseif ($matchfk[1][$i] == 6735)
             echo "
                 <td>
-                    <a href=\"http://zhanzhang.baidu.com/wiki/256\" rel=\"external nofollow\" target=\"_blank\">site特型&nbsp;百度站长平台</a>
+                    <a href=\"http://zhanzhang.baidu.com/wiki/256\" rel=\"external nofollow\" target=\"_blank\">site特型</a>
                 </td>
                 <td class=\"center\">
                     <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
@@ -6657,10 +6657,10 @@ if (strlen($s) > 0) {
 //百度左侧实时知心结果
 
 if
-(preg_match_all("/(?<=\"  srcid\=\")(\d{1,5})(.+)(id\=\"zxl_)(\d{1,2})(?=\" tpl\=\")/", @$baiduserp, $matchzxlrt))
+(preg_match_all('/(?<="  srcid=")(\d{1,5})(.+)(id="zxl_)(\d{1,2})(?=" tpl=")/', @$baiduserp, $matchzxlrt))
 
 if (strlen($s) > 0) {
-echo"
+echo "
 <div class=\"draglist\" draggable=\"true\">
 <table>
     <thead>
@@ -6718,12 +6718,12 @@ echo"
 
 // search product
 
-if (preg_match_all("/(?<=\"  srcid\=\")(\d{1,5})(\"  id\=\")(\d{1,2})(?=\" tpl\=\")/", @$baiduserp, $matchsp))
+if (preg_match_all('/(?<="  srcid=")(\d{1,5})("  id=")(\d{1,2})(?=" tpl=")/', @$baiduserp, $matchsp))
 
 // 百度搜索产品，来源，排名
 
 if (strlen($s) > 0) {
-echo"
+echo "
 <div class=\"draglist\" draggable=\"true\">
     <table>
         <thead>
@@ -7582,7 +7582,7 @@ echo"
 
 // 相关搜索
 
-if (preg_match_all("/(?<=&rs_src\=)([01]{1}&rsv_pq=[a-z0-9]{16}&rsv_t=[\w\%]{50,64}\">)([\x80-\xff\w\s\.#\:\/]{0,32})(?=<\/a><\/th><)/", @$baiduserp, $matchrelated))
+if (preg_match_all("/(?<=&rs_src=)([01]{1}&rsv_pq=[a-z0-9]{16}&rsv_t=[\w\%]{50,64}\">)([\x80-\xff\w\s\.#\:\/]{0,32})(?=<\/a><\/th><)/", @$baiduserp, $matchrelated))
 
 if (strlen($s) > 0) {
 
@@ -7672,7 +7672,7 @@ if (strlen($s) > 0) {
 
 // 为您推荐
 
-if (preg_match_all('/(?<=&p1\=)(\d{1,2})(\"\s\n\s+target=\"_blank\"\s\n\s+class=\"m\"\>)(.+)(<\/div><div class=\"c-gap-top c-recommend\" style=\"display:none;\" data-extquery=\")(.+)(?=\"\>\<i class=\"c-icon c-icon-bear-circle c-gap-right-small\"\>)/', @$baiduserp, $mcrq))
+if (preg_match_all('/(?<=&p1=)(\d{1,2})("\s\n\s+target="_blank"\s\n\s+class="m">)(.+)(<\/div><div class="c-gap-top c-recommend" style="display:none;" data-extquery=")(.+)(?="><i class="c-icon c-icon-bear-circle c-gap-right-small">)/', @$baiduserp, $mcrq))
 
 if (!is_null(@$mcrq)) {
     echo '
@@ -7880,7 +7880,7 @@ if (strlen($s) > 0) {
 
         if ($fvalue8 == 'A') {
             echo '
-                <td class="unit-aquamarine">默认</td>';
+                <td class="unit-aquamarine">精确匹配</td>';
         }
         elseif ($fvalue8 == 'B') {
             echo '
@@ -8119,27 +8119,26 @@ if (strlen($s) > 0) {
 if (preg_match_all("/(?<=F2':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", @$baiduserp, $matchf2))
 
 if (strlen($s) > 0) {
-echo"
-<div class=\"draglist\" draggable=\"true\">
+echo '
+<div class="draglist" draggable="true">
 <table>
         <thead>
             <tr>
-                <th>$F2[1]</th>
-                <th>$F2[2]</th>
-                <th>$F2[3]</th>
-                <th>$F2[4]</th>
-                <th>$F2[5]</th>
-                <th>$F2[6]</th>
-                <th>$F2[7]</th>
-                <th>$F2[8]</th>
-                <th><a href=\"http://ask.seowhy.com/question/8709\" rel=\"external nofollow\" target=\"_blank\" title=\"百度搜索结果参数 F2 和 rsv_sug9 探讨\">F2</a></th>
+                <th>'.$F2[1].'</th>
+                <th>'.$F2[2].'</th>
+                <th>'.$F2[3].'</th>
+                <th>'.$F2[4].'</th>
+                <th>'.$F2[5].'</th>
+                <th>'.$F2[6].'</th>
+                <th>'.$F2[7].'</th>
+                <th>'.$F2[8].'</th>
+                <th><a href="http://ask.seowhy.com/question/8709" rel="external nofollow noreferrer" target="_blank" title="百度搜索结果参数 F2 和 rsv_sug9 探讨">F2</a></th>
                 <th>排名</th>
             </tr>
         </thead>
-        <tbody class=\"center\">";
+        <tbody class="center">';
     
-    foreach ($matchf2[3] as $i => $position)
-    {
+    foreach ($matchf2[3] as $i => $position) {
         $f2value1 = $matchf2[3][$i];
         $f2value2 = $matchf2[4][$i];
         $f2value3 = $matchf2[5][$i];
@@ -8148,201 +8147,202 @@ echo"
         $f2value6 = $matchf2[8][$i];
         $f2value7 = $matchf2[9][$i];
         $f2value8 = $matchf2[10][$i];
-        echo "
-            <tr>";
-        {
-        if
-            ($f2value1 == "C")
-            echo "
-                <td class=\"unit-darkturquoise\">
-                    搜索结果与查询词深度相关
-                </td>";
-        elseif ($f2value1 == "8")
-            echo "
-                <td class=\"unit-mediumpurple\">
-                    <span title=\"只在百度搜索小米出现过\">中</span>
-                </td>";
-        elseif ($f2value1 == "6")
-            echo "
-                <td class=\"unit-silver\">
-                    搜索结果与查询词广度相关
-                </td>";
-        elseif ($f2value1 == "4")
-            echo "
-                <td class=\"unit-tomato\">
-                    默认
-                </td>";
-        else
-            echo "
-                <td>".$f2value1."</td>";
+        echo '
+            <tr>';
+
+        if ($f2value1 == '4') {
+            echo '
+                <td class="unit-tomato">默认</td>';
         }
-        {
-        if ($f2value2 == "E")
-            echo "
-                <td class=\"unit-deepskyblue\">
-                    <span title=\"百度搜索百度贴吧，nba出现\">[猜]&nbsp;搜索结果展现网址与目标网址不同</span>
-                </td>";
-        elseif ($f2value2 == "D")
-            echo "
-                <td class=\"unit-mediumseagreen\">
-                    <span title=\"百度搜索淘出现\">D</span>
-                </td>";
-        elseif ($f2value2 == "C")
-            echo "
-                <td class=\"unit-darkturquoise\">
-                    C
-                </td>";
-        elseif ($f2value2 == "8")
-            echo "
-                <td class=\"unit-darkseagreen\">
+        elseif ($f2value1 == 'C') {
+            echo '
+                <td class="unit-darkturquoise">搜索结果与查询词深度相关</td>';
+        }
+        elseif ($f2value1 == '8') {
+            echo '
+                <td class="unit-mediumpurple">
+                    <span title="只在百度搜索小米出现过">中</span>
+                </td>';
+        }
+        elseif ($f2value1 == '6') {
+            echo '
+                <td class="unit-silver">搜索结果与查询词广度相关</td>';
+        }
+        else {
+            echo '
+                <td>'.$f2value1.'</td>';
+        }
+
+        if ($f2value2 == 'C') {
+            echo '
+                <td class="unit-darkturquoise">默认</td>';
+        }
+        elseif ($f2value2 == 'E') {
+            echo '
+                <td class="unit-deepskyblue">
+                    <span title="百度搜索百度贴吧，nba出现">[猜]&nbsp;搜索结果展现网址与目标网址不同</span>
+                </td>';
+        }
+        elseif ($f2value2 == 'D') {
+            echo '
+                <td class="unit-mediumseagreen">
+                    <span title="百度搜索淘出现">D</span>
+                </td>';
+        }
+        elseif ($f2value2 == '8') {
+            echo '
+                <td class="unit-darkseagreen">
                     1.&nbsp;更多贴吧相关帖子&gt;&gt;<br>
                     2.&nbsp;未知
-                </td>";
-        else
-            echo "
-                <td>".$f2value2."</td>";
+                </td>';
         }
-        {
-        if ($f2value3 == "E")
-            echo "
-                <td class=\"unit-deepskyblue\">
-                    <span title=\"百度搜索淘宝|淘宝网|当当网出现\">E</span>
-                </td>";
-        elseif ($f2value3 == "A")
-            echo "
-                <td class=\"unit-aquamarine\">
-                    A
-                </td>";
-        elseif ($f2value3 == "8")
-            echo "
-                <td class=\"unit-mediumpurple\">
-                    8
-                </td>";
-        elseif ($f2value3 == "2")
-            echo "
-                <td class=\"unit-gold\">
+        else {
+            echo '
+                <td>'.$f2value2.'</td>';
+        }
+
+        if ($f2value3 == 'A') {
+            echo '
+                <td class="unit-aquamarine">默认</td>';
+        }
+        elseif ($f2value3 == 'E') {
+            echo '
+                <td class="unit-deepskyblue">
+                    <span title="百度搜索淘宝|淘宝网|当当网出现">E</span>
+                </td>';
+        }
+        elseif ($f2value3 == '8') {
+            echo '
+                <td class="unit-mediumpurple">8</td>';
+        }
+        elseif ($f2value3 == '2') {
+            echo '
+                <td class="unit-gold">
                     标语<br>
                     slogan
-                </td>";
-        else
-            echo "
-                <td>".$f2value3."</td>";
+                </td>';
         }
-        {
-        if ($f2value4 == "7")
-            echo "
-                <td class=\"unit-darkseagreen\">
+        else {
+            echo '
+                <td>'.$f2value3.'</td>';
+        }
+
+        if ($f2value4 == '6') {
+            echo '
+                <td class="unit-silver">默认</td>';
+        }
+        elseif ($f2value4 == '7') {
+            echo '
+                <td class="unit-darkseagreen">
                     [猜]&nbsp;使用百度排名点击器(搜easy)出现
-                </td>";
-        elseif ($f2value4 == "6")
-            echo "
-                <td class=\"unit-silver\">
-                    6
-                </td>";
-        else
-            echo "
-                <td>".$f2value4."</td>";
+                </td>';
         }
-        {
-        if ($f2value5 == "D")
-            echo "
-                <td class=\"unit-mediumseagreen\">
-                    D
-                </td>";
-        elseif ($f2value5 == "C")
-            echo "
-                <td class=\"unit-darkturquoise\">
-                    C
-                </td>";
-        else
-            echo "
-                <td>".$f2value5."</td>";
+        else {
+            echo '
+                <td>'.$f2value4.'</td>';
         }
-        {
-        if ($f2value6 == "F")
-            echo "
-                <td class=\"unit-lightskyblue\">
-                    无
-                </td>";
-        elseif ($f2value6 == "E")
-            echo "
-                <td class=\"unit-deepskyblue\">
-                    少
-                </td>";
-        elseif ($f2value6 == "D")
-            echo "
-                <td class=\"unit-mediumseagreen\">
-                    中
-                </td>";
-        elseif ($f2value6 == "C")
-            echo "
-                <td class=\"unit-darkturquoise\">
-                    多
-                </td>";
-        else
-            echo "
-                <td>".$f2value6."</td>";
+
+        if ($f2value5 == 'D') {
+            echo '
+                <td class="unit-mediumseagreen">默认</td>';
         }
-        {
-        if ($f2value7 == "E")
-            echo "
-                <td class=\"unit-deepskyblue\">
+        elseif ($f2value5 == 'C') {
+            echo '
+                <td class="unit-darkturquoise">C</td>';
+        }
+        else {
+            echo '
+                <td>'.$f2value5.'</td>';
+        }
+
+        if ($f2value6 == 'D') {
+            echo '
+                <td class="unit-mediumseagreen">默认</td>';
+        }
+        elseif ($f2value6 == 'F') {
+            echo '
+                <td class="unit-lightskyblue">无</td>';
+        }
+        elseif ($f2value6 == 'E') {
+            echo '
+                <td class="unit-deepskyblue">少</td>';
+        }
+        elseif ($f2value6 == 'C') {
+            echo '
+                <td class="unit-darkturquoise">多</td>';
+        }
+        else {
+            echo '
+                <td>'.$f2value6.'</td>';
+        }
+
+        if ($f2value7 == '6') {
+            echo '
+                <td class="unit-silver">
+                    无<br>
+                    no
+                </td>';
+        }
+        elseif ($f2value7 == 'E') {
+            echo '
+                <td class="unit-deepskyblue">
                     链接锚文本<br>
                     anchor_text
-                </td>";
-        elseif ($f2value7 == "6")
-            echo "
-                <td class=\"unit-silver\">
-                    无<br>
-                    no
-                </td>";
-        else
-            echo "
-                <td>".$f2value7."</td>";
+                </td>';
         }
-        {
-        if ($f2value8 == "F")
-            echo "
-                <td class=\"unit-lightskyblue\">
-                    <a href=\"http://www.weixingon.com/wordcount/#exp\" rel=\"nofollow\" target=\"_blank\" title=\"名词解释\">权值标签里的文本&nbsp;(-)&nbsp;网页标题</a>
-                </td>";
-        elseif ($f2value8 == "E")
-            echo "
-                <td class=\"unit-deepskyblue\">
-                    权值标签<br>
-                    tag
-                </td>";
-        elseif ($f2value8 == "B")
-            echo "
-                <td class=\"unit-springgreen\">
+        else {
+            echo '
+                <td>'.$f2value7.'</td>';
+        }
+
+        if ($f2value8 == 'B') {
+            echo '
+                <td class="unit-springgreen">
                     网页标题<br>
                     title
-                </td>";
-        elseif ($f2value8 == "A")
-            echo "
-                <td class=\"unit-aquamarine\">
+                </td>';
+        }
+        elseif ($f2value8 == 'F') {
+            echo '
+                <td class="unit-lightskyblue">
+                    <a href="http://www.weixingon.com/wordcount/#exp" target="_blank" title="名词解释">权值标签里的文本&nbsp;(-)&nbsp;网页标题</a>
+                </td>';
+        }
+        elseif ($f2value8 == 'E') {
+            echo '
+                <td class="unit-deepskyblue">
+                    权值标签<br>
+                    tag
+                </td>';
+        }
+        elseif ($f2value8 == 'A') {
+            echo '
+                <td class="unit-aquamarine">
                     无<br>
                     no
-                </td>";
-        elseif ($f2value8 == "8")
-            echo "
-                <td class=\"unit-mediumpurple\">
+                </td>';
+        }
+        elseif ($f2value8 == '8') {
+            echo '
+                <td class="unit-mediumpurple">
                     网址<br>
                     url
-                </td>";
-        else
-            echo "
-                <td>".$f2value8."</td>";
+                </td>';
         }
-            echo"
-                <td class=\"back-green\">".$f2value1.$f2value2.$f2value3.$f2value4.$f2value5.$f2value6.$f2value7.$f2value8."</td>
-                <td class=\"back-green\">".@$matchsrcid[3][$i]."</td>
-            </tr>";
+        else {
+            echo '
+                <td>'.$f2value8.'</td>';
+        }
+
+        echo '
+                <td class="back-green">'.$f2value1.$f2value2.$f2value3.$f2value4.$f2value5.$f2value6.$f2value7.$f2value8.'</td>
+                <td class="back-green">'.@$matchsrcid[3][$i].'</td>
+            </tr>';
     }
-    echo"
+    echo'
         </tbody>
     </table>
-</div>";
+</div>';
 }
 
 // F3
@@ -8350,27 +8350,26 @@ echo"
 if (preg_match_all("/(?<=F3':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", @$baiduserp, $matchf3))
 
 if (strlen($s) > 0) {
-echo"
-<div class=\"draglist\" draggable=\"true\">
+    echo '
+<div class="draglist" draggable="true">
     <table>
         <thead>
             <tr>
-                <th>$F3[1]</th>
-                <th>$F3[2]</th>
-                <th>$F3[3]</th>
-                <th>$F3[4]</th>
-                <th>$F3[5]</th>
-                <th>$F3[6]</th>
-                <th>$F3[7]</th>
-                <th>$F3[8]</th>
-                <th><a href=\"http://ask.seowhy.com/article/41\" rel=\"external nofollow\" target=\"_blank\" title=\"对吴星关于“F系列”参数研究的看法\">F3</a></th>
+                <th>'.$F3[1].'</th>
+                <th>'.$F3[2].'</th>
+                <th>'.$F3[3].'</th>
+                <th>'.$F3[4].'</th>
+                <th>'.$F3[5].'</th>
+                <th>'.$F3[6].'</th>
+                <th>'.$F3[7].'</th>
+                <th>'.$F3[8].'</th>
+                <th><a href="http://ask.seowhy.com/article/41" rel="external nofollow noreferrer" target="_blank" title="对吴星关于“F系列”参数研究的看法">F3</a></th>
                 <th>排名</th>
             </tr>
         </thead>
-        <tbody class=\"center\">";
+        <tbody class="center">';
 
-    foreach ($matchf3[3] as $i => $position)
-    {
+    foreach ($matchf3[3] as $i => $position) {
         $f3value1 = $matchf3[3][$i];
         $f3value2 = $matchf3[4][$i];
         $f3value3 = $matchf3[5][$i];
@@ -8379,246 +8378,223 @@ echo"
         $f3value6 = $matchf3[8][$i];
         $f3value7 = $matchf3[9][$i];
         $f3value8 = $matchf3[10][$i];
-        echo "
-            <tr>";
-        {
-        if
-            ($f3value1 == "D")
-            echo "
-                <td class=\"unit-mediumseagreen\">
-                    D
-                </td>";
-        elseif ($f3value1 == "5")
-            echo "
-                <td class=\"unit-lavender\">
-                    5
-                </td>";
-        else
-            echo "
-                <td>".$f3value1."</td>";
+        echo '
+            <tr>';
+
+        if ($f3value1 == '5') {
+            echo '
+                <td class="unit-lavender">默认</td>';
         }
-        {
-        if ($f3value2 == "4")
-            echo "
-                <td class=\"unit-tomato\">
-                    4
-                </td>";
-        else
-            echo "
-                <td>".$f3value2."</td>";
+        elseif ($f3value1 == 'D') {
+            echo '
+                <td class="unit-mediumseagreen">D</td>';
         }
-        {
-        if ($f3value3 == "F")
-            echo "
-                <td class=\"unit-lightskyblue\">
-                    <span title=\"百度搜索合肥SEO出现\">F</span>
-                </td>";
-        elseif ($f3value3 == "E")
-            echo "
-                <td class=\"unit-deepskyblue\">
-                    E
-                </td>";
-        else
-            echo "
-                <td>".$f3value3."</td>";
+        else {
+            echo '
+                <td>'.$f3value1.'</td>';
         }
-        {
-        if ($f3value4 == "7")
-            echo "
-                <td class=\"unit-darkseagreen\">
-                    最低<br>
-                    8 级
-                </td>";
-        elseif ($f3value4 == "6")
-            echo "
-                <td class=\"unit-silver\">
-                    7 级
-                </td>";
-        elseif ($f3value4 == "5")
-            echo "
-                <td class=\"unit-lavender\">
-                    默认<br>
-                    6 级
-                </td>";
-        elseif ($f3value4 == "3")
-            echo "
-                <td class=\"unit-violet\">
-                    星火计划 [原创]<br>
-                    4 级
-                </td>";
-        elseif ($f3value4 == "2")
-            echo "
-                <td class=\"unit-orange\">
-                    星火计划 [原创]<br>
-                    3 级
-                </td>";
-        elseif ($f3value4 == "1")
-            echo "
-                <td class=\"unit-gold\">
-                    星火计划 [原创]<br>
-                    2 级
-                </td>";
-        elseif ($f3value4 == "0")
-            echo "
-                <td class=\"unit-honeydew\">
-                    星火计划 [原创]<br>
-                    最高<br>
-                    1 级
-                </td>";
-        else
-            echo "
-                <td>".$f3value4."</td>";
+
+        if ($f3value2 == '4') {
+            echo '
+                <td class="unit-tomato">默认</td>';
         }
-        {
-        if ($f3value5 == "B")
-            echo "
-                <td class=\"unit-springgreen\">
-                    目录|详情页<br>
-                    优先级较高
-                </td>";
-        elseif ($f3value5 == "A")
-            echo "
-                <td class=\"unit-aquamarine\">
-                    主域名、子域名<br>
-                    优先级较高<br>
-                    或内容相对充实的目录、详情页
-                </td>";
-        elseif ($f3value5 == "6")
-            echo "
-                <td class=\"unit-violet\">
-                    6
-                </td>";
-        elseif ($f3value5 == "3")
-            echo "
-                <td class=\"unit-violet\">
-                    目录|详情页<br>
-                    优先级较低
-                </td>";
-        elseif ($f3value5 == "2")
-            echo "
-                <td class=\"unit-orange\">
+        else {
+            echo '
+                <td>'.$f3value2.'</td>';
+        }
+
+        if ($f3value3 == 'E') {
+            echo '
+                <td class="unit-deepskyblue">默认</td>';
+        }
+        elseif ($f3value3 == 'F') {
+            echo '
+                <td class="unit-lightskyblue">
+                    <span title="百度搜索合肥SEO出现">F</span>
+                </td>';
+        }
+        else {
+            echo '
+                <td>'.$f3value3.'</td>';
+        }
+
+        if ($f3value4 == '5') {
+            echo '
+                <td class="unit-lavender">默认</td>';
+        }
+        elseif ($f3value4 == '7') {
+            echo '
+                <td class="unit-darkseagreen">最低</td>';
+        }
+        elseif ($f3value4 == '6') {
+            echo '
+                <td class="unit-silver">6</td>';
+        }
+        elseif ($f3value4 == '3') {
+            echo '
+                <td class="unit-violet">星火计划 [原创] 3</td>';
+        }
+        elseif ($f3value4 == '2') {
+            echo '
+                <td class="unit-orange">星火计划 [原创] 2</td>';
+        }
+        elseif ($f3value4 == '1') {
+            echo '
+                <td class="unit-gold">星火计划 [原创] 1</td>';
+        }
+        elseif ($f3value4 == '0') {
+            echo '
+                <td class="unit-honeydew">
+                    星火计划 [原创]<br>
+                    最高 0
+                </td>';
+        }
+        else {
+            echo '
+                <td>'.$f3value4.'</td>';
+        }
+
+        if ($f3value5 == '2') {
+            echo '
+                <td class="unit-orange">
                     主域名、子域名<br>
                     优先级较低<br>
                     或内容相对充实的目录、详情页
-                </td>";
-        elseif ($f3value5 == "1")
-            echo "
-                <td class=\"unit-gold\">
-                    1
-                </td>";
-        elseif ($f3value5 == "0")
-            echo "
-                <td class=\"unit-honeydew\">
-                    0
-                </td>";
-        else
-            echo "
-                <td>".$f3value5."</td>";
+                </td>';
         }
-        {
-        if ($f3value6 == "C")
-            echo "
-                <td class=\"unit-darkturquoise\">
-                    C
-                </td>";
-        elseif ($f3value6 == "6")
-            echo "
-                <td class=\"unit-silver\">
-                    6
-                </td>";
-        elseif ($f3value6 == "4")
-            echo "
-                <td class=\"unit-tomato\">
-                    4
-                </td>";
-        elseif ($f3value6 == "2")
-            echo "
-                <td class=\"unit-orange\">
-                    2
-                </td>";
-        elseif ($f3value6 == "0")
-            echo "
-                <td class=\"unit-honeydew\">
-                    <span title=\"百度搜索杨澜爸爸|第一女神出现\">在有同义词的搜索结果页<br>完全匹配查询词</span>
-                </td>";
-        else
-            echo "
-                <td>".$f3value6."</td>";
+        elseif ($f3value5 == 'B') {
+            echo '
+                <td class="unit-springgreen">
+                    目录|详情页<br>
+                    优先级较高
+                </td>';
         }
-        {
-        if ($f3value7 == "3")
-            echo "
-                <td class=\"unit-violet\">
-                    3
-                </td>";
-        elseif ($f3value7 == "2")
-            echo "
-                <td class=\"unit-orange\">
-                    2
-                </td>";
-        elseif ($f3value7 == "1")
-            echo "
-                <td class=\"unit-gold\">
-                    <span title=\"搜索微信开发源代码出现\">1</span>
-                </td>";
-        else
-            echo "
-                <td>".$f3value7."</td>";
+        elseif ($f3value5 == 'A') {
+            echo '
+                <td class="unit-aquamarine">
+                    主域名、子域名<br>
+                    优先级较高<br>
+                    或内容相对充实的目录、详情页
+                </td>';
         }
-        {
-        if ($f3value8 == "F")
-            echo "
-                <td class=\"unit-lightskyblue\">
-                    精确匹配
-                </td>";
-        elseif ($f3value8 == "E")
-            echo "
-                <td class=\"unit-deepskyblue\">
-                    近义词匹配
-                </td>";
-        elseif ($f3value8 == "D")
-            echo "
-                <td class=\"unit-mediumseagreen\">
-                    D
-                </td>";
-        elseif ($f3value8 == "C")
-            echo "
-                <td class=\"unit-darkturquoise\">
-                    C
-                </td>";
-        elseif ($f3value8 == "7")
-            echo "
-                <td class=\"unit-darkseagreen\">
-                    匹配网址
-                </td>";
-        elseif ($f3value8 == "6")
-            echo "
-                <td class=\"unit-silver\">
-                    6
-                </td>";
-        elseif ($f3value8 == "5")
-            echo "
-                <td class=\"unit-lavender\">
-                    近似匹配
-                </td>";
-        elseif ($f3value8 == "4")
-            echo "
-                <td class=\"unit-tomato\">
-                    <span title=\"百度搜索bj.baidu后台维护出现\">4</span>
-                </td>";
-        else
-            echo "
-                <td>".$f3value8."</td>";
+        elseif ($f3value5 == '6') {
+            echo '
+                <td class="unit-violet">6</td>';
         }
-            echo"
-                <td class=\"back-blue\">".$f3value1.$f3value2.$f3value3.$f3value4.$f3value5.$f3value6.$f3value7.$f3value8."</td>
-                <td class=\"back-blue\">".@$matchsrcid[3][$i]."</td>
-            </tr>";
+        elseif ($f3value5 == '3') {
+            echo '
+                <td class="unit-violet">
+                    目录|详情页<br>
+                    优先级较低
+                </td>';
+        }
+        elseif ($f3value5 == '1') {
+            echo '
+                <td class="unit-gold">1</td>';
+        }
+        elseif ($f3value5 == '0') {
+            echo '
+                <td class="unit-honeydew">0</td>';
+        }
+        else {
+            echo '
+                <td>'.$f3value5.'</td>';
+        }
+
+        if ($f3value6 == '4') {
+            echo '
+                <td class="unit-tomato">默认</td>';
+        }
+        elseif ($f3value6 == 'C') {
+            echo '
+                <td class="unit-darkturquoise">C</td>';
+        }
+        elseif ($f3value6 == '6') {
+            echo '
+                <td class="unit-silver">6</td>';
+        }
+        elseif ($f3value6 == '2') {
+            echo '
+                <td class="unit-orange">2</td>';
+        }
+        elseif ($f3value6 == '0') {
+            echo '
+                <td class="unit-honeydew">
+                    <span title="百度搜索杨澜爸爸|第一女神出现">有同义词的搜索结果页<br>完全匹配查询词</span>
+                </td>';
+        }
+        else {
+            echo '
+                <td>'.$f3value6.'</td>';
+        }
+
+        if ($f3value7 == '3') {
+            echo '
+                <td class="unit-violet">默认</td>';
+        }
+        elseif ($f3value7 == '2') {
+            echo '
+                <td class="unit-orange">2</td>';
+        }
+        elseif ($f3value7 == '1') {
+            echo '
+                <td class="unit-gold">
+                    <span title="搜索微信开发源代码出现">1</span>
+                </td>';
+        }
+        else {
+            echo '
+                <td>'.$f3value7.'</td>';
+        }
+
+        if ($f3value8 == 'F') {
+            echo '
+                <td class="unit-lightskyblue">精确匹配</td>';
+        }
+        elseif ($f3value8 == 'E') {
+            echo '
+                <td class="unit-deepskyblue">近义词匹配</td>';
+        }
+        elseif ($f3value8 == 'D') {
+            echo '
+                <td class="unit-mediumseagreen">D</td>';
+        }
+        elseif ($f3value8 == 'C') {
+            echo '
+                <td class="unit-darkturquoise">C</td>';
+        }
+        elseif ($f3value8 == '7') {
+            echo '
+                <td class="unit-darkseagreen">匹配网址</td>';
+        }
+        elseif ($f3value8 == '6') {
+            echo '
+                <td class="unit-silver">6</td>';
+        }
+        elseif ($f3value8 == '5') {
+            echo '
+                <td class="unit-lavender">近似匹配</td>';
+        }
+        elseif ($f3value8 == '4') {
+            echo '
+                <td class="unit-tomato">
+                    <span title="百度搜索bj.baidu后台维护出现">4</span>
+                </td>';
+        }
+        else {
+            echo '
+                <td>'.$f3value8.'</td>';
+        }
+
+        echo '
+                <td class="back-blue">'.$f3value1.$f3value2.$f3value3.$f3value4.$f3value5.$f3value6.$f3value7.$f3value8.'</td>
+                <td class="back-blue">'.@$matchsrcid[3][$i].'</td>
+            </tr>';
     }
-    echo"
+    echo '
         </tbody>
     </table>
-</div>";
+</div>';
 }
 
 // y
@@ -8626,7 +8602,7 @@ if (preg_match_all("/(?<='y':')([0-9A-F]{8})(?=')/", @$baiduserp, $matchy))
 
 // template
 
-if (preg_match_all("/(?<=\" tpl\=\")([0-9a-z_]{3,28})(?=\")/", $baiduserp, $matchtemplate))
+if (preg_match_all('/(?<=" tpl=")([0-9a-z_]{3,28})(?=")/', $baiduserp, $matchtemplate))
 
 // 解释模版
 
@@ -10007,7 +9983,7 @@ echo"
 
 // 摘要
 
-if (preg_match_all("/(?<=<div class=\"c-abstract\">)(.*)(?=<\/div><div class=\"f13\">)/", @$baiduserp, $matchabstract))
+if (preg_match_all('/(?<=<div class="c-abstract">)(.*)(?=<\/div><div class="f13">)/', @$baiduserp, $matchabstract))
 
 // 摘要汇总
 
@@ -10038,12 +10014,10 @@ if (strlen($s) > 0) {
 
 // 右侧知心打分
 
-// if (preg_match_all("/(?<=\"rsv_stl\"\:\"0\",\"rsv_srcid\"\:)(\d{4,5})/", @$baiduserp, $srcidright))
-
 $score = json_decode(file_get_contents('http://opendata.baidu.com/api.php?resource_id=21028&format=json&ie=utf-8&oe=utf-8&query='.$query), true);
 
 if (strlen($s) > 0 && is_array(@$score['data'][0]['card'][0]['unit'])) {
-echo '
+    echo '
 <div class="draglist" draggable="true">
     <table>
         <thead>
@@ -10066,16 +10040,16 @@ foreach (@$score['data'][0]['card'] as $i => $position) {
             // 对齐分值
             $scores = ((preg_replace('/(score=)/', '', $score['data'][0]['card'][$i]['unit'][$j]['uri_drsv'])) * 10000);
 
-            if (preg_match("/(\d){4}/", $scores)) {
+            if (preg_match('/(\d){4}/', $scores)) {
                 echo $scores;
             }
-            elseif (preg_match("/(\d){3}/", $scores)) {
+            elseif (preg_match('/(\d){3}/', $scores)) {
                 echo '0'.$scores;
             }
-            elseif (preg_match("/(\d){2}/", $scores)) {
+            elseif (preg_match('/(\d){2}/', $scores)) {
                 echo '00'.$scores;
             }
-            elseif (preg_match("/(\d){1}/", $scores)) {
+            elseif (preg_match('/(\d){1}/', $scores)) {
                 echo '000'.$scores;
             }
             else {
@@ -10095,7 +10069,7 @@ foreach (@$score['data'][0]['card'] as $i => $position) {
 // 周围人都在搜
 
 if (strlen($s) > 0) {
-    if (preg_match_all('/(?<=&r_type\=text&r_key\=hot-1&r_wd\=)(.{1,50})(?=\" class\=link data-type\=hl-mod-link target\=)/', file_get_contents("http://entry.baidu.com/ur/scun?di=contentunion4170"), $maround))
+    if (preg_match_all('/(?<=&r_type=text&r_key=hot-1&r_wd=)(.{1,50})(?=" class=link data-type=hl-mod-link target=)/', file_get_contents("http://entry.baidu.com/ur/scun?di=contentunion4170"), $maround))
 
     echo '
 <div class="draglist" draggable="true">
