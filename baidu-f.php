@@ -1084,9 +1084,8 @@ $srcidas = array (
 </div>';
 }
 
-// fetch key 逻辑有问题
-if (preg_match_all("/(?<=\"  srcid\=\")(\d{1,5})(\"  fk=\")(\d{0,5})(_?)(.+)(\" id\=\")(\d{1,2})(?=\" tpl\=\")/", @$baiduserp, $matchfk))
-
+// fetch key
+if (preg_match_all('/(?<="  srcid=")(\d{1,5})("  fk=")([\d_]{0,6}?)([^_]{1,32})(" id=")(\d{1,2})(?=" tpl=")/', @$baiduserp, $matchfk))
 // 抓取键名，键值，来源，排名
 
 if (strlen($s) > 0) {
@@ -1104,8 +1103,8 @@ if (strlen($s) > 0) {
         </thead>
         <tbody>";
 
-    foreach ($matchfk[7] as $i => $position) {
-        $fk = explode('.',$matchfk[5][$i],5);
+    foreach ($matchfk[6] as $i => $position) {
+        $fk = explode('.',$matchfk[4][$i],5);
         echo '
             <tr class="back-egg">
                 <td class="center">'.$matchfk[1][$i].'</td>
@@ -1354,12 +1353,12 @@ if (strlen($s) > 0) {
                     报价|图片|参数配置|口碑-汽车之家
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20776)
             echo "
@@ -1367,12 +1366,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;百度百科
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20679)
             echo "
@@ -1380,12 +1379,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://help.alipay.com/lab/234578-236168/0-236168.htm\" rel=\"external nofollow\" target=\"_blank\">余额宝相关问题&nbsp;支付宝个人帮助中心</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20631)
             echo "
@@ -1393,12 +1392,12 @@ if (strlen($s) > 0) {
                     教育考试&nbsp;百度知心文库
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20548)
             echo "
@@ -1406,12 +1405,12 @@ if (strlen($s) > 0) {
                     系列&nbsp;百度视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20546)
             echo "
@@ -1419,12 +1418,12 @@ if (strlen($s) > 0) {
                     分集剧情&nbsp;电视猫
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20535)
             echo "
@@ -1432,12 +1431,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;2014年火车票购票日历
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20528)
             echo "
@@ -1445,12 +1444,12 @@ if (strlen($s) > 0) {
                     电视剧情介绍&nbsp;电视猫
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20527)
             echo "
@@ -1458,12 +1457,12 @@ if (strlen($s) > 0) {
                     百度左侧知心同系列电影&nbsp;百度视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20458)
             echo "
@@ -1471,12 +1470,12 @@ if (strlen($s) > 0) {
                     官方微博(原知心左侧卡片框)
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20457)
             echo "
@@ -1484,12 +1483,12 @@ if (strlen($s) > 0) {
                     电视剧&nbsp;百度视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20451)
             echo "
@@ -1497,25 +1496,25 @@ if (strlen($s) > 0) {
                     分集剧情&nbsp;电视猫
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20426)
             echo "
                 <td>
-                    <a href=\"http://s.weibo.com/user/".$matchfk[5][$i]."&amp;auth=vip\" rel=\"external nofollow\" target=\"_blank\">新浪官微</a>
+                    <a href=\"http://s.weibo.com/user/".$matchfk[4][$i]."&amp;auth=vip\" rel=\"external nofollow\" target=\"_blank\">新浪官微</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20423)
             echo "
@@ -1523,12 +1522,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;百度知道&nbsp;医疗健康&nbsp;更多知道相关问题
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20422)
             echo "
@@ -1536,12 +1535,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;百度知道&nbsp;医疗&nbsp;更多知道相关问题
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20408)
             echo "
@@ -1549,12 +1548,12 @@ if (strlen($s) > 0) {
                     百度百科(由<a href=\"http://www.baikemy.com/\" rel=\"external nofollow\" target=\"_blank\">卫生部临床医生科普平台/百科名医网</a>权威认证)
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20407)
             echo "
@@ -1562,12 +1561,12 @@ if (strlen($s) > 0) {
                     百度百科(由<a href=\"http://www.baikemy.com/\" rel=\"external nofollow\" target=\"_blank\">卫生部临床医生科普平台/百科名医网</a>权威认证)
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20406)
             echo "
@@ -1575,12 +1574,12 @@ if (strlen($s) > 0) {
                     百度视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20387)
             echo "
@@ -1588,12 +1587,12 @@ if (strlen($s) > 0) {
                     易车网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20376)
             echo "
@@ -1601,12 +1600,12 @@ if (strlen($s) > 0) {
                     百度百科&nbsp;汽车之家阿拉丁
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20375)
             echo "
@@ -1614,12 +1613,12 @@ if (strlen($s) > 0) {
                     官网&nbsp;汽车之家阿拉丁
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20324)
             echo "
@@ -1627,12 +1626,12 @@ if (strlen($s) > 0) {
                     百度百科(原知心左侧卡片框)
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20323)
             echo "
@@ -1640,12 +1639,12 @@ if (strlen($s) > 0) {
                     百度图片(原知心左侧卡片框)
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20322)
             echo "
@@ -1653,12 +1652,12 @@ if (strlen($s) > 0) {
                     百度音乐(原知心左侧卡片框)
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20321)
             echo "
@@ -1666,12 +1665,12 @@ if (strlen($s) > 0) {
                     百度视频(原知心左侧卡片框)
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20319)
             echo "
@@ -1679,12 +1678,12 @@ if (strlen($s) > 0) {
                     百度贴吧(原知心左侧卡片框)
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20315)
             echo "
@@ -1692,12 +1691,12 @@ if (strlen($s) > 0) {
                     付费观看&nbsp;百度视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20294)
             echo "
@@ -1705,12 +1704,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;热映电影&nbsp;百度视频&nbsp;-&nbsp;百度左侧知心结果
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20289)
             echo "
@@ -1718,12 +1717,12 @@ if (strlen($s) > 0) {
                     知乎&nbsp;-&nbsp;百度阿拉丁
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20172)
             echo "
@@ -1731,12 +1730,12 @@ if (strlen($s) > 0) {
                     知心旅游介绍&nbsp;百度旅游
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20135)
             echo "
@@ -1744,12 +1743,12 @@ if (strlen($s) > 0) {
                     topik&nbsp;网上报名
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20124)
             echo "
@@ -1757,12 +1756,12 @@ if (strlen($s) > 0) {
                     百度左侧知心视频电视剧
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20080)
             echo "
@@ -1770,12 +1769,12 @@ if (strlen($s) > 0) {
                     北京市预约挂号统一平台
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20071)
             echo "
@@ -1783,12 +1782,12 @@ if (strlen($s) > 0) {
                     医院科室&nbsp;好大夫在线
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20070)
             echo "
@@ -1796,12 +1795,12 @@ if (strlen($s) > 0) {
                     挂号网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20006)
             echo "
@@ -1809,12 +1808,12 @@ if (strlen($s) > 0) {
                     医院网站
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 20005)
             echo "
@@ -1822,12 +1821,12 @@ if (strlen($s) > 0) {
                     医院科室
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16932)
             echo "
@@ -1835,12 +1834,12 @@ if (strlen($s) > 0) {
                     美食/营养&nbsp;百度经验【组图】
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16852)
             echo "
@@ -1848,12 +1847,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;腾讯科技
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16847)
             echo "
@@ -1861,12 +1860,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;热点话题
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16821)
             echo "
@@ -1874,12 +1873,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;体育直播&nbsp;新浪网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16809)
             echo "
@@ -1887,12 +1886,12 @@ if (strlen($s) > 0) {
                     电视猫
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16796)
             echo "
@@ -1900,12 +1899,12 @@ if (strlen($s) > 0) {
                     综艺&nbsp;腾讯视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16790)
             echo "
@@ -1913,12 +1912,12 @@ if (strlen($s) > 0) {
                     美食美客&nbsp;爱奇艺
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16758)
             echo "
@@ -1926,12 +1925,12 @@ if (strlen($s) > 0) {
                     悦美网&nbsp;子链&nbsp;缩略图
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16743)
             echo "
@@ -1939,12 +1938,12 @@ if (strlen($s) > 0) {
                     软件下载&nbsp;中关村在线
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16724)
             echo "
@@ -1952,12 +1951,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;中国好系统
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16689)
             echo "
@@ -1965,12 +1964,12 @@ if (strlen($s) > 0) {
                     走势图表&nbsp;百度乐彩
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16653)
             echo "
@@ -1978,12 +1977,12 @@ if (strlen($s) > 0) {
                     女子拒搭讪被打死&nbsp;百度贴吧直播
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16641)
             echo "
@@ -1991,12 +1990,12 @@ if (strlen($s) > 0) {
                     百度加速乐
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16634)
             echo "
@@ -2004,12 +2003,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;蘑菇系统之家
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16633)
             echo "
@@ -2017,12 +2016,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;系统吧
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16590)
             echo "
@@ -2030,12 +2029,12 @@ if (strlen($s) > 0) {
                     开放式基金&nbsp;天天基金网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16545)
             echo "
@@ -2043,12 +2042,12 @@ if (strlen($s) > 0) {
                     面包屑导航新闻时间轴
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16524)
             echo "
@@ -2056,12 +2055,12 @@ if (strlen($s) > 0) {
                     疑似推销
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16499)
             echo "
@@ -2069,12 +2068,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;港股实时行情&nbsp;-&nbsp;东方财富网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16498)
             echo "
@@ -2082,12 +2081,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;股票实时行情&nbsp;-&nbsp;东方财富网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16488)
             echo "
@@ -2095,12 +2094,12 @@ if (strlen($s) > 0) {
                     百度知道问律师
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16450)
             echo "
@@ -2108,12 +2107,12 @@ if (strlen($s) > 0) {
                     百度阿拉丁&nbsp;robots&nbsp;禁止抓取
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16448)
             echo "
@@ -2121,12 +2120,12 @@ if (strlen($s) > 0) {
                     性病科&nbsp;挂号网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16411)
             echo "
@@ -2134,25 +2133,25 @@ if (strlen($s) > 0) {
                     百度软件中心
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16391)
             echo "
                 <td>
-                    <a href=\"http://search.jd.com/Search?keyword=".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">京东</a>|<a href=\"http://search.dangdang.com/?key=".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">当当</a>
+                    <a href=\"http://search.jd.com/Search?keyword=".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">京东</a>|<a href=\"http://search.dangdang.com/?key=".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">当当</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16387)
             echo "
@@ -2160,12 +2159,12 @@ if (strlen($s) > 0) {
                     手机&nbsp;太平洋电脑网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16355)
             echo "
@@ -2173,12 +2172,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;系统之家
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16345)
             echo "
@@ -2186,12 +2185,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;世界杯&nbsp;网易体育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16343)
             echo "
@@ -2199,12 +2198,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;NBA赛季&nbsp;新浪体育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16312)
             echo "
@@ -2212,12 +2211,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;百度贴吧访谈直播
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16311)
             echo "
@@ -2225,12 +2224,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://open.baidu.com/data/ms/nav/somesources/tag/imgu/\" target=\"_blank\" rel=\"external nofollow\">[猜]&nbsp;股票代码&nbsp;美股实时行情&nbsp;新浪财经</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16309)
             echo "
@@ -2238,12 +2237,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://open.baidu.com/data/ms/nav/somesources/tag/imgu/\" target=\"_blank\" rel=\"external nofollow\">[猜]&nbsp;股票名称&nbsp;美股实时行情&nbsp;新浪财经</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16277)
             echo "
@@ -2251,12 +2250,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://sports.sina.com.cn/g/seriea/\" rel=\"external nofollow\" target=\"_blank\">意甲&nbsp;新浪体育</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16262)
             echo "
@@ -2264,12 +2263,12 @@ if (strlen($s) > 0) {
                     带子链&nbsp;寻医问药网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16228)
             echo "
@@ -2277,12 +2276,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;非中国内地明星&nbsp;伊秀娱乐&nbsp;伊秀女性网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16198)
             echo "
@@ -2290,12 +2289,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;百度经验【组图】
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16189)
             echo "
@@ -2303,12 +2302,12 @@ if (strlen($s) > 0) {
                     股票实时行情&nbsp;东方财富网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16188)
             echo "
@@ -2316,12 +2315,12 @@ if (strlen($s) > 0) {
                     新浪财经
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16184)
             echo "
@@ -2329,12 +2328,12 @@ if (strlen($s) > 0) {
                     股票实时行情&nbsp;东方财富网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16163)
             echo "
@@ -2342,12 +2341,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;欧冠新闻时间轴
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16140)
             echo "
@@ -2355,12 +2354,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://www.guahao.com\" target=\"_blank\" rel=\"external nofollow\">挂号网</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16049)
             echo "
@@ -2368,12 +2367,12 @@ if (strlen($s) > 0) {
                     诈骗
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16048)
             echo "
@@ -2381,12 +2380,12 @@ if (strlen($s) > 0) {
                     寻医问药网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16047)
             echo "
@@ -2394,12 +2393,12 @@ if (strlen($s) > 0) {
                     百度在线翻译
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 16035)
             echo "
@@ -2407,12 +2406,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;旅游目的地推荐&nbsp;-&nbsp;百度旅游
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15988)
             echo "
@@ -2420,12 +2419,12 @@ if (strlen($s) > 0) {
                     动漫&nbsp;腾讯视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15964)
             echo "
@@ -2433,12 +2432,12 @@ if (strlen($s) > 0) {
                     专辑&nbsp;百度音乐
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15958)
             echo "
@@ -2446,12 +2445,12 @@ if (strlen($s) > 0) {
                     电视剧&nbsp;腾讯视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15940)
             echo "
@@ -2459,12 +2458,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://sports.sina.com.cn/g/laliga/\" rel=\"external nofollow\" target=\"_blank\">西甲&nbsp;新浪体育</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15929)
             echo "
@@ -2472,12 +2471,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;软件下载&nbsp;太平洋电脑网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15883)
             echo "
@@ -2485,12 +2484,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://ask.seowhy.com/question/8497\" rel=\"external nofollow\" target=\"_blank\" title=\"百度搜索结果页，都什么情况下会出现直链？\">代名词 百度快照在2013年09月-2013年10月间</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15863)
             echo "
@@ -2498,12 +2497,12 @@ if (strlen($s) > 0) {
                     小道消息&nbsp;手机中国
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15858)
             echo "
@@ -2511,12 +2510,12 @@ if (strlen($s) > 0) {
                     单机游戏网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15820)
             echo "
@@ -2524,12 +2523,12 @@ if (strlen($s) > 0) {
                     速尔快递客服电话
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15817)
             echo "
@@ -2537,12 +2536,12 @@ if (strlen($s) > 0) {
                     普通官网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15791)
             echo "
@@ -2550,12 +2549,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;快递电话
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15785)
             echo "
@@ -2563,12 +2562,12 @@ if (strlen($s) > 0) {
                     口袋巴士
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15772)
             echo "
@@ -2576,12 +2575,12 @@ if (strlen($s) > 0) {
                     逗游
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15765)
             echo "
@@ -2589,12 +2588,12 @@ if (strlen($s) > 0) {
                     世界杯新闻轴
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15758)
             echo "
@@ -2602,12 +2601,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://ask.seowhy.com/question/14936\" target=\"_blank\" rel=\"external nofollow\">慧聪网B2B</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15751)
             echo "
@@ -2615,12 +2614,12 @@ if (strlen($s) > 0) {
                     齐家网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15728)
             echo "
@@ -2628,12 +2627,12 @@ if (strlen($s) > 0) {
                     起点中文网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15726)
             echo "
@@ -2641,12 +2640,12 @@ if (strlen($s) > 0) {
                     起点中文网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15720)
             echo "
@@ -2654,12 +2653,12 @@ if (strlen($s) > 0) {
                     百度经验
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15678)
             echo "
@@ -2667,12 +2666,12 @@ if (strlen($s) > 0) {
                     巴西队赛程&nbsp;网易体育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15648)
             echo "
@@ -2680,12 +2679,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;旅游攻略&nbsp;百度旅游
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15623)
             echo "
@@ -2693,12 +2692,12 @@ if (strlen($s) > 0) {
                     报价及图片_太平洋汽车网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15584)
             echo "
@@ -2706,12 +2705,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://zhanzhang.baidu.com/\" rel=\"external nofollow\" target=\"_blank\">百度站长平台</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&amp;s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&amp;s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15560)
             echo "
@@ -2719,12 +2718,12 @@ if (strlen($s) > 0) {
                     中关村在线
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15557)
             echo "
@@ -2732,12 +2731,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;中公教育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15547)
             echo "
@@ -2745,12 +2744,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://www.yuemei.com/\" rel=\"external nofollow\" target=\"_blank\">整形美容&nbsp;-&nbsp;悦美网</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15516)
             echo "
@@ -2758,12 +2757,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://name.renren.com/\" rel=\"external nofollow\" target=\"_blank\">人人网同名搜索</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15515)
             echo "
@@ -2771,12 +2770,12 @@ if (strlen($s) > 0) {
                     人人网同名搜索
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15460)
             echo "
@@ -2784,12 +2783,12 @@ if (strlen($s) > 0) {
                     中国足彩网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15442)
             echo "
@@ -2797,12 +2796,12 @@ if (strlen($s) > 0) {
                     疾病百科&nbsp;39健康网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15388)
             echo "
@@ -2810,12 +2809,12 @@ if (strlen($s) > 0) {
                     手机中国
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15357)
             echo "
@@ -2823,12 +2822,12 @@ if (strlen($s) > 0) {
                     hao123汽车|hao123头条
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15295)
             echo "
@@ -2836,12 +2835,12 @@ if (strlen($s) > 0) {
                     畛域_百度视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15279)
             echo "
@@ -2849,12 +2848,12 @@ if (strlen($s) > 0) {
                     客服电话
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15232)
             echo "
@@ -2862,12 +2861,12 @@ if (strlen($s) > 0) {
                     百度轻应用
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15213)
             echo "
@@ -2875,25 +2874,25 @@ if (strlen($s) > 0) {
                     <a href=\"http://www.yuemei.com/parts_price.html\" rel=\"external nofollow\" target=\"_blank\">整形报价大全&nbsp;悦美整形网</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15200)
             echo "
                 <td>
-                    <a href=\"http://movie.douban.com/subject_search?search_text=".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">豆瓣电影</a>
+                    <a href=\"http://movie.douban.com/subject_search?search_text=".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">豆瓣电影</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15198)
             echo "
@@ -2901,12 +2900,12 @@ if (strlen($s) > 0) {
                     考研时间安排&nbsp;新浪教育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15195)
             echo "
@@ -2914,12 +2913,12 @@ if (strlen($s) > 0) {
                     不凡游戏网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15110)
             echo "
@@ -2927,12 +2926,12 @@ if (strlen($s) > 0) {
                     好大夫在线
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15109)
             echo "
@@ -2940,12 +2939,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;疾病&nbsp;好大夫在线
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15056)
             echo "
@@ -2953,12 +2952,12 @@ if (strlen($s) > 0) {
                     天极下载
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 15017)
             echo "
@@ -2966,12 +2965,12 @@ if (strlen($s) > 0) {
                     热点&nbsp;网易体育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14994)
             echo "
@@ -2979,12 +2978,12 @@ if (strlen($s) > 0) {
                     伊秀娱乐明星库
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14955)
             echo "
@@ -2992,12 +2991,12 @@ if (strlen($s) > 0) {
                     实物价格&nbsp;和讯黄金
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14861)
             echo "
@@ -3005,12 +3004,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;选手&nbsp;乐视网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14726)
             echo "
@@ -3018,12 +3017,12 @@ if (strlen($s) > 0) {
                     热点&nbsp;网易娱乐
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14713)
             echo "
@@ -3031,12 +3030,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;目的地指南&nbsp;百度旅游
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14664)
             echo "
@@ -3044,12 +3043,12 @@ if (strlen($s) > 0) {
                     <span>爱卡汽车网</span>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14611)
             echo "
@@ -3057,12 +3056,12 @@ if (strlen($s) > 0) {
                     hao123小游戏
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14584)
             echo "
@@ -3070,12 +3069,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;百度团购官网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14580)
             echo "
@@ -3083,12 +3082,12 @@ if (strlen($s) > 0) {
                     Zinch
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14545)
             echo "
@@ -3096,12 +3095,12 @@ if (strlen($s) > 0) {
                     品牌词
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14515)
             echo "
@@ -3109,12 +3108,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;新浪微博|58同城|百度卫士|百度影音|铁路客户服务中心
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14510)
             echo "
@@ -3122,12 +3121,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;58同城|淘宝网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14480)
             echo "
@@ -3135,12 +3134,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://sports.sohu.com/s2004/zhongjia.shtml\" rel=\"external nofollow\" target=\"_blank\">中甲&nbsp;搜狐体育</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14474)
             echo "
@@ -3148,12 +3147,12 @@ if (strlen($s) > 0) {
                     百度投诉中心
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14466)
             echo "
@@ -3161,12 +3160,12 @@ if (strlen($s) > 0) {
                     <span title=\"百度收购\">汽车点评</span>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14452)
             echo "
@@ -3174,12 +3173,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://tousu.baidu.com/webmaster/add\" rel=\"external nofollow\" target=\"_blank\">快照删除与更新&nbsp;百度投诉</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14435)
             echo "
@@ -3187,12 +3186,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;聊天通讯&nbsp;-&nbsp;百度软件中心
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14421)
             echo "
@@ -3200,12 +3199,12 @@ if (strlen($s) > 0) {
                     时刻表&nbsp;发车间隔&nbsp;同程网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14331)
             echo "
@@ -3213,12 +3212,12 @@ if (strlen($s) > 0) {
                     百度经验【图文】
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14305)
             echo "
@@ -3226,12 +3225,12 @@ if (strlen($s) > 0) {
                     百度网盘
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14287)
             echo "
@@ -3239,12 +3238,12 @@ if (strlen($s) > 0) {
                     股吧&nbsp;-&nbsp;东方财富网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14283)
             echo "
@@ -3252,12 +3251,12 @@ if (strlen($s) > 0) {
                     股吧&nbsp;-&nbsp;东方财富网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14181)
             echo "
@@ -3265,12 +3264,12 @@ if (strlen($s) > 0) {
                     [猜]社交网络&nbsp;-&nbsp;ipush
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14175)
             echo "
@@ -3278,12 +3277,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://euro2012.sina.com.cn/\" rel=\"external nofollow\" target=\"_blank\">欧洲杯</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14142)
             echo "
@@ -3291,12 +3290,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;系统吧
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14134)
             echo "
@@ -3304,12 +3303,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;百度图片 医疗健康
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14110)
             echo "
@@ -3317,12 +3316,12 @@ if (strlen($s) > 0) {
                     中国天气网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14098)
             echo "
@@ -3330,12 +3329,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://yz.chsi.com.cn/\" rel=\"external nofollow\" target=\"_blank\">中国研究生招生信息网</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14062)
             echo "
@@ -3343,12 +3342,12 @@ if (strlen($s) > 0) {
                     hao123折扣导航
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14060)
             echo "
@@ -3356,12 +3355,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://yingjian.baidu.com/\" rel=\"external nofollow\" target=\"_blank\">百度硬件</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14059)
             echo "
@@ -3369,12 +3368,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;马槽&nbsp;百度经验
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14058)
             echo "
@@ -3382,12 +3381,12 @@ if (strlen($s) > 0) {
                     电影&nbsp;百度团购
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14022)
             echo "
@@ -3395,12 +3394,12 @@ if (strlen($s) > 0) {
                     旅游景点&nbsp;百度经验【组图】
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 14004)
             echo "
@@ -3408,12 +3407,12 @@ if (strlen($s) > 0) {
                     挂号网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13932)
             echo "
@@ -3421,12 +3420,12 @@ if (strlen($s) > 0) {
                     企业官方贴吧
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13920)
             echo "
@@ -3434,12 +3433,12 @@ if (strlen($s) > 0) {
                     产品报价&nbsp;中关村在线
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13911)
             echo "
@@ -3447,12 +3446,12 @@ if (strlen($s) > 0) {
                     手机&nbsp;天极网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13885)
             echo "
@@ -3460,12 +3459,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;百度卫士&nbsp;更多知道相关问题&gt;&gt;百度知道
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13863)
             echo "
@@ -3473,12 +3472,12 @@ if (strlen($s) > 0) {
                     百度火车票
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13854)
             echo "
@@ -3486,12 +3485,12 @@ if (strlen($s) > 0) {
                     电影&nbsp;-&nbsp;腾讯视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13842)
             echo "
@@ -3499,12 +3498,12 @@ if (strlen($s) > 0) {
                     旅游攻略&nbsp;百度旅游
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13841)
             echo "
@@ -3512,12 +3511,12 @@ if (strlen($s) > 0) {
                     英语四六级考试查分&nbsp;考试吧
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13823)
             echo "
@@ -3525,12 +3524,12 @@ if (strlen($s) > 0) {
                     hao123下载站
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13806)
             echo "
@@ -3538,12 +3537,12 @@ if (strlen($s) > 0) {
                     附近电影院&nbsp;时光网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13798)
             echo "
@@ -3551,12 +3550,12 @@ if (strlen($s) > 0) {
                     支付宝客服电话|百度用户服务中心
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13750)
             echo "
@@ -3564,12 +3563,12 @@ if (strlen($s) > 0) {
                     7k7k小游戏
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13747)
             echo "
@@ -3577,12 +3576,12 @@ if (strlen($s) > 0) {
                     网页游戏&nbsp;7k7k小游戏
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13741)
             echo "
@@ -3590,12 +3589,12 @@ if (strlen($s) > 0) {
                     实时路况
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13717)
             echo "
@@ -3603,12 +3602,12 @@ if (strlen($s) > 0) {
                     左侧知心&nbsp;电视剧&nbsp;爱奇艺
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13706)
             echo "
@@ -3616,12 +3615,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;腾讯彩票
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13679)
             echo "
@@ -3629,12 +3628,12 @@ if (strlen($s) > 0) {
                     现货价格&nbsp;和讯黄金
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13631)
             echo "
@@ -3642,12 +3641,12 @@ if (strlen($s) > 0) {
                     比赛进程&nbsp;乐视网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13630)
             echo "
@@ -3655,12 +3654,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;中国内地明星&nbsp;伊秀娱乐&nbsp;伊秀女性网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13627)
             echo "
@@ -3668,12 +3667,12 @@ if (strlen($s) > 0) {
                     亚冠赛程结果&nbsp;新浪体育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13620)
             echo "
@@ -3683,12 +3682,12 @@ if (strlen($s) > 0) {
                     </a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13616)
             echo "
@@ -3696,12 +3695,12 @@ if (strlen($s) > 0) {
                     二手房&nbsp;百度乐居
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13598)
             echo "
@@ -3709,12 +3708,12 @@ if (strlen($s) > 0) {
                     猎聘网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13580)
             echo "
@@ -3722,12 +3721,12 @@ if (strlen($s) > 0) {
                     嫣然天使基金
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13466)
             echo "
@@ -3735,12 +3734,12 @@ if (strlen($s) > 0) {
                     逗游网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13445)
             echo "
@@ -3748,12 +3747,12 @@ if (strlen($s) > 0) {
                     供应信息&nbsp;慧聪网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13390)
             echo "
@@ -3761,12 +3760,12 @@ if (strlen($s) > 0) {
                     腾讯动漫
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13369)
             echo "
@@ -3774,25 +3773,25 @@ if (strlen($s) > 0) {
                     一听音乐
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13360)
             echo "
                 <td>
-                    <a href=\"http://tieba.baidu.com/f?kw=".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">[猜]&nbsp;百度贴吧</a>
+                    <a href=\"http://tieba.baidu.com/f?kw=".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">[猜]&nbsp;百度贴吧</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13355)
             echo "
@@ -3800,12 +3799,12 @@ if (strlen($s) > 0) {
                     短信&nbsp;爱祝福
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13336)
             echo "
@@ -3813,12 +3812,12 @@ if (strlen($s) > 0) {
                     墨迹天气
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13310)
             echo "
@@ -3826,12 +3825,12 @@ if (strlen($s) > 0) {
                     手机品牌&nbsp;太平洋电脑网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13264)
             echo "
@@ -3839,12 +3838,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://open.baidu.com/data/ms/nav/somesources/tag/ctw/\" target=\"_blank\" rel=\"external nofollow\">畅途网&nbsp;百度数据开放平台合作伙伴</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13260)
             echo "
@@ -3852,12 +3851,12 @@ if (strlen($s) > 0) {
                     汽车百科知识&nbsp;汽车点评
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13255)
             echo "
@@ -3865,12 +3864,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;景点目的地&nbsp;百度旅游
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13231)
             echo "
@@ -3878,12 +3877,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://sports.sina.com.cn/g/ucl/fixtures.html\" rel=\"external nofollow\" target=\"_blank\">欧洲冠军联赛&nbsp;-&nbsp;新浪体育</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13216)
             echo "
@@ -3891,12 +3890,12 @@ if (strlen($s) > 0) {
                     影讯&nbsp;最近上映电影&nbsp;Mtime时光网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13174)
             echo "
@@ -3904,12 +3903,12 @@ if (strlen($s) > 0) {
                     列车时刻表查询及在线预订&nbsp;去哪儿
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13118)
             echo "
@@ -3917,12 +3916,12 @@ if (strlen($s) > 0) {
                     比赛进程&nbsp;百度视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13111)
             echo "
@@ -3930,12 +3929,12 @@ if (strlen($s) > 0) {
                     中国红十字基金会
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13096)
             echo "
@@ -3943,12 +3942,12 @@ if (strlen($s) > 0) {
                     百度团购
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13039)
             echo "
@@ -3956,12 +3955,12 @@ if (strlen($s) > 0) {
                     客服电话&nbsp;去哪儿
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 13031)
             echo "
@@ -3969,12 +3968,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://open.baidu.com/data/ms/nav/somesources/tag/zgtq/\" target=\"_blank\" rel=\"external nofollow\">城市天气预报&nbsp;中国天气网</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12967)
             echo "
@@ -3982,12 +3981,12 @@ if (strlen($s) > 0) {
                     百度软件
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12965)
             echo "
@@ -3995,12 +3994,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://www.abab.com/\" rel=\"external nofollow\" target=\"_blank\">ABAB小游戏</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12946)
             echo "
@@ -4008,12 +4007,12 @@ if (strlen($s) > 0) {
                     动漫&nbsp;爱奇艺
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12926)
             echo "
@@ -4021,12 +4020,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;亚信峰会直播&nbsp;凤凰网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12906)
             echo "
@@ -4034,12 +4033,12 @@ if (strlen($s) > 0) {
                     [猜]城市&nbsp;-&nbsp;百度团购
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12904)
             echo "
@@ -4047,12 +4046,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;中国网络电视台
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12903)
             echo "
@@ -4060,12 +4059,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;百度团购导航
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12901)
             echo "
@@ -4073,12 +4072,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;旅游攻略&nbsp;百度旅游
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12880)
             echo "
@@ -4086,12 +4085,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;国内省市级|国外国家级目的地&nbsp;百度旅游
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12840)
             echo "
@@ -4099,12 +4098,12 @@ if (strlen($s) > 0) {
                     百度乐居
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12839)
             echo "
@@ -4112,12 +4111,12 @@ if (strlen($s) > 0) {
                     招远麦当劳&nbsp;新闻直播
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12809)
             echo "
@@ -4125,25 +4124,25 @@ if (strlen($s) > 0) {
                     综艺&nbsp;爱奇艺
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12729)
             echo "
                 <td>
-                    <a href=\"http://piao.baidu.com/s?wd=".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度票务</a>
+                    <a href=\"http://piao.baidu.com/s?wd=".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度票务</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12726)
             echo "
@@ -4151,12 +4150,12 @@ if (strlen($s) > 0) {
                     医院&nbsp;好大夫在线
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12645)
             echo "
@@ -4164,12 +4163,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;轿车&nbsp;易车网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12644)
             echo "
@@ -4177,12 +4176,12 @@ if (strlen($s) > 0) {
                     软件排行榜&nbsp;太平洋下载
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12643)
             echo "
@@ -4190,12 +4189,12 @@ if (strlen($s) > 0) {
                     百度团购第&nbsp;2&nbsp;种起点
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12616)
             echo "
@@ -4203,12 +4202,12 @@ if (strlen($s) > 0) {
                     开奖查询&nbsp;百度乐彩
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12610)
             echo "
@@ -4216,12 +4215,12 @@ if (strlen($s) > 0) {
                     汽车点评
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12605)
             echo "
@@ -4229,12 +4228,12 @@ if (strlen($s) > 0) {
                     百度乐彩
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12594)
             echo "
@@ -4242,12 +4241,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;腾讯视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12558)
             echo "
@@ -4255,12 +4254,12 @@ if (strlen($s) > 0) {
                     说明书&nbsp;寻医问药网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12542)
             echo "
@@ -4268,12 +4267,12 @@ if (strlen($s) > 0) {
                     英语四六级真题试卷&nbsp;新浪教育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12521)
             echo "
@@ -4281,12 +4280,12 @@ if (strlen($s) > 0) {
                     开心网会员登录
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12512)
             echo "
@@ -4294,12 +4293,12 @@ if (strlen($s) > 0) {
                     录取分数线&nbsp;高考招生&nbsp;中国教育在线
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12501)
             echo "
@@ -4307,12 +4306,12 @@ if (strlen($s) > 0) {
                     育儿&nbsp;太平洋亲子网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12500)
             echo "
@@ -4320,12 +4319,12 @@ if (strlen($s) > 0) {
                     育儿检测&nbsp;太平洋亲子网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12403)
             echo "
@@ -4333,12 +4332,12 @@ if (strlen($s) > 0) {
                     壹基金
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12391)
             echo "
@@ -4346,12 +4345,12 @@ if (strlen($s) > 0) {
                     装修&nbsp;齐家网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12347)
             echo "
@@ -4359,12 +4358,12 @@ if (strlen($s) > 0) {
                     产品导航&nbsp;手机&nbsp;太平洋电脑网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12346)
             echo "
@@ -4372,12 +4371,12 @@ if (strlen($s) > 0) {
                     商户&nbsp;大众点评网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12345)
             echo "
@@ -4385,12 +4384,12 @@ if (strlen($s) > 0) {
                     食品营养价值&nbsp;美食天下
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12342)
             echo "
@@ -4398,12 +4397,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;NBA决赛&nbsp;热点直播&nbsp;网易体育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12270)
             echo "
@@ -4411,12 +4410,12 @@ if (strlen($s) > 0) {
                     18183&nbsp;手游网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12220)
             echo "
@@ -4424,12 +4423,12 @@ if (strlen($s) > 0) {
                     排行榜&nbsp;百度搜索风云榜
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12215)
             echo "
@@ -4437,12 +4436,12 @@ if (strlen($s) > 0) {
                     今日游戏排行榜&nbsp;百度搜索风云榜
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12185)
             echo "
@@ -4450,12 +4449,12 @@ if (strlen($s) > 0) {
                     有妖气
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12123)
             echo "
@@ -4463,12 +4462,12 @@ if (strlen($s) > 0) {
                     专题&nbsp;百度音乐
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12121)
             echo "
@@ -4476,12 +4475,12 @@ if (strlen($s) > 0) {
                     综艺&nbsp;风行网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12118)
             echo "
@@ -4489,12 +4488,12 @@ if (strlen($s) > 0) {
                     百度相册
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12114)
             echo "
@@ -4502,12 +4501,12 @@ if (strlen($s) > 0) {
                     百度经验【组图】
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12102)
             echo "
@@ -4515,12 +4514,12 @@ if (strlen($s) > 0) {
                     自学考试&nbsp;考试吧
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12097)
             echo "
@@ -4528,12 +4527,12 @@ if (strlen($s) > 0) {
                     京东商城品牌
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12049)
             echo "
@@ -4541,12 +4540,12 @@ if (strlen($s) > 0) {
                     百度推广投诉客服电话
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12048)
             echo "
@@ -4554,12 +4553,12 @@ if (strlen($s) > 0) {
                     客服电话
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 12021)
             echo "
@@ -4567,12 +4566,12 @@ if (strlen($s) > 0) {
                     新闻时间轴
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11952)
             echo "
@@ -4580,12 +4579,12 @@ if (strlen($s) > 0) {
                     百度口碑
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11940)
             echo "
@@ -4593,12 +4592,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://open.baidu.com/data/ms/nav/somesources/tag/zgtq/\" target=\"_blank\" rel=\"external nofollow\">全国省份天气预报&nbsp;中国天气网</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11939)
             echo "
@@ -4606,12 +4605,12 @@ if (strlen($s) > 0) {
                     网页游戏开服表&nbsp;07073游戏网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11933)
             echo "
@@ -4619,12 +4618,12 @@ if (strlen($s) > 0) {
                     健身&nbsp;中国易登网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11899)
             echo "
@@ -4632,12 +4631,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;维基百科|百度团购|百度杀毒
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11898)
             echo "
@@ -4645,12 +4644,12 @@ if (strlen($s) > 0) {
                     知名网站
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11852)
             echo "
@@ -4658,12 +4657,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://sports.sina.com.cn/global/france2/\" target=\"_blank\" rel=\"external nofollow\">法甲&nbsp;新浪体育</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11838)
             echo "
@@ -4671,12 +4670,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;客服电话表
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11830)
             echo "
@@ -4684,12 +4683,12 @@ if (strlen($s) > 0) {
                     百度软件中心
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11828)
             echo "
@@ -4697,12 +4696,12 @@ if (strlen($s) > 0) {
                     融360
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11810)
             echo "
@@ -4710,12 +4709,12 @@ if (strlen($s) > 0) {
                     区号查询
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11803)
             echo "
@@ -4723,12 +4722,12 @@ if (strlen($s) > 0) {
                     爱漫画
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11782)
             echo "
@@ -4736,12 +4735,12 @@ if (strlen($s) > 0) {
                     <span title=\"百度收购\">手机大全&nbsp;-&nbsp;手机中国</span>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11757)
             echo "
@@ -4749,12 +4748,12 @@ if (strlen($s) > 0) {
                     爱漫画
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11708)
             echo "
@@ -4762,12 +4761,12 @@ if (strlen($s) > 0) {
                     组图&nbsp;美食天下
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11692)
             echo "
@@ -4775,12 +4774,12 @@ if (strlen($s) > 0) {
                     地铁&nbsp;百度地图
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11677)
             echo "
@@ -4788,12 +4787,12 @@ if (strlen($s) > 0) {
                     网易163邮箱登录
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11675)
             echo "
@@ -4801,12 +4800,12 @@ if (strlen($s) > 0) {
                     五笔编码汉语拼音查询&nbsp;ip138
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11640)
             echo "
@@ -4814,12 +4813,12 @@ if (strlen($s) > 0) {
                     考试吧
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11620)
             echo "
@@ -4827,12 +4826,12 @@ if (strlen($s) > 0) {
                     公益咨询电话
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11610)
             echo "
@@ -4840,12 +4839,12 @@ if (strlen($s) > 0) {
                     成人高考报名时间_考试吧
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11582)
             echo "
@@ -4853,12 +4852,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://sports.sina.com.cn/csl/\" rel=\"external nofollow\" target=\"_blank\">中超&nbsp;新浪体育</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11547)
             echo "
@@ -4866,12 +4865,12 @@ if (strlen($s) > 0) {
                     求医网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11539)
             echo "
@@ -4879,12 +4878,12 @@ if (strlen($s) > 0) {
                     足球联赛对战表&nbsp;新浪体育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11520)
             echo "
@@ -4892,12 +4891,12 @@ if (strlen($s) > 0) {
                     观后感、评论&nbsp;豆瓣电影
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11519)
             echo "
@@ -4905,12 +4904,12 @@ if (strlen($s) > 0) {
                     影评、简介及基本信息&nbsp;豆瓣电影
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11490)
             echo "
@@ -4918,12 +4917,12 @@ if (strlen($s) > 0) {
                     国际原油期货价格&nbsp;国际石油网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11471)
             echo "
@@ -4931,12 +4930,12 @@ if (strlen($s) > 0) {
                     国家授时中心标准时间
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11463)
             echo "
@@ -4944,12 +4943,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://open.baidu.com/data/ms/nav/somesources/tag/ctw/\" target=\"_blank\" rel=\"external nofollow\">畅途网&nbsp;百度数据开放平台合作伙伴</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11462)
             echo "
@@ -4957,12 +4956,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;官方订票电话
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11443)
             echo "
@@ -4970,12 +4969,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://info.sports.sina.com.cn/rank/\" target=\"_blank\" rel=\"external nofollow\">国际足联排名&nbsp;新浪体育</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11442)
             echo "
@@ -4983,12 +4982,12 @@ if (strlen($s) > 0) {
                     网球世界排名&nbsp;新浪体育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11439)
             echo "
@@ -4996,12 +4995,12 @@ if (strlen($s) > 0) {
                     乒乓球世界排名&nbsp;新浪体育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11437)
             echo "
@@ -5009,12 +5008,12 @@ if (strlen($s) > 0) {
                     羽毛球世界排名&nbsp;新浪体育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11436)
             echo "
@@ -5022,12 +5021,12 @@ if (strlen($s) > 0) {
                     233网校
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11409)
             echo "
@@ -5035,12 +5034,12 @@ if (strlen($s) > 0) {
                     公益咨询电话
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11386)
             echo "
@@ -5048,12 +5047,12 @@ if (strlen($s) > 0) {
                     百度贴吧&nbsp;查看更多贴子&gt;&gt;
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11353)
             echo "
@@ -5061,12 +5060,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;铁路客户服务中心官网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11301)
             echo "
@@ -5074,12 +5073,12 @@ if (strlen($s) > 0) {
                     人民网宏观经济数据库
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11263)
             echo "
@@ -5087,12 +5086,12 @@ if (strlen($s) > 0) {
                     中国妇女发展基金会
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11260)
             echo "
@@ -5100,12 +5099,12 @@ if (strlen($s) > 0) {
                     百度文库认证机构
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11252)
             echo "
@@ -5113,12 +5112,12 @@ if (strlen($s) > 0) {
                     百度文库认证作者
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11239)
             echo "
@@ -5126,12 +5125,12 @@ if (strlen($s) > 0) {
                     中国宋庆龄基金会
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11228)
             echo "
@@ -5139,12 +5138,12 @@ if (strlen($s) > 0) {
                     综艺节目联系方式&nbsp;爱奇艺
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11205)
             echo "
@@ -5152,12 +5151,12 @@ if (strlen($s) > 0) {
                     新浪星座查询
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11196)
             echo "
@@ -5165,12 +5164,12 @@ if (strlen($s) > 0) {
                     12306&nbsp;官网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11175)
             echo "
@@ -5178,12 +5177,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;百度贴吧直播
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11170)
             echo "
@@ -5191,12 +5190,12 @@ if (strlen($s) > 0) {
                     太平洋下载中心
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 11129)
             echo "
@@ -5204,12 +5203,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;综艺节目联系方式
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10936)
             echo "
@@ -5217,12 +5216,12 @@ if (strlen($s) > 0) {
                     英语四六级&nbsp;新浪教育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10927)
             echo "
@@ -5230,12 +5229,12 @@ if (strlen($s) > 0) {
                     电视节目表
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10904)
             echo "
@@ -5243,12 +5242,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://cet.99sushe.com/\" target=\"_blank\" rel=\"external nofollow\">全国大学英语四六级考试(CET)官方成绩查询</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10858)
             echo "
@@ -5256,12 +5255,12 @@ if (strlen($s) > 0) {
                     高考分数线&nbsp;新浪高考
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10827)
             echo "
@@ -5269,12 +5268,12 @@ if (strlen($s) > 0) {
                     高考各省市录取分数线汇总&nbsp;新浪高考
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10806)
             echo "
@@ -5282,12 +5281,12 @@ if (strlen($s) > 0) {
                     <span title=\"百度收购\">手机中国</span>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10797)
             echo "
@@ -5295,12 +5294,12 @@ if (strlen($s) > 0) {
                     装软件&nbsp;-&nbsp;hao123下载站
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10794)
             echo "
@@ -5308,12 +5307,12 @@ if (strlen($s) > 0) {
                     电影&nbsp;爱奇艺
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10792)
             echo "
@@ -5321,12 +5320,12 @@ if (strlen($s) > 0) {
                     快速查询&nbsp;求医网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10789)
             echo "
@@ -5334,12 +5333,12 @@ if (strlen($s) > 0) {
                     宜家|百度云图|世界知识产权组织|英雄联盟
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10788)
             echo "
@@ -5347,12 +5346,12 @@ if (strlen($s) > 0) {
                     亲子百科&nbsp;太平洋亲子网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10776)
             echo "
@@ -5360,12 +5359,12 @@ if (strlen($s) > 0) {
                     Mtime时光网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10775)
             echo "
@@ -5373,12 +5372,12 @@ if (strlen($s) > 0) {
                     影评、简介及放映时间查询&nbsp;Mtime时光网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10764)
             echo "
@@ -5386,12 +5385,12 @@ if (strlen($s) > 0) {
                     高考查分&nbsp;新浪高考
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10744)
             echo "
@@ -5399,12 +5398,12 @@ if (strlen($s) > 0) {
                     考研分数线查询&nbsp;新浪教育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10723)
             echo "
@@ -5412,12 +5411,12 @@ if (strlen($s) > 0) {
                     考研真题试卷&nbsp;新浪教育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10693)
             echo "
@@ -5425,12 +5424,12 @@ if (strlen($s) > 0) {
                     世界时间&nbsp;百度开放平台
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10678)
             echo "
@@ -5438,12 +5437,12 @@ if (strlen($s) > 0) {
                     基金吧&nbsp;天天基金网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10652)
             echo "
@@ -5451,12 +5450,12 @@ if (strlen($s) > 0) {
                     团体&nbsp;百度百科
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10646)
             echo "
@@ -5464,12 +5463,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;客船沉没
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10639)
             echo "
@@ -5477,12 +5476,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;中国移动客服电话
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10610)
             echo "
@@ -5490,12 +5489,12 @@ if (strlen($s) > 0) {
                     百度招聘
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10594)
             echo "
@@ -5503,12 +5502,12 @@ if (strlen($s) > 0) {
                     飞翔游戏
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10577)
             echo "
@@ -5516,12 +5515,12 @@ if (strlen($s) > 0) {
                     网页游戏&nbsp;百度游戏
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10530)
             echo "
@@ -5529,12 +5528,12 @@ if (strlen($s) > 0) {
                     药品通&nbsp;39健康网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10501)
             echo "
@@ -5542,12 +5541,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;直播热点话题&nbsp;新浪娱乐
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10500)
             echo "
@@ -5555,12 +5554,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;微信客服&nbsp;百度知道&nbsp;更多知道相关问题&gt;&gt;
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10422)
             echo "
@@ -5568,12 +5567,12 @@ if (strlen($s) > 0) {
                     [猜]时间轴新闻
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10396)
             echo "
@@ -5581,12 +5580,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;搜狐健康
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10393)
             echo "
@@ -5594,12 +5593,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;基于&nbsp;IP&nbsp;地理位置回答
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10385)
             echo "
@@ -5607,12 +5606,12 @@ if (strlen($s) > 0) {
                     有道翻译
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10382)
             echo "
@@ -5620,12 +5619,12 @@ if (strlen($s) > 0) {
                     尾号限行
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10319)
             echo "
@@ -5633,12 +5632,12 @@ if (strlen($s) > 0) {
                     热门视频&nbsp;太平洋游戏网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10317)
             echo "
@@ -5646,12 +5645,12 @@ if (strlen($s) > 0) {
                     网易彩票
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10315)
             echo "
@@ -5659,12 +5658,12 @@ if (strlen($s) > 0) {
                     开奖详情查询&nbsp;网易彩票
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10306)
             echo "
@@ -5672,12 +5671,12 @@ if (strlen($s) > 0) {
                     资讯&nbsp;网易彩票
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10298)
             echo "
@@ -5685,12 +5684,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://www.gov.cn/zwgk/2013-12/11/content_2546204.htm\" rel=\"external nofollow\" target=\"_blank\" title=\"放假通知\">2014年全年公休假放假安排&nbsp;中国政府网</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10268)
             echo "
@@ -5698,12 +5697,12 @@ if (strlen($s) > 0) {
                     百度经验【组图】
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10254)
             echo "
@@ -5711,25 +5710,25 @@ if (strlen($s) > 0) {
                     全国猎聘网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10249)
             echo "
                 <td>
-                    <a href=\"http://drugs.dxy.cn/search/drug.htm?keyword=".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">药品搜索&nbsp;丁香园</a>
+                    <a href=\"http://drugs.dxy.cn/search/drug.htm?keyword=".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">药品搜索&nbsp;丁香园</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10244)
             echo "
@@ -5737,12 +5736,12 @@ if (strlen($s) > 0) {
                     第&nbsp;2&nbsp;种百度经验
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10240)
             echo "
@@ -5750,12 +5749,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;开奖&nbsp;新浪彩票
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10239)
             echo "
@@ -5763,12 +5762,12 @@ if (strlen($s) > 0) {
                     乐游网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10219)
             echo "
@@ -5776,12 +5775,12 @@ if (strlen($s) > 0) {
                     第&nbsp;2&nbsp;种客服电话
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10213)
             echo "
@@ -5789,12 +5788,12 @@ if (strlen($s) > 0) {
                     易登网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10210)
             echo "
@@ -5802,12 +5801,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://www.showji.com/\" target=\"_blank\" rel=\"external nofollow\">手机号码归属地查询</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10201)
             echo "
@@ -5815,12 +5814,12 @@ if (strlen($s) > 0) {
                     货币基金&nbsp;天天基金网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10199)
             echo "
@@ -5828,12 +5827,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;医院&nbsp;-&nbsp;悦美整形网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10197)
             echo "
@@ -5841,12 +5840,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;转诊预约&nbsp;-&nbsp;好大夫在线
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10183)
             echo "
@@ -5854,12 +5853,12 @@ if (strlen($s) > 0) {
                     时刻表&nbsp;票价&nbsp;同程网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10178)
             echo "
@@ -5867,12 +5866,12 @@ if (strlen($s) > 0) {
                     展现多方观点&nbsp;百度知道
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10175)
             echo "
@@ -5880,12 +5879,12 @@ if (strlen($s) > 0) {
                     找好医院&nbsp;家庭医生在线
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10162)
             echo "
@@ -5893,12 +5892,12 @@ if (strlen($s) > 0) {
                     装修效果图大全&nbsp;齐家网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10161)
             echo "
@@ -5906,12 +5905,12 @@ if (strlen($s) > 0) {
                     [猜]疾病&nbsp;寻医问药专家网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10139)
             echo "
@@ -5919,12 +5918,12 @@ if (strlen($s) > 0) {
                     人民币利率&nbsp;和讯网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10118)
             echo "
@@ -5932,12 +5931,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;开奖&nbsp;hao123彩票
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10094)
             echo "
@@ -5945,12 +5944,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;开奖结果&nbsp;体坛网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10077)
             echo "
@@ -5958,12 +5957,12 @@ if (strlen($s) > 0) {
                     公务员考试真题试卷&nbsp;中公教育
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10023)
             echo "
@@ -5971,12 +5970,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://sports.sina.com.cn/g/premierleague/\" rel=\"external nofollow\" target=\"_blank\">英超&nbsp;新浪体育</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10015)
             echo "
@@ -5984,12 +5983,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;时间轴新闻&nbsp;腾讯网|新浪网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 7136)
             echo "
@@ -5997,25 +5996,25 @@ if (strlen($s) > 0) {
                     就医助手&nbsp;39健康网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 7127)
             echo "
                 <td>
-                    <a href=\"http://opendata.baidu.com/yaopin/s?ie=utf-8&amp;oe=utf-8&amp;wd=".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度药品</a>
+                    <a href=\"http://opendata.baidu.com/yaopin/s?ie=utf-8&amp;oe=utf-8&amp;wd=".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度药品</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 7123)
             echo "
@@ -6023,12 +6022,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;好大夫在线 推荐医院
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 7092)
             echo "
@@ -6036,12 +6035,12 @@ if (strlen($s) > 0) {
                     航班信息
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 7086)
             echo "
@@ -6049,12 +6048,12 @@ if (strlen($s) > 0) {
                     4399小游戏
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 7084)
             echo "
@@ -6062,12 +6061,12 @@ if (strlen($s) > 0) {
                     点评&nbsp;中关村在线
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 7079)
             echo "
@@ -6075,12 +6074,12 @@ if (strlen($s) > 0) {
                     数码系列&nbsp;-&nbsp;中关村在线
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 7076)
             echo "
@@ -6088,12 +6087,12 @@ if (strlen($s) > 0) {
                     详情页&nbsp;-&nbsp;中关村在线
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 7074)
             echo "
@@ -6101,12 +6100,12 @@ if (strlen($s) > 0) {
                     菜谱优质结果
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 7072)
             echo "
@@ -6114,12 +6113,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;洛克王国&nbsp;4399
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 7032)
             echo "
@@ -6127,12 +6126,12 @@ if (strlen($s) > 0) {
                     车次查询&nbsp;去哪儿
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 7027)
             echo "
@@ -6140,12 +6139,12 @@ if (strlen($s) > 0) {
                     物品&nbsp;178游戏网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6845)
             echo "
@@ -6153,38 +6152,38 @@ if (strlen($s) > 0) {
                     小说
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6835)
-            echo "
+            echo '
                 <td>
-                    百度软件中心
+                    <a href="http://rj.baidu.com/" target="_blank" rel="external nofollow">百度软件中心</a>
                 </td>
-                <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
-                    ."</a>
+                <td class="center">
+                    <a href="http://www.weixingon.com/baidusp-op.php?srcid='.$matchfk[1][$i].'&s='.$matchfk[4][$i].'" target="_blank" rel="external nofollow">'
+                        .$matchfk[4][$i]
+                    .'</a>
                 </td>
-                <td class=\"center\">
-                    ".$matchfk[7][$i]."
-                </td>";
+                <td class="center">
+                    '.$matchfk[6][$i].'
+                </td>';
         elseif ($matchfk[1][$i] == 6833)
             echo "
                 <td>
                     百度百科&nbsp;多义词
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6832)
             echo "
@@ -6192,12 +6191,12 @@ if (strlen($s) > 0) {
                     旅游景点大全
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6827)
             echo "
@@ -6205,12 +6204,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://www.baidu.com/#wd=".$query." 失信被执行人\" rel=\"external nofollow\" target=\"_blank\">".$query."由于失信已被列入国家失信被执行人名单</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6826)
             echo "
@@ -6218,12 +6217,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://shixin.court.gov.cn/\" rel=\"external nofollow\" target=\"_blank\">该企业已被列入全国失信被执行人名单中！</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6819)
             echo "
@@ -6231,12 +6230,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://shixin.court.gov.cn/\" rel=\"external nofollow\" target=\"_blank\">全国法院失信被执行人名单</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6817)
             echo "
@@ -6244,12 +6243,12 @@ if (strlen($s) > 0) {
                     百度视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6811)
             echo "
@@ -6257,12 +6256,12 @@ if (strlen($s) > 0) {
                     百度音乐
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6804)
             echo "
@@ -6270,12 +6269,12 @@ if (strlen($s) > 0) {
                     最新报价&nbsp;配置&nbsp;图片&nbsp;口碑&nbsp;油耗&nbsp;易车网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6801)
             echo "
@@ -6283,12 +6282,12 @@ if (strlen($s) > 0) {
                     车型&nbsp;-&nbsp;易车网
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6735)
             echo "
@@ -6296,12 +6295,12 @@ if (strlen($s) > 0) {
                     <a href=\"http://zhanzhang.baidu.com/wiki/256\" rel=\"external nofollow\" target=\"_blank\">site特型&nbsp;百度站长平台</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6727)
             echo "
@@ -6309,12 +6308,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;左侧动漫作品
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6714)
             echo "
@@ -6322,12 +6321,12 @@ if (strlen($s) > 0) {
                     最佳答案
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6705)
             echo "
@@ -6335,12 +6334,12 @@ if (strlen($s) > 0) {
                     电视剧榜单
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6700)
             echo "
@@ -6348,12 +6347,12 @@ if (strlen($s) > 0) {
                     电影&nbsp;-&nbsp;百度团购
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6691)
             echo "
@@ -6361,12 +6360,12 @@ if (strlen($s) > 0) {
                     歌曲&nbsp;-&nbsp;百度音乐
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6690)
             echo "
@@ -6374,12 +6373,12 @@ if (strlen($s) > 0) {
                     电影&nbsp;-&nbsp;百度视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6680)
             echo "
@@ -6387,12 +6386,12 @@ if (strlen($s) > 0) {
                     百度购物搜索
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6677)
             echo "
@@ -6400,12 +6399,12 @@ if (strlen($s) > 0) {
                     网页应用&nbsp;百度阿拉丁
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6670)
             echo "
@@ -6413,12 +6412,12 @@ if (strlen($s) > 0) {
                     百度团购
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6666)
             echo "
@@ -6426,12 +6425,12 @@ if (strlen($s) > 0) {
                     百度招聘搜索
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6665)
             echo "
@@ -6439,12 +6438,12 @@ if (strlen($s) > 0) {
                     百度招聘会搜索
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6653)
             echo "
@@ -6452,12 +6451,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;百度知心最佳答案
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6112)
             echo "
@@ -6465,12 +6464,12 @@ if (strlen($s) > 0) {
                     [猜]&nbsp;电视剧&nbsp;百度视频
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6018)
             echo "
@@ -6478,12 +6477,12 @@ if (strlen($s) > 0) {
                     日历
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6017)
             echo "
@@ -6491,12 +6490,12 @@ if (strlen($s) > 0) {
                     最新汇率
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6014)
             echo "
@@ -6506,12 +6505,12 @@ if (strlen($s) > 0) {
                     </a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6009)
             echo "
@@ -6519,12 +6518,12 @@ if (strlen($s) > 0) {
                     万年历
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6007)
             echo "
@@ -6532,12 +6531,12 @@ if (strlen($s) > 0) {
                     计算器
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6006)
             echo "
@@ -6545,90 +6544,90 @@ if (strlen($s) > 0) {
                     <a href=\"http://www.ip138.com/ips138.asp?ip=".$query."\" rel=\"external nofollow\" target=\"_blank\">IP地址查询</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 6004)
             echo "
                 <td>
-                    <a href=\"http://www.showji.com/search.htm?m=".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">手机归属地</a>
+                    <a href=\"http://www.showji.com/search.htm?m=".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">手机归属地</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 91)
             echo "
                 <td>
-                    <a href=\"http://baike.baidu.com/search?word=".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度百科_多义词</a>
+                    <a href=\"http://baike.baidu.com/search?word=".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度百科_多义词</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&amp;s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&amp;s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 85)
             echo "
                 <td>
-                    <a href=\"http://fanyi.baidu.com/#en/zh/".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度翻译</a>|<a href=\"http://dict.baidu.com/s?wd=".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度词典</a>
+                    <a href=\"http://fanyi.baidu.com/#en/zh/".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度翻译</a>|<a href=\"http://dict.baidu.com/s?wd=".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度词典</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&amp;s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&amp;s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 81)
             echo "
                 <td>
-                    <a href=\"http://baike.baidu.com/search?word=".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度百科</a>
+                    <a href=\"http://baike.baidu.com/search?word=".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度百科</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 80)
             echo "
                 <td>
-                    <a href=\"http://baike.baidu.com/search?word=".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度百科专有名词</a>
+                    <a href=\"http://baike.baidu.com/search?word=".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度百科专有名词</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         elseif ($matchfk[1][$i] == 10)
             echo "
                 <td>
-                    <a href=\"http://tieba.baidu.com/f?kw=".$matchfk[5][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度贴吧</a>
+                    <a href=\"http://tieba.baidu.com/f?kw=".$matchfk[4][$i]."\" rel=\"external nofollow\" target=\"_blank\">百度贴吧</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         else
             echo "
@@ -6638,82 +6637,17 @@ if (strlen($s) > 0) {
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[5][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
-                        .$matchfk[5][$i]
+                    <a href=\"http://www.weixingon.com/baidusp-op.php?srcid=".$matchfk[1][$i]."&s=".$matchfk[4][$i]."\" target=\"_blank\" rel=\"external nofollow\">"
+                        .$matchfk[4][$i]
                     ."</a>
                 </td>
                 <td class=\"center\">
-                    ".$matchfk[7][$i]."
+                    ".$matchfk[6][$i]."
                 </td>";
         }
         echo "
             </tr>";
     }
-    echo"
-        </tbody>
-    </table>
-</div>";
-}
-
-//有 fk，但没有抓取内容
-
-if (preg_match("/(?<=\"  srcid=\")(\d{1,5})(\" fk=\"\"  id=\")(\d{1,2})(?=\" )/", @$baiduserp, $matchapp))
-
-//抓取键名，键值，来源，排名
-
-if (strlen($s) > 0) {
-echo"
-<div class=\"draglist\" draggable=\"true\">
-<table>
-    <thead>
-        <tr>
-            <th>$fk1</th>
-            <th>$fk2</th>
-            <th><span title=\"百度搜索产品、合作伙伴\">$srcid2</span></th>
-            <th>$openapi</th>
-            <th>排名</th>
-        </tr>
-    </thead>
-    <tbody>";
-
-        echo "
-        <tr class=\"back-egg\">
-            <td class=\"center\">无</td>
-            <td class=\"center\">无</td>";
-        {
-        if
-            ($matchapp[1] == 35)
-            echo "
-            <td>
-                <a href=\"http://m.baidu.com/s?st=10a001&amp;tn=webmkt&amp;word=".$query."\" rel=\"external nofollow\" target=\"_blank\">百度移动应用</a>
-            </td>
-            <td class=\"center\">
-            </td>
-            <td class=\"center\">
-                ".$matchapp[3]."
-            </td>";
-        elseif
-            ($matchapp[1] == 2)
-            echo "
-            <td>
-                百度地图
-            </td>
-            <td class=\"center\">
-            </td>
-            <td class=\"center\">
-                ".$matchapp[3]."
-            </td>";
-        else
-            echo "
-            <td>".$matchapp[1]."</td>
-            <td class=\"center\">
-            </td>
-            <td class=\"center\">
-                ".$matchapp[3]."
-            </td>";
-        }
-        echo "
-        </tr>";
     echo"
         </tbody>
     </table>
@@ -7980,27 +7914,26 @@ if (strlen($s) > 0) {
 
 if (preg_match_all("/(?<=F1':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", @$baiduserp, $matchf1))
 if (strlen($s) > 0) {
-echo"
-<div class=\"draglist\" draggable=\"true\">
+    echo '
+<div class="draglist" draggable="true">
     <table>
         <thead>
             <tr>
-                <th>$F1[1]</th>
-                <th>$F1[2]</th>
-                <th>$F1[3]</th>
-                <th>$F1[4]</th>
-                <th>$F1[5]</th>
-                <th>$F1[6]</th>
-                <th>$F1[7]</th>
-                <th>$F1[8]</th>
+                <th>'.$F1[1].'</th>
+                <th>'.$F1[2].'</th>
+                <th>'.$F1[3].'</th>
+                <th>'.$F1[4].'</th>
+                <th>'.$F1[5].'</th>
+                <th>'.$F1[6].'</th>
+                <th>'.$F1[7].'</th>
+                <th>'.$F1[8].'</th>
                 <th>F1</th>
                 <th>排名</th>
             </tr>
         </thead>
-        <tbody class=\"center\">";
+        <tbody class="center">';
 
-    foreach ($matchf1[3] as $i => $position)
-    {
+    foreach ($matchf1[3] as $i => $position) {
         $f1value1 = $matchf1[3][$i];
         $f1value2 = $matchf1[4][$i];
         $f1value3 = $matchf1[5][$i];
@@ -8009,187 +7942,176 @@ echo"
         $f1value6 = $matchf1[8][$i];
         $f1value7 = $matchf1[9][$i];
         $f1value8 = $matchf1[10][$i];
-        echo "
-        <tr>";
-        {
-        if ($f1value1 == "D")
-            echo "
-                <td class=\"unit-mediumseagreen\">
-                    D
-                </td>";
-        elseif ($f1value1 == "B")
-            echo "
-                <td class=\"unit-springgreen\">
-                    更多文库相关文档
-                </td>";
-        elseif ($f1value1 == "9")
-            echo "
-                <td class=\"unit-burlywood\">
-                    9
-                </td>";
-        else
-            echo "
-                <td>".$f1value1."</td>";
+        echo '
+        <tr>';
+
+        if ($f1value1 == '9') {
+            echo '
+                <td class="unit-burlywood">默认</td>';
         }
-        {
-        if ($f1value2 == "D")
-            echo "
-                <td class=\"unit-mediumseagreen\">
-                    D
-                </td>";
-        elseif ($f1value2 == "9")
-            echo "
-                <td class=\"unit-burlywood\">
-                    [猜]&nbsp;匹配多个关键词
-                </td>";
-        elseif ($f1value2 == "5")
-            echo "
-                <td class=\"unit-lavender\">
-                    [猜]&nbsp;布尔匹配
-                </td>";
-        else
-            echo "
-                <td>".$f1value2."</td>";
+        elseif ($f1value1 == 'D') {
+            echo '
+                <td class="unit-mediumseagreen">D</td>';
         }
-        {
-        if ($f1value3 == "7")
-            echo "
-                <td class=\"unit-darkseagreen\">
-                    默认
-                </td>";
-        elseif ($f1value3 == "6")
-            echo "
-                <td class=\"unit-silver\">
-                    <a href=\"http://www.weixingon.com/baidusp-lm.php?s=$query&rn=100&lm=7\" target=\"_blank\" title=\"yyyy年MM月dd日|hh小时前|mm分钟前|ss秒前\">0-24小时前更新快照的网页</a>
-                </td>";
-        elseif ($f1value3 == "5")
-            echo "
-                <td class=\"unit-lavender\">
-                    <a href=\"http://www.weixingon.com/baidusp-lm.php?s=$query&rn=100&lm=7\" target=\"_blank\" title=\"yyyy年MM月dd日\">24-48小时前更新快照的网页</a>
-                </td>";
-        elseif ($f1value3 == "4")
-            echo "
-                <td class=\"unit-tomato\">
-                    <a href=\"http://www.weixingon.com/baidusp-lm.php?s=$query&rn=100&lm=7\" target=\"_blank\" title=\"yyyy年MM月dd日\">2-7天前更新快照的网页</a>
-                </td>";
-        else
-            echo "
-                <td>".$f1value3."</td>";
+        elseif ($f1value1 == 'B') {
+            echo '
+                <td class="unit-springgreen">更多文库相关文档</td>';
         }
-        {
-        if ($f1value4 == "3")
-            echo "
-                <td class=\"unit-violet\">
-                    默认
-                </td>";
-        elseif ($f1value4 == "2")
-            echo "
-                <td class=\"unit-orange\">
-                    24小时内多家同时报道
-                </td>";
-        elseif ($f1value4 == "0")
-            echo "
-                <td class=\"unit-honeydew\">
-                    24小时内独家
-                </td>";
-        else
-            echo "
-                <td>".$f1value4."</td>";
+        else {
+            echo '
+                <td>'.$f1value1.'</td>';
         }
-        {
-        if ($f1value5 == "F")
-            echo "
-                <td class=\"unit-lightskyblue\">
-                    高
-                </td>";
-        elseif ($f1value5 == "E")
-            echo "
-                <td class=\"unit-deepskyblue\">
-                    低
-                </td>";
-        elseif ($f1value5 == "B")
-            echo "
-                <td class=\"unit-springgreen\">
-                    更多知道相关问题
-                </td>";
-        else
-            echo "
-                <td>".$f1value5."</td>";
+
+        if ($f1value2 == 'D') {
+            echo '
+                <td class="unit-mediumseagreen">默认</td>';
         }
-        {
-        if ($f1value6 == "5")
-            echo "
-                <td class=\"unit-lavender\">
-                    <a href=\"http://www.weixingon.com/baidusp-hot.php?s=".$query."\" target=\"_blank\" title=\"百度搜索热门词\">新热门</a>
-                </td>";
-        elseif ($f1value6 == "3")
-            echo "
-                <td class=\"unit-violet\">
-                    <a href=\"http://www.weixingon.com/baidusp-hot.php?s=".$query."\" target=\"_blank\" title=\"百度搜索热门词\">中热门</a>
-                </td>";
-        elseif ($f1value6 == "1")
-            echo "
-                <td class=\"unit-gold\">
-                    默认
-                </td>";
-        elseif ($f1value6 == "0")
-            echo "
-                <td class=\"unit-honeydew\">
-                    <a href=\"http://www.weixingon.com/baidusp-hot.php?s=".$query."\" target=\"_blank\" title=\"百度搜索热门词\">老热门</a>
-                </td>";
-        else
-            echo "
-                <td>".$f1value6."</td>";
+        elseif ($f1value2 == '9') {
+            echo '
+                <td class="unit-burlywood">[猜]&nbsp;匹配多个关键词</td>';
         }
-        {
-        if ($f1value7 == "E")
-            echo "
-                <td class=\"unit-deepskyblue\">
-                    默认
-                </td>";
-        elseif ($f1value7 == "C")
-            echo "
-                <td class=\"unit-darkturquoise\">
-                    中
-                </td>";
-        elseif ($f1value7 == "6")
-            echo "
-                <td class=\"unit-silver\">
-                    低
-                </td>";
-        elseif ($f1value7 == "4")
-            echo "
-                <td class=\"unit-tomato\">
-                    <span title=\"百度搜索最新权威实物微信营销指南书：微信营销出现\">较低</span>
-                </td>";
-        else
-            echo "
-                <td>".$f1value7."</td>";
+        elseif ($f1value2 == '5') {
+            echo '
+                <td class="unit-lavender">[猜]&nbsp;布尔匹配</td>';
         }
-        {
-        if ($f1value8 == "6")
-            echo "
-                <td class=\"unit-silver\" title=\"搜索百度卫士出现，估计是网页内容完全一致，仅仅多了1个无意义的参数\">
-                    6
-                </td>";
-        elseif ($f1value8 == "4")
-            echo "
-                <td class=\"unit-tomato\">
-                    4
-                </td>";
-        else
-            echo "
-                <td>".$f1value8."</td>";
+        else {
+            echo '
+                <td>'.$f1value2.'</td>';
         }
-            echo"
-                <td class=\"back-yellow\">".$f1value1.$f1value2.$f1value3.$f1value4.$f1value5.$f1value6.$f1value7.$f1value8."</td>
-                <td class=\"back-yellow\">".@$matchsrcid[3][$i]."</td>
-            </tr>";
+
+        if ($f1value3 == '7') {
+            echo '
+                <td class="unit-darkseagreen">默认</td>';
+        }
+        elseif ($f1value3 == '6') {
+            echo '
+                <td class="unit-silver">
+                    <a href="http://www.weixingon.com/baidusp-lm.php?s='.$query.'&rn=50&lm=7" target="_blank" title="yyyy年MM月dd日|hh小时前|mm分钟前|ss秒前">0-24小时前更新快照的网页</a>
+                </td>';
+        }
+        elseif ($f1value3 == '5') {
+            echo '
+                <td class="unit-lavender">
+                    <a href="http://www.weixingon.com/baidusp-lm.php?s='.$query.'&rn=50&lm=7" target="_blank" title="yyyy年MM月dd日">24-48小时前更新快照的网页</a>
+                </td>';
+        }
+        elseif ($f1value3 == '4') {
+            echo '
+                <td class="unit-tomato">
+                    <a href="http://www.weixingon.com/baidusp-lm.php?s='.$query.'&rn=50&lm=7" target="_blank" title="yyyy年MM月dd日">2-7天前更新快照的网页</a>
+                </td>';
+        }
+        else {
+            echo '
+                <td>'.$f1value3.'</td>';
+        }
+
+        if ($f1value4 == '3') {
+            echo '
+                <td class="unit-violet">默认</td>';
+        }
+        elseif ($f1value4 == '2') {
+            echo '
+                <td class="unit-orange">24小时内多家同时报道</td>';
+        }
+        elseif ($f1value4 == '0') {
+            echo '
+                <td class="unit-honeydew">24小时内独家</td>';
+        }
+        else {
+            echo '
+                <td>'.$f1value4.'</td>';
+        }
+
+        if ($f1value5 == 'F') {
+            echo '
+                <td class="unit-lightskyblue">默认</td>';
+        }
+        elseif ($f1value5 == 'E') {
+            echo '
+                <td class="unit-deepskyblue">低</td>';
+        }
+        elseif ($f1value5 == 'B') {
+            echo '
+                <td class="unit-springgreen">更多知道相关问题</td>';
+        }
+        else {
+            echo '
+                <td>'.$f1value5.'</td>';
+        }
+
+        if ($f1value6 == '1') {
+            echo '
+                <td class="unit-gold">默认</td>';
+        }
+        elseif ($f1value6 == '5') {
+            echo '
+                <td class="unit-lavender">
+                    <a href="http://www.weixingon.com/baidusp-hot.php?s='.$query.'" target="_blank" title="百度搜索热门词">新热门</a>
+                </td>';
+        }
+        elseif ($f1value6 == '3') {
+            echo '
+                <td class="unit-violet">
+                    <a href="http://www.weixingon.com/baidusp-hot.php?s='.$query.'" target="_blank" title="百度搜索热门词">中热门</a>
+                </td>';
+        }
+        elseif ($f1value6 == '0') {
+            echo '
+                <td class="unit-honeydew">
+                    <a href="http://www.weixingon.com/baidusp-hot.php?s='.$query.'" target="_blank" title="百度搜索热门词">老热门</a>
+                </td>';
+        }
+        else {
+            echo '
+                <td>'.$f1value6.'</td>';
+        }
+
+        if ($f1value7 == 'E') {
+            echo '
+                <td class="unit-deepskyblue">默认</td>';
+        }
+        elseif ($f1value7 == 'C') {
+            echo '
+                <td class="unit-darkturquoise">中</td>';
+        }
+        elseif ($f1value7 == '6') {
+            echo '
+                <td class="unit-silver">低</td>';
+        }
+        elseif ($f1value7 == '4') {
+            echo '
+                <td class="unit-tomato">
+                    <span title="百度搜索最新权威实物微信营销指南书：微信营销出现">较低</span>
+                </td>';
+        }
+        else {
+            echo '
+                <td>'.$f1value7.'</td>';
+        }
+
+        if ($f1value8 == '4') {
+            echo '
+                <td class="unit-tomato">默认</td>';
+        }
+        elseif ($f1value8 == '6') {
+            echo '
+                <td class="unit-silver" title="搜索百度卫士出现，估计是网页内容一致，但多1个无意义参数">6</td>';
+        }
+        else {
+            echo '
+                <td>'.$f1value8.'</td>';
+        }
+
+        echo '
+                <td class="back-yellow">'.$f1value1.$f1value2.$f1value3.$f1value4.$f1value5.$f1value6.$f1value7.$f1value8.'</td>
+                <td class="back-yellow">'.@$matchsrcid[3][$i].'</td>
+            </tr>';
     }
-    echo"
+    echo '
         </tbody>
     </table>
-</div>";
+</div>';
 }
 
 // F2
@@ -10205,7 +10127,7 @@ if (strlen($s) > 0) {
     <a class="noa" href="http://top.baidu.com/buzz?b=1" target="_blank" rel="external nofollow noreferrer">百度实时热点排行榜</a>
     <a class="noa" href="http://www.weixingon.com/baidusp-srcid.php" target="_blank">百度搜索产品资源</a>
     <a class="noa" href="http://www.weixingon.com/baiduip.php" target="_blank">百度的IP地址是多少</a>
-    <a class="noa" href="https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php" target="_blank" rel="external nofollow noreferrer">百度参数分析工具v1.17</a>
+    <a class="noa" href="https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php" target="_blank" rel="external nofollow noreferrer">百度参数分析工具v1.18</a>
 </p>'."\r\n";
 }
 
