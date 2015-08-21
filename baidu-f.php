@@ -786,7 +786,35 @@ $ip = array (
     );
 shuffle ($ip);
 $baidu = 'http://'.$ip[0].'/s?wd=';
-$baiduserp = file_get_contents($baidu.$query.$connectpn.$pn.$connectrn.$rn.$connectgpc.$gpc);
+    if (strlen($pn) > 0) {
+        if (strlen($rn) > 0) {
+            if (strlen($gpc) > 0) {
+                $baiduserp = file_get_contents($baidu.$query.$connectpn.$pn.$connectrn.$rn.$connectgpc.$gpc);
+            }
+            else {
+                $baiduserp = file_get_contents($baidu.$query.$connectpn.$pn.$connectrn.$rn);
+            }
+        }
+        elseif (strlen($gpc) > 0) {
+            $baiduserp = file_get_contents($baidu.$query.$connectpn.$pn.$connectgpc.$gpc);
+        }
+        else {
+            $baiduserp = file_get_contents($baidu.$query.$connectpn.$pn);
+        }
+    }
+    elseif (strlen($rn) > 0) {
+        if (strlen($gpc) > 0) {
+            $baiduserp = file_get_contents($baidu.$query.$connectrn.$rn.$connectgpc.$gpc);
+        }
+        else {
+            $baiduserp = file_get_contents($baidu.$query.$connectrn.$rn);
+        }
+    }
+    elseif (strlen($gpc) > 0) {
+        $baiduserp = file_get_contents($baidu.$query.$connectgpc.$gpc);
+    }
+    else
+        $baiduserp = file_get_contents($baidu.$query);
 }
 
 // 打开网页显示相关资料
@@ -828,7 +856,35 @@ if (strlen($s) > 0) {
         );
     shuffle ($wallpapers);
     echo '    <p class="center white">
-        <a class="noa" href="https://www.baidu.com/s?wd='.$query.$connectpn.$pn.$connectrn.$rn.$connectgpc.$gpc.'" target="_blank" rel="external nofollow noreferrer">
+        <a class="noa" href="https://www.baidu.com/s?wd='.$query;
+    if (strlen($pn) > 0) {
+        if (strlen($rn) > 0) {
+            if (strlen($gpc) > 0) {
+                echo $connectpn.$pn.$connectrn.$rn.$connectgpc.$gpc;
+            }
+            else {
+                echo $connectpn.$pn.$connectrn.$rn;
+            }
+        }
+        elseif (strlen($gpc) > 0) {
+            echo $connectpn.$pn.$connectgpc.$gpc;
+        }
+        else {
+            echo $connectpn.$pn;
+        }
+    }
+    elseif (strlen($rn) > 0) {
+        if (strlen($gpc) > 0) {
+            echo $connectrn.$rn.$connectgpc.$gpc;
+        }
+        else {
+            echo $connectrn.$rn;
+        }
+    }
+    elseif (strlen($gpc) > 0) {
+        echo $connectgpc.$gpc;
+    }
+    echo '" target="_blank" rel="external nofollow noreferrer">
             点击查看“<span class="red">'.$s.'</span>”的百度搜索结果页
         </a>
         '.$matchnumbers[2].'&nbsp;个
@@ -6650,13 +6706,13 @@ if (strlen($s) > 0) {
                     ".$matchfk[6][$i]."
                 </td>";
         }
-        echo "
-            </tr>";
+        echo '
+            </tr>';
     }
-    echo"
+    echo '
         </tbody>
     </table>
-</div>";
+</div>';
 }
 
 //百度左侧实时知心结果
