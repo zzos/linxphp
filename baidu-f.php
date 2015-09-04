@@ -2,7 +2,7 @@
 <!--这是百度搜索结果参数分析工具 PHP 源码，若不知如何在浏览器打开，可加入百度参数QQ交流群(255363059)-->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="cmn-Hans" xml:lang="cmn-Hans">
 <head>
-<meta charset="UTF-8"/>
+<meta charset="UTF-8">
 <?php
 
 // 自动生成标题 v2.3
