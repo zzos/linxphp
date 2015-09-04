@@ -1,15 +1,8 @@
-<!--这是百度搜索结果参数分析工具 PHP 源码，若不知如何在浏览器打开，可加入百度参数QQ交流群(255363059)-->
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cmn-Hans" xml:lang="zh-cmn-Hans">
+<!--这是百度搜索结果参数分析工具 PHP 源码，若不知如何在浏览器打开，可加入百度参数QQ交流群(255363059)-->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cmn-Hans" xml:lang="cmn-Hans">
 <head>
-<meta name="renderer" content="webkit" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0,minimal-ui" />
-<meta name="apple-mobile-web-app-title" content="百度搜索结果参数" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<meta name="format-detection" content="telephone=no" />
-<meta content="text/html;charset=UTF-8" http-equiv="Content-Type" />
+<meta charset="UTF-8"/>
 <?php
 
 // 自动生成标题 v2.3
@@ -186,6 +179,7 @@ if (strlen($s) > 0) {
 
 // 标题后缀，品牌名
 echo $pt.'</title>
+<meta content="还你一个没有百度推广、产品的搜索结果页。" name="description" />
 ';
 
 // 下拉框提示词第 1 位，查询词作为 meta keywords
@@ -201,8 +195,15 @@ if (strlen($s) > 0) {
 }
 ?>
 百度搜索结果参数,F,F1,F2,F3" name="keywords" />
-<meta content="还你一个没有百度推广、产品的搜索结果页。" name="description" />
+<meta name="renderer" content="webkit" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0,minimal-ui" />
+<meta name="apple-mobile-web-app-title" content="百度搜索结果参数" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black" />
+<meta name="format-detection" content="telephone=no" />
 <meta name="author" content="吴星, maasdruck@gmail.com" />
+<link rel="alternate" type="application/rss+xml" title="百度搜索结果参数 RSS Feed" href="http://www.weixingon.com/feed.xml" />
 
 <!--css-->
 
@@ -234,7 +235,7 @@ img {
 table {
     width: 46.25em;
     border-collapse: collapse;
-    border: .0625em solid #390BDE;
+    border: .0625em solid #DDDDDD;
     margin-bottom: 1.75em;
     width: 100%!important;
 }
@@ -245,7 +246,7 @@ thead {
 }
 
 th,td {
-    border: .0625em solid #390BDE;
+    border: .0625em solid #DDDDDD;
     padding: .1875em;
 }
 
@@ -338,233 +339,146 @@ input {
 
 .back-white {
     background-color: #FFFFFF;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .back-egg {
     background-color: #FFFFBB;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .back-pink {
     background-color: #FFB7DD;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .back-yellow {
     background-color: #FFDDAA;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .back-orange {
     background-color: #FFDDAA;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .back-gold {
     background-color: #FFEE99;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .back-green {
     background-color: #EEFFBB;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .back-blue {
     background-color: #CCDDFF;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .back-sky {
     background-color: #CCEEFF;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .back-baidu {
     background-color: #77BBEF;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .back-wheat {
     background-color: #F5DEB3;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .back-azure {
     background-color: #F0FFFF;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-honeydew {
     background-color: #F0FFF0;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-gold {
     background-color: #FFD700;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-orange {
     background-color: #FFA500;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
-    $opacity: 0.85;
+    opacity: 0.85;
 }
 
 .unit-violet {
     background-color: #EE82EE;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-tomato {
     background-color: #FF6347;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-lavender {
     background-color: #E6E6FA;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-silver {
     background-color: #C0C0C0;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-darkseagreen {
     background-color: #8FBC8F;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-mediumpurple {
     background-color: #9370DB;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-burlywood {
     background-color: #DEB887;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-aquamarine {
     background-color: #7FFFD4;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-springgreen {
     background-color: #00FF7F;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-darkturquoise {
     background-color: #00CED1;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-mediumseagreen {
     background-color: #3CB371;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-deepskyblue {
     background-color: #00BFFF;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 .unit-lightskyblue {
     background-color: #87CEFA;
-    filter: alpha(opacity = 85);
-    -moz-opacity: 0.85;
-    -khtml-opacity: 0.85;
     opacity: 0.85;
 }
 
 @media screen and (min-width: 1024px) {
     a#go-top {
-        filter: alpha(opacity = 60);
-        -moz-opacity: 0.6;
-        -khtml-opacity: 0.6;
         opacity: 0.6;
         background-color: #E6E6E6;
         width: 6.25em;
@@ -610,7 +524,7 @@ input {
 <?php
 echo '    <form method="get" action="'.$url.'">
 ';
-echo '        <input class="text" type="text" value="'.htmlspecialchars(@$_GET['s'] ,ENT_QUOTES).'" name="s" title="解析" autocomplete="off" maxlength="76" baiduSug="1" autofocus="autofocus" placeholder="请输入查询词">
+echo '        <input class="text" type="text" value="'.htmlspecialchars(@$_GET['s'] ,ENT_QUOTES).'" name="s" title="解析" autocomplete="off" maxlength="76" id="sug" autofocus="autofocus" placeholder="请输入查询词">
 ';
 echo '        <input class="other" type="number" name="pn" title="从第几位开始取结果" min="0" max="750" value="'.@$_GET['pn'].'" placeholder="取第几位">
 ';
@@ -822,6 +736,7 @@ $baidu = 'http://'.$ip[0].'/s?wd=';
 if (strlen($s) == 0) {
     echo '
 <h1 class="center bold white">相关资料</h1>
+<p class="center"><a class="noa" href="http://www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">订阅更新RSS</a></p>
 <p class="center"><a class="noa" href="http://www.weixingon.com/baiduip.php" target="_blank">百度的IP地址是多少</a></p>
 <p class="center"><a class="noa" href="http://www.weixingon.com/wordcount/" target="_blank">百度搜索结果标题长度研究</a></p>
 <p class="center"><a class="noa" href="http://www.weixingon.com/par.html" target="_blank">百度 HTTP 接口参数</a></p>
@@ -894,6 +809,9 @@ if (strlen($s) > 0) {
         <a class="noa" href="http://open.baidu.com/special/time/" target="_blank" rel="external nofollow noreferrer" title="现在几点？">
             '.date('Y-m-d H:i:s', $matchservertime[1])
         .'</a>
+        <a class="noa" href="http://www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">
+            更新日志
+        </a>
     </p>';
 }
 // '</a>
@@ -1163,6 +1081,7 @@ if (strlen($s) > 0) {
     array(20070, '', '', '', '', '', '挂号网', '', '', ''),
     array(20006, '', '', '', '', '', '医院网站', '', '', ''),
     array(20005, '', '', '', '', '', '医院科室', '', '', ''),
+    array(18577, '', '', '', '', '', '【携程攻略】', '', '', ''),
     array(18521, '<a target="_blank" href="', 'http://s.hc360.com/?w=', $matchfk[4][$i], '" rel="external nofollow noreferrer', '">', '慧聪网&nbsp;导购', '</a>', '', ''),
     array(18258, '', '', '', '', '', '91论坛', '', '', ''),
     array(16932, '', '', '', '', '', '美食/营养&nbsp;百度经验【组图】', '', '', ''),
@@ -1339,7 +1258,7 @@ if (strlen($s) > 0) {
     array(12906, '', '', '', '', '', '[猜]城市&nbsp;-&nbsp;百度团购', '', '', ''),
     array(12904, '', '', '', '', '', '[猜]&nbsp;中国网络电视台', '', '', ''),
     array(12903, '', '', '', '', '', '[猜]&nbsp;百度团购导航', '', '', ''),
-    array(12901, '', '', '', '', '', '[猜]&nbsp;旅游攻略&nbsp;百度旅游', '', '', ''),
+    array(12901, '', '', '', '', '', '旅游攻略&nbsp;-&nbsp;百度旅游', '', '', ''),
     array(12880, '', '', '', '', '', '[猜]&nbsp;国内省市级|国外国家级目的地&nbsp;百度旅游', '', '', ''),
     array(12840, '', '', '', '', '', '百度乐居', '', '', ''),
     array(12839, '', '', '', '', '', '招远麦当劳&nbsp;新闻直播', '', '', ''),
@@ -1549,7 +1468,7 @@ if (strlen($s) > 0) {
         echo '
                 </td>
                 <td>
-                    <a href="http://www.weixingon.com/baidusp-op.php?srcid='.$matchfk[1][$i].'&s='.$matchfk[4][$i].'" target="_blank" rel="external nofollow noreferrer">'
+                    <a href="http://www.weixingon.com/baidusp-op.php?srcid='.$matchfk[1][$i].'&amp;s='.$matchfk[4][$i].'" target="_blank" rel="external nofollow noreferrer">'
                         .$matchfk[1][$i]
                     .'</a>
                 </td>
@@ -1727,7 +1646,7 @@ if (strlen($s) > 0) {
                 <td>';
             if (strlen(@$sug1[1][$i]) > 0) {
                 echo '
-                    <a href="'.$url.'?s='.@$sug1[1][$i].'" target="_blank">'
+                    <a href="'.$url.'?s='.preg_replace('/(\s+)/', '%20', @$sug1[1][$i]).'" target="_blank">'
                         .@$sug1[1][$i].'
                     </a>';
             }
@@ -1736,7 +1655,7 @@ if (strlen($s) > 0) {
                 <td>';
             if (strlen(@$sug2[1][$i]) > 0) {
                 echo '
-                    <a href="'.$url.'?s='.@$sug2[1][$i].'" target="_blank">'
+                    <a href="'.$url.'?s='.preg_replace('/(\s+)/', '%20', @$sug2[1][$i]).'" target="_blank">'
                         .@$sug2[1][$i].'
                     </a>';
             }
@@ -1745,7 +1664,7 @@ if (strlen($s) > 0) {
                 <td>';
             if (strlen(@$sug3[1][$i]) > 0) {
                 echo '
-                    <a href="'.$url.'?s='.@$sug3[$i+1].'" target="_blank">'
+                    <a href="'.$url.'?s='.preg_replace('/(\s+)/', '%20', @$sug3[$i+1]).'" target="_blank">'
                         .@$sug3[$i+1].'
                     </a>';
             }
@@ -1789,7 +1708,7 @@ if (strlen($s) > 0) {
                     $kz = (explode('&nbsp;', $mcrq[5][$g]));
                     array_pop($kz);
                     echo '
-                    <a href="'.$url.'?s='.@$kz[$f].'" target="_blank">'
+                    <a href="'.$url.'?s='.preg_replace('/(\s+)/', '%20', @$kz[$f]).'" target="_blank">'
                         .@$kz[$f]
                     .'</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
                 }
@@ -1942,7 +1861,7 @@ if (strlen($s) > 0) {
             }
             elseif ($fvalue6 == '5') {
                 echo '
-                <td class="unit-lavender">基于&nbsp;IP&nbsp;地理位置更换结果<br>5</td>';
+                <td class="unit-lavender">基于&nbsp;IP&nbsp;地理位置<br>5</td>';
             }
             elseif ($fvalue6 == '3')
                 echo '
@@ -2079,19 +1998,19 @@ if (strlen($s) > 0) {
             elseif ($f1value3 == '6') {
                 echo '
                 <td class="unit-silver">
-                    <a href="http://www.weixingon.com/baidusp-lm.php?s='.$query.'&rn=50&lm=7" target="_blank" title="yyyy年MM月dd日|hh小时前|mm分钟前|ss秒前">0-24小时前更新快照的网页</a><br>6
+                    <a href="http://www.weixingon.com/baidusp-lm.php?s='.$query.'&rn=50&lm=7" target="_blank" title="yyyy年MM月dd日|hh小时前|mm分钟前|ss秒前">0-24小时前更新快照</a><br>6
                 </td>';
             }
             elseif ($f1value3 == '5') {
                 echo '
                 <td class="unit-lavender">
-                    <a href="http://www.weixingon.com/baidusp-lm.php?s='.$query.'&rn=50&lm=7" target="_blank" title="yyyy年MM月dd日">24-48小时前更新快照的网页</a><br>5
+                    <a href="http://www.weixingon.com/baidusp-lm.php?s='.$query.'&rn=50&lm=7" target="_blank" title="yyyy年MM月dd日">24-48小时前更新快照</a><br>5
                 </td>';
             }
             elseif ($f1value3 == '4') {
                 echo '
                 <td class="unit-tomato">
-                    <a href="http://www.weixingon.com/baidusp-lm.php?s='.$query.'&rn=50&lm=7" target="_blank" title="yyyy年MM月dd日">2-7天前更新快照的网页</a><br>4
+                    <a href="http://www.weixingon.com/baidusp-lm.php?s='.$query.'&rn=50&lm=7" target="_blank" title="yyyy年MM月dd日">2-7天前更新快照</a><br>4
                 </td>';
             }
             else {
@@ -2683,6 +2602,36 @@ if (strlen($s) > 0) {
 
 }
 
+// 摘要
+
+if (strlen($s) > 0) {
+
+    if (preg_match_all('/(?<=<div class="c-abstract">)(.*)(?=<\/div><div class="f13">)/', $baiduserp, $matchabstract)) {
+        echo '
+<div class="draglist" draggable="true">
+    <table>
+        <thead>
+            <tr>
+                <th>摘要<br>abstract</th>
+                <th>排序</th>
+            </tr>
+        </thead>
+        <tbody>';
+
+        foreach ($matchabstract[1] as $i => $position) {
+            echo '
+            <tr class="back-gold">
+                <td>'.strip_tags($matchabstract[1][$i]).'</td>
+                <td class="center">'.($i+1).'</td>
+            </tr>';
+        }
+        echo '
+        </tbody>
+    </table>
+</div>';
+    }
+}
+
 if (strlen($s) > 0) {
 
     // template
@@ -2718,36 +2667,6 @@ if (strlen($s) > 0) {
     </table>
 </div>';    
         }
-    }
-}
-
-// 摘要
-
-if (strlen($s) > 0) {
-
-    if (preg_match_all('/(?<=<div class="c-abstract">)(.*)(?=<\/div><div class="f13">)/', $baiduserp, $matchabstract)) {
-        echo '
-<div class="draglist" draggable="true">
-    <table>
-        <thead>
-            <tr>
-                <th>摘要<br>abstract</th>
-                <th>排序</th>
-            </tr>
-        </thead>
-        <tbody>';
-
-        foreach ($matchabstract[1] as $i => $position) {
-            echo '
-            <tr class="back-gold">
-                <td>'.$matchabstract[1][$i].'</td>
-                <td class="center">'.($i+1).'</td>
-            </tr>';
-        }
-        echo '
-        </tbody>
-    </table>
-</div>';
     }
 }
 
@@ -2834,7 +2753,7 @@ if (strlen($s) > 0) {
             echo '
                     <a href="'.$url.'?s='.$maround[0][$i].'" target="_blank">'
                         .$maround[0][$i]
-                    .'</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
+                    .'</a>&nbsp;&nbsp;&nbsp;&nbsp;';
         }
     echo '
                 </td>
@@ -2848,7 +2767,7 @@ if (strlen($s) > 0) {
     echo '
 <p>
     <a class="noa" href="http://www.weixingon.com/baiduip.php" target="_blank">百度的IP地址是多少</a>
-    <a class="noa" href="https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php" target="_blank" rel="external nofollow noreferrer">百度参数分析工具v1.21</a>
+    <a class="noa" href="https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php" target="_blank" rel="external nofollow noreferrer">百度参数分析工具v1.22</a>
 </p>';
 }
 
@@ -2962,6 +2881,28 @@ eleDustbin.ondrop = function(ev) {
     this.style.color = '#000000';
     return false;
 };
+
+// 百度下拉框提示
+
+//回调函数，用于获取用户当前选择的文字
+function show(str) {
+    txtObj.innerHTML = str;
+}
+
+var params = {
+//  'XOffset': 0,               // 提示框位置横向偏移量,单位 px
+//  'YOffset': 0,               // 提示框位置纵向偏移量,单位 px
+//  'width': 204,               // 提示框宽度，单位 px
+//  'fontColor': '#f70',        // 提示框文字颜色
+    'fontColorHI': '#000000',   // 提示框高亮选择时文字颜色
+    'fontSize': '16px',         // 文字大小
+    'fontFamily': 'Helvetica',  // 文字字体
+    'borderColor': '#DDDDDD',   // 提示框的边框颜色
+    'bgcolorHI': '#DDDDDD',     // 提示框高亮选择的颜色
+    'sugSubmit': true           // 在选择提示词条是是否提交表单
+};
+
+BaiduSuggestion.bind('sug', params, show);
 </script>
 </body>
 </html>
