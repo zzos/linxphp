@@ -277,13 +277,6 @@ input {
         sans-serif;
 }
 
-.text {
-    padding: .125em .3125em .25em .3125em;
-    height: 2em;
-    width: 20em;
-    outline: none;
-}
-
 .other {
     padding: .125em .3125em .25em .3125em;
     height: 2em;
@@ -478,12 +471,13 @@ input {
     opacity: 0.85;
 }
 
-.left_outer,.right_outer {
+.left_outer,.right_outer,.non,.dustbin {
     display: none!important;
 }
 
 @media screen and (min-width: 1024px) {
     .dustbin {
+        display: block!important;
         margin-top: 3em;
         width: 5em;
         height: 19.25em;
@@ -500,6 +494,17 @@ input {
     .draglist:hover {
         border-color: #FFFFBB;
         background-color: #FFDDAA;
+    }
+
+    .non {
+        display: block!important;
+    }
+
+    .text {
+        padding: .125em .3125em .25em .3125em;
+        height: 2em;
+        width: 20em;
+        outline: none;
     }
 
     .left_outer,.right_outer {
@@ -532,7 +537,7 @@ input {
 
     .right {
         position: absolute;
-        left: 760px;
+        right: -150px;
         top: 42px;
         padding: 8px;
         border: 0.0625em solid #d9dadc;
@@ -540,17 +545,30 @@ input {
     }
 }
 
+.dis {
+    display: none!important;
+}
+
+@media screen and (max-width: 1023px) {
+    .dis {
+        display: block!important;
+   }
+
+    .text {
+        padding: .125em .3125em .25em .3125em;
+        height: 2em;
+        width: 12.5em;
+        outline: none;
+    }
+}
 </style>
 </head>
 <body>
-
 <!--拖放-->
-<div class="dustbin center"></div>
-
+<div class="dustbin center" style="display: block;"></div>
 <div class="detail">
-
 <!--搜索框-->
-<div class="header center">
+<div class="header center non">
 <?php
 echo '    <form method="get" action="'.$url.'">
 ';
@@ -588,6 +606,17 @@ if (@$_GET['gpc'] == 'stf%3D'.(time() - 31536000).'%2C'.time().'%7Cstftype%3D1')
 }
 echo '>最近1年</option>
         </select>
+        <input class="submit" type="submit" value="百度一下">
+    </form>
+</div>
+';
+?>
+
+<div class="header center dis">
+<?php
+echo '    <form method="get" action="'.$url.'">
+';
+echo '        <input class="text" type="text" value="'.htmlspecialchars(@$_GET['s'] ,ENT_QUOTES).'" name="s" title="解析" autocomplete="off" maxlength="76" baiduSug="1" placeholder="请输入查询词">
         <input class="submit" type="submit" value="百度一下">
     </form>
 </div>
@@ -764,13 +793,28 @@ $baidu = 'http://'.$ip[0].'/s?wd=';
 
 if (strlen($s) == 0) {
     echo '
-<h1 class="center bold white">相关资料</h1>
-<p class="center"><a class="noa" href="http://www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">订阅更新RSS</a></p>
-<p class="center"><a class="noa" href="http://www.weixingon.com/baiduip.php" target="_blank">百度的IP地址是多少</a></p>
-<p class="center"><a class="noa" href="http://www.weixingon.com/wordcount/" target="_blank">百度搜索结果标题长度研究</a></p>
-<p class="center"><a class="noa" href="http://www.weixingon.com/par.html" target="_blank">百度 HTTP 接口参数</a></p>
-<p class="center"><a class="noa" href="http://www.weixingon.com/chaolianfenxi.html" target="_blank">超链分析</a></p>
-';
+<div class="back-yellow" style="padding: 1em;">
+<h1 class="center bold">百度搜索结果参数相关资料</h1>
+<hr>
+<p><a href="http://www.weixingon.com/wordcount/" target="_blank">字数统计工具_百度搜索结果标题长度研究</a><br>
+编著者 吴星 发布于 2014年10月10日，上海<br>
+分类 百度参数<br>
+使用主流的中文环境操作系统，浏览器等(字符编码为 UTF-8, GB2312, BIG5 等)，展示在百度中文搜索结果页(字符编码为 UTF-8, GB2312, BIG5 等)的网页型标题，长度限制为 3－63 字节(2 byte &lt; title 长度 &lt; 64 byte)，如果 F 参数所指的标题策略是 F2 = xxxxxx6B，短于 3 字节或超过 63 字节的非百度产品的普通结果(AS)会自动截断，并增加省略符号 "…"，截断后加上省略符号的 title 长度限制为 3－64 字节。</p>
+<hr>
+<p><a href="http://www.weixingon.com/chaolianfenxi.html" target="_blank">超链文件检索系统和方法</a><br>
+编著者 李彦宏 发布于 1999年07月06日，纽约<br>
+分类 搜索引擎技术<br>
+一个与根据超链指向的查询索引文档相关，用于检索文档的搜索引擎。它的索引器遍历超文本数据库并寻找包括超链指向的文档地址与每个超链锚文本在内的超文本信息。超文本信息是贮存在一个倒排索引文件里，这个倒排索引文件亦可用于计算对于各超链指向的特定文档链接向量。输入查询时候，搜索引擎找到锚文本里含有查询词的全部文档向量。与此同时计算了查询向量，然后算出查询向量跟每个文档链接向量的点积。锚文本里含有查询词的全部文档相关点积的加总决定了每一个文档的相关性排名。</p>
+<hr>
+<p><a href="http://www.weixingon.com/par.html" target="_blank">百度 HTTP 接口参数</a><br>
+编著者 吴星 发布于 2014年09月02日，上海<br>
+分类 百度参数<br>
+百度上线“全网寻人平台”。为了打通互联网全部寻人信息，百度随即启动全网寻人平台的开发和相关资源的协调，经过30多个小时的努力，“百度全网寻人平台”正式上线。用户登陆百度首页，搜索“雅安寻人”等热门关键词即可进入寻人平台。同时百度全网寻人平台同步对外开放，所有寻人平台的信息都可接入。</p>
+<hr>
+<p>很喜欢王世襄的一句话，亦是我分析网站的理念之一。不浮曰沉，沉是深而稳的意思，是浮躁的反面。穆是美的意思。故沉穆是一种深沉而幽静的美。在明式家具中，能入简练、淳朴、厚拙、凝重诸品的，必然兼具幽静的美。今举黑漆炕几作为此品的实例，因其更饶沉穆的韵趣而已。</p>
+<p>
+<img src="http://www.weixingon.com/pic/%C1%E8%B2%A8%C7%DB.jpg" alt="凌波芹" style="max-width: 100%!important;"></p>
+</div>';
 }
 
 // 确定时间
@@ -2831,6 +2875,15 @@ if (strlen($s) > 0) {
 }
 
 ?>
+<table style="border:none;">
+    <tbody>
+        <tr>
+            <td class="center" style="font-size: 2em; border:none;">
+                <strong><a class="noa" href="#">&nbsp;&nbsp;返&nbsp;&nbsp;&nbsp;&nbsp;回&nbsp;&nbsp;&nbsp;&nbsp;顶&nbsp;&nbsp;&nbsp;&nbsp;部&nbsp;&nbsp;</a></strong>
+            </td>
+        </tr>
+    </tbody>
+</table>
 </div>
 
 <div class="left_outer" style="display: block;">
@@ -2869,7 +2922,7 @@ if (strlen($s) > 0) {
 <a href="https://adwords.google.com/da/DisplayPlanner/Home" rel="external nofollow noreferrer" target="_blank" title="vpn">Google AdWords</a><br>
 <a href="http://support.google.com/analytics/bin/answer.py?hl=zh-Hans&amp;answer=1033867" rel="external nofollow noreferrer" target="_blank" title="vpn">网址构建工具</a><br>
 <a href="http://creativecommons.org/choose/" rel="external nofollow noreferrer" target="_blank">creative common</a></p>
-<p><a class="noa" href="#">返&nbsp;回&nbsp;顶&nbsp;部</a></p>
+<p><strong><a class="noa" href="#">&nbsp;返&nbsp;回&nbsp;顶&nbsp;部&nbsp;</a></strong></p>
         </div>
     </div>
 </div>
@@ -2881,38 +2934,36 @@ if (strlen($s) > 0) {
 <a href="http://www.douban.com" rel="external nofollow noreferrer" target="_blank">豆瓣</a><br>
 <a href="http://www.zhihu.com" rel="external nofollow noreferrer" target="_blank">知乎</a><br>
 <a href="https://www.pinterest.com" rel="external nofollow noreferrer" target="_blank">pinterest</a><br>
-<a href="http://www.ruanyifeng.com/blog/" rel="external nofollow noreferrer" target="_blank">阮一峰</a><br>
+<a href="http://www.ruanyifeng.com/blog/" rel="external nofollow noreferrer" target="_blank">阮一峰的网络日志</a><br>
 <a href="http://www.jintian.net/today/" rel="external nofollow noreferrer" target="_blank">今天</a><br>
 <a href="http://www.huxiu.com" rel="external nofollow noreferrer" target="_blank">虎嗅</a><br>
-<a href="https://support.google.com/webmasters/answer/72462?hl=zh-Hans" rel="external nofollow noreferrer" target="_blank" title="vpn">移动开发</a><br>
+<a href="https://support.google.com/webmasters/answer/72462?hl=zh-Hans" rel="external nofollow noreferrer" target="_blank" title="vpn">移动网站开发详情</a><br>
 <a href="http://www.smashingmagazine.com/tag/wallpapers/" rel="external nofollow noreferrer" target="_blank">Wallpaper</a><br>
-<a href="http://googlewebmastercentral.blogspot.com" rel="external nofollow noreferrer" target="_blank" title="vpn">谷歌网管</a><br>
+<a href="http://googlewebmastercentral.blogspot.com" rel="external nofollow noreferrer" target="_blank" title="vpn">谷歌网管中心</a><br>
 <strong>文档</strong><br>
-<a href="http://deerchao.net/tutorials/regex/regex.htm" rel="external nofollow noreferrer" target="_blank">正则表达式</a><br>
+<a href="http://deerchao.net/tutorials/regex/regex.htm" rel="external nofollow noreferrer" target="_blank">正则表达式入门</a><br>
 <a href="https://github.com/taobao/nginx-book" rel="external nofollow noreferrer" target="_blank">Nginx book</a><br>
 <a href="http://nginx.org/en/docs/" rel="external nofollow noreferrer" target="_blank">nginx 文档</a><br>
 <a href="https://zh.wikibooks.org/zh-cn/Lisp_%E5%85%A5%E9%96%80" rel="external nofollow noreferrer" target="_blank">Lisp 入门</a><br>
 <a href="http://www.w3school.com.cn/tags/html_ref_entities.html" rel="external nofollow noreferrer" target="_blank">HTML ISO</a><br>
-<a href="https://github.com/ausdruck/spec" rel="external nofollow noreferrer" target="_blank">编码规范</a><br>
+<a href="https://github.com/ausdruck/spec" rel="external nofollow noreferrer" target="_blank">百度内部编码规范</a><br>
 <a href="http://schema.org/docs/full.html" rel="external nofollow noreferrer" target="_blank" title="vpn">微数据层级</a><br>
-<a href="http://www.html-5.com/microdata/breadcrumbs/index.html" rel="external nofollow noreferrer" target="_blank">Breadcrumb</a><br>
-<a href="https://developers.google.com/speed/articles/optimizing-html" rel="external nofollow noreferrer" target="_blank" title="vpn">Reducing</a><br>
+<a href="http://www.html-5.com/microdata/breadcrumbs/index.html" rel="external nofollow noreferrer" target="_blank">Breadcrumb Trail</a><br>
+<a href="https://developers.google.com/speed/articles/optimizing-html" rel="external nofollow noreferrer" target="_blank" title="vpn">Reducing file size</a><br>
 <strong>站长平台</strong><br>
-<a href="https://www.google.com/webmasters/tools/home?hl=zh" rel="external nofollow noreferrer" target="_blank" title="vpn">谷歌网管</a><br>
-<a href="http://cn.bing.com/webmaster/" rel="external nofollow noreferrer" target="_blank">必应网管</a><br>
-<a href="http://zhanzhang.baidu.com/site/index" rel="external nofollow noreferrer" target="_blank">百度站长</a><br>
-<a href="http://zhanzhang.sogou.com/index.php/dashboard/index" rel="external nofollow noreferrer" target="_blank">搜狗站长</a><br>
-<a href="http://zhanzhang.so.com" rel="external nofollow noreferrer" target="_blank">好搜站长</a><br>
-<a href="http://mp.weixin.qq.com/" rel="external nofollow noreferrer" target="_blank">微信公号</a><br>
-<a href="http://open.weibo.com/webmaster/console?siteid=1664136430" rel="external nofollow noreferrer" target="_blank">微博控制台</a><br>
+<a href="https://www.google.com/webmasters/tools/home?hl=zh" rel="external nofollow noreferrer" target="_blank" title="vpn">谷歌网管工具</a><br>
+<a href="http://cn.bing.com/webmaster/" rel="external nofollow noreferrer" target="_blank">必应网管工具</a><br>
+<a href="http://zhanzhang.baidu.com/site/index" rel="external nofollow noreferrer" target="_blank">百度站长平台</a><br>
+<a href="http://zhanzhang.sogou.com/index.php/dashboard/index" rel="external nofollow noreferrer" target="_blank">搜狗站长平台</a><br>
+<a href="http://zhanzhang.so.com" rel="external nofollow noreferrer" target="_blank">好搜站长平台</a><br>
+<a href="http://mp.weixin.qq.com/" rel="external nofollow noreferrer" target="_blank">微信公众平台登录</a><br>
 <strong>统计</strong><br>
-<a href="http://www.google.com/trends/" rel="external nofollow noreferrer" target="_blank" title="vpn">Trends</a><br>
+<a href="http://www.google.com/trends/" rel="external nofollow noreferrer" target="_blank" title="vpn">Google Trends</a><br>
 <a href="http://index.baidu.com/" rel="external nofollow noreferrer" target="_blank">百度指数</a><br>
-<a href="http://top.sogou.com/" rel="external nofollow noreferrer" target="_blank">搜狗热搜榜</a><br>
 <a href="http://tongji.baidu.com/web/welcome/ico?s=7cf4d0f651a8933d3c13cf70a0d7d30a" rel="external nofollow noreferrer" target="_blank">百度统计</a><br>
-<a href="http://www.google.com/analytics/ce/mws/" rel="external nofollow noreferrer" target="_blank" title="vpn">GA</a><br>
-<a href="http://i.baidu.com/my/history" rel="external nofollow noreferrer" target="_blank">搜索历史</a><br>
-<a href="http://baozhang.baidu.com/guarantee/step" rel="external nofollow noreferrer" target="_blank">推广历史</a></p>
+<a href="http://www.google.com/analytics/ce/mws/" rel="external nofollow noreferrer" target="_blank" title="vpn">Google Analytics</a><br>
+<a href="http://i.baidu.com/my/history" rel="external nofollow noreferrer" target="_blank">百度搜索历史记录</a><br></p>
+<p><strong><a class="noa" href="#">&nbsp;返&nbsp;回&nbsp;顶&nbsp;部&nbsp;</a></strong></p>
         </div>
     </div>
 </div>
