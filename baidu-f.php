@@ -2922,7 +2922,7 @@ if (strlen($s) > 0) {
 <a href="https://adwords.google.com/da/DisplayPlanner/Home" rel="external nofollow noreferrer" target="_blank" title="vpn">Google AdWords</a><br>
 <a href="http://support.google.com/analytics/bin/answer.py?hl=zh-Hans&amp;answer=1033867" rel="external nofollow noreferrer" target="_blank" title="vpn">网址构建工具</a><br>
 <a href="http://creativecommons.org/choose/" rel="external nofollow noreferrer" target="_blank">creative common</a></p>
-<p><strong><a class="noa" href="#">&nbsp;返&nbsp;回&nbsp;顶&nbsp;部&nbsp;</a></strong></p>
+<p>百度参数QQ群<br>255363059</p>
         </div>
     </div>
 </div>
