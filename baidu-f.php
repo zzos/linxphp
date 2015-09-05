@@ -565,15 +565,15 @@ echo '>最近1年</option>
 
 $startTime = microtime(true);
 $gpc = @$_GET['gpc'];
-$connectpn = "&pn=";
-$connectrn = "&rn=";
-$connectgpc = "&gpc=";
+$connectpn = "&amp;pn=";
+$connectrn = "&amp;rn=";
+$connectgpc = "&amp;gpc=";
 $p = array (
     '/(\s+)/',
     '/(http:\/\/)/',
 );
 $r = array (
-    '%20',
+    '+',
     '',
 );
 $z = preg_replace($p[1], $r[1], $s);
@@ -1639,7 +1639,7 @@ if (strlen($s) > 0) {
             echo '
             <tr class="back-azure">
                 <td>
-                    <a href="'.$url.'?s='.@$matchrelated[2][$i].'" target="_blank">'
+                    <a href="'.$url.'?s='.preg_replace('/(\s+)/', '%20', @$matchrelated[2][$i]).'" target="_blank">'
                         .@$matchrelated[2][$i].'
                     </a>
                 </td>
@@ -1708,7 +1708,7 @@ if (strlen($s) > 0) {
                     $kz = (explode('&nbsp;', $mcrq[5][$g]));
                     array_pop($kz);
                     echo '
-                    <a href="'.$url.'?s='.preg_replace('/(\s+)/', '%20', @$kz[$f]).'" target="_blank">'
+                    <a href="'.$url.'?s='.preg_replace('/(\s+)/', '+', @$kz[$f]).'" target="_blank">'
                         .@$kz[$f]
                     .'</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;';
                 }
@@ -2696,7 +2696,7 @@ if (strlen($s) > 0) {
                 echo '
         <tr class="back-egg">
             <td class="center">
-                <a href="'.$url.'?s='.$score['data'][0]['card'][$i]['unit'][$j]['name'].'" target="_blank">'
+                <a href="'.$url.'?s='.preg_replace('/(\s+)/', '+', $score['data'][0]['card'][$i]['unit'][$j]['name']).'" target="_blank">'
                     .$score['data'][0]['card'][$i]['unit'][$j]['name']
                 .'</a>
             </td>
