@@ -503,7 +503,7 @@ input {
     .text {
         padding: .125em .3125em .25em .3125em;
         height: 2em;
-        width: 20em;
+        width: 17em;
         outline: none;
     }
 
@@ -571,6 +571,20 @@ input {
 <div class="header center non">
 <?php
 echo '    <form method="get" action="'.$url.'">
+    <a href="'.$url.'">
+        <canvas id="myCanvas" width="52" height="26">
+            Your browser does not support the canvas element.
+        </canvas>
+    </a>
+    <script type="text/javascript">
+    var canvas = document.getElementById("myCanvas");
+        if(canvas.getContext) {  
+        var ctx = canvas.getContext("2d");
+        ctx.font = "24px Helvetica Neue";
+        ctx.fillStyle = "#FF6347";
+        ctx.fillText("百度", 0, 24);
+        }
+    </script>
 ';
 echo '        <input class="text" type="text" value="'.htmlspecialchars(@$_GET['s'] ,ENT_QUOTES).'" name="s" title="解析" autocomplete="off" maxlength="76" id="sug" autofocus="autofocus" placeholder="请输入查询词">
 ';
@@ -812,8 +826,6 @@ if (strlen($s) == 0) {
 百度上线“全网寻人平台”。为了打通互联网全部寻人信息，百度随即启动全网寻人平台的开发和相关资源的协调，经过30多个小时的努力，“百度全网寻人平台”正式上线。用户登陆百度首页，搜索“雅安寻人”等热门关键词即可进入寻人平台。同时百度全网寻人平台同步对外开放，所有寻人平台的信息都可接入。</p>
 <hr>
 <p>很喜欢王世襄的一句话，亦是我分析网站的理念之一。不浮曰沉，沉是深而稳的意思，是浮躁的反面。穆是美的意思。故沉穆是一种深沉而幽静的美。在明式家具中，能入简练、淳朴、厚拙、凝重诸品的，必然兼具幽静的美。今举黑漆炕几作为此品的实例，因其更饶沉穆的韵趣而已。</p>
-<p>
-<img src="http://www.weixingon.com/pic/%C1%E8%B2%A8%C7%DB.jpg" alt="凌波芹" style="max-width: 100%!important;"></p>
 </div>';
 }
 
@@ -865,14 +877,13 @@ if (strlen($s) > 0) {
     echo '" target="_blank" rel="external nofollow noreferrer">
             点击查看“<span class="red">'.$s.'</span>”的百度搜索结果页
         </a>
-        '.$matchnumbers[2].'&nbsp;个
-        <a class="noa" href="http://ask.seowhy.com/question/8376" rel="external nofollow noreferrer" target="_blank" title="百度搜索结果onmousedown事件对排名有什么影响？">
-            结果
-        </a>
+    </h1>
+    <p class="white center">
+        '.$matchnumbers[2].'&nbsp;个结果
         <a class="noa" href="http://open.baidu.com/special/time/" target="_blank" rel="external nofollow noreferrer" title="现在几点？">
             '.date('Y-m-d H:i:s', $matchservertime[1])
         .'</a>
-    </h1>';
+    </p>';
 }
 
 // 冇收录
@@ -924,7 +935,7 @@ if (preg_match('/(?<=该网站共有)(\s{16})(<b style="color:#333">)([0-9,\x80-
 <p class="white">'.$indextime.'&nbsp;百度索引量&nbsp;'.$matchsite[3].'&nbsp;(site&nbsp;&divide;&nbsp;索引量)&nbsp;=&nbsp;'.sprintf('%.3f',((str_replace(',', '', $matchnumbers[2]) / str_replace(',' ,'' ,$matchsite[3])) * 100)).'%</p>';
 
 // 搜索结果
-if (preg_match_all("/(?<=\" data\-tools=\'{\"title\":\")([^\"]+)(\",\"url\":\"http:)(\/\/www.baidu.com\/link\?url=[a-zA-Z0-9_\-]{43,299})(?=\"}'><a class=\"c-tip-icon\"><i class=\"c-icon c-icon-triangle-down-g\"><\/i><\/a><\/div>)/", @$baiduserp, $matchserp))
+if (preg_match_all("/(?<=\" data\-tools=\'{\"title\":\")([^\"]+)(\",\"url\":\"http:)(\/\/www.baidu.com\/link\?url=[a-zA-Z0-9_\-]{43,320})(?=\"}'><a class=\"c-tip-icon\"><i class=\"c-icon c-icon-triangle-down-g\"><\/i><\/a><\/div>)/", @$baiduserp, $matchserp))
 
 // 搜索结果页资源
 
@@ -1019,7 +1030,7 @@ $srcidas = array (
     array(26, '更多文库相关文档', '', ''),
     array(25, '百度文库', '', ''),
     array(24, '缩略图结果', '但非每个查询词展现图片', ''),
-    array(23, 'robots.txt&nbsp;文件存在限制指令的结果', '', ''),
+    array(23, 'robots.txt&nbsp;存在限制', '', ''),
     array(22, '百度经验带相册', '', ''),
     array(21, '图片&nbsp;百度百科(可能与查询词内容相关度较高)', '', ''),
     // 2015-01-08 无序的新世界 维普网 http://www.cqvip.com/qk/95355X/200106/15044983.html
@@ -1110,7 +1121,7 @@ if (strlen($s) > 0) {
     array(20451, '', '', '', '', '', '分集剧情&nbsp;电视猫', '', '', ''),
     array(20426, '<a target="_blank" href="', 'http://s.weibo.com/user/', preg_replace('/(\s+)/', '+', $matchfk[4][$i]), '&amp;auth=vip" rel="external nofollow noreferrer', '">', '新浪官微', '</a>', '', ''),
     array(20423, '', '', '', '', '', '[猜]&nbsp;百度知道&nbsp;医疗健康&nbsp;更多知道相关问题', '', '', ''),
-    array(20422, '', '', '', '', '', '[猜]&nbsp;百度知道&nbsp;医疗&nbsp;更多知道相关问题', '', '', ''),
+    array(20422, '', '', '', '', '', '百度知道&nbsp;医疗健康&nbsp;更多知道相关问题', '', '', ''),
     array(20408, '百度百科(由<a target="_blank" href="', 'http://www.baikemy.com', '', '&amp;auth=vip" rel="external nofollow noreferrer', '">', '卫生部临床医生科普平台/百科名医网', '</a>权威认证', '', ''),
     array(20407, '百度百科(由<a target="_blank" href="', 'http://www.baikemy.com', '', '&amp;auth=vip" rel="external nofollow noreferrer', '">', '卫生部临床医生科普平台/百科名医网', '</a>权威认证', '', ''),
     array(20406, '', '', '', '', '', '百度视频', '', '', ''),
@@ -1133,6 +1144,7 @@ if (strlen($s) > 0) {
     array(20070, '', '', '', '', '', '挂号网', '', '', ''),
     array(20006, '', '', '', '', '', '医院网站', '', '', ''),
     array(20005, '', '', '', '', '', '医院科室', '', '', ''),
+    array(19093, '<a target="_blank" href="', 'http://www.18183.com/', '', '" rel="external nofollow noreferrer', '">', '游戏攻略&nbsp;18183手机游戏网', '</a>', '', ''),
     array(18577, '', '', '', '', '', '【携程攻略】', '', '', ''),
     array(18521, '<a target="_blank" href="', 'http://s.hc360.com/?w=', preg_replace('/(\s+)/', '+', $matchfk[4][$i]), '" rel="external nofollow noreferrer', '">', '慧聪网&nbsp;导购', '</a>', '', ''),
     array(18258, '', '', '', '', '', '91论坛', '', '', ''),
@@ -1166,6 +1178,7 @@ if (strlen($s) > 0) {
     array(16355, '', '', '', '', '', '[猜]&nbsp;系统之家', '', '', ''),
     array(16345, '', '', '', '', '', '[猜]&nbsp;世界杯&nbsp;网易体育', '', '', ''),
     array(16343, '', '', '', '', '', '[猜]&nbsp;NBA赛季&nbsp;新浪体育', '', '', ''),
+    array(16323, '<a target="_blank" href="', 'http://www.39yst.com/', '', '" rel="external nofollow noreferrer', '">', '三九养生堂', '</a>', '', ''),
     array(16312, '', '', '', '', '', '[猜]&nbsp;百度贴吧访谈直播', '', '', ''),
     array(16311, '<a target="_blank" href="', 'http://open.baidu.com/data/ms/nav/somesources/tag/imgu/', '', '" rel="external nofollow noreferrer', '">', '股票代码&nbsp;美股实时行情&nbsp;新浪财经', '</a>', '', ''),
     array(16309, '<a target="_blank" href="', 'http://open.baidu.com/data/ms/nav/somesources/tag/imgu/', '', '" rel="external nofollow noreferrer', '">', '股票代码&nbsp;美股实时行情&nbsp;新浪财经', '</a>', '', ''),
@@ -1211,6 +1224,7 @@ if (strlen($s) > 0) {
     array(15516, '<a target="_blank" href="', 'http://name.renren.com/', '', '" rel="external nofollow noreferrer', '">', '人人网同名搜索', '</a>', '', ''),
     array(15515, '', '', '', '', '', '人人网同名搜索', '', '', ''),
     array(15460, '', '', '', '', '', '中国足彩网', '', '', ''),
+    array(15448, '<a target="_blank" href="', 'http://s.hc360.com', '', '" rel="external nofollow noreferrer', '">', '慧聪商务搜索', '</a>', '', ''),
     array(15442, '', '', '', '', '', '疾病百科&nbsp;39健康网', '', '', ''),
     array(15388, '', '', '', '', '', '手机中国', '', '', ''),
     array(15357, '', '', '', '', '', 'hao123汽车|hao123头条', '', '', ''),
@@ -1247,6 +1261,7 @@ if (strlen($s) > 0) {
     array(14435, '', '', '', '', '', '[猜]&nbsp;聊天通讯&nbsp;-&nbsp;百度软件中心', '', '', ''),
     array(14427, '', '', '', '', '', '天极下载', '', '', ''),
     array(14421, '', '', '', '', '', '时刻表&nbsp;发车间隔&nbsp;同程网', '', '', ''),
+    array(14412, '<a target="_blank" href="', 'http://data.10jqka.com.cn/financial/bdcbmg/', '', '" rel="external nofollow noreferrer', '">', '公司财报&nbsp;同花顺财经', '</a>', '', ''),
     array(14331, '', '', '', '', '', '百度经验【图文】', '', '', ''),
     array(14305, '', '', '', '', '', '百度网盘', '', '', ''),
     array(14287, '', '', '', '', '', '股吧&nbsp;-&nbsp;东方财富网', '', '', ''),
@@ -1282,7 +1297,7 @@ if (strlen($s) > 0) {
     array(13679, '', '', '', '', '', '现货价格&nbsp;和讯黄金', '', '', ''),
     array(13631, '', '', '', '', '', '比赛进程&nbsp;乐视网', '', '', ''),
     array(13630, '', '', '', '', '', '[猜]&nbsp;中国内地明星&nbsp;伊秀娱乐&nbsp;伊秀女性网', '', '', ''),
-    array(13627, '', '', '', '', '', '亚冠赛程结果&nbsp;新浪体育', '', '', ''),
+    array(13627, '<a target="_blank" href="', 'http://sports.sina.com.cn/z/AFCCL2015/', '', '" rel="external nofollow noreferrer', '">', '亚冠赛程结果&nbsp;新浪体育', '</a>', '', ''),
     array(13620, '<a target="_blank" href="', 'http://www.baidu.com/aladdin/js/iknow/iknowask.html', '', '" rel="external nofollow noreferrer', '">', '百度知道&nbsp;ipush', '</a>', '', ''),
     array(13616, '', '', '', '', '', '二手房&nbsp;百度乐居', '', '', ''),
     array(13598, '', '', '', '', '', '猎聘网', '', '', ''),
@@ -1474,7 +1489,7 @@ if (strlen($s) > 0) {
     array(7072, '', '', '', '', '', '[猜]&nbsp;洛克王国&nbsp;4399', '', '', ''),
     array(7032, '', '', '', '', '', '车次查询&nbsp;去哪儿', '', '', ''),
     array(7027, '', '', '', '', '', '物品&nbsp;178游戏网', '', '', ''),
-    array(6869, '', '', '', '', '', '爱奇艺&nbsp;影视新生态', '', '', ''),
+    array(6869, '', '', '', '', '', '影视新生态', '', '', ''),
     array(6845, '', '', '', '', '', '小说', '', '', ''),
     array(6835, '<a target="_blank" href="', 'http://rj.baidu.com/search/index/?kw=', preg_replace('/(\s+)/', '%20', $matchfk[4][$i]), '" rel="external nofollow noreferrer', '">', $matchfk[4][$i], '</a>', '', ''),
     array(6833, '', '', '', '', '', '百度百科&nbsp;多义词', '', '', ''),
@@ -1558,7 +1573,9 @@ if (strlen($s) > 0) {
         <tbody>';
 
 $srcidsp = array (
+    array(29279, '<a target="_blank" href="', 'http://jiankang.baidu.com/wenda/mining?key=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '精选问答合集&nbsp;百度健康', '</a>', '', ''),
     array(29250, '<a target="_blank" href="', 'http://jiankang.baidu.com/healthStar/index?wd=', $query, '" rel="external nofollow noreferrer', '">', '十二星座健康运势&nbsp;百度健康', '</a>', '', ''),
+    array(29228, '<a target="_blank" href="', 'http://temai.baidu.com/Index/index?wd=', $query, '" rel="external nofollow noreferrer', '">', '百度品牌特卖', '</a>', '', ''),
     array(29205, '<a target="_blank" href="', 'http://jiaoyu.baidu.com/query/exam?classId=2007&amp;originQuery=', $query, '" rel="external nofollow noreferrer', '">', '高等教育自学考试&nbsp;百度教育', '</a>', '', ''),
     array(29204, '<a target="_blank" href="', 'http://jiaoyu.baidu.com/query/exam?originQuery=', $query, '" rel="external nofollow noreferrer', '">', '考试&nbsp;百度教育', '</a>', '', ''),
     array(29200, '<a target="_blank" href="', 'http://jiaoyu.baidu.com/query/exam?originQuery=', $query, '" rel="external nofollow noreferrer', '">', '考试&nbsp;百度教育', '</a>', '', ''),
@@ -1692,10 +1709,14 @@ if (strlen($s) > 0) {
         for ($i = 0; $i <= 9; $i++) {
             echo '
             <tr class="back-azure">
-                <td>
+                <td>';
+            if (strlen(@$matchrelated[2][$i]) > 0) {
+                echo '
                     <a href="'.$url.'?s='.preg_replace('/(\s+)/', '%20', @$matchrelated[2][$i]).'" target="_blank">'
                         .@$matchrelated[2][$i].'
-                    </a>
+                    </a>';
+            }
+            echo '
                 </td>
                 <td>';
             if (strlen(@$sug1[1][$i]) > 0) {
@@ -1716,7 +1737,7 @@ if (strlen($s) > 0) {
             echo '
                 </td>
                 <td>';
-            if (strlen(@$sugunion[1][$i]) > 0) {
+            if (strlen(@$sugunion[$i+1]) > 0) {
                 echo '
                     <a href="'.$url.'?s='.preg_replace('/(\s+)/', '+', @$sugunion[$i+1]).'" target="_blank">'
                         .@$sugunion[$i+1].'
@@ -2960,7 +2981,7 @@ if (strlen($s) > 0) {
 <strong>统计</strong><br>
 <a href="http://www.google.com/trends/" rel="external nofollow noreferrer" target="_blank" title="vpn">Google Trends</a><br>
 <a href="http://index.baidu.com/" rel="external nofollow noreferrer" target="_blank">百度指数</a><br>
-<a href="http://tongji.baidu.com/web/welcome/ico?s=7cf4d0f651a8933d3c13cf70a0d7d30a" rel="external nofollow noreferrer" target="_blank">百度统计</a><br>
+<a href="http://tongji.baidu.com/web/welcome/login" rel="external nofollow noreferrer" target="_blank">百度统计</a><br>
 <a href="http://www.google.com/analytics/ce/mws/" rel="external nofollow noreferrer" target="_blank" title="vpn">Google Analytics</a><br>
 <a href="http://i.baidu.com/my/history" rel="external nofollow noreferrer" target="_blank">百度搜索历史记录</a><br></p>
 <p><strong><a class="noa" href="#">&nbsp;返&nbsp;回&nbsp;顶&nbsp;部&nbsp;</a></strong></p>
