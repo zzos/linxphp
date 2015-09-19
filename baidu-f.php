@@ -4,6 +4,15 @@
 <head>
 <meta charset="UTF-8">
 <?php
+
+// 自动生成标题 v2.4
+
+// 请手动修改 url 对应网址、标题后缀、百度实时推送接口
+$url = 'http://'.$_SERVER['HTTP_HOST'].'/baidu-f.php';
+$pt = '百度搜索结果参数';
+$api = '';
+// 百度实时推送接口示例 $api = 'http://data.zz.baidu.com/urls?site=www.weixingon.com&token=EzNWsyWaxYSUdtJO';
+
 // 云体检通用漏洞防护补丁 v1.1
 
 $url_arr = array (
@@ -57,12 +66,6 @@ function check($str, $v) {
         }
     }
 }
-
-// 自动生成标题 v2.3
-
-// 请手动修改 url 对应网址、标题后缀
-$url = 'http://'.$_SERVER['HTTP_HOST'].'/baidu-f.php';
-$pt = '百度搜索结果参数';
 
 // 取得搜索词
 $s = @$_GET['s'];
@@ -212,6 +215,19 @@ if (strlen($s) > 0) {
             echo $sug.'_';
             $cache->add(urlencode($query), $sug);
         }
+
+        // 主动推送
+        $ch = curl_init();
+        $options = array(
+        CURLOPT_URL => $api,
+        CURLOPT_POST => true,
+        CURLOPT_RETURNTRANSFER => true,
+        CURLOPT_POSTFIELDS => $url.'s/'.$query,
+        CURLOPT_HTTPHEADER => array('Content-Type: text/plain'),
+        );
+        curl_setopt_array($ch, $options);
+        $result = curl_exec($ch);
+        curl_close ($ch);
     }
 
     // 引号转换为 HTML 实体的查询词作为副标题
