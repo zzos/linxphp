@@ -222,7 +222,7 @@ if (strlen($s) > 0) {
         CURLOPT_URL => $api,
         CURLOPT_POST => true,
         CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_POSTFIELDS => $url.'s/'.$query,
+        CURLOPT_POSTFIELDS => $url.'?s='.$query,
         CURLOPT_HTTPHEADER => array('Content-Type: text/plain'),
         );
         curl_setopt_array($ch, $options);
