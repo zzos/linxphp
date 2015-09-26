@@ -204,9 +204,6 @@ if (strlen($s) > 0) {
         );
         curl_setopt_array($ch, $options);
         $result = curl_exec($ch);
-        if ($result === FALSE) {
-            echo "cURL Error: " . curl_error($ch);
-        }
         curl_close ($ch);
     }
 
@@ -1268,7 +1265,7 @@ if (strlen($s) > 0) {
             array(14966, '<a target="_blank" href="', '//v.baidu.com/v?ie=utf-8&amp;word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度视频&nbsp;相关视频', '</a>', '', 'sp'),
             array(14960, '<a target="_blank" href="', '//product.yesky.com/', '', '" rel="external nofollow noreferrer', '">', '天极产品库', '</a>', '', 'sp'),
             array(14955, '', '', '', '', '', '实物价格&nbsp;和讯黄金', '', '', 'sp'),
-            array(14907, '', '', '', '', '', '分集剧情介绍&nbsp;电视猫', '', '', 'sp'),
+            array(14907, '<a target="_blank" href="', '//www.tvmao.com/query.jsp?keys=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'分集剧情介绍&nbsp;电视猫', '</a>', '', 'sp'),
             array(14861, '', '', '', '', '', '[猜]&nbsp;选手&nbsp;乐视网', '', '', 'sp'),
             array(14744, '<a target="_blank" href="', '//www.xiaopi.com/', '', '" rel="external nofollow noreferrer', '">', '小皮游戏', '</a>', '', 'sp'),
             array(14726, '', '', '', '', '', '热点&nbsp;网易娱乐', '', '', 'sp'),
@@ -1513,7 +1510,7 @@ if (strlen($s) > 0) {
             array(10041, '<a target="_blank" href="', '//www.autohome.com.cn/', '', '" rel="external nofollow noreferrer', '">', '汽车之家', '</a>', '', 'sp'),
             array(10023, '<a target="_blank" href="', '//sports.sina.com.cn/g/premierleague/', '', '" rel="external nofollow noreferrer', '">', '英超&nbsp;新浪体育', '</a>', '', 'sp'),
             array(10015, '', '', '', '', '', '[猜]&nbsp;时间轴新闻&nbsp;腾讯网|新浪网', '', '', 'sp'),
-            array(8041, '<a target="_blank" href="', '//sou.kuwo.cn/ws/NSearch?key=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '酷我音乐', '</a>', '', 'sp'),
+            array(8041, '<a target="_blank" href="', '//sou.kuwo.cn/ws/NSearch?key=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;酷我音乐', '</a>', '', 'sp'),
             array(7136, '', '', '', '', '', '就医助手&nbsp;39健康网', '', '', 'sp'),
             array(7127, '<a target="_blank" href="', '//opendata.baidu.com/yaopin/s?ie=utf-8&amp;oe=utf-8&amp;wd=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度药品', '</a>', '', 'sp'),
             array(7123, '', '', '', '', '', '[猜]&nbsp;好大夫在线 推荐医院', '', '', 'sp'),
@@ -1527,9 +1524,9 @@ if (strlen($s) > 0) {
             array(7032, '', '', '', '', '', '车次查询&nbsp;去哪儿', '', '', 'sp'),
             array(7027, '', '', '', '', '', '物品&nbsp;178游戏网', '', '', 'sp'),
             array(6899, '<a target="_blank" href="', '//shixin.court.gov.cn/', '', '" rel="external nofollow noreferrer', '">', '全国失信被执行人名单', '</a>', '', 'sp'),
-            array(6869, '', '', '', '', '', '影视新生态', '', '', 'sp'),
+            array(6869, '<a target="_blank" href="', '//so.iqiyi.com/so/q_', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;影视新生态', '</a>', '', 'sp'),
             array(6845, '', '', '', '', '', '小说', '', '', 'sp'),
-            array(6835, '<a target="_blank" href="', '//rj.baidu.com/search/index/?kw=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'_百度软件中心', '</a>', '', 'sp'),
+            array(6835, '<a target="_blank" href="', '//rj.baidu.com/search/index/?kw=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度软件中心', '</a>', '', 'sp'),
             array(6833, '', '', '', '', '', '百度百科&nbsp;多义词', '', '', 'sp'),
             array(6832, '', '', '', '', '', '旅游景点大全', '', '', 'sp'),
             array(6827, '<a target="_blank" href="', '//www.baidu.com/#wd=', $query.' 失信被执行人', '" rel="external nofollow noreferrer', '">', $query.'由于失信已被列入国家失信被执行人名单', '</a>', '', 'sp'),
@@ -1625,7 +1622,7 @@ if (strlen($s) > 0) {
             array(1501, '', '', '', '', '', '评分－结构化', '', '', 'as'),
             array(1500, '', '', '', '', '', '无', '', '', 'as'),
             array(101, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '[猜]&nbsp;沙盒保护', '</a>', '', 'ec'),
-            array(91, '<a target="_blank" href="', '//baike.baidu.com/search?word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度百科&nbsp;[1－10&nbsp;位]', '</a>', '多义词', 'sp'),
+            array(91, '<a target="_blank" href="', '//baike.baidu.com/search?word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度百科&nbsp;[1－10&nbsp;位]', '</a>', '多义词', 'sp'),
             array(85, '<a target="_blank" href="', '//fanyi.baidu.com/#en/zh/', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度翻译|百度词典', '</a>', '', 'sp'),
             array(81, '<a target="_blank" href="', '//baike.baidu.com/search?word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度百科_多义词', '</a>', '', 'sp'),
             array(80, '<a target="_blank" href="', '//baike.baidu.com/search?word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度百科专有名词', '</a>', '', 'sp'),
@@ -2228,19 +2225,19 @@ if (strlen($s) > 0) {
             elseif ($f1value6 == '5') {
                 echo '
                     <td class="unit-lavender">
-                        <a href="//www.weixingon.com/baidusp-hot.php?s='.$query.'" target="_blank" title="百度搜索热门词">新热门</a><br>5
+                        <a href="//www.weixingon.com/baidusp-hot.php?s='.$query.'" target="_blank" title="百度搜索热门词" rel="external nofollow noreferrer">新热门</a><br>5
                     </td>';
             }
             elseif ($f1value6 == '3') {
                 echo '
                     <td class="unit-violet">
-                        <a href="//www.weixingon.com/baidusp-hot.php?s='.$query.'" target="_blank" title="百度搜索热门词">中热门</a><br>3
+                        <a href="//www.weixingon.com/baidusp-hot.php?s='.$query.'" target="_blank" title="百度搜索热门词" rel="external nofollow noreferrer">中热门</a><br>3
                     </td>';
             }
             elseif ($f1value6 == '0') {
                 echo '
                     <td class="unit-honeydew">
-                        <a href="//www.weixingon.com/baidusp-hot.php?s='.$query.'" target="_blank" title="百度搜索热门词">老热门</a><br>0
+                        <a href="//www.weixingon.com/baidusp-hot.php?s='.$query.'" target="_blank" title="百度搜索热门词" rel="external nofollow noreferrer">老热门</a><br>0
                     </td>';
             }
             else {
