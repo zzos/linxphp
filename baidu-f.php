@@ -1006,31 +1006,31 @@ if (strlen($s) > 0) {
 
     // 三位一体
 
-    if (strlen($nsrcid[0][0]) > 0) {
-        if (strlen($nfk[0][0]) > 0) {
-            if (strlen($nsp[0][0]) > 0) {
+    if (strlen(@$nsrcid[0][0]) > 0) {
+        if (strlen(@$nfk[0][0]) > 0) {
+            if (strlen(@$nsp[0][0]) > 0) {
                 $n = array_merge($nsrcid, $nfk, $nsp);
             }
             else {
                 $n = array_merge($nsrcid, $nfk);
             }
         }
-        elseif (strlen($nsp[0][0]) > 0) {
+        elseif (strlen(@$nsp[0][0]) > 0) {
             $n = array_merge($nsrcid, $nsp);
         }
         else {
             $n = array_merge($nsrcid);
         }
     }
-    elseif (strlen($nfk[0][0]) > 0) {
-        if (strlen($nsp[0][0]) > 0) {
+    elseif (strlen(@$nfk[0][0]) > 0) {
+        if (strlen(@$nsp[0][0]) > 0) {
             $n = array_merge($nfk, $nsp);
         }
         else {
             $n = array_merge($nfk);
         }
     }
-    elseif (strlen($nsp[0][0]) > 0) {
+    elseif (strlen(@$nsp[0][0]) > 0) {
         $n = array_merge($nsp);
     }
     else
@@ -1665,7 +1665,7 @@ if (strlen($s) > 0) {
 
         foreach ($n as $i => $v) {
             foreach ($srcid as $h => $v) {
-                if ($n[$i][0] == $srcid[$h][0] && $srcid[$h][9] == 'as') {
+                if (@$n[$i][0] == $srcid[$h][0] && $srcid[$h][9] == 'as') {
                     echo '
                 <tr class="back-white">
                     <td>
@@ -1679,7 +1679,7 @@ if (strlen($s) > 0) {
                 </tr>';
                     unset($n[$i]);
                 }
-                elseif ($n[$i][0] == $srcid[$h][0] && $srcid[$h][9] == 'sp') {
+                elseif (@$n[$i][0] == $srcid[$h][0] && $srcid[$h][9] == 'sp') {
                     echo '
                 <tr class="back-egg">
                     <td>
@@ -1695,7 +1695,7 @@ if (strlen($s) > 0) {
                 </tr>';
                     unset($n[$i]);
                 }
-                elseif ($n[$i][0] == $srcid[$h][0] && $srcid[$h][9] == 'ec') {
+                elseif (@$n[$i][0] == $srcid[$h][0] && $srcid[$h][9] == 'ec') {
                     $np = array (
                         '/(http:\/\/privatehospital.health.vs-static.baidu.com)/',
                         '/(http:\/\/foodsearch.health.vs-static.baidu.com)/',
@@ -1734,7 +1734,7 @@ if (strlen($s) > 0) {
                     unset($n[$i]);
                 }
             }
-            if ($n[$i] != null) {
+            if (@$n[$i] != null) {
                 echo '
                 <tr class="back-azure">
                     <td>未收进资源库</td>
