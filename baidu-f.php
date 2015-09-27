@@ -203,7 +203,7 @@ if (strlen($s) > 0) {
             CURLOPT_HTTPHEADER => array('Content-Type: text/plain'),
         );
         curl_setopt_array($ch, $options);
-        $result = curl_exec($ch);
+        curl_exec($ch);
         curl_close ($ch);
     }
 
@@ -308,6 +308,11 @@ a {
     color: #FFC0CB;
     font-size: 1em;
     font-weight: bold;
+    text-decoration: none;
+}
+
+.pinks {
+    color: #FFC0CB;
     text-decoration: none;
 }
 
@@ -717,7 +722,6 @@ if (strlen($s) > 0) {
     $z = preg_replace($p[1], $r[1], $s);
     $query = htmlspecialchars(preg_replace($p, $r, $s));
     $F[1] = '<span title="搜索结果标题|摘要与查询词的语义关联度">语义关联</span>';
-    $F[2] = '同音词';
     $F[3] = '[猜]正规性';
     $F[4] = '[猜]更新';
     $F[5] = '[猜]实时度';
@@ -726,10 +730,8 @@ if (strlen($s) > 0) {
     $F[8] = '标题|网址|摘要';
     $F1[1] = '第1位';
     $F1[2] = '第2位';
-    $F1[3] = '<a href="//ask.seowhy.com/question/8958" target="_blank" rel="external nofollow noreferrer" title="快照时间显示，以小时为单位">时间限制</a>';
     $F1[4] = '[猜]实时动态';
     $F1[5] = '[猜]匹配率';
-    $F1[6] = '热门度';
     $F1[7] = '[猜]网址权重';
     $F1[8] = '第8位';
     $F2[1] = '[猜]相关';
@@ -738,8 +740,6 @@ if (strlen($s) > 0) {
     $F2[4] = '第4位';
     $F2[5] = '第5位';
     $F2[6] = '<span title="仅是这一刻的搜索结果目标页相对查询词的权重">[猜]内链数量</span>';
-    $F2[7] = '<a href="//seo.qiankoo.com/813" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果参数F2与搜索结果标题的关系">前标题</a>';
-    $F2[8] = '<a href="//ask.seowhy.com/question/8411" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果参数F2">后标题</a>';
     $F3[1] = '第1位';
     $F3[2] = '第2位';
     $F3[3] = '第3位';
@@ -983,8 +983,63 @@ if (strlen($s) > 0) {
     // 搜索结果页资源
 
     if (preg_match_all('/(?<=<div class="result c-container)( ?)(" id=")(\d{1,3})(" srcid=")(15\d{2})(?=" tpl=")/', @$se, $msrcid)) {
-        foreach ($msrcid[3] as $i => $v) {
-            $nsrcid[$i] = array ($msrcid[5][$i], $mserp[1][$i], $msrcid[3][$i], $mserp[3][$i]);
+        // F0
+        if (preg_match_all("/(?<=F':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $mf)) {
+            // F1
+            if (preg_match_all("/(?<=F1':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $mf1)) {
+                // F2
+                if (preg_match_all("/(?<=F2':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $mf2)) {
+                    foreach ($msrcid[3] as $i => $v) {
+                        // 同音词
+                        if ($mf[4][$i] == 'F') {
+                            $homonym[$i] = '&nbsp;<span class="pinks" title="F0&nbsp;=&nbsp;xFxxxxxx&nbsp;多义词结果">多义词</span>';
+                        }
+                        elseif ($mf[4][$i] == '3') {
+                            $homonym[$i] = '&nbsp;<span class="pinks" title="F0&nbsp;=&nbsp;x3xxxxxx&nbsp;显示纠正的同音词搜索结果">纠正同音词</span>';
+                        }
+                        // 时间限制
+                        elseif ($mf1[5][$i] == '6') {
+                            $lm[$i] = '&nbsp;<a class="pinks" href="'.$url.$l.$query.'&amp;gpc=stf%3D'.(time() - 86400).'%2C'.time().'%7Cstftype%3D1" title="F1&nbsp;=&nbsp;xx6xxxxx&nbsp;0－24小时前更新快照&nbsp;yyyy年MM月dd日|hh小时前|mm分钟前|ss秒前" target="_blank" rel="nofollow noreferrer">1天内</a>';
+                        }
+                        elseif ($mf1[5][$i] == '5') {
+                            $lm[$i] = '&nbsp;<a class="pinks" href="'.$url.$l.$query.'&amp;gpc=stf%3D'.(time() - 172800).'%2C'.(time() - 86400).'%7Cstftype%3D2" title="F1&nbsp;=&nbsp;xx5xxxxx&nbsp;24－48小时前更新快照&nbsp;yyyy年MM月dd日" target="_blank" rel="nofollow noreferrer">1－2天前</a>';
+                        }
+                        elseif ($mf1[5][$i] == '4') {
+                            $lm[$i] = '&nbsp;<a class="pinks" href="'.$url.$l.$query.'&amp;gpc=stf%3D'.(time() - 604800).'%2C'.(time() - 172800).'%7Cstftype%3D2" title="F1&nbsp;=&nbsp;xx5xxxxx&nbsp;2－7天前前更新快照&nbsp;yyyy年MM月dd日" target="_blank" rel="nofollow noreferrer">2－7天前</a>';
+                        }
+                        // 相关检索词
+                        elseif ($mf1[8][$i] == '5') {
+                            $sug9[$i] = '&nbsp;<a class="pinks" href="//www.weixingon.com/baidusp-hot.php?s='.$query.'" title="F1&nbsp;=&nbsp;xxxxx5xx&nbsp;最新其他人还搜索的相关热门内容" target="_blank" rel="external nofollow noreferrer">新热门内容</a>';
+                        }
+                        elseif ($mf1[8][$i] == '3') {
+                            $sug9[$i] = '&nbsp;<a class="pinks" href="//www.weixingon.com/baidusp-hot.php?s='.$query.'" title="F1&nbsp;=&nbsp;xxxxx5xx&nbsp;中期其他人还搜索的相关热门内容" target="_blank" rel="external nofollow noreferrer">中热门内容</a>';
+                        }
+                        elseif ($mf1[8][$i] == '0') {
+                            $sug9[$i] = '&nbsp;<a class="pinks" href="//www.weixingon.com/baidusp-hot.php?s='.$query.'" title="F1&nbsp;=&nbsp;xxxxx5xx&nbsp;早先其他人还搜索的相关热门内容" target="_blank" rel="external nofollow noreferrer">老热门内容</a>';
+                        }
+                        // 标题类型
+                        elseif ($mf2[9][$i].$mf2[10][$i] == 'EB') {
+                            $title[$i] = '&nbsp;<span class="pinks" title="F2&nbsp;=&nbsp;xxxxxxEB&nbsp;锚文本&nbsp;-&nbsp;网页标题&nbsp;anchortext&nbsp;-&nbsp;title">锚文本&nbsp;-&nbsp;网页标题</span>';
+                        }
+                        elseif ($mf2[9][$i].$mf2[10][$i] == 'EA') {
+                            $title[$i] = '&nbsp;<a class="pinks" href="//www.vuln.cn/813" title="F2&nbsp;=&nbsp;xxxxxxEA&nbsp;锚文本&nbsp;anchortext" target="_blank" rel="external nofollow noreferrer">锚文本</a>';
+                        }
+                        elseif ($mf2[9][$i].$mf2[10][$i] == '6F') {
+                            $title[$i] = '&nbsp;<a class="pinks" href="/wordcount/#exp" title="F2&nbsp;=&nbsp;xxxxxx6F&nbsp;大字标题&nbsp;-&nbsp;网页标题&nbsp;headline&nbsp;-&nbsp;title" target="_blank" rel="external nofollow noreferrer">大字标题&nbsp;-&nbsp;网页标题</a>';
+                        }
+                        elseif ($mf2[9][$i].$mf2[10][$i] == '6E') {
+                            $title[$i] = '&nbsp;<a class="pinks" href="//ask.seowhy.com/question/8411" title="F2&nbsp;=&nbsp;xxxxxx6E&nbsp;大字标题&nbsp;headline" target="_blank" rel="external nofollow noreferrer">大字标题</a>';
+                        }
+                        elseif ($mf2[9][$i].$mf2[10][$i] == '6A') {
+                            $title[$i] = '&nbsp;<span class="pinks" title="F2&nbsp;=&nbsp;xx2xxx6A&nbsp;标语&nbsp;slogan">标语</span>';
+                        }
+                        elseif ($mf2[9][$i].$mf2[10][$i] == '68') {
+                            $title[$i] = '&nbsp;<span class="pinks" title="F2&nbsp;=&nbsp;xxxxxx68&nbsp;网址&nbsp;url">网址</span>';
+                        }
+                        $nsrcid[$i] = array ($msrcid[5][$i], $mserp[1][$i], $msrcid[3][$i], $mserp[3][$i], @$title[$i], @$lm[$i], @$sug9[$i], @$homonym[$i]);
+                    }
+                }
+            }
         }
     }
 
@@ -992,7 +1047,7 @@ if (strlen($s) > 0) {
 
     if (preg_match_all('/(?<="  srcid=")(\d{1,5})("  fk=")([\d_]{0,6}?)([^_]{1,32})(" id=")(\d{1,2})(?=" tpl=")/', @$se, $mfk)) {
         foreach ($mfk[6] as $i => $v) {
-            $nfk[$i] = array ($mfk[1][$i], $mfk[4][$i], $mfk[6][$i], '');
+            $nfk[$i] = array ($mfk[1][$i], $mfk[4][$i], $mfk[6][$i]);
         }
     }
 
@@ -1100,6 +1155,7 @@ if (strlen($s) > 0) {
             array(29070, '<a target="_blank" href="', '//iwan.baidu.com/yeyou?query=', $query, '" rel="external nofollow noreferrer', '">', '网页游戏&nbsp;百度爱玩', '</a>', '', 'ec'),
             array(29051, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '百度微购', '</a>', '', 'ec'),
             array(28299, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '精准问答', '</a>', '', 'ec'),
+            array(28232, '<a target="_blank" href="', '//dict.baidu.com/s?wd=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度词典', '</a>', '', 'sp'),
             array(28093, '', '', '', '', '', '去哪儿网门票频道', '', '', 'ec'),
             array(28092, '', '', '', '', '', '去哪儿网门票频道', '', '', 'ec'),
             array(28072, '', '', '', '', '', '去哪儿网酒店预定查询频道', '', '', 'ec'),
@@ -1107,6 +1163,7 @@ if (strlen($s) > 0) {
             array(28056, '', '', '', '', '', '[猜]&nbsp;去哪儿度假频道', '', '', 'ec'),
             array(28054, '', '', '', '', '', '机票查询&nbsp;去哪儿', '', '', 'ec'),
             array(28050, '<a target="_blank" href="', '//zhidao.baidu.com/search?word=', $query, '" rel="external nofollow noreferrer', '">', '疾病&nbsp;百度知道', '</a>', '', 'ec'),
+            array(28043, '<a target="_blank" href="', '//lvyou.baidu.com/', '', '" rel="external nofollow noreferrer', '">', '海外&nbsp;百度旅游', '</a>', '', 'ec'),
             array(28042, '', '', '', '', '', '地图&nbsp;第&nbsp;2&nbsp;版&nbsp;百度旅游', '', '', 'ec'),
             array(28041, '', '', '', '', '', '地图&nbsp;第&nbsp;2&nbsp;版&nbsp;百度旅游', '', '', 'ec'),
             array(28040, '', '', '', '', '', '景点介绍&nbsp;第&nbsp;2&nbsp;版&nbsp;百度旅游', '', '', 'ec'),
@@ -1118,6 +1175,7 @@ if (strlen($s) > 0) {
             array(27994, '<a target="_blank" href="', '//zhidao.baidu.com/qiye', '', '" rel="external nofollow noreferrer', '">', '【企业问答】', '</a>', '', 'ec'),
             array(27003, '', '', '', '', '', '携程攻略', '', '', 'ec'),
             array(27002, '', '', '', '', '', '携程攻略', '', '', 'ec'),
+            array(20970, '<a target="_blank" href="', '//movie.douban.com/subject_search?search_text=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;豆瓣影评', '</a>', '', 'sp'),
             array(20840, '', '', '', '', '', '报价|图片|参数配置|口碑-汽车之家', '', '', 'sp'),
             array(20776, '', '', '', '', '', '[猜]&nbsp;百度百科', '', '', 'sp'),
             array(20679, '<a target="_blank" href="', '//help.alipay.com/lab/234578-236168/0-236168.htm', '', '" rel="external nofollow noreferrer', '">', '余额宝相关问题&nbsp;支付宝个人帮助中心', '</a>', '', 'sp'),
@@ -1130,7 +1188,7 @@ if (strlen($s) > 0) {
             array(20458, '', '', '', '', '', '官方微博(原知心左侧卡片框)', '', '', 'sp'),
             array(20457, '', '', '', '', '', '电视剧&nbsp;百度视频', '', '', 'sp'),
             array(20451, '', '', '', '', '', '分集剧情&nbsp;电视猫', '', '', 'sp'),
-            array(20426, '<a target="_blank" href="', '//s.weibo.com/user/', preg_replace('/(\s+)/', '+', $query), '&amp;auth=vip" rel="external nofollow noreferrer', '">', '新浪官微&nbsp;[1－10&nbsp;位]', '</a>', '', 'sp'),
+            array(20426, '<a target="_blank" href="', '//s.weibo.com/user/', preg_replace('/(\s+)/', '+', $query), '&amp;auth=vip" rel="external nofollow noreferrer', '">', '新浪官微&nbsp;[1－10]', '</a>', '', 'sp'),
             array(20423, '', '', '', '', '', '[猜]&nbsp;百度知道&nbsp;医疗健康&nbsp;更多知道相关问题', '', '', 'sp'),
             array(20422, '', '', '', '', '', '百度知道&nbsp;医疗健康&nbsp;更多知道相关问题', '', '', 'sp'),
             array(20408, '百度百科(由<a target="_blank" href="', '//www.baikemy.com', '', '&amp;auth=vip" rel="external nofollow noreferrer', '">', '卫生部临床医生科普平台/百科名医网', '</a>权威认证', '', 'sp'),
@@ -1154,14 +1212,19 @@ if (strlen($s) > 0) {
             array(20071, '', '', '', '', '', '医院科室&nbsp;好大夫在线', '', '', 'sp'),
             array(20070, '', '', '', '', '', '挂号网', '', '', 'sp'),
             array(20006, '', '', '', '', '', '医院网站', '', '', 'sp'),
-            array(20005, '', '', '', '', '', '医院科室', '', '', 'sp'),
+            array(20005, '<a target="_blank" href="', '//www.haodf.com/', '', '" rel="external nofollow noreferrer', '">', '医院科室&nbsp;好大夫在线', '</a>', '', 'sp'),
+            array(19979, '', '', '', '', '', '政府官网', '', '', 'sp'),
             array(19912, '<a target="_blank" href="', '//www.soyoung.com/', '', '" rel="external nofollow noreferrer', '">', '新氧美容整形', '</a>', '', 'sp'),
             array(19792, '<a target="_blank" href="', '//beauty.yxlady.com/', '', '" rel="external nofollow noreferrer', '">', '伊秀美容', '</a>', '', 'sp'),
             array(19788, '<a target="_blank" href="', '//www.yxlady.com/', '', '" rel="external nofollow noreferrer', '">', '伊秀娱乐网', '</a>', '', 'sp'),
+            array(19708, '<a target="_blank" href="', '//bbs.tuniu.com/', '', '" rel="external nofollow noreferrer', '">', '途牛旅游论坛', '</a>', '', 'sp'),
             array(19687, '<a target="_blank" href="', '//detail.zol.com.cn/', '', '" rel="external nofollow noreferrer', '">', 'ZOL产品报价&nbsp;中关村在线', '</a>', '', 'sp'),
+            array(19255, '<a target="_blank" href="', '//www.autohome.com.cn/', '', '" rel="external nofollow noreferrer', '">', '汽车之家', '</a>', '', 'sp'),
             array(19093, '<a target="_blank" href="', '//www.18183.com/', '', '" rel="external nofollow noreferrer', '">', '游戏攻略&nbsp;18183手机游戏网', '</a>', '', 'sp'),
-            array(18577, '', '', '', '', '', '【携程攻略】', '', '', 'sp'),
+            array(18849, '<a target="_blank" href="', '//car.bitauto.com/', '', '" rel="external nofollow noreferrer', '">', '易车网', '</a>', '', 'sp'),
+            array(18577, '<a target="_blank" href="', '//you.ctrip.com/', '', '" rel="external nofollow noreferrer', '">', '【携程攻略】', '</a>', '', 'sp'),
             array(18521, '<a target="_blank" href="', '//s.hc360.com/?w=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '慧聪网&nbsp;导购', '</a>', '', 'sp'),
+            array(18371, '<a target="_blank" href="', '//soft.hao123.com/', '', '" rel="external nofollow noreferrer', '">', 'hao123下载站', '</a>', '', 'sp'),
             array(18308, '<a target="_blank" href="', '//club.xywy.com/', '', '" rel="external nofollow noreferrer', '">', '有问必答&nbsp;寻医问药网', '</a>', '', 'sp'),
             array(18258, '<a target="_blank" href="', '//news.91.com/', '', '" rel="external nofollow noreferrer', '">', '91资讯', '</a>', '', 'sp'),
             array(18198, '<a target="_blank" href="', '//www.downza.cn/', '', '" rel="external nofollow noreferrer', '">', '下载之家', '</a>', '', 'sp'),
@@ -1196,13 +1259,14 @@ if (strlen($s) > 0) {
             array(16411, '', '', '', '', '', '百度软件中心', '', '', 'sp'),
             array(16391, '<a target="_blank" href="', '//search.jd.com/Search?keyword=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '京东', '</a>', '', 'sp'),
             array(16387, '', '', '', '', '', '手机&nbsp;太平洋电脑网', '', '', 'sp'),
+            array(16379, '<a target="_blank" href="', '//lvyou.baidu.com/', '', '" rel="external nofollow noreferrer', '">', '百度旅游', '</a>', '', 'sp'),
             array(16355, '', '', '', '', '', '[猜]&nbsp;系统之家', '', '', 'sp'),
             array(16345, '', '', '', '', '', '[猜]&nbsp;世界杯&nbsp;网易体育', '', '', 'sp'),
             array(16343, '', '', '', '', '', '[猜]&nbsp;NBA赛季&nbsp;新浪体育', '', '', 'sp'),
             array(16323, '<a target="_blank" href="', '//www.39yst.com/', '', '" rel="external nofollow noreferrer', '">', '三九养生堂', '</a>', '', 'sp'),
             array(16312, '', '', '', '', '', '[猜]&nbsp;百度贴吧访谈直播', '', '', 'sp'),
-            array(16311, '<a target="_blank" href="', 'http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=usstock&amp;q=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '股票代码&nbsp;美股实时行情&nbsp;新浪财经&nbsp;[1－9&nbsp;位]', '</a>', '', 'sp'),
-            array(16309, '<a target="_blank" href="', 'http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=usstock&amp;q=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '股票代码&nbsp;美股实时行情&nbsp;新浪财经&nbsp;[1－9&nbsp;位]', '</a>', '', 'sp'),
+            array(16311, '<a target="_blank" href="', 'http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=usstock&amp;q=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '股票代码&nbsp;美股实时行情&nbsp;新浪财经&nbsp;[1－9]', '</a>', '', 'sp'),
+            array(16309, '<a target="_blank" href="', 'http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=usstock&amp;q=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '股票代码&nbsp;美股实时行情&nbsp;新浪财经&nbsp;[1－9]', '</a>', '', 'sp'),
             array(16277, '<a target="_blank" href="', '//sports.sina.com.cn/g/seriea/', '', '" rel="external nofollow noreferrer', '">', '意甲&nbsp;新浪体育', '</a>', '', 'sp'),
             array(16262, '', '', '', '', '', '带子链&nbsp;寻医问药网', '', '', 'sp'),
             array(16228, '', '', '', '', '', '[猜]&nbsp;非中国内地明星&nbsp;伊秀娱乐&nbsp;伊秀女性网', '', '', 'sp'),
@@ -1214,7 +1278,7 @@ if (strlen($s) > 0) {
             array(16140, '<a target="_blank" href="', '//www.guahao.com', '', '" rel="external nofollow noreferrer', '">', '挂号网', '</a>', '', 'sp'),
             array(16049, '', '', '', '', '', '诈骗', '', '', 'sp'),
             array(16048, '', '', '', '', '', '寻医问药网', '', '', 'sp'),
-            array(16047, '<a target="_blank" href="', '//fanyi.baidu.com/#auto/zh/', '', '" rel="external nofollow noreferrer', '">', '百度在线翻译&nbsp;[1－10&nbsp;位]', '</a>', '', 'sp'),
+            array(16047, '<a target="_blank" href="', '//fanyi.baidu.com/#auto/zh/', '', '" rel="external nofollow noreferrer', '">', '百度在线翻译&nbsp;[1－10]', '</a>', '', 'sp'),
             array(16035, '', '', '', '', '', '[猜]&nbsp;旅游目的地推荐&nbsp;-&nbsp;百度旅游', '', '', 'sp'),
             array(15988, '', '', '', '', '', '动漫&nbsp;腾讯视频', '', '', 'sp'),
             array(15964, '', '', '', '', '', '专辑&nbsp;百度音乐', '', '', 'sp'),
@@ -1235,7 +1299,7 @@ if (strlen($s) > 0) {
             array(15728, '', '', '', '', '', '起点中文网', '', '', 'sp'),
             array(15726, '', '', '', '', '', '起点中文网', '', '', 'sp'),
             array(15720, '', '', '', '', '', '百度经验', '', '', 'sp'),
-            array(15678, '', '', '', '', '', '巴西队赛程&nbsp;网易体育', '', '', 'sp'),
+            array(15678, '<a target="_blank" href="', '//worldcup.2014.163.com/schedule/', '', '" rel="external nofollow noreferrer', '">', '2014巴西世界杯赛程&nbsp;网易体育', '</a>', '', 'sp'),
             array(15648, '', '', '', '', '', '[猜]&nbsp;旅游攻略&nbsp;百度旅游', '', '', 'sp'),
             array(15623, '', '', '', '', '', '报价及图片_太平洋汽车网', '', '', 'sp'),
             array(15584, '<a target="_blank" href="', '//zhanzhang.baidu.com/', '', '" rel="external nofollow noreferrer', '">', '百度站长平台', '</a>', '', 'sp'),
@@ -1250,15 +1314,19 @@ if (strlen($s) > 0) {
             array(15388, '', '', '', '', '', '手机中国', '', '', 'sp'),
             array(15357, '', '', '', '', '', 'hao123汽车|hao123头条', '', '', 'sp'),
             array(15295, '', '', '', '', '', '畛域_百度视频', '', '', 'sp'),
-            array(15279, '<a target="_blank" href="', '//open.baidu.com/coop/kefu.html', '', '" rel="external nofollow noreferrer', '">', '客服电话&nbsp;[3－4&nbsp;位]', '</a>', '', 'sp'),
+            array(15279, '<a target="_blank" href="', '//open.baidu.com/coop/kefu.html', '', '" rel="external nofollow noreferrer', '">', '客服电话&nbsp;[3－4]', '</a>', '', 'sp'),
             array(15232, '', '', '', '', '', '百度轻应用', '', '', 'sp'),
             array(15213, '<a target="_blank" href="', '//www.yuemei.com/parts_price.html', '', '" rel="external nofollow noreferrer', '">', '整形报价大全&nbsp;悦美整形网', '</a>', '', 'sp'),
             array(15200, '<a target="_blank" href="', '//movie.douban.com/subject_search?search_text=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '豆瓣电影', '</a>', '', 'sp'),
             array(15198, '', '', '', '', '', '考研时间安排&nbsp;新浪教育', '', '', 'sp'),
             array(15195, '', '', '', '', '', '不凡游戏网', '', '', 'sp'),
+            array(15181, '<a target="_blank" href="', '//search.newhua.com/search_list.php?searchname=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'华军软件园', '</a>', '', 'sp'),
             array(15110, '', '', '', '', '', '好大夫在线', '', '', 'sp'),
             array(15109, '', '', '', '', '', '[猜]&nbsp;疾病&nbsp;好大夫在线', '', '', 'sp'),
+            array(15108, '<a target="_blank" href="', '//kbs.sports.qq.com/', '', '" rel="external nofollow noreferrer', '">', '看比赛&nbsp;腾讯体育&nbsp;[1－10]', '</a>', '', 'sp'),
+            array(15101, '<a target="_blank" href="', '//cn.hao123.com/zhaopin', '', '" rel="external nofollow noreferrer', '">', 'hao123招聘', '</a>', '', 'sp'),
             array(15056, '', '', '', '', '', '天极下载', '', '', 'sp'),
+            array(15027, '', '', '', '', '', 'pc大卡', '', '', 'sp'),
             array(15017, '', '', '', '', '', '热点&nbsp;网易体育', '', '', 'sp'),
             array(14994, '', '', '', '', '', '伊秀娱乐明星库', '', '', 'sp'),
             array(14990, '<a target="_blank" href="', '//xiazai.zol.com.cn/search?wd=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', 'ZOL软件下载', '</a>', '', 'sp'),
@@ -1270,6 +1338,7 @@ if (strlen($s) > 0) {
             array(14744, '<a target="_blank" href="', '//www.xiaopi.com/', '', '" rel="external nofollow noreferrer', '">', '小皮游戏', '</a>', '', 'sp'),
             array(14726, '', '', '', '', '', '热点&nbsp;网易娱乐', '', '', 'sp'),
             array(14713, '', '', '', '', '', '[猜]&nbsp;目的地指南&nbsp;百度旅游', '', '', 'sp'),
+            array(14744, '<a target="_blank" href="', '//www.edeng.cn/', '', '" rel="external nofollow noreferrer', '">', '易登网', '</a>', '', 'sp'),
             array(14664, '', '', '', '', '', '爱卡汽车网', '', '', 'sp'),
             array(14611, '', '', '', '', '', 'hao123小游戏', '', '', 'sp'),
             array(14584, '', '', '', '', '', '[猜]&nbsp;百度团购官网', '', '', 'sp'),
@@ -1287,6 +1356,7 @@ if (strlen($s) > 0) {
             array(14421, '', '', '', '', '', '时刻表&nbsp;发车间隔&nbsp;同程网', '', '', 'sp'),
             array(14412, '<a target="_blank" href="', '//data.10jqka.com.cn/financial/bdcbmg/', '', '" rel="external nofollow noreferrer', '">', '公司财报&nbsp;同花顺财经', '</a>', '', 'sp'),
             array(14331, '', '', '', '', '', '百度经验【图文】', '', '', 'sp'),
+            array(14330, '<a target="_blank" href="', '//www.pc6.com/', '', '" rel="external nofollow noreferrer', '">', 'pc6下载站', '</a>', '', 'sp'),
             array(14305, '', '', '', '', '', '百度网盘', '', '', 'sp'),
             array(14287, '', '', '', '', '', '股吧&nbsp;-&nbsp;东方财富网', '', '', 'sp'),
             array(14283, '', '', '', '', '', '股吧&nbsp;-&nbsp;东方财富网', '', '', 'sp'),
@@ -1295,6 +1365,7 @@ if (strlen($s) > 0) {
             array(14142, '', '', '', '', '', '[猜]&nbsp;系统吧', '', '', 'sp'),
             array(14134, '', '', '', '', '', '[猜]&nbsp;百度图片 医疗健康', '', '', 'sp'),
             array(14110, '', '', '', '', '', '中国天气网', '', '', 'sp'),
+            array(14105, '', '', '', '', '', '实时热点新闻', '', '', 'sp'),
             array(14098, '<a target="_blank" href="', '//yz.chsi.com.cn/', '', '" rel="external nofollow noreferrer', '">', '中国研究生招生信息网', '</a>', '', 'sp'),
             array(14076, '<a target="_blank" href="', '//v.baidu.com/v?ie=utf-8&amp;word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '最新迷你&nbsp;在线观看&nbsp;百度视频', '</a>', '', 'sp'),
             array(14062, '', '', '', '', '', 'hao123折扣导航', '', '', 'sp'),
@@ -1327,8 +1398,9 @@ if (strlen($s) > 0) {
             array(13627, '<a target="_blank" href="', '//sports.sina.com.cn/z/AFCCL2015/', '', '" rel="external nofollow noreferrer', '">', '亚冠赛程结果&nbsp;新浪体育', '</a>', '', 'sp'),
             array(13620, '<a target="_blank" href="', '//www.baidu.com/aladdin/js/iknow/iknowask.html', '', '" rel="external nofollow noreferrer', '">', '百度知道&nbsp;ipush', '</a>', '', 'sp'),
             array(13616, '', '', '', '', '', '二手房&nbsp;百度乐居', '', '', 'sp'),
-            array(13598, '', '', '', '', '', '猎聘网', '', '', 'sp'),
+            array(13598, '<a target="_blank" href="', '//www.liepin.com/', '', '" rel="external nofollow noreferrer', '">', '猎聘网', '</a>', '', 'sp'),
             array(13580, '', '', '', '', '', '嫣然天使基金', '', '', 'sp'),
+            array(13522, '<a target="_blank" href="', '//www.51job.com/', '', '" rel="external nofollow noreferrer', '">', '找工作&nbsp;求职&nbsp;上前程无忧', '</a>', '', 'sp'),
             array(13466, '', '', '', '', '', '逗游网', '', '', 'sp'),
             array(13445, '', '', '', '', '', '供应信息&nbsp;慧聪网', '', '', 'sp'),
             array(13390, '', '', '', '', '', '腾讯动漫', '', '', 'sp'),
@@ -1365,6 +1437,7 @@ if (strlen($s) > 0) {
             array(12645, '', '', '', '', '', '[猜]&nbsp;轿车&nbsp;易车网', '', '', 'sp'),
             array(12644, '', '', '', '', '', '软件排行榜&nbsp;太平洋下载', '', '', 'sp'),
             array(12643, '', '', '', '', '', '百度团购第&nbsp;2&nbsp;种起点', '', '', 'sp'),
+            array(12640, '<a target="_blank" href="', '//newcar.xcar.com.cn/', '', '" rel="external nofollow noreferrer', '">', '爱卡汽车', '</a>', '', 'sp'),
             array(12616, '', '', '', '', '', '开奖查询&nbsp;百度乐彩', '', '', 'sp'),
             array(12610, '', '', '', '', '', '汽车点评', '', '', 'sp'),
             array(12605, '', '', '', '', '', '百度乐彩', '', '', 'sp'),
@@ -1394,6 +1467,7 @@ if (strlen($s) > 0) {
             array(12049, '', '', '', '', '', '百度推广投诉客服电话', '', '', 'sp'),
             array(12048, '', '', '', '', '', '客服电话', '', '', 'sp'),
             array(12021, '', '', '', '', '', '新闻时间轴', '', '', 'sp'),
+            array(12019, '<a target="_blank" href="', '//www.xgo.com.cn/', '', '" rel="external nofollow noreferrer', '">', '汽车点评', '</a>', '', 'sp'),
             array(11952, '', '', '', '', '', '百度口碑', '', '', 'sp'),
             array(11940, '<a target="_blank" href="', '//open.baidu.com/data/ms/nav/somesources/tag/zgtq/', '', '" rel="external nofollow noreferrer', '">', '全国省份天气预报&nbsp;中国天气网', '</a>', '', 'sp'),
             array(11939, '', '', '', '', '', '网页游戏开服表&nbsp;07073游戏网', '', '', 'sp'),
@@ -1407,7 +1481,7 @@ if (strlen($s) > 0) {
             array(11828, '', '', '', '', '', '融360', '', '', 'sp'),
             array(11810, '', '', '', '', '', '区号查询', '', '', 'sp'),
             array(11803, '', '', '', '', '', '爱漫画', '', '', 'sp'),
-            array(11782, '', '', '', '', '', '手机大全&nbsp;-&nbsp;手机中国&nbsp;[1－10&nbsp;位]', '', '百度收购', 'sp'),
+            array(11782, '<a target="_blank" href="', '//product.cnmo.com/', '', '" rel="external nofollow noreferrer', '">', '手机大全&nbsp;-&nbsp;手机中国&nbsp;[1－10]', '</a>', '百度收购', 'sp'),
             array(11757, '', '', '', '', '', '爱漫画', '', '', 'sp'),
             array(11708, '', '', '', '', '', '组图&nbsp;美食天下', '', '', 'sp'),
             array(11692, '', '', '', '', '', '地铁&nbsp;百度地图', '', '', 'sp'),
@@ -1492,7 +1566,7 @@ if (strlen($s) > 0) {
             array(10244, '', '', '', '', '', '第&nbsp;2&nbsp;种百度经验', '', '', 'sp'),
             array(10240, '', '', '', '', '', '[猜]&nbsp;开奖&nbsp;新浪彩票', '', '', 'sp'),
             array(10239, '', '', '', '', '', '乐游网', '', '', 'sp'),
-            array(10219, '<a target="_blank" href="', '//open.baidu.com/coop/kefu.html', '', '" rel="external nofollow noreferrer', '">', '第&nbsp;2&nbsp;种客服电话&nbsp;[3－4&nbsp;位]', '</a>', '', 'sp'),
+            array(10219, '<a target="_blank" href="', '//open.baidu.com/coop/kefu.html', '', '" rel="external nofollow noreferrer', '">', '第&nbsp;2&nbsp;种客服电话&nbsp;[3－4]', '</a>', '', 'sp'),
             array(10213, '', '', '', '', '', '易登网', '', '', 'sp'),
             array(10210, '<a target="_blank" href="', '//www.showji.com/', '', '" rel="external nofollow noreferrer', '">', '手机号码归属地查询', '</a>', '', 'sp'),
             array(10201, '', '', '', '', '', '货币基金&nbsp;天天基金网', '', '', 'sp'),
@@ -1510,7 +1584,10 @@ if (strlen($s) > 0) {
             array(10041, '<a target="_blank" href="', '//www.autohome.com.cn/', '', '" rel="external nofollow noreferrer', '">', '汽车之家', '</a>', '', 'sp'),
             array(10023, '<a target="_blank" href="', '//sports.sina.com.cn/g/premierleague/', '', '" rel="external nofollow noreferrer', '">', '英超&nbsp;新浪体育', '</a>', '', 'sp'),
             array(10015, '', '', '', '', '', '[猜]&nbsp;时间轴新闻&nbsp;腾讯网|新浪网', '', '', 'sp'),
+            array(8047, '<a target="_blank" href="', 'http://zhaopin.baidu.com/search?ie=utf8&amp;query=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度招聘', '</a>', '', 'sp'),
+            array(13355, '', '', '', '', '', '短信&nbsp;爱祝福', '', '', 'sp'),
             array(8041, '<a target="_blank" href="', '//sou.kuwo.cn/ws/NSearch?key=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;酷我音乐', '</a>', '', 'sp'),
+            array(8003, '<a target="_blank" href="', '//quote.eastmoney.com/center/hkstock.html', '', '" rel="external nofollow noreferrer', '">', '港股实时行情&nbsp;东方财富网', '</a>', '', 'sp'),
             array(7136, '', '', '', '', '', '就医助手&nbsp;39健康网', '', '', 'sp'),
             array(7127, '<a target="_blank" href="', '//opendata.baidu.com/yaopin/s?ie=utf-8&amp;oe=utf-8&amp;wd=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度药品', '</a>', '', 'sp'),
             array(7123, '', '', '', '', '', '[猜]&nbsp;好大夫在线 推荐医院', '', '', 'sp'),
@@ -1524,7 +1601,9 @@ if (strlen($s) > 0) {
             array(7032, '', '', '', '', '', '车次查询&nbsp;去哪儿', '', '', 'sp'),
             array(7027, '', '', '', '', '', '物品&nbsp;178游戏网', '', '', 'sp'),
             array(6899, '<a target="_blank" href="', '//shixin.court.gov.cn/', '', '" rel="external nofollow noreferrer', '">', '全国失信被执行人名单', '</a>', '', 'sp'),
+            array(6878, '<a target="_blank" href="', '//www.nuomi.com/film/', '', '" rel="external nofollow noreferrer', '">', '百度糯米电影购票', '</a>', '', 'sp'),
             array(6869, '<a target="_blank" href="', '//so.iqiyi.com/so/q_', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;影视新生态', '</a>', '', 'sp'),
+            array(6865, '<a target="_blank" href="', '//www.autohome.com.cn/', '', '" rel="external nofollow noreferrer', '">', '汽车之家', '</a>', '', 'sp'),
             array(6845, '', '', '', '', '', '小说', '', '', 'sp'),
             array(6835, '<a target="_blank" href="', '//rj.baidu.com/search/index/?kw=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度软件中心', '</a>', '', 'sp'),
             array(6833, '', '', '', '', '', '百度百科&nbsp;多义词', '', '', 'sp'),
@@ -1550,8 +1629,8 @@ if (strlen($s) > 0) {
             array(6665, '', '', '', '', '', '百度招聘会搜索', '', '', 'sp'),
             array(6653, '', '', '', '', '', '[猜]&nbsp;百度知心最佳答案', '', '', 'sp'),
             array(6112, '', '', '', '', '', '[猜]&nbsp;电视剧&nbsp;百度视频', '', '', 'sp'),
-            array(6018, '', '', '', '', '', '日历&nbsp;[1－3&nbsp;位]', '', '', 'sp'),
-            array(6017, '<a target="_blank" href="', '//forex.hexun.com/rmbhl/#zkRate', '', '" rel="external nofollow noreferrer', '">', '最新汇率&nbsp;[1－10&nbsp;位]', '</a>', '', 'sp'),
+            array(6018, '', '', '', '', '', '日历&nbsp;[1－3]', '', '', 'sp'),
+            array(6017, '<a target="_blank" href="', '//forex.hexun.com/rmbhl/#zkRate', '', '" rel="external nofollow noreferrer', '">', '最新汇率&nbsp;[1－10]', '</a>', '', 'sp'),
             array(6014, '<a target="_blank" href="', '//www.baidu.com/aladdin/js/iknow/iknowask.html', '', '" rel="external nofollow noreferrer', '">', '提问到百度知道', '</a>', '', 'sp'),
             array(6009, '', '', '', '', '', '万年历', '', '', 'sp'),
             array(6007, '', '', '', '', '', '计算器', '', '', 'sp'),
@@ -1564,6 +1643,7 @@ if (strlen($s) > 0) {
             array(1581, '', '', '', '', '', '更多同站相关结果&gt;&gt;', '', '201412添加', 'as'),
             // 2015-09-25 Twitter - Wikipedia, the free encyclopedia // https://en.wikipedia.org/wiki/Twitter
             array(1553, '', '', '', '', '', '维基百科', '', '', 'as'),
+            array(1552, '', '', '', '', '', '未知', '', '', 'as'),
             // 2015-06-23 如何在中国办理留学生学历认证 RED SCARF // www.honglingjin.co.uk/3023.html
             array(1551, '', '', '', '', '', '列表－模版', '', '201411添加&nbsp;QQ&nbsp;751476', 'as'),
             array(1550, '', '', '', '', '', '未知', '', '', 'as'),
@@ -1580,7 +1660,7 @@ if (strlen($s) > 0) {
             // 2015-01-08 搜外 搜外网 //www.seowhy.com/
             array(1539, '', '', '', '', '', '[官网]&nbsp;0－6&nbsp;个子链', '', '201405添加', 'as'),
             array(1538, '', '', '', '', '', '摘要－结构化', '', '', 'as'),
-            array(1537, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '组图&nbsp;百度经验', '</a>', '', 'ec'),
+            array(1537, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '百度经验&nbsp;组图', '</a>', '', 'ec'),
             array(1536, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '一般答案&nbsp;百度知道', '</a>', '', 'ec'),
             array(1535, '', '', '', '', '', '未知，模版采用&nbsp;se_com_image_s', '', '模版', 'as'),
             array(1534, '', '', '', '', '', '未知，模版采用&nbsp;se_com_default', '', '模版', 'as'),
@@ -1622,7 +1702,7 @@ if (strlen($s) > 0) {
             array(1501, '', '', '', '', '', '评分－结构化', '', '', 'as'),
             array(1500, '', '', '', '', '', '无', '', '', 'as'),
             array(101, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '[猜]&nbsp;沙盒保护', '</a>', '', 'ec'),
-            array(91, '<a target="_blank" href="', '//baike.baidu.com/search?word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度百科&nbsp;[1－10&nbsp;位]', '</a>', '多义词', 'sp'),
+            array(91, '<a target="_blank" href="', '//baike.baidu.com/search?word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度百科&nbsp;[1－10]', '</a>', '多义词', 'sp'),
             array(85, '<a target="_blank" href="', '//fanyi.baidu.com/#en/zh/', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度翻译|百度词典', '</a>', '', 'sp'),
             array(81, '<a target="_blank" href="', '//baike.baidu.com/search?word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度百科_多义词', '</a>', '', 'sp'),
             array(80, '<a target="_blank" href="', '//baike.baidu.com/search?word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度百科专有名词', '</a>', '', 'sp'),
@@ -1630,8 +1710,8 @@ if (strlen($s) > 0) {
             array(37, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '最新图片', '</a>', '', 'ec'),
             array(34, '<a target="_blank" href="', '//www.baidu.com/s?rtt=2&tn=baiduwb&cl=2&wd=', $query, '" rel="external nofollow noreferrer', '">', '最新微博结果', '</a>', '', 'ec'),
             array(23, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '百度翻译', '</a>', '', 'ec'),
-            array(19, '<a target="_blank" href="', '//www.baidu.com/s?tn=baidurt&amp;rtt=1&amp;bsst=1&amp;wd=', $query, '" rel="external nofollow noreferrer', '">', '最新相关消息', '</a>', '', 'ec'),
-            array(10, '<a target="_blank" href="', '//tieba.baidu.com/f?kw=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度贴吧&nbsp;[1－10&nbsp;位]', '</a>', '', 'sp'),
+            array(19, '<a target="_blank" href="', '//www.baidu.com/s?tn=baidurt&amp;rtt=1&amp;bsst=1&amp;wd=', $query, '" rel="external nofollow noreferrer', '">', $query.'最新相关消息', '</a>', '', 'ec'),
+            array(10, '<a target="_blank" href="', '//tieba.baidu.com/f?kw=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度贴吧&nbsp;[1－10]', '</a>', '', 'sp'),
             array(5, '<a target="_blank" href="', '//music.baidu.com/search?key=', $query, '" rel="external nofollow noreferrer', '">', '百度音乐', '</a>', '', 'ec'),
             array(4, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '百度图片', '</a>', '', 'ec'),
             array(1, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '百度视频', '</a>', '', 'ec')
@@ -1672,6 +1752,7 @@ if (strlen($s) > 0) {
                         <a href="'.$n[$i][3].'" rel="external nofollow noreferrer" target="_blank">
                             '.stripslashes($n[$i][1]).'
                         </a>
+                        '.$n[$i][4].$n[$i][5].$n[$i][6].$n[$i][7].'
                     </td>
                     <td class="center">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($n[$i][1], ENT_QUOTES))).'</td>
                     <td class="center">'.$srcid[$h][6].'</td>
@@ -1782,7 +1863,7 @@ if (strlen($s) > 0) {
                         <th>
                             <a href="//ask.seowhy.com/article/109" rel="external nofollow noreferrer" target="_blank" title="百度相关提示与搜索结果标题">下拉框提示模式&nbsp;II</a>
                         </th>
-                        <th>百度搜索框提示</th>
+                        <th>搜索框提示</th>
                     </tr>
             </thead>
             <tbody>';
@@ -1896,14 +1977,12 @@ if (strlen($s) > 0) {
 
     // F
 
-    if (preg_match_all("/(?<=F':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $mf)) {
-        echo '
+    echo '
     <div class="draglist" draggable="true">
         <table>
             <thead>
                 <tr>
                     <th>'.$F[1].'</th>
-                    <th>'.$F[2].'</th>
                     <th>'.$F[3].'</th>
                     <th>'.$F[4].'</th>
                     <th>'.$F[5].'</th>
@@ -1946,25 +2025,6 @@ if (strlen($s) > 0) {
             else {
                 echo '
                     <td>'.$fvalue1.'</td>';
-            }
-
-            if ($fvalue2 == '7') {
-                echo '
-                    <td class="unit-darkseagreen">默认<br>7</td>';
-            }
-            elseif ($fvalue2 == 'F') {
-                echo '
-                    <td class="unit-lightskyblue">
-                        <span title="百度搜索302">[猜]&nbsp;多义词</span><br>F
-                    </td>';
-            }
-            elseif ($fvalue2 == '3') {
-                echo '
-                    <td class="unit-violet">显示纠正搜索结果<br>3</td>';
-            }
-            else {
-                echo '
-                    <td>'.$fvalue2.'</td>';
             }
 
             if ($fvalue3 == '8') {
@@ -2088,22 +2148,18 @@ if (strlen($s) > 0) {
             </tbody>
         </table>
     </div>';
-    }
 
     // F1
 
-    if (preg_match_all("/(?<=F1':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $mf1)) {
-        echo '
+    echo '
     <div class="draglist" draggable="true">
         <table>
             <thead>
                 <tr>
                     <th>'.$F1[1].'</th>
                     <th>'.$F1[2].'</th>
-                    <th>'.$F1[3].'</th>
                     <th>'.$F1[4].'</th>
                     <th>'.$F1[5].'</th>
-                    <th>'.$F1[6].'</th>
                     <th>'.$F1[7].'</th>
                     <th>'.$F1[8].'</th>
                     <th>F1</th>
@@ -2114,10 +2170,8 @@ if (strlen($s) > 0) {
         foreach ($mf1[3] as $i => $v) {
             $f1value1 = $mf1[3][$i];
             $f1value2 = $mf1[4][$i];
-            $f1value3 = $mf1[5][$i];
             $f1value4 = $mf1[6][$i];
             $f1value5 = $mf1[7][$i];
-            $f1value6 = $mf1[8][$i];
             $f1value7 = $mf1[9][$i];
             $f1value8 = $mf1[10][$i];
             echo '
@@ -2133,7 +2187,7 @@ if (strlen($s) > 0) {
             }
             elseif ($f1value1 == 'B') {
                 echo '
-                    <td class="unit-springgreen">更多文库相关文档<br>B</td>';
+                    <td class="unit-springgreen">百度文库<br>B</td>';
             }
             else {
                 echo '
@@ -2155,33 +2209,6 @@ if (strlen($s) > 0) {
             else {
                 echo '
                     <td>'.$f1value2.'</td>';
-            }
-
-            if ($f1value3 == '7') {
-                echo '
-                    <td class="unit-darkseagreen">默认<br>7</td>';
-            }
-            elseif ($f1value3 == '6') {
-                echo '
-                    <td class="unit-silver">
-                        <a href="//www.weixingon.com/baidusp-lm.php?s='.$query.'&amp;rn=50&amp;lm=7" target="_blank" title="yyyy年MM月dd日|hh小时前|mm分钟前|ss秒前" rel="external nofollow noreferrer">0-24小时前更新快照</a><br>6
-                    </td>';
-            }
-            elseif ($f1value3 == '5') {
-                echo '
-                    <td class="unit-lavender">
-                        <a href="//www.weixingon.com/baidusp-lm.php?s='.$query.'&amp;rn=50&amp;lm=7" target="_blank" title="yyyy年MM月dd日" rel="external nofollow noreferrer">24-48小时前更新快照</a><br>5
-                    </td>';
-            }
-            elseif ($f1value3 == '4') {
-                echo '
-                    <td class="unit-tomato">
-                        <a href="//www.weixingon.com/baidusp-lm.php?s='.$query.'&amp;rn=50&amp;lm=7" target="_blank" title="yyyy年MM月dd日" rel="external nofollow noreferrer">2-7天前更新快照</a><br>4
-                    </td>';
-            }
-            else {
-                echo '
-                    <td>'.$f1value3.'</td>';
             }
 
             if ($f1value4 == '3') {
@@ -2211,38 +2238,11 @@ if (strlen($s) > 0) {
             }
             elseif ($f1value5 == 'B') {
                 echo '
-                    <td class="unit-springgreen">更多知道相关问题<br>B</td>';
+                    <td class="unit-springgreen">百度知道<br>B</td>';
             }
             else {
                 echo '
                     <td>'.$f1value5.'</td>';
-            }
-
-            if ($f1value6 == '1') {
-                echo '
-                    <td class="unit-gold">默认<br>1</td>';
-            }
-            elseif ($f1value6 == '5') {
-                echo '
-                    <td class="unit-lavender">
-                        <a href="//www.weixingon.com/baidusp-hot.php?s='.$query.'" target="_blank" title="百度搜索热门词" rel="external nofollow noreferrer">新热门</a><br>5
-                    </td>';
-            }
-            elseif ($f1value6 == '3') {
-                echo '
-                    <td class="unit-violet">
-                        <a href="//www.weixingon.com/baidusp-hot.php?s='.$query.'" target="_blank" title="百度搜索热门词" rel="external nofollow noreferrer">中热门</a><br>3
-                    </td>';
-            }
-            elseif ($f1value6 == '0') {
-                echo '
-                    <td class="unit-honeydew">
-                        <a href="//www.weixingon.com/baidusp-hot.php?s='.$query.'" target="_blank" title="百度搜索热门词" rel="external nofollow noreferrer">老热门</a><br>0
-                    </td>';
-            }
-            else {
-                echo '
-                    <td>'.$f1value6.'</td>';
             }
 
             if ($f1value7 == 'E') {
@@ -2289,12 +2289,10 @@ if (strlen($s) > 0) {
             </tbody>
         </table>
     </div>';
-    }
 
     // F2
 
-    if (preg_match_all("/(?<=F2':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $mf2)) {
-        echo '
+    echo '
     <div class="draglist" draggable="true">
         <table>
             <thead>
@@ -2305,8 +2303,6 @@ if (strlen($s) > 0) {
                     <th>'.$F2[4].'</th>
                     <th>'.$F2[5].'</th>
                     <th>'.$F2[6].'</th>
-                    <th>'.$F2[7].'</th>
-                    <th>'.$F2[8].'</th>
                     <th><a href="//ask.seowhy.com/question/8709" rel="external nofollow noreferrer" target="_blank" title="百度搜索结果参数 F2 和 rsv_sug9 探讨">F2</a></th>
                 </tr>
             </thead>
@@ -2319,8 +2315,6 @@ if (strlen($s) > 0) {
             $f2value4 = $mf2[6][$i];
             $f2value5 = $mf2[7][$i];
             $f2value6 = $mf2[8][$i];
-            $f2value7 = $mf2[9][$i];
-            $f2value8 = $mf2[10][$i];
             echo '
                 <tr>';
 
@@ -2366,7 +2360,7 @@ if (strlen($s) > 0) {
             elseif ($f2value2 == '8') {
                 echo '
                     <td class="unit-darkseagreen">
-                        1.&nbsp;更多贴吧相关帖子&gt;&gt;<br>
+                        1.&nbsp;百度贴吧<br>
                         2.&nbsp;未知<br>8
                     </td>';
             }
@@ -2450,64 +2444,6 @@ if (strlen($s) > 0) {
                     <td>'.$f2value6.'</td>';
             }
 
-            if ($f2value7 == '6') {
-                echo '
-                    <td class="unit-silver">
-                        无<br>
-                        no<br>6
-                    </td>';
-            }
-            elseif ($f2value7 == 'E') {
-                echo '
-                    <td class="unit-deepskyblue">
-                        链接锚文本<br>
-                        anchor_text<br>E
-                    </td>';
-            }
-            else {
-                echo '
-                    <td>'.$f2value7.'</td>';
-            }
-
-            if ($f2value8 == 'B') {
-                echo '
-                    <td class="unit-springgreen">
-                        网页标题<br>
-                        title<br>B
-                    </td>';
-            }
-            elseif ($f2value8 == 'F') {
-                echo '
-                    <td class="unit-lightskyblue">
-                        <a href="//www.weixingon.com/wordcount/#exp" target="_blank" title="名词解释">大字标题&nbsp;(-)&nbsp;网页标题</a><br>F
-                    </td>';
-            }
-            elseif ($f2value8 == 'E') {
-                echo '
-                    <td class="unit-deepskyblue">
-                        大字标题<br>
-                        headline<br>E
-                    </td>';
-            }
-            elseif ($f2value8 == 'A') {
-                echo '
-                    <td class="unit-aquamarine">
-                        无<br>
-                        no<br>A
-                    </td>';
-            }
-            elseif ($f2value8 == '8') {
-                echo '
-                    <td class="unit-mediumpurple">
-                        网址<br>
-                        url<br>8
-                    </td>';
-            }
-            else {
-            echo '
-                    <td>'.$f2value8.'</td>';
-            }
-
             echo '
                     <td class="back-green">'.@$msrcid[3][$i].'</td>
                 </tr>';
@@ -2516,7 +2452,6 @@ if (strlen($s) > 0) {
             </tbody>
         </table>
     </div>';
-    }
 
     // F3
 
@@ -2770,7 +2705,6 @@ if (strlen($s) > 0) {
         <thead>
             <tr>
                 <th>摘要<br>abstract</th>
-                <th>排序</th>
             </tr>
         </thead>
         <tbody class="break">';
@@ -2779,7 +2713,6 @@ if (strlen($s) > 0) {
             echo '
             <tr class="back-gold">
                 <td>'.strip_tags($mabs[1][$i]).'</td>
-                <td class="center">'.($i+1).'</td>
             </tr>';
         }
         echo '
@@ -2802,7 +2735,6 @@ if (strlen($s) > 0) {
                 <tr>
                     <th>模版 template</th>
                     <th>'.$y.'</th>
-                    <th>排序</th>
                 </tr>
             </thead>
             <tbody>';
@@ -2812,7 +2744,6 @@ if (strlen($s) > 0) {
                 <tr class="back-sky">
                     <td>'.$mtpl[1][$i].'</td>
                     <td class="center">'.@$my[1][$i].'</td>
-                    <td class="center">'.($i+1).'</td>
                 </tr>';
             }
         echo '
