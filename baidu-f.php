@@ -878,47 +878,46 @@ if (strlen($s) > 0) {
     // 百度服务器返回的 Unix 时间戳
 
     if (preg_match("/(?<='T':')(\d{10})(?=',)/", $se, $mservertime));
-}
-
-if (strlen($mnum[2]) > 0) {
 
     // 搜索结果链接，数量
 
     echo '    <h1 class="center white">
         <a class="noa break" target="_blank" rel="external nofollow noreferrer" href="https://www.baidu.com/s?wd='.$query;
 
-    if (strlen($se) > 0) {
-        if (strlen($pn) > 0) {
-            if (strlen($rn) > 0) {
-                if (strlen($gpc) > 0) {
-                    echo $cpn.$pn.$crn.$rn.$cgpc.$gpc;
-                }
-                else {
-                    echo $cpn.$pn.$crn.$rn;
-                }
-            }
-            elseif (strlen($gpc) > 0) {
-                echo $cpn.$pn.$cgpc.$gpc;
-            }
-            else {
-                echo $cpn.$pn;
-            }
-        }
-        elseif (strlen($rn) > 0) {
+    if (strlen($pn) > 0) {
+        if (strlen($rn) > 0) {
             if (strlen($gpc) > 0) {
-                echo $crn.$rn.$cgpc.$gpc;
+                echo $cpn.$pn.$crn.$rn.$cgpc.$gpc;
             }
             else {
-                echo $crn.$rn;
+                echo $cpn.$pn.$crn.$rn;
             }
         }
         elseif (strlen($gpc) > 0) {
-            echo $cgpc.$gpc;
+            echo $cpn.$pn.$cgpc.$gpc;
         }
-        echo '">
+        else {
+            echo $cpn.$pn;
+        }
+    }
+    elseif (strlen($rn) > 0) {
+        if (strlen($gpc) > 0) {
+            echo $crn.$rn.$cgpc.$gpc;
+        }
+        else {
+            echo $crn.$rn;
+        }
+    }
+    elseif (strlen($gpc) > 0) {
+        echo $cgpc.$gpc;
+    }
+    echo '">
             百度“<span class="red">'.$s.'</span>”的结果
         </a>
-    </h1>
+    </h1>';
+
+    if (strlen($mnum[2]) > 0) {
+        echo '
     <p class="white center">
         '.$mnum[2].'&nbsp;个结果
         <a class="noa" href="//open.baidu.com/special/time/" target="_blank" rel="external nofollow noreferrer" title="现在几点？">
@@ -926,9 +925,6 @@ if (strlen($mnum[2]) > 0) {
         .'</a>
     </p>';
     }
-}
-
-if (strlen($s) > 0) {
 
     // 冇收录
 
