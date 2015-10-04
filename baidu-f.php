@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<!--这是百度搜索结果参数分析工具 PHP 源码，若不知如何在浏览器打开，可加入百度参数QQ交流群(255363059)-->
+<!--这是百度搜索结果参数分析工具-->
 <html xmlns="http://www.w3.org/1999/xhtml" lang="cmn-Hans" xml:lang="cmn-Hans">
 <head>
 <meta charset="UTF-8">
@@ -7,7 +7,7 @@
 // 自动生成标题 v2.7
 
 // 请手动修改 url 对应网址、标题后缀、百度实时推送接口、伪静态、关于我
-$url = 'http://'.$_SERVER['HTTP_HOST'].'/baidu-f.php';
+$url = '//'.$_SERVER['HTTP_HOST'].'/baidu-f.php';
 if (file_exists(md5('maas').'.txt')) {
     $pt = file_get_contents(md5('maas').'.txt');
 }
@@ -81,7 +81,32 @@ if (strlen($s) > 0) {
     $p = array ('/(\s+)/', '/(http:\/\/)/');
     $r = array ('%20', '');
     $z = preg_replace($p[1], $r[1], $s);
-    $query = htmlspecialchars(preg_replace($p, $r, $s));
+    $querys = htmlspecialchars(preg_replace($p, $r, $s));
+    $rr = array ('+', '');
+    $query = htmlspecialchars(preg_replace($p, $rr, $s));
+
+    $sugip = array (
+        '115.239.211.11',
+        '115.239.211.12',
+        '180.97.33.72',
+        '180.97.33.73'
+    );
+    shuffle ($sugip);
+
+    // 1. 初始化
+    $ch = curl_init();
+
+    // 2. 设置选项，包括 URL
+    curl_setopt($ch, CURLOPT_URL, 'http://'.$sugip[0].'/su?action=opensearch&ie=UTF-8&wd='.$query);
+    curl_setopt($ch, CURLOPT_TIMEOUT, 3); // 设置超时限制防止死循环
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+    curl_setopt($ch, CURLOPT_HEADER, 0);
+
+    // 3. 执行并获取 HTML 文档内容
+    $sug1 = json_decode(curl_exec($ch));
+
+    // 4. 释放 curl 句柄
+    curl_close($ch);
 
     // 缓存
     class FCache {
@@ -158,43 +183,14 @@ if (strlen($s) > 0) {
 
     $cache = new FCache();
 
-    if (strlen($cache->get(urlencode($query))) > 0) {
-        echo $cache->get(urlencode($query)).'_';
+    if (strlen($cache->get(urlencode($querys))) > 0) {
+        echo $cache->get(urlencode($querys)).'_';
     }
     else {
         // 下拉框提示模式 I 第 1 位查询扩展作为主标题
-        $sugip = array (
-            '115.239.211.11',
-            '115.239.211.12',
-            '180.97.33.72',
-            '180.97.33.73'
-        );
-        shuffle ($sugip);
-
-        // 1. 初始化
-        $ch = curl_init();
-
-        // 2. 设置选项，包括 URL
-        curl_setopt($ch, CURLOPT_URL, 'http://'.$sugip[0].'/su?action=opensearch&ie=UTF-8&wd='.$query);
-        curl_setopt($ch, CURLOPT_TIMEOUT, 3); // 设置超时限制防止死循环
-        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($ch, CURLOPT_HEADER, 0);
-        curl_setopt($ch, CURLOPT_USERAGENT, $_SERVER['HTTP_USER_AGENT']); // 模拟用户使用的浏览器
-
-        // 3. 执行并获取 HTML 文档内容
-        $output = curl_exec ($ch);
-        if ($output === FALSE) {
-            echo "cURL Error: " . curl_error($ch);
-        }
-        $sug1 = json_decode($output);
-
-        // 4. 释放 curl 句柄
-        curl_close ($ch);
-        $sug = @$sug1[1][0];
-
-        if (strlen($sug) > 0) {
-            echo $sug.'_';
-            $cache->add(urlencode($query), $sug);
+        if (strlen(@$sug1[1][0]) > 0) {
+            echo $sug1[1][0].'_';
+            $cache->add(urlencode($querys), $sug1[1][0]);
         }
 
         // 主动推送
@@ -204,12 +200,12 @@ if (strlen($s) > 0) {
             CURLOPT_POST => true,
             CURLOPT_TIMEOUT => 3,
             CURLOPT_RETURNTRANSFER => true,
-            CURLOPT_POSTFIELDS => 'http:'.$url.$l.$query,
+            CURLOPT_POSTFIELDS => 'http:'.$url.$l.$querys,
             CURLOPT_HTTPHEADER => array('Content-Type: text/plain'),
         );
         curl_setopt_array($ch, $options);
         curl_exec($ch);
-        curl_close ($ch);
+        curl_close($ch);
     }
 
     // 引号转换为 HTML 实体的查询词作为副标题
@@ -224,11 +220,11 @@ echo $pt.'</title>
 // 下拉框提示词第 1 位，查询词作为 meta keywords
 echo '<meta content="';
 if (strlen($s) > 0) {
-    if (strlen($cache->get(urlencode($query))) > 0) {
-        echo $cache->get(urlencode($query)).',';
+    if (strlen($cache->get(urlencode($querys))) > 0) {
+        echo $cache->get(urlencode($querys)).',';
     }
-    elseif (strlen($sug) > 0) {
-        echo $sug.',';
+    elseif (strlen(@$sug1[1][0]) > 0) {
+        echo $sug1[1][0].',';
     }
     echo htmlspecialchars($z, ENT_QUOTES).',';
 }
@@ -238,7 +234,7 @@ if (strlen($s) > 0) {
     echo htmlspecialchars($z, ENT_QUOTES).'_'.$pt;
 }
 echo '" />
-<link rel="canonical" href="http:'.$url.$l.@$query.'" />
+<link rel="canonical" href="http:'.$url.$l.@$querys.'" />
 ';
 ?>
 <meta name="renderer" content="webkit" />
@@ -637,15 +633,7 @@ echo '        <form method="get" action="'.$url.'">
                     no canvas
                 </canvas>
             </a>
-            <script type="text/javascript">
-            var canvas = document.getElementById("myCanvas");
-                if(canvas.getContext) {  
-                    var ctx = canvas.getContext("2d");
-                    ctx.font = "24px Helvetica Neue";
-                    ctx.fillStyle = "#FF6347";
-                    ctx.fillText("百度", 0, 24);
-                }
-            </script>
+            <script type="text/javascript">var canvas=document.getElementById("myCanvas");if(canvas.getContext){var ctx=canvas.getContext("2d");ctx.font="24px Helvetica Neue";ctx.fillStyle="#FF6347";ctx.fillText("百度",0,24)};</script>
 ';
 echo '            <input class="text" type="text" value="'.htmlspecialchars(@$_GET['s'] ,ENT_QUOTES).'" name="s" title="解析" autocomplete="off" maxlength="76" id="sug" autofocus="autofocus" placeholder="请输入查询词" onmouseover="this.focus()" onfocus="this.select()">
 ';
@@ -653,31 +641,34 @@ echo '            <input class="other" type="number" name="pn" title="从第几�
 ';
 echo '            <input class="other" type="number" name="rn" title="搜索结果数量" min="0" max="50" value="'.@$_GET['rn'].'" placeholder="返回数量">
 ';
+$tp = array ('/(stf%3D)/', '/(%2C\d{10}%7Cstftype%3D1)/');
+$tr = array ('', '');
+$ts = preg_replace($tp, $tr, @$_GET['gpc']);
 echo '            <select title="搜索结果时间限制" name="gpc">
 ';
 echo '                <option value="">全部时间</option>
 ';
 echo '                <option value="stf%3D'.(time() - 86400).'%2C'.time().'%7Cstftype%3D1"';
-if (@$_GET['gpc'] == 'stf%3D'.(time() - 86400).'%2C'.time().'%7Cstftype%3D1') {
-    echo 'selected';
+if ((time() - $ts) > 86400 && (time() - $ts) < 172800) {
+    echo ' selected="selected"';
 }
 echo '>最近1天</option>
 ';
 echo '                <option value="stf%3D'.(time() - 604800).'%2C'.time().'%7Cstftype%3D1"';
-if (@$_GET['gpc'] == 'stf%3D'.(time() - 604800).'%2C'.time().'%7Cstftype%3D1') {
-    echo 'selected"';
+if ((time() - $ts) > 604800 && (time() - $ts) < 691200) {
+    echo ' selected="selected"';
 }
 echo '>最近1週</option>
 ';
 echo '                <option value="stf%3D'.(time() - 2678400).'%2C'.time().'%7Cstftype%3D1"';
-if (@$_GET['gpc'] == 'stf%3D'.(time() - 2678400).'%2C'.time().'%7Cstftype%3D1') {
-    echo 'selected"';
+if ((time() - $ts) > 2678400 && (time() - $ts) < 2764800) {
+    echo ' selected="selected"';
 }
 echo '>最近1月</option>
 ';
 echo '                <option value="stf%3D'.(time() - 31536000).'%2C'.time().'%7Cstftype%3D1"';
-if (@$_GET['gpc'] == 'stf%3D'.(time() - 31536000).'%2C'.time().'%7Cstftype%3D1') {
-    echo 'selected"';
+if ((time() - $ts) > 31536000 && (time() - $ts) < 31622400) {
+    echo ' selected="selected"';
 }
 echo '>最近1年</option>
             </select>
@@ -719,40 +710,41 @@ if (strlen($s) > 0) {
     $pn = @$_GET['pn'];
     $rn = @$_GET['rn'];
     $gpc = @$_GET['gpc'];
-    $cpn = "&pn=";
-    $crn = "&rn=";
-    $cgpc = "&gpc=";
-    $p = array ('/(\s+)/', '/(http:\/\/)/');
-    $r = array ('+', '');
-    $z = preg_replace($p[1], $r[1], $s);
-    $query = htmlspecialchars(preg_replace($p, $r, $s));
-    $F[1] = '<span title="搜索结果标题|摘要与查询词的语义关联度">语义关联</span>';
-    $F[3] = '[猜]正规性';
-    $F[4] = '[猜]更新';
-    $F[5] = '[猜]实时度';
-    $F[6] = '<a href="//ask.seowhy.com/article/121" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果参数F第6位基于IP位置">基于IP位置</a>';
-    $F[7] = '网址';
-    $F[8] = '标题|网址|摘要';
-    $F1[1] = '第1位';
-    $F1[2] = '第2位';
-    $F1[4] = '[猜]实时动态';
-    $F1[5] = '[猜]匹配率';
-    $F1[7] = '[猜]网址权重';
-    $F1[8] = '第8位';
-    $F2[1] = '[猜]相关';
-    $F2[2] = '第2位';
-    $F2[3] = '第3位';
-    $F2[4] = '第4位';
-    $F2[5] = '第5位';
-    $F2[6] = '<span title="仅是这一刻的搜索结果目标页相对查询词的权重">[猜]内链数量</span>';
-    $F3[1] = '第1位';
-    $F3[2] = '第2位';
-    $F3[3] = '第3位';
-    $F3[4] = '<a href="//ask.seowhy.com/article/30" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果参数F3 - 域名选择与原创内容时效性">[猜]时效性</a>';
-    $F3[5] = '<a href="//ask.seowhy.com/article/46" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果参数F3 - 超越域名选择的含义">[猜]网址形式</a>';
-    $F3[6] = '第6位';
-    $F3[7] = '第7位';
-    $F3[8] = '[猜]相似度';
+
+    // 搜索结果链接
+
+    echo '    <h1 class="center">
+        <a class="noa break" target="_blank" rel="external nofollow noreferrer" href="https://www.baidu.com/s?wd='.$query;
+
+    if (strlen($pn) > 0) {
+        if (strlen($rn) > 0) {
+            if (strlen($gpc) > 0) {
+                echo '&amp;pn='.$pn.'&amp;rn='.$rn.'&amp;gpc='.$gpc;
+            }
+            else {
+                echo '&amp;pn='.$pn.'&amp;rn='.$rn;
+            }
+        }
+        elseif (strlen($gpc) > 0) {
+            echo '&amp;pn='.$pn.'&amp;gpc='.$gpc;
+        }
+        else {
+            echo '&amp;pn='.$pn;
+        }
+    }
+    elseif (strlen($rn) > 0) {
+        if (strlen($gpc) > 0) {
+            echo '&amp;rn='.$rn.'&amp;gpc='.$gpc;
+        }
+        else {
+            echo '&amp;rn='.$rn;
+        }
+    }
+    elseif (strlen($gpc) > 0) {
+        echo '&amp;gpc='.$gpc;
+    }
+    echo '">百度“<span class="red">'.$s.'</span>”的结果</a>
+    </h1>';
 
     // 随机更换 IP
     $ip = array (
@@ -836,6 +828,9 @@ if (strlen($s) > 0) {
     );
     shuffle ($ip);
     $baidu = 'http://'.$ip[0].'/s?wd=';
+    $cpn = '&pn=';
+    $crn = '&rn=';
+    $cgpc = '&gpc=';
     if (strlen($pn) > 0) {
         if (strlen($rn) > 0) {
             if (strlen($gpc) > 0) {
@@ -866,65 +861,23 @@ if (strlen($s) > 0) {
     else
         $se = file_get_contents($baidu.$query);
 
-    // 确定时间
+    // 搜索结果数量
 
+    if (preg_match('/(?<=百度为您找到相关结果约)([0-9,]{1,11})(?=个<\/div>)/', @$se, $mnum));
+}
+
+if (strlen(@$mnum[0]) > 0) {
+
+    // 确定时间
     date_default_timezone_set('PRC');
-    clearstatcache();
 
     // 搜索结果数量
 
-    if (preg_match('/(?<=百度为您找到相关结果)([\x80-\xff]{0,3})([0-9,]{1,11})(?=个<\/div>)/', @$se, $mnum))
-
-    // 百度服务器返回的 Unix 时间戳
-
-    if (preg_match("/(?<='T':')(\d{10})(?=',)/", $se, $mservertime));
-
-    // 搜索结果链接，数量
-
-    echo '    <h1 class="center white">
-        <a class="noa break" target="_blank" rel="external nofollow noreferrer" href="https://www.baidu.com/s?wd='.$query;
-
-    if (strlen($pn) > 0) {
-        if (strlen($rn) > 0) {
-            if (strlen($gpc) > 0) {
-                echo $cpn.$pn.$crn.$rn.$cgpc.$gpc;
-            }
-            else {
-                echo $cpn.$pn.$crn.$rn;
-            }
-        }
-        elseif (strlen($gpc) > 0) {
-            echo $cpn.$pn.$cgpc.$gpc;
-        }
-        else {
-            echo $cpn.$pn;
-        }
-    }
-    elseif (strlen($rn) > 0) {
-        if (strlen($gpc) > 0) {
-            echo $crn.$rn.$cgpc.$gpc;
-        }
-        else {
-            echo $crn.$rn;
-        }
-    }
-    elseif (strlen($gpc) > 0) {
-        echo $cgpc.$gpc;
-    }
-    echo '">
-            百度“<span class="red">'.$s.'</span>”的结果
-        </a>
-    </h1>';
-
-    if (strlen($mnum[2]) > 0) {
-        echo '
+    echo '
     <p class="white center">
-        '.$mnum[2].'&nbsp;个结果
-        <a class="noa" href="//open.baidu.com/special/time/" target="_blank" rel="external nofollow noreferrer" title="现在几点？">
-            '.date('Y-m-d H:i:s', $mservertime[1])
-        .'</a>
+        '.$mnum[0].'&nbsp;个结果
+        <a class="noa" href="//open.baidu.com/special/time/" target="_blank" rel="external nofollow noreferrer" title="现在几点？">'.date('Y-m-d H:i:s', time()).'</a>
     </p>';
-    }
 
     // 冇收录
 
@@ -979,7 +932,7 @@ if (strlen($s) > 0) {
 
     if (preg_match('/(?<=该网站共有)(\s{16})(<b style="color:#333">)([0-9,\x80-\xff]{1,32})(?=<\/b>)/', @$se, $msite)) {
         echo '
-<p class="white">'.$indextime.'&nbsp;百度索引量&nbsp;'.$msite[3].'&nbsp;(site&nbsp;&divide;&nbsp;索引量)&nbsp;=&nbsp;'.sprintf('%.3f',((str_replace(',', '', $mnum[2]) / str_replace(',' ,'' ,$msite[3])) * 100)).'%</p>';
+<p class="white">'.$indextime.'&nbsp;百度索引量&nbsp;'.$msite[3].'&nbsp;(site&nbsp;&divide;&nbsp;索引量)&nbsp;=&nbsp;'.sprintf('%.3f',((str_replace(',', '', $mnum[0]) / str_replace(',' ,'' ,$msite[3])) * 100)).'%</p>';
     }
 
     // 搜索结果
@@ -988,7 +941,8 @@ if (strlen($s) > 0) {
 
     // 搜索结果页资源
 
-    if (preg_match_all('/(?<=<div class="result c-container)( ?)(" id=")(\d{1,3})(" srcid=")(15\d{2})(?=" tpl=")/', @$se, $msrcid)) {
+    if (preg_match_all('/(?<=<div class="result c-container)( ?)(" id=")(\d{1,3})(" srcid=")(15\d{2})(" tpl=")(\w{3,28})(?="  data-click="{)/', @$se, $msrcid)) {
+
         // F0
         if (preg_match_all("/(?<=F':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $mf)) {
             // F1
@@ -1042,7 +996,7 @@ if (strlen($s) > 0) {
                         elseif ($mf2[9][$i].$mf2[10][$i] == '68') {
                             $title[$i] = '&nbsp;<span class="pinks" title="F2&nbsp;=&nbsp;xxxxxx68&nbsp;网址&nbsp;url">网址</span>';
                         }
-                        $nsrcid[$i] = array ($msrcid[5][$i], $mserp[1][$i], $msrcid[3][$i], $mserp[3][$i], @$title[$i], @$lm[$i], @$sug9[$i], @$homonym[$i]);
+                        $nsrcid[$i] = array ($msrcid[5][$i], $mserp[1][$i], $msrcid[3][$i], $mserp[3][$i], $msrcid[7][$i], @$title[$i], @$lm[$i], @$sug9[$i], @$homonym[$i]);
                     }
                 }
             }
@@ -1051,17 +1005,17 @@ if (strlen($s) > 0) {
 
     // fetch key
 
-    if (preg_match_all('/(?<="  srcid=")(\d{1,5})("  fk=")([\d_]{0,6}?)([^_]{1,64})(" id=")(\d{1,2})(?=" tpl=")/', @$se, $mfk)) {
+    if (preg_match_all('/(?<="  srcid=")(\d{1,5})("  fk=")([\d_]{0,6}?)([^_]{1,64})(" id=")(\d{1,2})(" tpl=")(\w{3,28})(" mu=")(.+)(?=" data-op="{\'y\':\'[a-zA-Z0-9]{8}\'}")/', @$se, $mfk)) {
         foreach ($mfk[6] as $i => $v) {
-            $nfk[$i] = array ($mfk[1][$i], $mfk[4][$i], $mfk[6][$i]);
+            $nfk[$i] = array ($mfk[1][$i], $mfk[4][$i], $mfk[6][$i], $mfk[10][$i], $mfk[8][$i]);
         }
     }
 
     // search product
 
-    if (preg_match_all('/(?<="  srcid=")(\d{1,5})("  id=")(\d{1,2})(" tpl="\w{2,32}" mu=")(.+)(?=" data\-op="\{\'y\':\'[a-zA-Z0-9]{8}\'\}")/', @$se, $msp)) {
+    if (preg_match_all('/(?<="  srcid=")(\d{1,5})("  id=")(\d{1,2})(" tpl=")(\w{3,28})(" mu=")(.+)(?=" data-op="{\'y\':\'[a-zA-Z0-9]{8}\'}")/', @$se, $msp)) {
         foreach ($msp[3] as $i => $v) {
-            $nsp[$i] = array ($msp[1][$i], '', $msp[3][$i], $msp[5][$i]);
+            $nsp[$i] = array ($msp[1][$i], '', $msp[3][$i], $msp[7][$i], $msp[5][$i]);
         }
     }
 
@@ -1116,7 +1070,7 @@ if (strlen($s) > 0) {
                         </a>
                     </th>
                     <th>
-                        <span title="标题长度 &lt; 64">字节</span>
+                        <span title="2 &lt; 标题长度 &lt; 64">字节</span>
                     </th>
                     <th>
                         <a href="//ask.seowhy.com/article/79" target="_blank" rel="external nofollow noreferrer" title="百度左侧搜索结果来源分类srcid - 教你精准区分百度搜索产品">srcid
@@ -1126,627 +1080,741 @@ if (strlen($s) > 0) {
             </thead>
             <tbody>';
 
+        $rrr = array (' ', '');
+        $queryn = htmlspecialchars(preg_replace($p, $rrr, $s));
         $srcid = array (
-            array(29308, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', $query.'&nbsp;综合采购&nbsp;百度商贸', '</a>', '', 'ec'),
-            array(29279, '<a target="_blank" href="', '//jiankang.baidu.com/wenda/mining?key=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '精选问答合集&nbsp;百度健康', '</a>', '', 'ec'),
-            array(29250, '<a target="_blank" href="', '//jiankang.baidu.com/healthStar/index?wd=', $query, '" rel="external nofollow noreferrer', '">', '十二星座健康运势&nbsp;百度健康', '</a>', '', 'ec'),
-            array(29256, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '饮食保健知识&nbsp;百度健康', '</a>', '', 'ec'),
-            array(29228, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度品牌特卖', '</a>', '', 'ec'),
-            array(29205, '<a target="_blank" href="', '//jiaoyu.baidu.com/query/exam?classId=2007&amp;originQuery=', $query, '" rel="external nofollow noreferrer', '">', '高等教育自学考试&nbsp;百度教育', '</a>', '', 'ec'),
-            array(29204, '<a target="_blank" href="', '//jiaoyu.baidu.com/query/exam?originQuery=', $query, '" rel="external nofollow noreferrer', '">', '考试&nbsp;百度教育', '</a>', '', 'ec'),
-            array(29200, '<a target="_blank" href="', '//jiaoyu.baidu.com/query/exam?originQuery=', $query, '" rel="external nofollow noreferrer', '">', '考试&nbsp;百度教育', '</a>', '', 'ec'),
-            array(29181, '', '', '', '', '', '产品大全&nbsp;百度财富', '', '', 'ec'),
-            array(29166, '<a target="_blank" href="', '//iwan.baidu.com/search?query=', $query, '" rel="external nofollow noreferrer', '">', '页游&nbsp;开始游戏&nbsp;百度爱玩', '</a>', '', 'ec'),
-            array(29163, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '新专区&nbsp;百度爱玩', '</a>', '', 'ec'),
-            array(29152, '', '', '', '', '', '游戏专区&nbsp;17173', '', '', 'ec'),
-            array(29140, '', '', '', '', '', '二手车&nbsp;百度汽车', '', '', 'ec'),
-            array(29129, '', '', '', '', '', '开始游戏&nbsp;百度爱玩', '', '', 'ec'),
-            array(29127, '<a target="_blank" href="', '//iwan.baidu.com/search?searchquery=', $query, '" rel="external nofollow noreferrer', '">', '百度爱玩', '</a>', '', 'ec'),
-            array(29120, '<a target="_blank" href="', '//iwan.baidu.com/yeyou?query=', $query, '" rel="external nofollow noreferrer', '">', '热门网页游戏平台&nbsp;百度爱玩', '</a>', '', 'ec'),
-            array(29118, '', '', '', '', '', '百度品牌特卖', '', '', 'ec'),
-            array(29116, '', '', '', '', '', '百度品牌特卖', '', '', 'ec'),
-            array(29115, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '百度品牌特卖', '</a>', '', 'ec'),
-            array(29114, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '百度品牌特卖', '</a>', '', 'ec'),
-            array(29099, '', '', '', '', '', '百度教育考试', '', '', 'ec'),
-            array(29096, '<a target="_blank" href="', '//jiaoyu.baidu.com/query/abroad?originQuery=', $query, '" rel="external nofollow noreferrer', '">', '留学图片资讯&nbsp;百度教育', '</a>', '', 'ec'),
-            array(29094, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '找课程&nbsp;百度教育', '</a>', '', 'ec'),
-            array(29093, '', '', '', '', '', '机构&nbsp;百度教育', '', '', 'ec'),
-            array(29090, '', '', '', '', '', '课程&nbsp;百度教育', '', '', 'ec'),
-            array(29089, '<a target="_blank" href="', '//jiankang.baidu.com/juhe/index?aType=1&amp;wd=', $query, '" rel="external nofollow noreferrer', '">', '百度健康', '</a>', '', 'ec'),
-            array(29088, '', '', '', '', '', '混合&nbsp;-&nbsp;百度健康', '', '', 'ec'),
-            array(29087, '', '', '', '', '', '[猜]&nbsp;百度知心_健康_知识_图片', '', '', 'ec'),
-            array(29083, '<a target="_blank" href="', '//yao.xywy.com/so/?q=', $query, '" rel="external nofollow noreferrer', '">', '药品频道&nbsp;寻医问药网&nbsp;百度健康', '</a>', '', 'ec'),
-            array(29081, '<a target="_blank" href="', '//jiankang.baidu.com/shoushu/base?wd=', $query, '" rel="external nofollow noreferrer', '">', '手术&nbsp;百度健康', '</a>', '', 'ec'),
-            array(29080, '', '', '', '', '', '知识图片&nbsp;-&nbsp;百度健康', '', '', 'ec'),
-            array(29070, '<a target="_blank" href="', '//iwan.baidu.com/yeyou?query=', $query, '" rel="external nofollow noreferrer', '">', '网页游戏&nbsp;百度爱玩', '</a>', '', 'ec'),
-            array(29051, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '百度微购', '</a>', '', 'ec'),
-            array(29010, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', $query.'&nbsp;家装&nbsp;百度微购', '</a>', '', 'ec'),
-            array(28299, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '精准问答', '</a>', '', 'ec'),
-            array(28232, '<a target="_blank" href="', '//dict.baidu.com/s?wd=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度词典', '</a>', '', 'sp'),
-            array(28093, '', '', '', '', '', '去哪儿网门票频道', '', '', 'ec'),
-            array(28092, '', '', '', '', '', '去哪儿网门票频道', '', '', 'ec'),
-            array(28072, '', '', '', '', '', '去哪儿网酒店预定查询频道', '', '', 'ec'),
-            array(28057, '', '', '', '', '', '去哪儿度假频道', '', '', 'ec'),
-            array(28056, '', '', '', '', '', '[猜]&nbsp;去哪儿度假频道', '', '', 'ec'),
-            array(28054, '', '', '', '', '', '机票查询&nbsp;去哪儿', '', '', 'ec'),
-            array(28050, '<a target="_blank" href="', '//zhidao.baidu.com/search?word=', $query, '" rel="external nofollow noreferrer', '">', '疾病&nbsp;百度知道', '</a>', '', 'ec'),
-            array(28043, '<a target="_blank" href="', '//lvyou.baidu.com/', '', '" rel="external nofollow noreferrer', '">', '海外&nbsp;百度旅游', '</a>', '', 'ec'),
-            array(28042, '', '', '', '', '', '地图&nbsp;第&nbsp;2&nbsp;版&nbsp;百度旅游', '', '', 'ec'),
-            array(28041, '', '', '', '', '', '地图&nbsp;第&nbsp;2&nbsp;版&nbsp;百度旅游', '', '', 'ec'),
-            array(28040, '', '', '', '', '', '景点介绍&nbsp;第&nbsp;2&nbsp;版&nbsp;百度旅游', '', '', 'ec'),
-            array(28026, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '团购&nbsp;百度糯米', '</a>', '', 'ec'),
-            array(28025, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '团购&nbsp;百度糯米', '</a>', '', 'ec'),
-            array(28022, '<a target="_blank" href="', '//map.baidu.com/?newmap=1&amp;ie=utf-8&amp;s=s%26wd%3D', $query, '" rel="external nofollow noreferrer', '">', '百度地图', '</a>', '', 'ec'),
-            array(28010, '<a target="_blank" href="', '//map.baidu.com/?newmap=1&amp;ie=utf-8&amp;s=s%26wd%3D', $query, '" rel="external nofollow noreferrer', '">', '百度地图&nbsp;城市', '</a>', '', 'ec'),
-            array(28002, '<a target="_blank" href="', '//map.baidu.com/?newmap=1&amp;ie=utf-8&amp;s=s%26wd%3D', $query, '" rel="external nofollow noreferrer', '">', '百度地图', '</a>', '', 'ec'),
-            array(27994, '<a target="_blank" href="', '//zhidao.baidu.com/qiye', '', '" rel="external nofollow noreferrer', '">', '【企业问答】', '</a>', '', 'ec'),
-            array(27003, '', '', '', '', '', '携程攻略', '', '', 'ec'),
-            array(27002, '', '', '', '', '', '携程攻略', '', '', 'ec'),
-            array(21018, '<a target="_blank" href="', '//v.baidu.com/v?ie=utf-8&amp;word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;电影&nbsp;百度视频', '</a>', '', 'sp'),
-            array(20970, '<a target="_blank" href="', '//movie.douban.com/subject_search?search_text=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;豆瓣影评', '</a>', '', 'sp'),
-            array(20840, '', '', '', '', '', '报价|图片|参数配置|口碑-汽车之家', '', '', 'sp'),
-            array(20776, '', '', '', '', '', '[猜]&nbsp;百度百科', '', '', 'sp'),
-            array(20679, '<a target="_blank" href="', '//help.alipay.com/lab/234578-236168/0-236168.htm', '', '" rel="external nofollow noreferrer', '">', '余额宝相关问题&nbsp;支付宝个人帮助中心', '</a>', '', 'sp'),
-            array(20631, '', '', '', '', '', '教育考试&nbsp;百度知心文库', '', '', 'sp'),
-            array(20548, '', '', '', '', '', '系列&nbsp;百度视频', '', '', 'sp'),
-            array(20546, '', '', '', '', '', '分集剧情&nbsp;电视猫', '', '', 'sp'),
-            array(20535, '', '', '', '', '', '火车票购票日历', '', '', 'sp'),
-            array(20528, '', '', '', '', '', '电视剧情介绍&nbsp;电视猫', '', '', 'sp'),
-            array(20527, '', '', '', '', '', '百度左侧知心同系列电影&nbsp;百度视频', '', '', 'sp'),
-            array(20458, '', '', '', '', '', '官方微博(原知心左侧卡片框)', '', '', 'sp'),
-            array(20457, '', '', '', '', '', '电视剧&nbsp;百度视频', '', '', 'sp'),
-            array(20451, '', '', '', '', '', '分集剧情&nbsp;电视猫', '', '', 'sp'),
-            array(20426, '<a target="_blank" href="', '//s.weibo.com/user/', preg_replace('/(\s+)/', '+', $query), '&amp;auth=vip" rel="external nofollow noreferrer', '">', $query.'&nbsp;新浪官微&nbsp;[1－10]', '</a>', '', 'sp'),
-            array(20423, '', '', '', '', '', '百度知道&nbsp;医疗健康', '', '', 'sp'),
-            array(20422, '', '', '', '', '', '百度知道&nbsp;医疗健康', '', '', 'sp'),
-            array(20408, '百度百科(由<a target="_blank" href="', '//www.baikemy.com', '', '&amp;auth=vip" rel="external nofollow noreferrer', '">', '卫生部临床医生科普平台/百科名医网', '</a>权威认证', '', 'sp'),
-            array(20407, '百度百科(由<a target="_blank" href="', '//www.baikemy.com', '', '&amp;auth=vip" rel="external nofollow noreferrer', '">', '卫生部临床医生科普平台/百科名医网', '</a>权威认证', '', 'sp'),
-            array(20406, '<a target="_blank" href="', '//v.baidu.com/v?ie=utf-8&amp;word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度视频', '</a>', '', 'sp'),
-            array(20387, '', '', '', '', '', '易车网', '', '', 'sp'),
-            array(20376, '', '', '', '', '', '百度百科&nbsp;汽车之家阿拉丁', '', '', 'sp'),
-            array(20375, '', '', '', '', '', '官网&nbsp;汽车之家阿拉丁', '', '', 'sp'),
-            array(20324, '', '', '', '', '', '百度百科(原知心左侧卡片框)', '', '', 'sp'),
-            array(20323, '', '', '', '', '', '百度图片(原知心左侧卡片框)', '', '', 'sp'),
-            array(20322, '', '', '', '', '', '百度音乐(原知心左侧卡片框)', '', '', 'sp'),
-            array(20321, '', '', '', '', '', '百度视频(原知心左侧卡片框)', '', '', 'sp'),
-            array(20319, '', '', '', '', '', '百度贴吧(原知心左侧卡片框)', '', '', 'sp'),
-            array(20315, '', '', '', '', '', '付费观看&nbsp;百度视频', '', '', 'sp'),
-            array(20294, '', '', '', '', '', '[猜]&nbsp;热映电影&nbsp;百度视频&nbsp;-&nbsp;百度左侧知心结果', '', '', 'sp'),
-            array(20289, '<a target="_blank" href="', '//www.zhihu.com/search?q=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;知乎', '</a>', '', 'sp'),
-            array(20172, '', '', '', '', '', '知心旅游介绍&nbsp;百度旅游', '', '', 'sp'),
-            array(20135, '', '', '', '', '', 'topik&nbsp;网上报名', '', '', 'sp'),
-            array(20124, '', '', '', '', '', '百度左侧知心视频电视剧', '', '', 'sp'),
-            array(20080, '', '', '', '', '', '北京市预约挂号统一平台', '', '', 'sp'),
-            array(20071, '', '', '', '', '', '医院科室&nbsp;好大夫在线', '', '', 'sp'),
-            array(20070, '', '', '', '', '', '挂号网', '', '', 'sp'),
-            array(20006, '', '', '', '', '', '医院网站', '', '', 'sp'),
-            array(20005, '<a target="_blank" href="', '//www.haodf.com/', '', '" rel="external nofollow noreferrer', '">', '医院科室&nbsp;好大夫在线', '</a>', '', 'sp'),
-            array(19979, '', '', '', '', '', '政府官网', '', '', 'sp'),
-            array(19912, '<a target="_blank" href="', '//www.soyoung.com/', '', '" rel="external nofollow noreferrer', '">', '新氧美容整形', '</a>', '', 'sp'),
-            array(19792, '<a target="_blank" href="', '//beauty.yxlady.com/', '', '" rel="external nofollow noreferrer', '">', '伊秀美容', '</a>', '', 'sp'),
-            array(19788, '<a target="_blank" href="', '//www.yxlady.com/', '', '" rel="external nofollow noreferrer', '">', '伊秀娱乐网', '</a>', '', 'sp'),
-            array(19746, '<a target="_blank" href="', '//www.ci123.com/', '', '" rel="external nofollow noreferrer', '">', '育儿网', '</a>', '', 'sp'),
-            array(19708, '<a target="_blank" href="', '//bbs.tuniu.com/', '', '" rel="external nofollow noreferrer', '">', '途牛旅游论坛', '</a>', '', 'sp'),
-            array(19703, '<a target="_blank" href="', '//www.xcar.com.cn/', '', '" rel="external nofollow noreferrer', '">', '爱卡汽车', '</a>', '', 'sp'),
-            array(19687, '<a target="_blank" href="', '//detail.zol.com.cn/', '', '" rel="external nofollow noreferrer', '">', 'ZOL产品报价&nbsp;中关村在线', '</a>', '', 'sp'),
-            array(19303, '<a target="_blank" href="', '//www.543.cn/', '', '" rel="external nofollow noreferrer', '">', '543小游戏', '</a>', '', 'sp'),
-            array(19255, '<a target="_blank" href="', '//www.autohome.com.cn/', '', '" rel="external nofollow noreferrer', '">', '汽车之家', '</a>', '', 'sp'),
-            array(19093, '<a target="_blank" href="', '//www.18183.com/', '', '" rel="external nofollow noreferrer', '">', '游戏攻略&nbsp;18183手机游戏网', '</a>', '', 'sp'),
-            array(18849, '<a target="_blank" href="', '//car.bitauto.com/', '', '" rel="external nofollow noreferrer', '">', '易车网', '</a>', '', 'sp'),
-            array(18805, '<a target="_blank" href="', '//www.tuniu.com/', '', '" rel="external nofollow noreferrer', '">', '途牛', '</a>', '', 'sp'),
-            array(18730, '<a target="_blank" href="', '//yuedu.baidu.com/search?word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度阅读', '</a>', '', 'sp'),
-            array(18577, '<a target="_blank" href="', '//you.ctrip.com/', '', '" rel="external nofollow noreferrer', '">', '【携程攻略】', '</a>', '', 'sp'),
-            array(18521, '<a target="_blank" href="', '//s.hc360.com/?w=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '慧聪网&nbsp;导购', '</a>', '', 'sp'),
-            array(18478, '<a target="_blank" href="', '//www.11773.com/search/index/?k=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;11773手游网', '</a>', '', 'sp'),
-            array(18371, '<a target="_blank" href="', '//soft.hao123.com/', '', '" rel="external nofollow noreferrer', '">', 'hao123下载站', '</a>', '', 'sp'),
-            array(18532, '<a target="_blank" href="', '//www.83133.com/', '', '" rel="external nofollow noreferrer', '">', '百山探索', '</a>', '', 'sp'),
-            array(18308, '<a target="_blank" href="', '//club.xywy.com/', '', '" rel="external nofollow noreferrer', '">', '有问必答&nbsp;寻医问药网', '</a>', '', 'sp'),
-            array(18258, '<a target="_blank" href="', '//news.91.com/', '', '" rel="external nofollow noreferrer', '">', '91资讯', '</a>', '', 'sp'),
-            array(18198, '<a target="_blank" href="', '//www.downza.cn/', '', '" rel="external nofollow noreferrer', '">', '下载之家', '</a>', '', 'sp'),
-            array(17719, '<a target="_blank" href="', '//pic.yesky.com/', '', '" rel="external nofollow noreferrer', '">', '天极时尚', '</a>', '', 'sp'),
-            array(17706, '<a target="_blank" href="', '//pic.yesky.com/', '', '" rel="external nofollow noreferrer', '">', '天极时尚', '</a>', '', 'sp'),
-            array(17590, '<a target="_blank" href="', '//www.onlinedown.net/', '', '" rel="external nofollow noreferrer', '">', '华军软件园', '</a>', '', 'sp'),
-            array(17518, '<a target="_blank" href="', '//bus.ctrip.com/', '', '" rel="external nofollow noreferrer', '">', '全国长途汽车时刻表及汽车票价查询&nbsp;携程汽车', '</a>', '', 'sp'),
-            array(17502, '<a target="_blank" href="', '//s.hc360.com/?w=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;购买推荐&nbsp;慧聪网', '</a>', '', 'sp'),
-            array(17306, '<a target="_blank" href="', '//price.pcauto.com.cn/', '', '" rel="external nofollow noreferrer', '">', '太平洋汽车网', '</a>', '', 'sp'),
-            array(17153, '<a target="_blank" href="', '//www.cr173.com/', '', '" rel="external nofollow noreferrer', '">', '西西软件园', '</a>', '', 'sp'),
-            array(16932, '', '', '', '', '', '美食/营养&nbsp;百度经验【组图】', '', '', 'sp'),
-            array(16852, '', '', '', '', '', '[猜]&nbsp;腾讯科技', '', '', 'sp'),
-            array(16847, '', '', '', '', '', '[猜]&nbsp;热点话题', '', '', 'sp'),
-            array(16821, '', '', '', '', '', '[猜]&nbsp;体育直播&nbsp;新浪网', '', '', 'sp'),
-            array(16809, '', '', '', '', '', '电视猫', '', '', 'sp'),
-            array(16796, '', '', '', '', '', '综艺&nbsp;腾讯视频', '', '', 'sp'),
-            array(16790, '', '', '', '', '', '美食美客&nbsp;爱奇艺', '', '', 'sp'),
-            array(16758, '', '', '', '', '', '悦美网&nbsp;子链&nbsp;缩略图', '', '', 'sp'),
-            array(16743, '', '', '', '', '', '软件下载&nbsp;中关村在线', '', '', 'sp'),
-            array(16724, '', '', '', '', '', '[猜]&nbsp;中国好系统', '', '', 'sp'),
-            array(16689, '', '', '', '', '', '走势图表&nbsp;百度乐彩', '', '', 'sp'),
-            array(16653, '', '', '', '', '', '女子拒搭讪被打死&nbsp;百度贴吧直播', '', '', 'sp'),
-            array(16641, '', '', '', '', '', '百度加速乐', '', '', 'sp'),
-            array(16634, '', '', '', '', '', '[猜]&nbsp;蘑菇系统之家', '', '', 'sp'),
-            array(16633, '', '', '', '', '', '[猜]&nbsp;系统吧', '', '', 'sp'),
-            array(16590, '', '', '', '', '', '开放式基金&nbsp;天天基金网', '', '', 'sp'),
-            array(16545, '', '', '', '', '', '面包屑导航新闻时间轴', '', '', 'sp'),
-            array(16524, '', '', '', '', '', '疑似推销', '', '', 'sp'),
-            array(16502, '<a target="_blank" href="', '//blog.csdn.net/', '', '" rel="external nofollow noreferrer', '">', 'CSDN博客', '</a>', '', 'sp'),
-            array(16499, '', '', '', '', '', '[猜]&nbsp;港股实时行情&nbsp;-&nbsp;东方财富网', '', '', 'sp'),
-            array(16498, '', '', '', '', '', '[猜]&nbsp;股票实时行情&nbsp;-&nbsp;东方财富网', '', '', 'sp'),
-            array(16488, '', '', '', '', '', '百度知道问律师', '', '', 'sp'),
-            array(16450, '', '', '', '', '', '百度阿拉丁&nbsp;robots&nbsp;禁止抓取', '', '', 'sp'),
-            array(16448, '', '', '', '', '', '性病科&nbsp;挂号网', '', '', 'sp'),
-            array(16411, '', '', '', '', '', '百度软件中心', '', '', 'sp'),
-            array(16391, '<a target="_blank" href="', '//search.jd.com/Search?keyword=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '京东', '</a>', '', 'sp'),
-            array(16387, '', '', '', '', '', '手机&nbsp;太平洋电脑网', '', '', 'sp'),
-            array(16379, '<a target="_blank" href="', '//lvyou.baidu.com/', '', '" rel="external nofollow noreferrer', '">', '百度旅游', '</a>', '', 'sp'),
-            array(16375, '<a target="_blank" href="', '//www.91danji.com/az/', '', '" rel="external nofollow noreferrer', '">', '91手游网', '</a>', '', 'sp'),
-            array(16355, '', '', '', '', '', '[猜]&nbsp;系统之家', '', '', 'sp'),
-            array(16345, '', '', '', '', '', '[猜]&nbsp;世界杯&nbsp;网易体育', '', '', 'sp'),
-            array(16343, '', '', '', '', '', '[猜]&nbsp;NBA赛季&nbsp;新浪体育', '', '', 'sp'),
-            array(16323, '<a target="_blank" href="', '//www.39yst.com/', '', '" rel="external nofollow noreferrer', '">', '三九养生堂', '</a>', '', 'sp'),
-            array(16312, '', '', '', '', '', '[猜]&nbsp;百度贴吧访谈直播', '', '', 'sp'),
-            array(16311, '<a target="_blank" href="', 'http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=usstock&amp;q=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;股票代码&nbsp;美股实时行情&nbsp;新浪财经&nbsp;[1－9]', '</a>', '', 'sp'),
-            array(16309, '<a target="_blank" href="', 'http://biz.finance.sina.com.cn/suggest/lookup_n.php?country=usstock&amp;q=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;美股实时行情&nbsp;新浪财经&nbsp;[1－9]', '</a>', '', 'sp'),
-            array(16277, '<a target="_blank" href="', '//sports.sina.com.cn/g/seriea/', '', '" rel="external nofollow noreferrer', '">', '意甲&nbsp;新浪体育', '</a>', '', 'sp'),
-            array(16262, '', '', '', '', '', '带子链&nbsp;寻医问药网', '', '', 'sp'),
-            array(16228, '', '', '', '', '', '[猜]&nbsp;非中国内地明星&nbsp;伊秀娱乐&nbsp;伊秀女性网', '', '', 'sp'),
-            array(16198, '', '', '', '', '', '[猜]&nbsp;百度经验【组图】', '', '', 'sp'),
-            array(16189, '', '', '', '', '', '股票实时行情&nbsp;东方财富网', '', '', 'sp'),
-            array(16188, '', '', '', '', '', '新浪财经', '', '', 'sp'),
-            array(16184, '', '', '', '', '', '股票实时行情&nbsp;东方财富网', '', '', 'sp'),
-            array(16163, '', '', '', '', '', '[猜]&nbsp;欧冠新闻时间轴', '', '', 'sp'),
-            array(16140, '<a target="_blank" href="', '//www.guahao.com', '', '" rel="external nofollow noreferrer', '">', '挂号网', '</a>', '', 'sp'),
-            array(16049, '', '', '', '', '', '诈骗', '', '', 'sp'),
-            array(16048, '', '', '', '', '', '寻医问药网', '', '', 'sp'),
-            array(16047, '<a target="_blank" href="', '//fanyi.baidu.com/#auto/zh/', '', '" rel="external nofollow noreferrer', '">', '百度在线翻译&nbsp;[1－10]', '</a>', '', 'sp'),
-            array(16035, '', '', '', '', '', '[猜]&nbsp;旅游目的地推荐&nbsp;-&nbsp;百度旅游', '', '', 'sp'),
-            array(15988, '', '', '', '', '', '动漫&nbsp;腾讯视频', '', '', 'sp'),
-            array(15964, '', '', '', '', '', '专辑&nbsp;百度音乐', '', '', 'sp'),
-            array(15958, '', '', '', '', '', '电视剧&nbsp;腾讯视频', '', '', 'sp'),
-            array(15940, '<a target="_blank" href="', '//sports.sina.com.cn/g/laliga/', '', '" rel="external nofollow noreferrer', '">', '西甲&nbsp;新浪体育', '</a>', '', 'sp'),
-            array(15929, '', '', '', '', '', '[猜]&nbsp;软件下载&nbsp;太平洋电脑网', '', '', 'sp'),
-            array(15883, '<a target="_blank" href="', '//ask.seowhy.com/question/8497', '', '" rel="external nofollow noreferrer" title="百度搜索结果页，都什么情况下会出现直链？', '">', '代名词 百度快照在2013年09月-2013年10月间', '</a>', '', 'sp'),
-            array(15863, '', '', '', '', '', '小道消息&nbsp;手机中国', '', '', 'sp'),
-            array(15858, '', '', '', '', '', '单机游戏网', '', '', 'sp'),
-            array(15820, '', '', '', '', '', '速尔快递客服电话', '', '', 'sp'),
-            array(15817, '', '', '', '', '', '普通官网', '', '', 'sp'),
-            array(15791, '', '', '', '', '', '[猜]&nbsp;快递电话', '', '', 'sp'),
-            array(15785, '', '', '', '', '', '口袋巴士', '', '', 'sp'),
-            array(15772, '', '', '', '', '', '逗游', '', '', 'sp'),
-            array(15765, '', '', '', '', '', '世界杯新闻轴', '', '', 'sp'),
-            array(15758, '<a target="_blank" href="', '//ask.seowhy.com/question/14936', '', '" rel="external nofollow noreferrer', '">', '慧聪网B2B', '</a>', '', 'sp'),
-            array(15751, '', '', '', '', '', '齐家网', '', '百度收购', 'sp'),
-            array(15728, '', '', '', '', '', '起点中文网', '', '', 'sp'),
-            array(15726, '', '', '', '', '', '起点中文网', '', '', 'sp'),
-            array(15720, '', '', '', '', '', '百度经验', '', '', 'sp'),
-            array(15678, '<a target="_blank" href="', '//worldcup.2014.163.com/schedule/', '', '" rel="external nofollow noreferrer', '">', '2014巴西世界杯赛程&nbsp;网易体育', '</a>', '', 'sp'),
-            array(15648, '', '', '', '', '', '[猜]&nbsp;旅游攻略&nbsp;百度旅游', '', '', 'sp'),
-            array(15623, '', '', '', '', '', '报价及图片_太平洋汽车网', '', '', 'sp'),
-            array(15584, '<a target="_blank" href="', '//zhanzhang.baidu.com/', '', '" rel="external nofollow noreferrer', '">', '百度站长平台', '</a>', '', 'sp'),
-            array(15583, '<a target="_blank" href="', '//s.hc360.com/?w=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;慧聪网', '</a>', '', 'sp'),
-            array(15560, '', '', '', '', '', '中关村在线', '', '', 'sp'),
-            array(15559, '<a target="_blank" href="', '//s.hc360.com/?w=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;慧聪网', '</a>', '', 'sp'),
-            array(15557, '', '', '', '', '', '[猜]&nbsp;中公教育', '', '', 'sp'),
-            array(15547, '<a target="_blank" href="', '//www.yuemei.com/', '', '" rel="external nofollow noreferrer', '">', '整形美容&nbsp;-&nbsp;悦美网', '</a>', '', 'sp'),
-            array(15516, '<a target="_blank" href="', '//name.renren.com/', '', '" rel="external nofollow noreferrer', '">', '人人网同名搜索', '</a>', '', 'sp'),
-            array(15515, '', '', '', '', '', '人人网同名搜索', '', '', 'sp'),
-            array(15460, '', '', '', '', '', '中国足彩网', '', '', 'sp'),
-            array(15448, '<a target="_blank" href="', '//s.hc360.com', '', '" rel="external nofollow noreferrer', '">', '慧聪商务搜索', '</a>', '', 'sp'),
-            array(15442, '', '', '', '', '', '疾病百科&nbsp;39健康网', '', '', 'sp'),
-            array(15388, '', '', '', '', '', '手机中国', '', '', 'sp'),
-            array(15357, '', '', '', '', '', 'hao123汽车|hao123头条', '', '', 'sp'),
-            array(15295, '', '', '', '', '', '畛域_百度视频', '', '', 'sp'),
-            array(15279, '<a target="_blank" href="', '//open.baidu.com/coop/kefu.html', '', '" rel="external nofollow noreferrer', '">', '客服电话&nbsp;[3－4]', '</a>', '', 'sp'),
-            array(15232, '', '', '', '', '', '百度轻应用', '', '', 'sp'),
-            array(15213, '<a target="_blank" href="', '//www.yuemei.com/parts_price.html', '', '" rel="external nofollow noreferrer', '">', '整形报价大全&nbsp;悦美整形网', '</a>', '', 'sp'),
-            array(15200, '<a target="_blank" href="', '//movie.douban.com/subject_search?search_text=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '豆瓣电影', '</a>', '', 'sp'),
-            array(15198, '', '', '', '', '', '考研时间安排&nbsp;新浪教育', '', '', 'sp'),
-            array(15195, '', '', '', '', '', '不凡游戏网', '', '', 'sp'),
-            array(15181, '<a target="_blank" href="', '//search.newhua.com/search_list.php?searchname=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'华军软件园', '</a>', '', 'sp'),
-            array(15125, '<a target="_blank" href="', '//www.iqiyi.com/', '', '" rel="external nofollow noreferrer', '">', '在线观看&nbsp;爱奇艺', '</a>', '', 'sp'),
-            array(15110, '', '', '', '', '', '好大夫在线', '', '', 'sp'),
-            array(15109, '', '', '', '', '', '[猜]&nbsp;疾病&nbsp;好大夫在线', '', '', 'sp'),
-            array(15108, '<a target="_blank" href="', '//kbs.sports.qq.com/', '', '" rel="external nofollow noreferrer', '">', '看比赛&nbsp;腾讯体育&nbsp;[1－10]', '</a>', '', 'sp'),
-            array(15101, '<a target="_blank" href="', '//cn.hao123.com/zhaopin', '', '" rel="external nofollow noreferrer', '">', 'hao123招聘', '</a>', '', 'sp'),
-            array(15056, '', '', '', '', '', '天极下载', '', '', 'sp'),
-            array(15027, '', '', '', '', '', 'pc大卡', '', '', 'sp'),
-            array(15017, '', '', '', '', '', '热点&nbsp;网易体育', '', '', 'sp'),
-            array(14994, '', '', '', '', '', '伊秀娱乐明星库', '', '', 'sp'),
-            array(14990, '<a target="_blank" href="', '//xiazai.zol.com.cn/search?wd=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', 'ZOL软件下载', '</a>', '', 'sp'),
-            array(14966, '<a target="_blank" href="', '//v.baidu.com/v?ie=utf-8&amp;word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度视频&nbsp;相关视频', '</a>', '', 'sp'),
-            array(14960, '<a target="_blank" href="', '//product.yesky.com/', '', '" rel="external nofollow noreferrer', '">', '天极产品库', '</a>', '', 'sp'),
-            array(14955, '', '', '', '', '', '实物价格&nbsp;和讯黄金', '', '', 'sp'),
-            array(14907, '<a target="_blank" href="', '//www.tvmao.com/query.jsp?keys=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'分集剧情介绍&nbsp;电视猫', '</a>', '', 'sp'),
-            array(14861, '', '', '', '', '', '[猜]&nbsp;选手&nbsp;乐视网', '', '', 'sp'),
-            array(14744, '<a target="_blank" href="', '//www.xiaopi.com/', '', '" rel="external nofollow noreferrer', '">', '小皮游戏', '</a>', '', 'sp'),
-            array(14726, '', '', '', '', '', '热点&nbsp;网易娱乐', '', '', 'sp'),
-            array(14713, '', '', '', '', '', '[猜]&nbsp;目的地指南&nbsp;百度旅游', '', '', 'sp'),
-            array(14744, '<a target="_blank" href="', '//www.edeng.cn/', '', '" rel="external nofollow noreferrer', '">', '易登网', '</a>', '', 'sp'),
-            array(14664, '<a target="_blank" href="', '//www.xcar.com.cn/', '', '" rel="external nofollow noreferrer', '">', '爱卡汽车', '</a>', '', 'sp'),
-            array(14611, '', '', '', '', '', 'hao123小游戏', '', '', 'sp'),
-            array(14584, '', '', '', '', '', '[猜]&nbsp;百度团购官网', '', '', 'sp'),
-            array(14580, '', '', '', '', '', 'Zinch', '', '', 'sp'),
-            array(14545, '', '', '', '', '', '品牌词', '', '', 'sp'),
-            array(14515, '', '', '', '', '', '[猜]&nbsp;新浪微博|58同城|百度卫士|百度影音|铁路客户服务中心', '', '', 'sp'),
-            array(14510, '', '', '', '', '', '[猜]&nbsp;58同城|淘宝网', '', '', 'sp'),
-            array(14480, '<a target="_blank" href="', '//sports.sohu.com/s2004/zhongjia.shtml', '', '" rel="external nofollow noreferrer', '">', '中甲&nbsp;搜狐体育', '</a>', '', 'sp'),
-            array(14474, '', '', '', '', '', '百度投诉中心', '', '', 'sp'),
-            array(14466, '', '', '', '', '', '汽车点评', '', '百度收购', 'sp'),
-            array(14452, '<a target="_blank" href="', '//tousu.baidu.com/webmaster/add', '', '" rel="external nofollow noreferrer', '">', '快照删除与更新&nbsp;百度投诉', '</a>', '', 'sp'),
-            array(14435, '', '', '', '', '', '[猜]&nbsp;聊天通讯&nbsp;-&nbsp;百度软件中心', '', '', 'sp'),
-            array(14434, '<a target="_blank" href="', '//product.yesky.com/', '', '" rel="external nofollow noreferrer', '">', '天极产品库', '</a>', '', 'sp'),
-            array(14427, '<a target="_blank" href="', '//mydown.yesky.com/', '', '" rel="external nofollow noreferrer', '">', '天极下载', '</a>', '', 'sp'),
-            array(14421, '', '', '', '', '', '时刻表&nbsp;发车间隔&nbsp;同程网', '', '', 'sp'),
-            array(14412, '<a target="_blank" href="', '//data.10jqka.com.cn/financial/bdcbmg/', '', '" rel="external nofollow noreferrer', '">', '公司财报&nbsp;同花顺财经', '</a>', '', 'sp'),
-            array(14331, '', '', '', '', '', '百度经验【图文】', '', '', 'sp'),
-            array(14330, '<a target="_blank" href="', '//www.pc6.com/', '', '" rel="external nofollow noreferrer', '">', 'pc6下载站', '</a>', '', 'sp'),
-            array(14305, '', '', '', '', '', '百度网盘', '', '', 'sp'),
-            array(14287, '', '', '', '', '', '股吧&nbsp;-&nbsp;东方财富网', '', '', 'sp'),
-            array(14283, '', '', '', '', '', '股吧&nbsp;-&nbsp;东方财富网', '', '', 'sp'),
-            array(14181, '', '', '', '', '', '[猜]社交网络&nbsp;-&nbsp;ipush', '', '', 'sp'),
-            array(14175, '<a target="_blank" href="', '//euro2012.sina.com.cn/', '', '" rel="external nofollow noreferrer', '">', '欧洲杯', '</a>', '', 'sp'),
-            array(14142, '', '', '', '', '', '[猜]&nbsp;系统吧', '', '', 'sp'),
-            array(14134, '', '', '', '', '', '[猜]&nbsp;百度图片 医疗健康', '', '', 'sp'),
-            array(14110, '', '', '', '', '', '中国天气网', '', '', 'sp'),
-            array(14105, '', '', '', '', '', '实时热点新闻', '', '', 'sp'),
-            array(14098, '<a target="_blank" href="', '//yz.chsi.com.cn/', '', '" rel="external nofollow noreferrer', '">', '中国研究生招生信息网', '</a>', '', 'sp'),
-            array(14076, '<a target="_blank" href="', '//v.baidu.com/v?ie=utf-8&amp;word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '最新迷你&nbsp;在线观看&nbsp;百度视频', '</a>', '', 'sp'),
-            array(14062, '', '', '', '', '', 'hao123折扣导航', '', '', 'sp'),
-            array(14060, '<a target="_blank" href="', '//yingjian.baidu.com/', '', '" rel="external nofollow noreferrer', '">', '百度硬件', '</a>', '', 'sp'),
-            array(14059, '', '', '', '', '', '[猜]&nbsp;马槽&nbsp;百度经验', '', '', 'sp'),
-            array(14058, '', '', '', '', '', '电影&nbsp;百度团购', '', '', 'sp'),
-            array(14022, '', '', '', '', '', '旅游景点&nbsp;百度经验【组图】', '', '', 'sp'),
-            array(14004, '', '', '', '', '', '挂号网', '', '', 'sp'),
-            array(13932, '', '', '', '', '', '企业官方贴吧', '', '', 'sp'),
-            array(13927, '<a target="_blank" href="', '//detail.zol.com.cn/', '', '" rel="external nofollow noreferrer', '">', 'ZOL产品报价&nbsp;中关村在线', '</a>', '', 'sp'),
-            array(13920, '', '', '', '', '', '产品报价&nbsp;中关村在线', '', '', 'sp'),
-            array(13911, '', '', '', '', '', '手机&nbsp;天极网', '', '', 'sp'),
-            array(13885, '', '', '', '', '', '[猜]&nbsp;百度卫士&nbsp;百度知道', '', '', 'sp'),
-            array(13863, '', '', '', '', '', '百度火车票', '', '', 'sp'),
-            array(13854, '', '', '', '', '', '电影&nbsp;-&nbsp;腾讯视频', '', '', 'sp'),
-            array(13842, '', '', '', '', '', '旅游攻略&nbsp;百度旅游', '', '', 'sp'),
-            array(13841, '', '', '', '', '', '英语四六级考试查分&nbsp;考试吧', '', '', 'sp'),
-            array(13823, '<a target="_blank" href="', '//soft.hao123.com/', '', '" rel="external nofollow noreferrer', '">', 'hao123下载站', '</a>', '', 'sp'),
-            array(13806, '', '', '', '', '', '附近电影院&nbsp;时光网', '', '', 'sp'),
-            array(13805, '<a target="_blank" href="', '//www.99danji.com/', '', '" rel="external nofollow noreferrer', '">', '99安卓游戏', '</a>', '', 'sp'),
-            array(13798, '', '', '', '', '', '支付宝客服电话|百度用户服务中心', '', '', 'sp'),
-            array(13750, '', '', '', '', '', '7k7k小游戏', '', '', 'sp'),
-            array(13747, '', '', '', '', '', '网页游戏&nbsp;7k7k小游戏', '', '', 'sp'),
-            array(13741, '', '', '', '', '', '实时路况', '', '', 'sp'),
-            array(13717, '', '', '', '', '', '左侧知心&nbsp;电视剧&nbsp;爱奇艺', '', '', 'sp'),
-            array(13706, '', '', '', '', '', '[猜]&nbsp;腾讯彩票', '', '', 'sp'),
-            array(13679, '', '', '', '', '', '现货价格&nbsp;和讯黄金', '', '', 'sp'),
-            array(13631, '', '', '', '', '', '比赛进程&nbsp;乐视网', '', '', 'sp'),
-            array(13630, '', '', '', '', '', '[猜]&nbsp;中国内地明星&nbsp;伊秀娱乐&nbsp;伊秀女性网', '', '', 'sp'),
-            array(13627, '<a target="_blank" href="', '//sports.sina.com.cn/z/AFCCL2015/', '', '" rel="external nofollow noreferrer', '">', '亚冠赛程结果&nbsp;新浪体育', '</a>', '', 'sp'),
-            array(13620, '<a target="_blank" href="', '//www.baidu.com/aladdin/js/iknow/iknowask.html', '', '" rel="external nofollow noreferrer', '">', '百度知道&nbsp;ipush', '</a>', '', 'sp'),
-            array(13616, '', '', '', '', '', '二手房&nbsp;百度乐居', '', '', 'sp'),
-            array(13598, '<a target="_blank" href="', '//www.liepin.com/', '', '" rel="external nofollow noreferrer', '">', '猎聘网', '</a>', '', 'sp'),
-            array(13580, '', '', '', '', '', '嫣然天使基金', '', '', 'sp'),
-            array(13522, '<a target="_blank" href="', '//www.51job.com/', '', '" rel="external nofollow noreferrer', '">', '找工作&nbsp;求职&nbsp;上前程无忧', '</a>', '', 'sp'),
-            array(13501, '', '', '', '', '', '犬类&nbsp;知心结果', '', '', 'sp'),
-            array(13466, '', '', '', '', '', '逗游网', '', '', 'sp'),
-            array(13445, '', '', '', '', '', '供应信息&nbsp;慧聪网', '', '', 'sp'),
-            array(13390, '', '', '', '', '', '腾讯动漫', '', '', 'sp'),
-            array(13369, '', '', '', '', '', '一听音乐', '', '', 'sp'),
-            array(13360, '<a target="_blank" href="', '//tieba.baidu.com/f?kw=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '[猜]&nbsp;百度贴吧', '</a>', '', 'sp'),
-            array(13355, '', '', '', '', '', '短信&nbsp;爱祝福', '', '', 'sp'),
-            array(13336, '', '', '', '', '', '墨迹天气', '', '', 'sp'),
-            array(13310, '', '', '', '', '', '手机品牌&nbsp;太平洋电脑网', '', '', 'sp'),
-            array(13264, '<a target="_blank" href="', '//open.baidu.com/data/ms/nav/somesources/tag/ctw/', '', '" rel="external nofollow noreferrer', '">', '畅途网&nbsp;百度数据开放平台合作伙伴', '</a>', '', 'sp'),
-            array(13260, '', '', '', '', '', '汽车百科知识&nbsp;汽车点评', '', '', 'sp'),
-            array(13255, '', '', '', '', '', '1', '', '', 'sp'),
-            array(13231, '<a target="_blank" href="', '//sports.sina.com.cn/g/ucl/fixtures.html', '', '" rel="external nofollow noreferrer', '">', '欧洲冠军联赛&nbsp;-&nbsp;新浪体育', '</a>', '', 'sp'),
-            array(13216, '', '', '', '', '', '影讯&nbsp;最近上映电影&nbsp;Mtime时光网', '', '', 'sp'),
-            array(13174, '', '', '', '', '', '列车时刻表查询及在线预订&nbsp;去哪儿', '', '', 'sp'),
-            array(13118, '', '', '', '', '', '比赛进程&nbsp;百度视频', '', '', 'sp'),
-            array(13111, '', '', '', '', '', '中国红十字基金会', '', '', 'sp'),
-            array(13096, '', '', '', '', '', '百度团购', '', '', 'sp'),
-            array(13039, '', '', '', '', '', '客服电话&nbsp;去哪儿', '', '', 'sp'),
-            array(13031, '<a target="_blank" href="', '//open.baidu.com/data/ms/nav/somesources/tag/zgtq/', '', '" rel="external nofollow noreferrer', '">', '城市天气预报&nbsp;中国天气网', '</a>', '', 'sp'),
-            array(12967, '', '', '', '', '', '百度软件', '', '', 'sp'),
-            array(12965, '<a target="_blank" href="', '//www.abab.com/', '', '" rel="external nofollow noreferrer', '">', 'ABAB小游戏', '</a>', '', 'sp'),
-            array(12946, '', '', '', '', '', '动漫&nbsp;爱奇艺', '', '', 'sp'),
-            array(12926, '', '', '', '', '', '[猜]&nbsp;亚信峰会直播&nbsp;凤凰网', '', '', 'sp'),
-            array(12906, '', '', '', '', '', '[猜]城市&nbsp;-&nbsp;百度团购', '', '', 'sp'),
-            array(12904, '', '', '', '', '', '[猜]&nbsp;中国网络电视台', '', '', 'sp'),
-            array(12903, '', '', '', '', '', '[猜]&nbsp;百度团购导航', '', '', 'sp'),
-            array(12901, '', '', '', '', '', '旅游攻略&nbsp;-&nbsp;百度旅游', '', '', 'sp'),
-            array(12880, '', '', '', '', '', '[猜]&nbsp;国内省市级|国外国家级目的地&nbsp;百度旅游', '', '', 'sp'),
-            array(12840, '', '', '', '', '', '百度乐居', '', '', 'sp'),
-            array(12839, '', '', '', '', '', '招远麦当劳&nbsp;新闻直播', '', '', 'sp'),
-            array(12809, '', '', '', '', '', '综艺&nbsp;爱奇艺', '', '', 'sp'),
-            array(12762, '<a target="_blank" href="', '//www.mafengwo.cn/', '', '" rel="external nofollow noreferrer', '">', '蚂蜂窝', '</a>', '', 'sp'),
-            array(12729, '<a target="_blank" href="', '//piao.baidu.com/s?wd=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度票务', '</a>', '', 'sp'),
-            array(12726, '', '', '', '', '', '医院&nbsp;好大夫在线', '', '', 'sp'),
-            array(12645, '', '', '', '', '', '[猜]&nbsp;轿车&nbsp;易车网', '', '', 'sp'),
-            array(12644, '', '', '', '', '', '软件排行榜&nbsp;太平洋下载', '', '', 'sp'),
-            array(12643, '', '', '', '', '', '百度团购第&nbsp;2&nbsp;种起点', '', '', 'sp'),
-            array(12640, '<a target="_blank" href="', '//newcar.xcar.com.cn/', '', '" rel="external nofollow noreferrer', '">', '爱卡汽车', '</a>', '', 'sp'),
-            array(12628, '<a target="_blank" href="', '//www.familydoctor.com.cn/', '', '" rel="external nofollow noreferrer', '">', '家庭医生在线', '</a>', '', 'sp'),
-            array(12616, '', '', '', '', '', '开奖查询&nbsp;百度乐彩', '', '', 'sp'),
-            array(12610, '', '', '', '', '', '汽车点评', '', '', 'sp'),
-            array(12605, '', '', '', '', '', '百度乐彩', '', '', 'sp'),
-            array(12594, '', '', '', '', '', '[猜]&nbsp;腾讯视频', '', '', 'sp'),
-            array(12558, '', '', '', '', '', '说明书&nbsp;寻医问药网', '', '', 'sp'),
-            array(12542, '', '', '', '', '', '英语四六级真题试卷&nbsp;新浪教育', '', '', 'sp'),
-            array(12521, '', '', '', '', '', '开心网会员登录', '', '', 'sp'),
-            array(12512, '', '', '', '', '', '录取分数线&nbsp;高考招生&nbsp;中国教育在线', '', '', 'sp'),
-            array(12501, '', '', '', '', '', '育儿&nbsp;太平洋亲子网', '', '', 'sp'),
-            array(12500, '', '', '', '', '', '育儿检测&nbsp;太平洋亲子网', '', '', 'sp'),
-            array(12403, '', '', '', '', '', '壹基金', '', '', 'sp'),
-            array(12391, '', '', '', '', '', '装修&nbsp;齐家网', '', '', 'sp'),
-            array(12347, '', '', '', '', '', '产品导航&nbsp;手机&nbsp;太平洋电脑网', '', '', 'sp'),
-            array(12346, '', '', '', '', '', '商户&nbsp;大众点评网', '', '', 'sp'),
-            array(12345, '', '', '', '', '', '食品营养价值&nbsp;美食天下', '', '', 'sp'),
-            array(12342, '', '', '', '', '', '[猜]&nbsp;NBA决赛&nbsp;热点直播&nbsp;网易体育', '', '', 'sp'),
-            array(12270, '', '', '', '', '', '18183&nbsp;手游网', '', '', 'sp'),
-            array(12220, '', '', '', '', '', '排行榜&nbsp;百度搜索风云榜', '', '', 'sp'),
-            array(12215, '', '', '', '', '', '今日游戏排行榜&nbsp;百度搜索风云榜', '', '', 'sp'),
-            array(12185, '', '', '', '', '', '有妖气', '', '', 'sp'),
-            array(12123, '', '', '', '', '', '专题&nbsp;百度音乐', '', '', 'sp'),
-            array(12121, '', '', '', '', '', '综艺&nbsp;风行网', '', '', 'sp'),
-            array(12118, '', '', '', '', '', '百度相册', '', '', 'sp'),
-            array(12114, '', '', '', '', '', '百度经验【组图】', '', '', 'sp'),
-            array(12102, '', '', '', '', '', '自学考试&nbsp;考试吧', '', '', 'sp'),
-            array(12097, '', '', '', '', '', '京东商城品牌', '', '', 'sp'),
-            array(12049, '', '', '', '', '', '百度推广投诉客服电话', '', '', 'sp'),
-            array(12048, '', '', '', '', '', '客服电话', '', '', 'sp'),
-            array(12021, '', '', '', '', '', '新闻时间轴', '', '', 'sp'),
-            array(12019, '<a target="_blank" href="', '//www.xgo.com.cn/', '', '" rel="external nofollow noreferrer', '">', '汽车点评', '</a>', '', 'sp'),
-            array(11952, '', '', '', '', '', '百度口碑', '', '', 'sp'),
-            array(11940, '<a target="_blank" href="', '//open.baidu.com/data/ms/nav/somesources/tag/zgtq/', '', '" rel="external nofollow noreferrer', '">', '全国省份天气预报&nbsp;中国天气网', '</a>', '', 'sp'),
-            array(11939, '', '', '', '', '', '网页游戏开服表&nbsp;07073游戏网', '', '', 'sp'),
-            array(11933, '<a target="_blank" href="', '//www.edeng.cn/', '', '" rel="external nofollow noreferrer', '">', '中国易登网', '</a>', '', 'sp'),
-            array(11899, '', '', '', '', '', '[猜]&nbsp;维基百科|百度团购|百度杀毒', '', '', 'sp'),
-            array(11898, '', '', '', '', '', '知名网站', '', '', 'sp'),
-            array(11874, '<a target="_blank" href="', '//www.9niu.com/', '', '" rel="external nofollow noreferrer', '">', '九牛网', '</a>', '', 'sp'),
-            array(11852, '<a target="_blank" href="', '//sports.sina.com.cn/global/france2/', '', '" rel="external nofollow noreferrer', '">', '法甲&nbsp;新浪体育', '</a>', '', 'sp'),
-            array(11838, '', '', '', '', '', '[猜]&nbsp;客服电话表', '', '', 'sp'),
-            array(11830, '', '', '', '', '', '百度软件中心', '', '', 'sp'),
-            array(11828, '', '', '', '', '', '融360', '', '', 'sp'),
-            array(11814, '<a target="_blank" href="', '//xuexiao.liuxue86.com/', '', '" rel="external nofollow noreferrer', '">', '出国留学网', '</a>', '', 'sp'),
-            array(11810, '', '', '', '', '', '区号查询', '', '', 'sp'),
-            array(11803, '<a target="_blank" href="', '//www.114chn.com/', '', '" rel="external nofollow noreferrer', '">', '中国114黄页', '</a>', '原“爱漫画”', 'sp'),
-            array(11782, '<a target="_blank" href="', '//product.cnmo.com/', '', '" rel="external nofollow noreferrer', '">', '手机大全&nbsp;-&nbsp;手机中国&nbsp;[1－10]', '</a>', '百度收购', 'sp'),
-            array(11757, '', '', '', '', '', '爱漫画', '', '', 'sp'),
-            array(11708, '', '', '', '', '', '组图&nbsp;美食天下', '', '', 'sp'),
-            array(11692, '', '', '', '', '', '地铁&nbsp;百度地图', '', '', 'sp'),
-            array(11677, '', '', '', '', '', '网易163邮箱登录', '', '', 'sp'),
-            array(11675, '', '', '', '', '', '五笔编码汉语拼音查询&nbsp;ip138', '', '', 'sp'),
-            array(11640, '', '', '', '', '', '考试吧', '', '', 'sp'),
-            array(11620, '', '', '', '', '', '公益咨询电话', '', '', 'sp'),
-            array(11610, '', '', '', '', '', '成人高考报名时间_考试吧', '', '', 'sp'),
-            array(11582, '<a target="_blank" href="', '//sports.sina.com.cn/csl/', '', '" rel="external nofollow noreferrer', '">', '中超&nbsp;新浪体育', '</a>', '', 'sp'),
-            array(11547, '', '', '', '', '', '求医网', '', '', 'sp'),
-            array(11539, '', '', '', '', '', '足球联赛对战表&nbsp;新浪体育', '', '', 'sp'),
-            array(11520, '', '', '', '', '', '观后感、评论&nbsp;豆瓣电影', '', '', 'sp'),
-            array(11519, '', '', '', '', '', '影评、简介及基本信息&nbsp;豆瓣电影', '', '', 'sp'),
-            array(11513, '<a target="_blank" href="', '//data.10jqka.com.cn/financial/bdcbhk/', '', '" rel="external nofollow noreferrer', '">', '最新港股财报&nbsp;同花顺', '</a>', '', 'sp'),
-            array(11501, '<a target="_blank" href="', '//soft.hao123.com/', '', '" rel="external nofollow noreferrer', '">', 'hao123下载站', '</a>', '', 'sp'),
-            array(11490, '', '', '', '', '', '国际原油期货价格&nbsp;国际石油网', '', '', 'sp'),
-            array(11478, '', '', '', '', '', '间接确认的官网', '', '', 'sp'),
-            array(11471, '', '', '', '', '', '国家授时中心标准时间', '', '', 'sp'),
-            array(11463, '<a target="_blank" href="', '//open.baidu.com/data/ms/nav/somesources/tag/ctw/', '', '" rel="external nofollow noreferrer', '">', '畅途网&nbsp;百度数据开放平台合作伙伴', '</a>', '', 'sp'),
-            array(11462, '', '', '', '', '', '[猜]&nbsp;官方订票电话', '', '', 'sp'),
-            array(11443, '<a target="_blank" href="', '//info.sports.sina.com.cn/rank/', '', '" rel="external nofollow noreferrer', '">', '国际足联排名&nbsp;新浪体育', '</a>', '', 'sp'),
-            array(11442, '', '', '', '', '', '网球世界排名&nbsp;新浪体育', '', '', 'sp'),
-            array(11439, '', '', '', '', '', '乒乓球世界排名&nbsp;新浪体育', '', '', 'sp'),
-            array(11437, '', '', '', '', '', '羽毛球世界排名&nbsp;新浪体育', '', '', 'sp'),
-            array(11436, '', '', '', '', '', '233网校', '', '', 'sp'),
-            array(11421, '<a target="_blank" href="', '//jiaoyu.baidu.com/college/match?originQuery=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '高考分数线&nbsp;招生信息&nbsp;百度教育', '</a>', '', 'sp'),
-            array(11409, '', '', '', '', '', '公益咨询电话', '', '', 'sp'),
-            array(11386, '<a target="_blank" href="', '//tieba.baidu.com/f/search/res?ie=utf-8&qw=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度贴吧', '</a>', '', 'sp'),
-            array(11353, '<a target="_blank" href="', '//www.12306.cn/', '', '" rel="external nofollow noreferrer', '">', '铁路客户服务中心官网', '</a>', '', 'sp'),
-            array(11301, '', '', '', '', '', '人民网宏观经济数据库', '', '', 'sp'),
-            array(11299, '<a target="_blank" href="', '//product.cnmo.com/', '', '" rel="external nofollow noreferrer', '">', '手机中国', '</a>', '', 'sp'),
-            array(11263, '', '', '', '', '', '中国妇女发展基金会', '', '', 'sp'),
-            array(11260, '', '', '', '', '', '百度文库认证机构', '', '', 'sp'),
-            array(11252, '', '', '', '', '', '百度文库认证作者', '', '', 'sp'),
-            array(11239, '', '', '', '', '', '中国宋庆龄基金会', '', '', 'sp'),
-            array(11228, '', '', '', '', '', '综艺节目联系方式&nbsp;爱奇艺', '', '', 'sp'),
-            array(11205, '', '', '', '', '', '新浪星座查询', '', '', 'sp'),
-            array(11196, '<a target="_blank" href="', '//www.12306.cn/mormhweb/', '', '" rel="external nofollow noreferrer', '">', '12306&nbsp;官网', '</a>', '', 'sp'),
-            array(11175, '', '', '', '', '', '[猜]&nbsp;百度贴吧直播', '', '', 'sp'),
-            array(11170, '', '', '', '', '', '太平洋下载中心', '', '', 'sp'),
-            array(11129, '', '', '', '', '', '[猜]&nbsp;综艺节目联系方式', '', '', 'sp'),
-            array(11098, '', '', '', '', '', '<a href="tel:95105105" rel="external nofollow noreferrer">铁路订票电话 95105105</a>&nbsp;外地订票需加拨出发地区号', '', '', 'sp'),
-            array(10936, '', '', '', '', '', '英语四六级&nbsp;新浪教育', '', '', 'sp'),
-            array(10927, '', '', '', '', '', '电视节目表', '', '', 'sp'),
-            array(10904, '<a target="_blank" href="', '//cet.99sushe.com/', '', '" rel="external nofollow noreferrer', '">', '全国大学英语四六级考试(CET)官方成绩查询', '</a>', '', 'sp'),
-            array(10858, '', '', '', '', '', '高考分数线&nbsp;新浪高考', '', '', 'sp'),
-            array(10827, '', '', '', '', '', '高考各省市录取分数线汇总&nbsp;新浪高考', '', '', 'sp'),
-            array(10806, '', '', '', '', '', '手机中国', '', '百度收购', 'sp'),
-            array(10797, '<a target="_blank" href="', '//soft.hao123.com/', '', '" rel="external nofollow noreferrer', '">', 'hao123下载站', '</a>', '', 'sp'),
-            array(10794, '', '', '', '', '', '电影&nbsp;爱奇艺', '', '', 'sp'),
-            array(10792, '', '', '', '', '', '快速查询&nbsp;求医网', '', '', 'sp'),
-            array(10789, '', '', '', '', '', '宜家|百度云图|世界知识产权组织|英雄联盟', '', '', 'sp'),
-            array(10788, '', '', '', '', '', '亲子百科&nbsp;太平洋亲子网', '', '', 'sp'),
-            array(10776, '', '', '', '', '', 'Mtime时光网', '', '', 'sp'),
-            array(10775, '', '', '', '', '', '影评、简介及放映时间查询&nbsp;Mtime时光网', '', '', 'sp'),
-            array(10764, '', '', '', '', '', '高考查分&nbsp;新浪高考', '', '', 'sp'),
-            array(10744, '', '', '', '', '', '考研分数线查询&nbsp;新浪教育', '', '', 'sp'),
-            array(10723, '', '', '', '', '', '考研真题试卷&nbsp;新浪教育', '', '', 'sp'),
-            array(10693, '', '', '', '', '', '世界时间&nbsp;百度开放平台', '', '', 'sp'),
-            array(10678, '', '', '', '', '', '基金吧&nbsp;天天基金网', '', '', 'sp'),
-            array(10652, '<a target="_blank" href="', '//baike.baidu.com/search?word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '实例&nbsp;聚合&nbsp;百度百科', '</a>', '', 'sp'),
-            array(10646, '', '', '', '', '', '[猜]&nbsp;客船沉没', '', '', 'sp'),
-            array(10639, '', '', '', '', '', '[猜]&nbsp;中国移动客服电话', '', '', 'sp'),
-            array(10610, '', '', '', '', '', '百度招聘', '', '', 'sp'),
-            array(10594, '', '', '', '', '', '飞翔游戏', '', '', 'sp'),
-            array(10577, '', '', '', '', '', '网页游戏&nbsp;百度游戏', '', '', 'sp'),
-            array(10530, '', '', '', '', '', '药品通&nbsp;39健康网', '', '', 'sp'),
-            array(10501, '', '', '', '', '', '[猜]&nbsp;直播热点话题&nbsp;新浪娱乐', '', '', 'sp'),
-            array(10500, '', '', '', '', '', '客服是多少&nbsp;百度知道', '', '', 'sp'),
-            array(10422, '', '', '', '', '', '[猜]时间轴新闻', '', '', 'sp'),
-            array(10396, '', '', '', '', '', '[猜]&nbsp;搜狐健康', '', '', 'sp'),
-            array(10393, '', '', '', '', '', '[猜]&nbsp;基于&nbsp;IP&nbsp;地理位置回答', '', '', 'sp'),
-            array(10385, '', '', '', '', '', '有道翻译', '', '', 'sp'),
-            array(10382, '', '', '', '', '', '尾号限行', '', '', 'sp'),
-            array(10342, '<a target="_blank" href="', '//www.jushuo.com/', '', '" rel="external nofollow noreferrer', '">', '据说娱乐', '</a>', '', 'sp'),
-            array(10319, '', '', '', '', '', '热门视频&nbsp;太平洋游戏网', '', '', 'sp'),
-            array(10317, '', '', '', '', '', '网易彩票', '', '', 'sp'),
-            array(10315, '', '', '', '', '', '开奖详情查询&nbsp;网易彩票', '', '', 'sp'),
-            array(10306, '', '', '', '', '', '资讯&nbsp;网易彩票', '', '', 'sp'),
-            array(10298, '<a target="_blank" href="', '//www.gov.cn/zwgk/2013-12/11/content_2546204.htm', '', '" rel="external nofollow noreferrer', '">', '2014年全年公休假放假安排&nbsp;中国政府网', '</a>', '放假通知', 'sp'),
-            array(10268, '', '', '', '', '', '百度经验【组图】', '', '', 'sp'),
-            array(10254, '', '', '', '', '', '全国猎聘网', '', '', 'sp'),
-            array(10249, '<a target="_blank" href="', '//drugs.dxy.cn/search/drug.htm?keyword=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '药品搜索&nbsp;丁香园', '</a>', '', 'sp'),
-            array(10244, '', '', '', '', '', '第&nbsp;2&nbsp;种百度经验', '', '', 'sp'),
-            array(10240, '', '', '', '', '', '[猜]&nbsp;开奖&nbsp;新浪彩票', '', '', 'sp'),
-            array(10239, '', '', '', '', '', '乐游网', '', '', 'sp'),
-            array(10219, '<a target="_blank" href="', '//open.baidu.com/coop/kefu.html', '', '" rel="external nofollow noreferrer', '">', '第&nbsp;2&nbsp;种客服电话&nbsp;[3－4]', '</a>', '', 'sp'),
-            array(10213, '', '', '', '', '', '易登网', '', '', 'sp'),
-            array(10210, '<a target="_blank" href="', '//www.showji.com/', '', '" rel="external nofollow noreferrer', '">', '手机号码归属地查询', '</a>', '', 'sp'),
-            array(10201, '', '', '', '', '', '货币基金&nbsp;天天基金网', '', '', 'sp'),
-            array(10199, '', '', '', '', '', '[猜]&nbsp;医院&nbsp;-&nbsp;悦美整形网', '', '', 'sp'),
-            array(10197, '', '', '', '', '', '[猜]&nbsp;转诊预约&nbsp;-&nbsp;好大夫在线', '', '', 'sp'),
-            array(10183, '', '', '', '', '', '时刻表&nbsp;票价&nbsp;同程网', '', '', 'sp'),
-            array(10178, '', '', '', '', '', '展现多方观点&nbsp;百度知道', '', '', 'sp'),
-            array(10175, '', '', '', '', '', '找好医院&nbsp;家庭医生在线', '', '', 'sp'),
-            array(10162, '', '', '', '', '', '装修效果图大全&nbsp;齐家网', '', '', 'sp'),
-            array(10161, '', '', '', '', '', '[猜]疾病&nbsp;寻医问药专家网', '', '', 'sp'),
-            array(10139, '', '', '', '', '', '人民币利率&nbsp;和讯网', '', '', 'sp'),
-            array(10118, '', '', '', '', '', '[猜]&nbsp;开奖&nbsp;hao123彩票', '', '', 'sp'),
-            array(10094, '', '', '', '', '', '[猜]&nbsp;开奖结果&nbsp;体坛网', '', '', 'sp'),
-            array(10077, '', '', '', '', '', '公务员考试真题试卷&nbsp;中公教育', '', '', 'sp'),
-            array(10041, '<a target="_blank" href="', '//www.autohome.com.cn/', '', '" rel="external nofollow noreferrer', '">', '汽车之家', '</a>', '', 'sp'),
-            array(10023, '<a target="_blank" href="', '//sports.sina.com.cn/g/premierleague/', '', '" rel="external nofollow noreferrer', '">', '英超&nbsp;新浪体育', '</a>', '', 'sp'),
-            array(10015, '', '', '', '', '', '[猜]&nbsp;时间轴新闻&nbsp;腾讯网|新浪网', '', '', 'sp'),
-            array(8047, '<a target="_blank" href="', 'http://zhaopin.baidu.com/search?ie=utf8&amp;query=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度招聘', '</a>', '', 'sp'),
-            array(13355, '', '', '', '', '', '短信&nbsp;爱祝福', '', '', 'sp'),
-            array(8041, '<a target="_blank" href="', '//sou.kuwo.cn/ws/NSearch?key=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;酷我音乐', '</a>', '', 'sp'),
-            array(8003, '<a target="_blank" href="', '//quote.eastmoney.com/center/hkstock.html', '', '" rel="external nofollow noreferrer', '">', '港股实时行情&nbsp;东方财富网', '</a>', '', 'sp'),
-            array(7136, '', '', '', '', '', '就医助手&nbsp;39健康网', '', '', 'sp'),
-            array(7127, '<a target="_blank" href="', '//opendata.baidu.com/yaopin/s?ie=utf-8&amp;oe=utf-8&amp;wd=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度药品', '</a>', '', 'sp'),
-            array(7123, '', '', '', '', '', '[猜]&nbsp;好大夫在线 推荐医院', '', '', 'sp'),
-            array(7092, '', '', '', '', '', '航班信息', '', '', 'sp'),
-            array(7086, '', '', '', '', '', '4399小游戏', '', '', 'sp'),
-            array(7084, '', '', '', '', '', '点评&nbsp;中关村在线', '', '', 'sp'),
-            array(7079, '<a target="_blank" href="', '//detail.zol.com.cn/', '', '" rel="external nofollow noreferrer', '">', '数码系列&nbsp;-&nbsp;中关村在线', '</a>', '', 'sp'),
-            array(7076, '', '', '', '', '', '详情页&nbsp;-&nbsp;中关村在线', '', '', 'sp'),
-            array(7074, '', '', '', '', '', '菜谱优质结果', '', '', 'sp'),
-            array(7072, '', '', '', '', '', '[猜]&nbsp;洛克王国&nbsp;4399', '', '', 'sp'),
-            array(7032, '', '', '', '', '', '车次查询&nbsp;去哪儿', '', '', 'sp'),
-            array(7027, '', '', '', '', '', '物品&nbsp;178游戏网', '', '', 'sp'),
-            array(6899, '<a target="_blank" href="', '//shixin.court.gov.cn/', '', '" rel="external nofollow noreferrer', '">', '全国失信被执行人名单', '</a>', '', 'sp'),
-            array(6883, '', '', '', '', '', '百度应用', '', '', 'sp'),
-            array(6882, '', '', '', '', '', '百度应用', '', '', 'sp'),
-            array(6878, '<a target="_blank" href="', '//www.nuomi.com/film/', '', '" rel="external nofollow noreferrer', '">', '百度糯米电影购票', '</a>', '', 'sp'),
-            array(6869, '<a target="_blank" href="', '//so.iqiyi.com/so/q_', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;影视新生态', '</a>', '', 'sp'),
-            array(6865, '<a target="_blank" href="', '//www.autohome.com.cn/', '', '" rel="external nofollow noreferrer', '">', '汽车之家', '</a>', '', 'sp'),
-            array(6845, '', '', '', '', '', '小说', '', '', 'sp'),
-            array(6841, '<a target="_blank" href="', '//www.228.com.cn/', '', '" rel="external nofollow noreferrer', '">', '永乐票务', '</a>', '', 'sp'),
-            array(6835, '<a target="_blank" href="', '//rj.baidu.com/search/index/?kw=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度软件中心', '</a>', '', 'sp'),
-            array(6833, '', '', '', '', '', '百度百科&nbsp;多义词', '', '', 'sp'),
-            array(6832, '', '', '', '', '', '旅游景点大全', '', '', 'sp'),
-            array(6827, '<a target="_blank" href="', '//www.baidu.com/#wd=', $query.' 失信被执行人', '" rel="external nofollow noreferrer', '">', $query.'由于失信已被列入国家失信被执行人名单', '</a>', '', 'sp'),
-            array(6826, '<a target="_blank" href="', '//shixin.court.gov.cn/', '', '" rel="external nofollow noreferrer', '">', '该企业已被列入全国失信被执行人名单中！', '</a>', '', 'sp'),
-            array(6819, '<a target="_blank" href="', '//shixin.court.gov.cn/', '', '" rel="external nofollow noreferrer', '">', '全国法院失信被执行人名单', '</a>', '', 'sp'),
-            array(6817, '', '', '', '', '', '百度视频', '', '', 'sp'),
-            array(6811, '', '', '', '', '', '百度音乐', '', '', 'sp'),
-            array(6804, '', '', '', '', '', '最新报价&nbsp;配置&nbsp;图片&nbsp;口碑&nbsp;油耗&nbsp;易车网', '', '', 'sp'),
-            array(6801, '', '', '', '', '', '车型&nbsp;-&nbsp;易车网', '', '', 'sp'),
-            array(6735, '<a target="_blank" href="', '//zhanzhang.baidu.com/wiki/256', '', '" rel="external nofollow noreferrer', '">', 'site特型', '</a>', '', 'sp'),
-            array(6727, '', '', '', '', '', '[猜]&nbsp;左侧动漫作品', '', '', 'sp'),
-            array(6714, '', '', '', '', '', '最佳答案', '', '', 'sp'),
-            array(6705, '', '', '', '', '', '电视剧榜单', '', '', 'sp'),
-            array(6700, '', '', '', '', '', '电影&nbsp;-&nbsp;百度团购', '', '', 'sp'),
-            array(6691, '', '', '', '', '', '歌曲&nbsp;-&nbsp;百度音乐', '', '', 'sp'),
-            array(6690, '', '', '', '', '', '电影&nbsp;-&nbsp;百度视频', '', '', 'sp'),
-            array(6680, '<a target="_blank" href="', '//gouwu.baidu.com/s?wd=', $query, '" rel="external nofollow noreferrer', '">', '百度购物搜索', '</a>', '', 'ec'),
-            array(6677, '', '', '', '', '', '网页应用&nbsp;百度阿拉丁', '', '', 'sp'),
-            array(6670, '', '', '', '', '', '百度团购', '', '', 'sp'),
-            array(6666, '', '', '', '', '', '百度招聘搜索', '', '', 'sp'),
-            array(6665, '', '', '', '', '', '百度招聘会搜索', '', '', 'sp'),
-            array(6653, '', '', '', '', '', '[猜]&nbsp;百度知心最佳答案', '', '', 'sp'),
-            array(6112, '', '', '', '', '', '[猜]&nbsp;电视剧&nbsp;百度视频', '', '', 'sp'),
-            array(6018, '', '', '', '', '', '日历&nbsp;[1－3]', '', '', 'sp'),
-            array(6017, '<a target="_blank" href="', '//forex.hexun.com/rmbhl/#zkRate', '', '" rel="external nofollow noreferrer', '">', '最新汇率&nbsp;[1－10]', '</a>', '', 'sp'),
-            array(6014, '<a target="_blank" href="', '//www.baidu.com/aladdin/js/iknow/iknowask.html', '', '" rel="external nofollow noreferrer', '">', '提问到百度知道', '</a>', '', 'sp'),
-            array(6009, '', '', '', '', '', '万年历', '', '', 'sp'),
-            array(6007, '', '', '', '', '', '计算器', '', '', 'sp'),
-            array(6006, '<a target="_blank" href="', '//www.ip138.com/ips138.asp?ip=', $query, '" rel="external nofollow noreferrer', '">', 'IP地址查询', '</a>', '', 'sp'),
-            array(6004, '<a target="_blank" href="', '//www.showji.com/search.htm?m=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '手机归属地', '</a>', '', 'sp'),
-            array(4027, '<a target="_blank" href="', '//train.qunar.com/', '', '" rel="external nofollow noreferrer', '">', '查询&nbsp;火车票&nbsp;列车时刻表&nbsp;去哪儿网', '</a>', '', 'sp'),
-            array(4004, '', '', '', '', '', '快递查询&nbsp;快递100', '', '', 'ec'),
-            array(4002, '', '', '', '', '', '单位换算&nbsp;百度阿拉丁', '', '', 'ec'),
-            array(4001, '', '', '', '', '', '快递查询&nbsp;快递100', '', '', 'ec'),
-            array(1599, '', '', '', '', '', '普通结果', '', '模版名2数据策略', 'as'),
-            array(1581, '', '', '', '', '', '更多同站相关结果&gt;&gt;', '', '201412添加', 'as'),
-            // 2015-09-25 Twitter - Wikipedia, the free encyclopedia // https://en.wikipedia.org/wiki/Twitter
-            array(1553, '', '', '', '', '', '维基百科', '', '', 'as'),
-            array(1552, '', '', '', '', '', '未知', '', '', 'as'),
-            // 2015-06-23 如何在中国办理留学生学历认证 RED SCARF // www.honglingjin.co.uk/3023.html
-            array(1551, '', '', '', '', '', '列表－模版', '', '201411添加&nbsp;QQ&nbsp;751476', 'as'),
-            array(1550, '', '', '', '', '', '未知', '', '', 'as'),
-            array(1549, '', '', '', '', '', '未知', '', '', 'as'),
-            array(1548, '', '', '', '', '', '评分－结构化', '', '201408添加', 'as'),
-            array(1547, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', $query.'&nbsp;相关的百度百科词条', '</a>', '[201407添加]', 'ec'),
-            array(1546, '', '', '', '', '', '未知', '', '', 'as'),
-            array(1545, '', '', '', '', '', '非正规相册', '', '201412添加&nbsp;QQ&nbsp;1724102740', 'as'),
-            array(1544, '', '', '', '', '', '未知', '', '', 'as'),
-            array(1543, '', '', '', '', '', '面包屑－结构化', '', '', 'as'),
-            array(1542, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '百度学术', '</a>', '', 'ec'),
-            array(1541, '', '', '', '', '', '未知', '', '', 'as'),
-            array(1540, '', '', '', '', '', '未知', '', '', 'as'),
-            // 2015-01-08 搜外 搜外网 //www.seowhy.com/
-            array(1539, '', '', '', '', '', '[官网]&nbsp;0－6&nbsp;个子链', '', '201405添加', 'as'),
-            array(1538, '', '', '', '', '', '摘要－结构化', '', '', 'as'),
-            array(1537, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', $query.'&nbsp;相关百度经验&nbsp;组图', '</a>', '', 'ec'),
-            array(1536, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '一般答案&nbsp;百度知道', '</a>', '', 'ec'),
-            array(1535, '', '', '', '', '', '未知，模版采用&nbsp;se_com_image_s', '', '模版', 'as'),
-            array(1534, '', '', '', '', '', '未知，模版采用&nbsp;se_com_default', '', '模版', 'as'),
-            array(1533, '', '', '', '', '', '论坛帖子', '', '', 'as'),
-            array(1532, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '最佳答案&nbsp;百度知道', '</a>', '', 'ec'),
-            // 在原用户查询词的基础上，通过一定的方法和策略把与原查询词相关的词、词组添加到原查询中，组成新的、更能准确表达用户查询意图的查询词序列，然后用新查询对文档重新检索，从而提高信息检索中的查全率和查准率。 李晓明; 闫宏飞; 王继民. 附录 术语//搜索引擎——原理、技术与系统(第二版). 2013年5月第9次印刷. 北京: 科学. 2012.5: 第322–323页 ISBN 7-03-034258-4 (简体中文)
-            array(1531, '', '', '', '', '', '查询扩展', '', '', 'as'),
-            array(1530, '', '', '', '', '', '百度贴吧', '', '', 'as'),
-            // 百度知道|搜狗问问(搜搜问问)|爱问知识人|39问医生|寻医问药网有问必答
-            array(1529, '', '', '', '', '', '权威问答网站', '', '', 'as'),
-            array(1528, '', '', '', '', '', '百度知道', '', '', 'as'),
-            array(1527, '', '', '', '', '', '百度文库标签;', '', '', 'ec'),
-            array(1526, '', '', '', '', '', '百度文库', '', '', 'as'),
-            array(1525, '', '', '', '', '', '百度文库', '', '', 'as'),
-            array(1524, '', '', '', '', '', '缩略图结果', '', '但非每个查询词展现图片', 'as'),
-            array(1523, '', '', '', '', '', 'robots.txt&nbsp;存在限制', '', '', 'as'),
-            array(1522, '', '', '', '', '', '百度经验带相册', '', '', 'as'),
-            array(1521, '<a target="_blank" href="', '//baike.baidu.com/search?word=', $query, '" rel="external nofollow noreferrer', '">', '图片&nbsp;百度百科(可能与查询词内容相关度较高)', '</a>', '', 'ec'),
-            // 2015-01-08 无序的新世界 维普网 //www.cqvip.com/qk/95355X/200106/15044983.html
-            array(1520, '', '', '', '', '', '期刊文献', '', '', 'as'),
-            array(1519, '', '', '', '', '', '维基百科&nbsp;国际化', '', '', 'as'),
-            array(1518, '', '', '', '', '', '软件下载&nbsp;国际化', '', '', 'as'),
-            array(1517, '', '', '', '', '', '[图文]', '', '但并非每个查询词显示&nbsp;[图文]', 'as'),
-            array(1516, '', '', '', '', '', '宗教&nbsp;国际化', '', '', 'as'),
-            array(1515, '', '', '', '', '', '电影&nbsp;国际化', '', '', 'as'),
-            array(1514, '', '', '', '', '', '在线文档－结构化', '', '', 'as'),
-            array(1513, '', '', '', '', '', '软件下载－结构化', '', '', 'as'),
-            array(1512, '', '', '', '', '', '单视频&nbsp;国际化', '', '', 'as'),
-            array(1511, '', '', '', '', '', '[原创]', '', '星火计划', 'as'),
-            array(1510, '', '', '', '', '', '子链&nbsp;国际化', '', '', 'as'),
-            array(1509, '', '', '', '', '', '[官网]', '', '通常在 1－2 位', 'as'),
-            array(1508, '', '', '', '', '', '单视频&nbsp;站点', '', '', 'as'),
-            array(1507, '', '', '', '', '', '微博', '', '', 'as'),
-            array(1506, '', '', '', '', '', '单视频', '', '', 'as'),
-            array(1505, '', '', '', '', '', '百度知道&nbsp;高品质(知道达人|权威专家|官方机构)', '', '', 'as'),
-            array(1504, '', '', '', '', '', '自动问答', '', '', 'as'),
-            array(1503, '', '', '', '', '', '图片&nbsp;单视频', '', '', 'as'),
-            array(1502, '', '', '', '', '', '百度百科', '', '', 'as'),
-            array(1501, '', '', '', '', '', '评分－结构化', '', '', 'as'),
-            array(1500, '', '', '', '', '', '无', '', '', 'as'),
-            array(101, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '[猜]&nbsp;沙盒保护', '</a>', '', 'ec'),
-            array(91, '<a target="_blank" href="', '//baike.baidu.com/search?word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度百科&nbsp;[1－10]', '</a>', '多义词', 'sp'),
-            array(85, '<a target="_blank" href="', '//fanyi.baidu.com/#en/zh/', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度翻译|百度词典', '</a>', '', 'sp'),
-            array(81, '<a target="_blank" href="', '//baike.baidu.com/search?word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度百科_多义词', '</a>', '', 'sp'),
-            array(80, '<a target="_blank" href="', '//baike.baidu.com/search?word=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', '百度百科专有名词', '</a>', '', 'sp'),
-            array(43, '<a target="_blank" href="', '//zhidao.baidu.com/new?ie=utf8&word=', $query, '" rel="external nofollow noreferrer', '">', '去百度知道提问', '</a>', '', 'ec'),
-            array(37, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', $query.'&nbsp;最新图像', '</a>', '', 'ec'),
-            array(34, '<a target="_blank" href="', '//www.baidu.com/s?rtt=2&tn=baiduwb&cl=2&wd=', $query, '" rel="external nofollow noreferrer', '">', '最新微博结果', '</a>', '', 'ec'),
-            array(23, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', '百度翻译', '</a>', '', 'ec'),
-            array(19, '<a target="_blank" href="', '//www.baidu.com/s?tn=baidurt&amp;rtt=1&amp;bsst=1&amp;wd=', $query, '" rel="external nofollow noreferrer', '">', $query.'&nbsp;最新相关消息', '</a>', '', 'ec'),
-            array(10, '<a target="_blank" href="', '//tieba.baidu.com/f?kw=', preg_replace('/(\s+)/', '+', $query), '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度贴吧&nbsp;[1－10]', '</a>', '', 'sp'),
-            array(5, '<a target="_blank" href="', '//music.baidu.com/search?key=', $query, '" rel="external nofollow noreferrer', '">', '百度音乐', '</a>', '', 'ec'),
-            array(4, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度图片', '</a>', '', 'ec'),
-            array(1, '<a target="_blank" href="', '', '', '" rel="external nofollow noreferrer', '">', $query.'&nbsp;百度视频', '</a>', '', 'ec')
+array(29308, $queryn.'&nbsp;综合采购&nbsp;百度商贸', '', '', 'ec'),
+array(29279, $queryn.'&nbsp;精选问答合集&nbsp;百度健康', '', '', 'ec'),
+array(29276, $queryn.'&nbsp;病症&nbsp;百度健康', '', '', 'ec'),
+array(29266, '向医生提问&nbsp;'.$queryn.'&nbsp;百度知道', '', '', 'ec'),
+array(29261, '问答&nbsp;百度健康', '', '', 'ec'),
+array(29257, '美容整形&nbsp;百度健康', '', '', 'ec'),
+array(29250, '十二星座健康运势&nbsp;百度健康', '', '', 'ec'),
+array(29256, '饮食保健知识&nbsp;百度健康', '', '', 'ec'),
+array(29253, '问答&nbsp;百度健康', '', '', 'ec'),
+array(29228, $queryn.'&nbsp;百度品牌特卖', '', '', 'ec'),
+array(29205, '高等教育自学考试&nbsp;百度教育', '', '', 'ec'),
+array(29204, '考试&nbsp;百度教育', '', '', 'ec'),
+array(29200, $queryn.'&nbsp;考试&nbsp;百度教育', '', '', 'ec'),
+array(29181, '产品大全&nbsp;百度财富', '', '', 'ec'),
+array(29166, '页游&nbsp;开始游戏&nbsp;百度爱玩', '', '', 'ec'),
+array(29163, '新专区&nbsp;百度爱玩', '', '', 'ec'),
+array(29153, '手游&nbsp;百度爱玩', '', '', 'ec'),
+array(29152, '游戏专区&nbsp;17173', '', '', 'ec'),
+array(29140, '二手车&nbsp;百度汽车', '', '', 'ec'),
+array(29134, '单机游戏&nbsp;百度爱玩', '', '', 'ec'),
+array(29129, '开始游戏&nbsp;百度爱玩', '', '', 'ec'),
+array(29127, '百度爱玩', '', '', 'ec'),
+array(29120, '热门网页游戏平台&nbsp;百度爱玩', '', '', 'ec'),
+array(29118, '百度品牌特卖', '', '', 'ec'),
+array(29116, '百度品牌特卖', '', '', 'ec'),
+array(29115, '百度品牌特卖', '', '', 'ec'),
+array(29114, '百度品牌特卖', '', '', 'ec'),
+array(29099, '百度教育考试', '', '', 'ec'),
+array(29096, '留学图片资讯&nbsp;百度教育', '', '', 'ec'),
+array(29094, '找课程&nbsp;百度教育', '', '', 'ec'),
+array(29093, '机构&nbsp;百度教育', '', '', 'ec'),
+array(29090, '课程&nbsp;百度教育', '', '', 'ec'),
+array(29089, $queryn.'&nbsp;百度健康', '', '', 'ec'),
+array(29088, $queryn.'&nbsp;混合&nbsp;百度健康', '', '', 'ec'),
+array(29087, $queryn.'&nbsp;知识&nbsp;图片&nbsp;百度健康', '', '', 'ec'),
+array(29083, '药品频道&nbsp;寻医问药网&nbsp;百度健康', '', '', 'ec'),
+array(29081, '手术&nbsp;百度健康', '', '', 'ec'),
+array(29080, $queryn.'&nbsp;知识图片&nbsp;百度健康', '', '', 'ec'),
+array(29070, '网页游戏&nbsp;百度爱玩', '', '', 'ec'),
+array(29051, '百度微购', '', '', 'ec'),
+array(29010, $queryn.'&nbsp;家装&nbsp;百度微购', '', '', 'ec'),
+array(28299, '知识图谱', '', '', 'ec'),
+array(28232, $queryn.'&nbsp;百度词典', '', '', 'sp'),
+array(28218, '知识图谱&nbsp;百度旅游', '', '', 'ec'),
+array(28217, '详细&nbsp;知识图谱', '', '', 'ec'),
+array(28213, $queryn.'&nbsp;知识图谱&nbsp;百度百科', '', '', 'ec'),
+array(28093, '去哪儿网门票频道', '', '', 'ec'),
+array(28092, '去哪儿网门票频道', '', '', 'ec'),
+array(28072, '去哪儿网酒店预定查询频道', '', '', 'ec'),
+array(28057, '去哪儿度假频道', '', '', 'ec'),
+array(28056, '[猜]&nbsp;去哪儿度假频道', '', '', 'ec'),
+array(28054, '机票查询&nbsp;去哪儿', '', '', 'ec'),
+array(28050, $queryn.'&nbsp;疾病&nbsp;百度知道', '', '', 'ec'),
+array(28043, $queryn.'&nbsp;海外&nbsp;百度旅游', '', '', 'ec'),
+array(28042, '景点介绍&nbsp;第&nbsp;2&nbsp;版&nbsp;百度旅游', '', '', 'ec'),
+array(28041, '地图&nbsp;第&nbsp;2&nbsp;版&nbsp;百度旅游', '', '', 'ec'),
+array(28040, '景点介绍&nbsp;第&nbsp;2&nbsp;版&nbsp;百度旅游', '', '', 'ec'),
+array(28027, $queryn.'&nbsp;团购&nbsp;百度糯米', '', '', 'ec'),
+array(28026, '团购&nbsp;百度糯米', '', '', 'ec'),
+array(28025, '团购&nbsp;百度糯米', '', '', 'ec'),
+array(28022, $queryn.'&nbsp;百度地图', '', '', 'ec'),
+array(28010, '百度地图&nbsp;城市', '', '', 'ec'),
+array(28002, '百度地图', '', '', 'ec'),
+array(27994, '【企业问答】', '', '', 'ec'),
+array(27024, '经销商&nbsp;汽车之家', '', '', 'ec'),
+array(27019, $queryn.'&nbsp;汽车之家', '', '', 'ec'),
+array(27018, $queryn.'&nbsp;车系&nbsp;汽车之家', '', '', 'ec'),
+array(27007, $queryn.'&nbsp;电视之家', '', '', 'ec'),
+array(27003, $queryn.'&nbsp;旅游攻略&nbsp;蚂蜂窝', '', '', 'ec'),
+array(27002, '携程攻略', '', '', 'ec'),
+array(21093, '大家都在搜&nbsp;权威性答案', '', '', 'sp'),
+array(21018, '电影&nbsp;百度视频', '', '', 'sp'),
+array(20970, '豆瓣影评', '', '', 'sp'),
+array(20840, '报价|图片|参数配置|口碑-汽车之家', '', '', 'sp'),
+array(20776, '[猜]&nbsp;百度百科', '', '', 'sp'),
+array(20679, '余额宝相关问题&nbsp;支付宝个人帮助中心', '', '', 'sp'),
+array(20631, '教育考试&nbsp;百度知心文库', '', '', 'sp'),
+array(20548, '系列&nbsp;百度视频', '', '', 'sp'),
+array(20546, '分集剧情&nbsp;电视猫', '', '', 'sp'),
+array(20535, '火车票购票日历', '', '', 'sp'),
+array(20528, '电视剧情介绍&nbsp;电视猫', '', '', 'sp'),
+array(20527, '百度左侧知心同系列电影&nbsp;百度视频', '', '', 'sp'),
+array(20458, '官方微博(原知心左侧卡片框)', '', '', 'sp'),
+array(20457, '电视剧&nbsp;百度视频', '', '', 'sp'),
+array(20451, '分集剧情&nbsp;电视猫', '', '', 'sp'),
+array(20426, '新浪官微&nbsp;[1－10]', '', '', 'sp'),
+array(20423, '百度知道&nbsp;医疗健康', '', '', 'sp'),
+array(20422, '百度知道&nbsp;医疗健康', '', '', 'sp'),
+array(20408, '百度百科(由国家卫生计生委临床医生科普项目/百科名医网权威认证)', '', '', 'sp'),
+array(20407, '百度百科(由国家卫生计生委临床医生科普平台/百科名医网权威认证)', '', '', 'sp'),
+array(20406, '百度视频', '', '', 'sp'),
+array(20387, '易车网', '', '', 'sp'),
+array(20376, '百度百科&nbsp;汽车之家阿拉丁', '', '', 'sp'),
+array(20375, '官网&nbsp;汽车之家阿拉丁', '', '', 'sp'),
+array(20324, '百度百科(原知心左侧卡片框)', '', '', 'sp'),
+array(20323, '百度图片(原知心左侧卡片框)', '', '', 'sp'),
+array(20322, '百度音乐(原知心左侧卡片框)', '', '', 'sp'),
+array(20321, '百度视频(原知心左侧卡片框)', '', '', 'sp'),
+array(20319, '百度贴吧(原知心左侧卡片框)', '', '', 'sp'),
+array(20315, '付费观看&nbsp;百度视频', '', '', 'sp'),
+array(20294, '[猜]&nbsp;热映电影&nbsp;百度视频&nbsp;-&nbsp;百度左侧知心结果', '', '', 'sp'),
+array(20289, '知乎', '', '', 'sp'),
+array(20281, '挂号网&nbsp;[1－10]', '', '', 'sp'),
+array(20172, '知心旅游介绍&nbsp;百度旅游', '', '', 'sp'),
+array(20135, 'topik&nbsp;网上报名', '', '', 'sp'),
+array(20124, '百度左侧知心视频电视剧', '', '', 'sp'),
+array(20080, '北京市预约挂号统一平台', '', '', 'sp'),
+array(20071, '医院科室&nbsp;好大夫在线', '', '', 'sp'),
+array(20070, '挂号网', '', '', 'sp'),
+array(20006, '医院官网', '', '', 'sp'),
+array(20005, '医院科室&nbsp;好大夫在线', '', '', 'sp'),
+array(19994, '18183手机库', '', '', 'sp'),
+array(19979, '政府官网', '', '', 'sp'),
+array(19912, '新氧美容整形', '', '', 'sp'),
+array(19817, '系统之家', '', '', 'sp'),
+array(19792, '伊秀美容', '', '', 'sp'),
+array(19788, '伊秀娱乐网', '', '', 'sp'),
+array(19787, '伊秀生活网', '', '', 'sp'),
+array(19786, '亲子&nbsp;伊秀生活网', '', '', 'sp'),
+array(19761, '逗游', '', '', 'sp'),
+array(19746, '育儿网', '', '', 'sp'),
+array(19708, '途牛旅游论坛', '', '', 'sp'),
+array(19703, '爱卡汽车', '', '', 'sp'),
+array(19692, '找法网', '', '', 'sp'),
+array(19687, 'ZOL产品报价&nbsp;中关村在线', '', '', 'sp'),
+array(19674, '乐途旅游', '', '', 'sp'),
+array(19666, '中大网校', '', '', 'sp'),
+array(19568, '系统屋', '', '', 'sp'),
+array(19502, '蚂蜂窝', '', '', 'sp'),
+array(19385, '授权经销商&nbsp;汽车之家', '', '', 'ec'),
+array(19303, '543小游戏', '', '', 'sp'),
+array(19255, '汽车之家', '', '', 'sp'),
+array(19165, '公务员考试网', '', '', 'sp'),
+array(19093, '游戏攻略&nbsp;18183手机游戏网', '', '', 'sp'),
+array(19081, '游戏攻略&nbsp;18183手机游戏网', '', '', 'sp'),
+array(18948, '风行网', '', '', 'sp'),
+array(18947, '风行网', '', '', 'sp'),
+array(18964, '游戏专题&nbsp;游侠网', '', '', 'sp'),
+array(18849, '易车网', '', '', 'sp'),
+array(18805, '途牛', '', '', 'sp'),
+array(18730, '百度阅读', '', '', 'sp'),
+array(18666, '汽车点评', '', '', 'sp'),
+array(18577, '【携程攻略】', '', '', 'sp'),
+array(18521, '慧聪网&nbsp;导购', '', '', 'sp'),
+array(18478, '11773手游网', '', '', 'sp'),
+array(18404, '途牛', '', '', 'sp'),
+array(18371, 'hao123下载站', '', '', 'sp'),
+array(18532, '百山探索', '', '', 'sp'),
+array(18380, '热门攻略&nbsp;笨手机', '', '', 'sp'),
+array(18308, '寻医问药网', '', '', 'sp'),
+array(18274, '游戏系列专题&nbsp;游侠网', '', '', 'sp'),
+array(18258, '91资讯', '', '', 'sp'),
+array(18198, '下载之家', '', '', 'sp'),
+array(18158, '景点门票&nbsp;驴妈妈旅游网', '', '', 'sp'),
+array(18143, '途牛旅游', '', '', 'sp'),
+array(19817, '系统之家', '', '', 'sp'),
+array(17989, 'XP之家', '', '', 'sp'),
+array(17868, '太平洋亲子网', '', '', 'sp'),
+array(17719, '天极时尚', '', '', 'sp'),
+array(17706, '天极时尚', '', '', 'sp'),
+array(17613, '公务员考试报考流程&nbsp;百度教育', '', '', 'sp'),
+array(17590, '华军软件园', '', '', 'sp'),
+array(17518, '全国长途汽车时刻表及汽车票价查询&nbsp;携程汽车', '', '', 'sp'),
+array(17502, '购买推荐&nbsp;慧聪网', '', '', 'sp'),
+array(17340, '法律快车网', '', '', 'sp'),
+array(17313, '症状库&nbsp;求医网', '', '', 'sp'),
+array(17306, '太平洋汽车网', '', '', 'sp'),
+array(17274, '游戏狗', '', '', 'sp'),
+array(17154, '齐家商城', '', '百度收购', 'sp'),
+array(17153, '西西软件园', '', '', 'sp'),
+array(17030, '古诗文网', '', '', 'sp'),
+array(16982, '中国教育在线', '', '', 'sp'),
+array(16932, '美食/营养&nbsp;百度经验【组图】', '', '', 'sp'),
+array(16890, '聚合&nbsp;百度百科', '', '', 'sp'),
+array(16852, '[猜]&nbsp;腾讯科技', '', '', 'sp'),
+array(16847, '[猜]&nbsp;热点话题', '', '', 'sp'),
+array(16821, '[猜]&nbsp;体育直播&nbsp;新浪网', '', '', 'sp'),
+array(16809, '电视猫', '', '', 'sp'),
+array(16796, '综艺&nbsp;腾讯视频', '', '', 'sp'),
+array(16790, '美食美客&nbsp;爱奇艺', '', '', 'sp'),
+array(16782, '北京市预约挂号统一平台', '', '', 'sp'),
+array(16758, '悦美网&nbsp;子链&nbsp;缩略图', '', '', 'sp'),
+array(16743, '软件下载&nbsp;中关村在线', '', '', 'sp'),
+array(16724, '[猜]&nbsp;中国好系统', '', '', 'sp'),
+array(16689, '走势图表&nbsp;百度乐彩', '', '', 'sp'),
+array(16684, '天气预报&nbsp;中国天气网', '', '', 'sp'),
+array(16665, '美食&nbsp;权威性答案', '', '', 'sp'),
+array(16653, '女子拒搭讪被打死&nbsp;百度贴吧直播', '', '', 'sp'),
+array(16641, '百度加速乐', '', '', 'sp'),
+array(16634, '[猜]&nbsp;蘑菇系统之家', '', '', 'sp'),
+array(16633, '[猜]&nbsp;系统吧', '', '', 'sp'),
+array(16590, '开放式基金&nbsp;天天基金网', '', '', 'sp'),
+array(16579, '中国电视网', '', '', 'sp'),
+array(16578, 'XP系统之家', '', '', 'sp'),
+array(16545, '面包屑导航新闻时间轴', '', '', 'sp'),
+array(16524, '疑似推销', '', '', 'sp'),
+array(16502, 'CSDN博客', '', '', 'sp'),
+array(16499, '[猜]&nbsp;港股实时行情&nbsp;-&nbsp;东方财富网', '', '', 'sp'),
+array(16498, '[猜]&nbsp;股票实时行情&nbsp;-&nbsp;东方财富网', '', '', 'sp'),
+array(16488, '百度知道问律师', '', '', 'sp'),
+array(16450, '百度阿拉丁&nbsp;robots&nbsp;禁止抓取', '', '', 'sp'),
+array(16448, '性病科&nbsp;挂号网', '', '', 'sp'),
+array(16411, '百度软件中心', '', '', 'sp'),
+array(16391, '京东', '', '', 'sp'),
+array(16387, '手机&nbsp;太平洋电脑网', '', '', 'sp'),
+array(16379, '百度旅游', '', '', 'sp'),
+array(16375, '91手游网', '', '', 'sp'),
+array(16369, '动漫之家', '', '', 'sp'),
+array(16355, '[猜]&nbsp;系统之家', '', '', 'sp'),
+array(16345, '[猜]&nbsp;世界杯&nbsp;网易体育', '', '', 'sp'),
+array(16343, '[猜]&nbsp;NBA赛季&nbsp;新浪体育', '', '', 'sp'),
+array(16323, '三九养生堂', '', '', 'sp'),
+array(16312, '[猜]&nbsp;百度贴吧访谈直播', '', '', 'sp'),
+array(16311, '股票代码&nbsp;美股实时行情&nbsp;新浪财经&nbsp;[1－9]', '', '', 'sp'),
+array(16309, '美股实时行情&nbsp;新浪财经&nbsp;[1－9]', '', '', 'sp'),
+array(16308, '百姓知道', '', '', 'sp'),
+array(16281, '客服电话&nbsp;去哪儿', '', '百度收购', 'sp'),
+array(16277, '意甲&nbsp;新浪体育', '', '', 'sp'),
+array(16262, '带子链&nbsp;寻医问药网', '', '', 'sp'),
+array(16250, '游侠网', '', '', 'sp'),
+array(16228, '[猜]&nbsp;非中国内地明星&nbsp;伊秀娱乐&nbsp;伊秀女性网', '', '', 'sp'),
+array(16198, '[猜]&nbsp;百度经验【组图】', '', '', 'sp'),
+array(16189, '股票实时行情&nbsp;东方财富网', '', '', 'sp'),
+array(16188, '新浪财经', '', '', 'sp'),
+array(16184, '股票实时行情&nbsp;东方财富网', '', '', 'sp'),
+array(16163, '[猜]&nbsp;欧冠新闻时间轴', '', '', 'sp'),
+array(16140, '挂号网', '', '', 'sp'),
+array(16137, 'hao123下载站', '', '', 'sp'),
+array(16127, 'hao123下载站', '', '', 'sp'),
+array(16049, '诈骗', '', '', 'sp'),
+array(16048, '寻医问药网', '', '', 'sp'),
+array(16047, '百度在线翻译&nbsp;[1－10]', '', '', 'sp'),
+array(16035, '旅游目的地推荐&nbsp;-&nbsp;百度旅游', '', '', 'sp'),
+array(15988, '动漫&nbsp;腾讯视频', '', '', 'sp'),
+array(15964, '专辑&nbsp;百度音乐', '', '', 'sp'),
+array(15958, '电视剧&nbsp;腾讯视频', '', '', 'sp'),
+array(15940, '西甲&nbsp;新浪体育', '', '', 'sp'),
+array(15929, '[猜]&nbsp;软件下载&nbsp;太平洋电脑网', '', '', 'sp'),
+array(15921, '新&nbsp;不同观点&nbsp;百度知道', '', '', 'sp'),
+array(15883, '代名词 百度快照在2013年09月-2013年10月间', '', '', 'sp'),
+array(15863, '小道消息&nbsp;手机中国', '', '', 'sp'),
+array(15858, '单机游戏网', '', '', 'sp'),
+array(15820, '速尔快递客服电话', '', '', 'sp'),
+array(15817, '普通官网', '', '', 'sp'),
+array(15791, '[猜]&nbsp;快递电话', '', '', 'sp'),
+array(15785, '口袋巴士', '', '', 'sp'),
+array(15775, '手机应用&nbsp;天极下载', '', '', 'sp'),
+array(15772, '逗游', '', '', 'sp'),
+array(15765, '世界杯新闻轴', '', '', 'sp'),
+array(15758, '慧聪网B2B', '', '', 'sp'),
+array(15751, '齐家网', '', '百度收购', 'sp'),
+array(15728, '起点中文网', '', '', 'sp'),
+array(15726, '起点中文网', '', '', 'sp'),
+array(15720, '百度经验', '', '', 'sp'),
+array(15678, '网易体育', '', '', 'sp'),
+array(15665, '百度百科(由好大夫在线提供内容并参与编辑)', '', '', 'sp'),
+array(15648, '旅游攻略&nbsp;百度旅游', '', '', 'sp'),
+array(15620, '热搜攻略&nbsp;笨手机', '', '', 'sp'),
+array(15623, '报价及图片_太平洋汽车网', '', '', 'sp'),
+array(15584, '百度站长平台', '', '', 'sp'),
+array(15583, '慧聪网', '', '', 'sp'),
+array(15560, '中关村在线', '', '', 'sp'),
+array(15559, '慧聪网', '', '', 'sp'),
+array(15557, '[猜]&nbsp;中公教育', '', '', 'sp'),
+array(15547, '整形美容&nbsp;-&nbsp;悦美网', '', '', 'sp'),
+array(15516, '人人网同名搜索', '', '', 'sp'),
+array(15515, '人人网同名搜索', '', '', 'sp'),
+array(15460, '中国足彩网', '', '', 'sp'),
+array(15448, '慧聪商务搜索', '', '', 'sp'),
+array(15442, '疾病百科&nbsp;39健康网', '', '', 'sp'),
+array(15416, '出国留学&nbsp;百度教育', '', '', 'sp'),
+array(15388, '手机中国', '', '', 'sp'),
+array(15357, 'hao123汽车|hao123头条', '', '', 'sp'),
+array(15352, '系统家园', '', '', 'sp'),
+array(15346, '精品课程&nbsp;百度文库', '', '', 'sp'),
+array(15295, '畛域_百度视频', '', '', 'sp'),
+array(15279, '客服电话&nbsp;[3－4]', '', '', 'sp'),
+array(15232, '百度轻应用', '', '', 'sp'),
+array(15213, '整形报价大全&nbsp;悦美整形网', '', '', 'sp'),
+array(15200, '豆瓣电影', '', '', 'sp'),
+array(15198, '考研时间安排&nbsp;新浪教育', '', '', 'sp'),
+array(15195, '不凡游戏网', '', '', 'sp'),
+array(15181, '华军软件园', '', '', 'sp'),
+array(15174, '百度手机助手', '', '', 'sp'),
+array(15131, '百度传课', '', '', 'sp'),
+array(15129, 'yy138', '', '', 'sp'),
+array(15125, '在线观看&nbsp;爱奇艺', '', '', 'sp'),
+array(15110, '好大夫在线', '', '', 'sp'),
+array(15109, '疾病&nbsp;好大夫在线', '', '', 'sp'),
+array(15108, '看比赛&nbsp;腾讯体育&nbsp;[1－10]', '', '', 'sp'),
+array(15101, 'hao123招聘', '', '', 'sp'),
+array(15063, '天气预报&nbsp;中国天气网&nbsp;[1－7]', '', '', 'sp'),
+array(15058, '飞翔游戏网', '', '', 'sp'),
+array(15056, '天极下载', '', '', 'sp'),
+array(15027, 'pc大卡', '', '', 'sp'),
+array(15017, '热点&nbsp;网易体育', '', '', 'sp'),
+array(14994, '伊秀娱乐明星库', '', '', 'sp'),
+array(14990, 'ZOL软件下载', '', '', 'sp'),
+array(14966, '百度视频&nbsp;相关视频', '', '', 'sp'),
+array(14960, '天极产品库', '', '', 'sp'),
+array(14955, '实物价格&nbsp;和讯黄金', '', '', 'sp'),
+array(14907, '分集剧情介绍&nbsp;电视猫', '', '', 'sp'),
+array(14861, '[猜]&nbsp;选手&nbsp;乐视网', '', '', 'sp'),
+array(14744, '小皮游戏', '', '', 'sp'),
+array(14726, '热点&nbsp;网易娱乐', '', '', 'sp'),
+array(14713, '[猜]&nbsp;目的地指南&nbsp;百度旅游', '', '', 'sp'),
+array(14709, '易登网', '', '', 'sp'),
+array(14664, '爱卡汽车', '', '', 'sp'),
+array(14611, 'hao123小游戏', '', '', 'sp'),
+array(14584, '[猜]&nbsp;百度团购官网', '', '', 'sp'),
+array(14580, 'Zinch', '', '', 'sp'),
+array(14545, '品牌词', '', '', 'sp'),
+array(14515, '[猜]&nbsp;新浪微博|58同城|百度卫士|百度影音|铁路客户服务中心', '', '', 'sp'),
+array(14510, '[猜]&nbsp;58同城|淘宝网', '', '', 'sp'),
+array(14480, '中甲&nbsp;搜狐体育', '', '', 'sp'),
+array(14474, '百度投诉中心', '', '', 'sp'),
+array(14466, '汽车点评', '', '百度收购', 'sp'),
+array(14452, '快照删除与更新&nbsp;百度投诉', '', '', 'sp'),
+array(14435, '[猜]&nbsp;聊天通讯&nbsp;-&nbsp;百度软件中心', '', '', 'sp'),
+array(14434, '天极产品库', '', '', 'sp'),
+array(14427, '天极下载', '', '', 'sp'),
+array(14421, '时刻表&nbsp;发车间隔&nbsp;同程网', '', '', 'sp'),
+array(14412, '公司财报&nbsp;同花顺财经', '', '', 'sp'),
+array(14331, '百度经验【图文】', '', '', 'sp'),
+array(14330, 'pc6下载站', '', '', 'sp'),
+array(14324, '天气预报&nbsp;中国天气网', '', '', 'sp'),
+array(14305, '百度网盘', '', '', 'sp'),
+array(14287, '股吧&nbsp;-&nbsp;东方财富网', '', '', 'sp'),
+array(14283, '股吧&nbsp;-&nbsp;东方财富网', '', '', 'sp'),
+array(14181, '[猜]社交网络&nbsp;-&nbsp;ipush', '', '', 'sp'),
+array(14175, '欧洲杯', '', '', 'sp'),
+array(14167, '跨考网', '', '', 'sp'),
+array(14142, '[猜]&nbsp;系统吧', '', '', 'sp'),
+array(14134, '[猜]&nbsp;百度图片 医疗健康', '', '', 'sp'),
+array(14110, '中国天气网', '', '', 'sp'),
+array(14105, '实时热点新闻', '', '', 'sp'),
+array(14098, '研究生|公务员报考官网', '', '', 'sp'),
+array(14076, '最新迷你&nbsp;在线观看&nbsp;百度视频', '', '', 'sp'),
+array(14065, '百度医生', '', '', 'sp'),
+array(14062, 'hao123折扣导航', '', '', 'sp'),
+array(14060, '百度硬件', '', '', 'sp'),
+array(14059, '[猜]&nbsp;马槽&nbsp;百度经验', '', '', 'sp'),
+array(14058, '电影&nbsp;百度团购', '', '', 'sp'),
+array(14037, '数码系列&nbsp;中关村在线', '', '', 'sp'),
+array(14022, '旅游景点&nbsp;百度经验【组图】', '', '', 'sp'),
+array(14004, '挂号网', '', '', 'sp'),
+array(13952, '百度安全论坛', '', '', 'sp'),
+array(13932, '企业官方贴吧', '', '', 'sp'),
+array(13927, 'ZOL产品报价&nbsp;中关村在线', '', '', 'sp'),
+array(13920, '产品报价&nbsp;中关村在线', '', '', 'sp'),
+array(13911, '手机&nbsp;天极网', '', '', 'sp'),
+array(13885, '[猜]&nbsp;百度卫士&nbsp;百度知道', '', '', 'sp'),
+array(13863, '百度火车票', '', '', 'sp'),
+array(13854, '电影&nbsp;-&nbsp;腾讯视频', '', '', 'sp'),
+array(13842, '旅游攻略&nbsp;百度旅游', '', '', 'sp'),
+array(13841, '英语四六级考试查分&nbsp;考试吧', '', '', 'sp'),
+array(13823, 'hao123下载站', '', '', 'sp'),
+array(13806, '附近电影院&nbsp;时光网', '', '', 'sp'),
+array(13805, '99安卓游戏', '', '', 'sp'),
+array(13798, '支付宝客服电话|百度用户服务中心', '', '', 'sp'),
+array(13750, '7k7k小游戏', '', '', 'sp'),
+array(13747, '网页游戏&nbsp;7k7k小游戏', '', '', 'sp'),
+array(13741, '实时路况', '', '', 'sp'),
+array(13717, '左侧知心&nbsp;电视剧&nbsp;爱奇艺', '', '', 'sp'),
+array(13709, '51offer&nbsp;免费留学申请智能平台', '', '', 'sp'),
+array(13706, '[猜]&nbsp;腾讯彩票', '', '', 'sp'),
+array(13679, '现货价格&nbsp;和讯黄金', '', '', 'sp'),
+array(13635, '二手房&nbsp;百度乐居', '', '', 'sp'),
+array(13631, '比赛进程&nbsp;乐视网', '', '', 'sp'),
+array(13630, '[猜]&nbsp;中国内地明星&nbsp;伊秀娱乐&nbsp;伊秀女性网', '', '', 'sp'),
+array(13627, '亚冠赛程结果&nbsp;新浪体育', '', '', 'sp'),
+array(13620, '百度知道&nbsp;ipush', '', '', 'sp'),
+array(13616, '二手房&nbsp;百度乐居', '', '', 'sp'),
+array(13598, '猎聘网', '', '', 'sp'),
+array(13580, '嫣然天使基金', '', '', 'sp'),
+array(13522, '找工作&nbsp;求职&nbsp;上前程无忧', '', '', 'sp'),
+array(13516, '足球队&nbsp;新浪体育', '', '', 'sp'),
+array(13501, '犬类&nbsp;知心结果', '', '', 'sp'),
+array(13466, '逗游网', '', '', 'sp'),
+array(13465, 'ABAB小游戏', '', '', 'sp'),
+array(13447, '百度电脑专家', '', '', 'sp'),
+array(13445, '供应信息&nbsp;慧聪网', '', '', 'sp'),
+array(13390, '腾讯动漫', '', '', 'sp'),
+array(13369, '一听音乐', '', '', 'sp'),
+array(13360, '[猜]&nbsp;百度贴吧', '', '', 'sp'),
+array(13355, '短信&nbsp;爱祝福', '', '', 'sp'),
+array(13336, '墨迹天气', '', '', 'sp'),
+array(13310, '手机品牌&nbsp;太平洋电脑网', '', '', 'sp'),
+array(13264, '畅途网&nbsp;百度数据开放平台合作伙伴', '', '', 'sp'),
+array(13260, '汽车百科知识&nbsp;汽车点评', '', '', 'sp'),
+array(13255, '旅游景点&nbsp;百度旅游', '', '', 'sp'),
+array(13231, '欧洲冠军联赛&nbsp;-&nbsp;新浪体育', '', '', 'sp'),
+array(13216, '影讯&nbsp;最近上映电影&nbsp;Mtime时光网', '', '', 'sp'),
+array(13174, '列车时刻表查询及在线预订&nbsp;去哪儿', '', '', 'sp'),
+array(13118, '比赛进程&nbsp;百度视频', '', '', 'sp'),
+array(13111, '中国红十字基金会', '', '', 'sp'),
+array(13096, '百度团购', '', '', 'sp'),
+array(13051, '口碑&nbsp;百度知道', '', '', 'sp'),
+array(13039, '客服电话&nbsp;去哪儿', '', '', 'sp'),
+array(13031, '城市天气预报&nbsp;中国天气网', '', '', 'sp'),
+array(12967, '百度软件', '', '', 'sp'),
+array(12965, 'ABAB小游戏', '', '', 'sp'),
+array(12964, '二手房&nbsp;百度乐居', '', '', 'sp'),
+array(12946, '动漫&nbsp;爱奇艺', '', '', 'sp'),
+array(12926, '[猜]&nbsp;亚信峰会直播&nbsp;凤凰网', '', '', 'sp'),
+array(12906, '[猜]城市&nbsp;-&nbsp;百度团购', '', '', 'sp'),
+array(12904, '[猜]&nbsp;中国网络电视台', '', '', 'sp'),
+array(12903, '[猜]&nbsp;百度团购导航', '', '', 'sp'),
+array(12901, '旅游攻略&nbsp;-&nbsp;百度旅游', '', '', 'sp'),
+array(12880, '[猜]&nbsp;国内省市级|国外国家级目的地&nbsp;百度旅游', '', '', 'sp'),
+array(12840, '百度乐居', '', '', 'sp'),
+array(12839, '招远麦当劳&nbsp;新闻直播', '', '', 'sp'),
+array(12809, '综艺&nbsp;爱奇艺', '', '', 'sp'),
+array(12762, '蚂蜂窝', '', '', 'sp'),
+array(12729, '百度票务', '', '', 'sp'),
+array(12726, '医院&nbsp;好大夫在线', '', '', 'sp'),
+array(12645, '[猜]&nbsp;轿车&nbsp;易车网', '', '', 'sp'),
+array(12644, '软件排行榜&nbsp;太平洋下载', '', '', 'sp'),
+array(12643, '百度团购第&nbsp;2&nbsp;种起点', '', '', 'sp'),
+array(12640, '爱卡汽车', '', '', 'sp'),
+array(12628, '家庭医生在线', '', '', 'sp'),
+array(12616, '开奖查询&nbsp;百度乐彩', '', '', 'sp'),
+array(12610, '汽车点评', '', '', 'sp'),
+array(12605, '百度乐彩', '', '', 'sp'),
+array(12594, '[猜]&nbsp;腾讯视频', '', '', 'sp'),
+array(12577, '地图&nbsp;百度旅游', '', '', 'sp'),
+array(12573, '介绍&nbsp;百度旅游', '', '', 'sp'),
+array(12558, '说明书&nbsp;寻医问药网', '', '', 'sp'),
+array(12542, '英语四六级真题试卷&nbsp;新浪教育', '', '', 'sp'),
+array(12521, '开心网会员登录', '', '', 'sp'),
+array(12512, '录取分数线&nbsp;高考招生&nbsp;中国教育在线', '', '', 'sp'),
+array(12501, '育儿&nbsp;太平洋亲子网', '', '', 'sp'),
+array(12500, '育儿检测&nbsp;太平洋亲子网', '', '', 'sp'),
+array(12403, '壹基金', '', '', 'sp'),
+array(12391, '装修&nbsp;齐家网', '', '', 'sp'),
+array(12360, '足球队&nbsp;新浪体育', '', '', 'sp'),
+array(12353, '快速问医生', '', '', 'sp'),
+array(12347, '产品导航&nbsp;手机&nbsp;太平洋电脑网', '', '', 'sp'),
+array(12346, '商户&nbsp;大众点评网', '', '', 'sp'),
+array(12345, '食品营养价值&nbsp;美食天下', '', '', 'sp'),
+array(12342, '[猜]&nbsp;NBA决赛&nbsp;热点直播&nbsp;网易体育', '', '', 'sp'),
+array(12322, '百度视频', '', '', 'sp'),
+array(12270, '18183手机游戏网', '', '', 'sp'),
+array(12248, '医护网', '', '', 'sp'),
+array(12220, '排行榜&nbsp;百度搜索风云榜', '', '', 'sp'),
+array(12215, '今日游戏排行榜&nbsp;百度搜索风云榜', '', '', 'sp'),
+array(12196, '18183手机游戏网', '', '', 'sp'),
+array(12185, '有妖气', '', '', 'sp'),
+array(12123, '专题&nbsp;百度音乐', '', '', 'sp'),
+array(12121, '综艺&nbsp;风行网', '', '', 'sp'),
+array(12118, '百度相册', '', '', 'sp'),
+array(12114, '百度经验【组图】', '', '', 'sp'),
+array(12102, '自学考试&nbsp;考试吧', '', '', 'sp'),
+array(12097, '京东商城品牌', '', '', 'sp'),
+array(12049, '百度推广投诉客服电话', '', '', 'sp'),
+array(12048, '客服电话', '', '', 'sp'),
+array(12021, '新闻时间轴', '', '', 'sp'),
+array(12019, '汽车点评', '', '', 'sp'),
+array(11952, '百度口碑', '', '', 'sp'),
+array(11940, '全国省份天气预报&nbsp;中国天气网', '', '', 'sp'),
+array(11939, '网页游戏开服表&nbsp;07073游戏网', '', '', 'sp'),
+array(11933, '中国易登网', '', '', 'sp'),
+array(11899, '[猜]&nbsp;维基百科|百度团购|百度杀毒', '', '', 'sp'),
+array(11898, '知名网站', '', '', 'sp'),
+array(11874, '九牛网', '', '', 'sp'),
+array(11852, '法甲&nbsp;新浪体育', '', '', 'sp'),
+array(11838, '[猜]&nbsp;客服电话表', '', '', 'sp'),
+array(11830, '百度软件中心', '', '', 'sp'),
+array(11828, '融360', '', '', 'sp'),
+array(11814, '出国留学网', '', '', 'sp'),
+array(11810, '区号查询', '', '', 'sp'),
+array(11803, '中国114黄页', '', '原“爱漫画”', 'sp'),
+array(11782, '手机大全&nbsp;手机中国&nbsp;[1－10]', '', '百度收购', 'sp'),
+array(11757, '爱漫画', '', '', 'sp'),
+array(11731, '房源信息&nbsp;安居客', '', '', 'sp'),
+array(11708, '组图&nbsp;美食天下', '', '', 'sp'),
+array(11700, '疾病百科&nbsp;寻医问药网', '', '', 'sp'),
+array(11692, '地铁&nbsp;百度地图', '', '', 'sp'),
+array(11677, '网易163邮箱登录', '', '', 'sp'),
+array(11675, '五笔编码汉语拼音查询&nbsp;ip138', '', '', 'sp'),
+array(11640, '考试吧', '', '', 'sp'),
+array(11620, '公益咨询电话', '', '', 'sp'),
+array(11610, '成人高考报名时间_考试吧', '', '', 'sp'),
+array(11582, '中超&nbsp;新浪体育', '', '', 'sp'),
+array(11576, '搜狐焦点网', '', '', 'sp'),
+array(11547, '求医网', '', '', 'sp'),
+array(11539, '足球联赛对战表&nbsp;新浪体育', '', '', 'sp'),
+array(11520, '观后感、评论&nbsp;豆瓣电影', '', '', 'sp'),
+array(11519, '影评、简介及基本信息&nbsp;豆瓣电影', '', '', 'sp'),
+array(11513, '最新港股财报&nbsp;同花顺', '', '', 'sp'),
+array(11512, '一游网', '', '', 'sp'),
+array(11501, 'hao123下载站', '', '', 'sp'),
+array(11490, '国际原油期货价格&nbsp;国际石油网', '', '', 'sp'),
+array(11478, '间接确认的官网', '', '', 'sp'),
+array(11471, '国家授时中心标准时间', '', '', 'sp'),
+array(11463, '畅途网&nbsp;百度数据开放平台合作伙伴', '', '', 'sp'),
+array(11462, '[猜]&nbsp;官方订票电话', '', '', 'sp'),
+array(11443, '国际足联排名&nbsp;新浪体育', '', '', 'sp'),
+array(11442, '网球世界排名&nbsp;新浪体育', '', '', 'sp'),
+array(11439, '乒乓球世界排名&nbsp;新浪体育', '', '', 'sp'),
+array(11437, '羽毛球世界排名&nbsp;新浪体育', '', '', 'sp'),
+array(11436, '233网校', '', '', 'sp'),
+array(11421, '高考分数线&nbsp;招生信息&nbsp;百度教育', '', '', 'sp'),
+array(11409, '公益咨询电话', '', '', 'sp'),
+array(11386, '百度贴吧', '', '', 'sp'),
+array(11358, '【携程酒店】', '', '', 'sp'),
+array(11353, '铁路客户服务中心官网', '', '', 'sp'),
+array(11314, '系统屋', '', '', 'sp'),
+array(11301, '人民网宏观经济数据库', '', '', 'sp'),
+array(11299, '手机中国', '', '', 'sp'),
+array(11263, '中国妇女发展基金会', '', '', 'sp'),
+array(11260, '百度文库认证机构', '', '', 'sp'),
+array(11252, '百度文库认证作者', '', '', 'sp'),
+array(11239, '中国宋庆龄基金会', '', '', 'sp'),
+array(11228, '综艺节目联系方式&nbsp;爱奇艺', '', '', 'sp'),
+array(11205, '新浪星座查询', '', '', 'sp'),
+array(11196, '12306&nbsp;官网', '', '', 'sp'),
+array(11175, '[猜]&nbsp;百度贴吧直播', '', '', 'sp'),
+array(11170, '太平洋下载中心', '', '', 'sp'),
+array(11129, '[猜]&nbsp;综艺节目联系方式', '', '', 'sp'),
+array(11098, '铁路订票电话 95105105&nbsp;外地订票需加拨出发地区号', '', '', 'sp'),
+array(11051, '3533手机世界', '', '', 'sp'),
+array(10991, '百度租房', '', '', 'sp'),
+array(10972, '汽车点评', '', '', 'sp'),
+array(10951, '妈妈网百科', '', '', 'sp'),
+array(10936, '英语四六级&nbsp;新浪教育', '', '', 'sp'),
+array(10927, '电视节目表', '', '', 'sp'),
+array(10904, '全国大学英语四六级考试(CET)官方成绩查询', '', '', 'sp'),
+array(10858, '高考分数线&nbsp;新浪高考', '', '', 'sp'),
+array(10827, '高考各省市录取分数线汇总&nbsp;新浪高考', '', '', 'sp'),
+array(10806, '手机中国', '', '百度收购', 'sp'),
+array(10797, 'hao123下载站', '', '', 'sp'),
+array(10794, '电影&nbsp;爱奇艺', '', '', 'sp'),
+array(10792, '快速查询&nbsp;求医网', '', '', 'sp'),
+array(10789, '宜家|百度云图|世界知识产权组织|英雄联盟', '', '', 'sp'),
+array(10788, '亲子百科&nbsp;太平洋亲子网', '', '', 'sp'),
+array(10785, '游久网', '', '', 'sp'),
+array(10776, 'Mtime时光网', '', '', 'sp'),
+array(10775, '影评、简介及放映时间查询&nbsp;Mtime时光网', '', '', 'sp'),
+array(10764, '高考查分&nbsp;新浪高考', '', '', 'sp'),
+array(10744, '考研分数线查询&nbsp;新浪教育', '', '', 'sp'),
+array(10723, '考研真题试卷&nbsp;新浪教育', '', '', 'sp'),
+array(10693, '世界时间&nbsp;百度开放平台', '', '', 'sp'),
+array(10678, '基金吧&nbsp;天天基金网', '', '', 'sp'),
+array(10654, '系统粉', '', '', 'sp'),
+array(10652, '实例&nbsp;聚合&nbsp;百度百科', '', '', 'sp'),
+array(10646, '[猜]&nbsp;客船沉没', '', '', 'sp'),
+array(10639, '[猜]&nbsp;中国移动客服电话', '', '', 'sp'),
+array(10610, '百度招聘', '', '', 'sp'),
+array(10594, '飞翔游戏', '', '', 'sp'),
+array(10577, '网页游戏&nbsp;百度游戏', '', '', 'sp'),
+array(10543, 'AK军事网', '', '', 'sp'),
+array(10530, '药品通&nbsp;39健康网', '', '', 'sp'),
+array(10501, '[猜]&nbsp;直播热点话题&nbsp;新浪娱乐', '', '', 'sp'),
+array(10500, '客服是多少&nbsp;百度知道', '', '', 'sp'),
+array(10496, 'ZOL产品报价&nbsp;中关村在线', '', '', 'sp'),
+array(10458, '豆瓣影评&nbsp;[1－10]', '', '', 'sp'),
+array(10422, '[猜]时间轴新闻', '', '', 'sp'),
+array(10396, '[猜]&nbsp;搜狐健康', '', '', 'sp'),
+array(10393, '[猜]&nbsp;基于&nbsp;IP&nbsp;地理位置回答', '', '', 'sp'),
+array(10385, '有道翻译', '', '', 'sp'),
+array(10382, '尾号限行', '', '', 'sp'),
+array(10360, '百度房产', '', '', 'sp'),
+array(10342, '据说娱乐', '', '', 'sp'),
+array(10319, '热门视频&nbsp;太平洋游戏网', '', '', 'sp'),
+array(10317, '网易彩票', '', '', 'sp'),
+array(10315, '开奖详情查询&nbsp;网易彩票', '', '', 'sp'),
+array(10306, '资讯&nbsp;网易彩票', '', '', 'sp'),
+array(10298, '2014年全年公休假放假安排&nbsp;中国政府网', '', '放假通知', 'sp'),
+array(10268, '百度经验【组图】', '', '', 'sp'),
+array(10254, '全国猎聘网', '', '', 'sp'),
+array(10249, '药品搜索&nbsp;丁香园', '', '', 'sp'),
+array(10244, '第&nbsp;2&nbsp;种百度经验', '', '', 'sp'),
+array(10240, '[猜]&nbsp;开奖&nbsp;新浪彩票', '', '', 'sp'),
+array(10239, '乐游网', '', '', 'sp'),
+array(10219, '第&nbsp;2&nbsp;种客服电话&nbsp;[3－4]', '', '', 'sp'),
+array(10213, '易登网', '', '', 'sp'),
+array(10210, '手机号码归属地查询', '', '', 'sp'),
+array(10201, '货币基金&nbsp;天天基金网', '', '', 'sp'),
+array(10199, '[猜]&nbsp;医院&nbsp;-&nbsp;悦美整形网', '', '', 'sp'),
+array(10197, '预约加号&nbsp;好大夫在线', '', '', 'sp'),
+array(10183, '时刻表&nbsp;票价&nbsp;同程网', '', '', 'sp'),
+array(10178, '展现多方观点&nbsp;百度知道', '', '', 'sp'),
+array(10175, '找好医院&nbsp;家庭医生在线', '', '', 'sp'),
+array(10162, '装修效果图大全&nbsp;齐家网', '', '', 'sp'),
+array(10161, '[猜]疾病&nbsp;寻医问药专家网', '', '', 'sp'),
+array(10139, '人民币利率&nbsp;和讯网', '', '', 'sp'),
+array(10118, '[猜]&nbsp;开奖&nbsp;hao123彩票', '', '', 'sp'),
+array(10094, '[猜]&nbsp;开奖结果&nbsp;体坛网', '', '', 'sp'),
+array(10077, '公务员考试真题试卷&nbsp;中公教育', '', '', 'sp'),
+array(10041, '汽车之家', '', '', 'sp'),
+array(10023, '英超&nbsp;新浪体育', '', '', 'sp'),
+array(10015, '[猜]&nbsp;时间轴新闻&nbsp;腾讯网|新浪网', '', '', 'sp'),
+array(8047, '百度招聘', '', '', 'sp'),
+array(8041, '中国内地音乐网站聚合', '', '百度音乐|虾米音乐|QQ音乐|网易云音乐|酷我音乐|一听音乐', 'sp'),
+array(8003, '港股实时行情&nbsp;东方财富网', '', '', 'sp'),
+array(7136, '就医助手&nbsp;39健康网', '', '', 'sp'),
+array(7127, '百度药品', '', '', 'sp'),
+array(7123, '推荐医院&nbsp;好大夫在线', '', '', 'sp'),
+array(7092, '航班信息', '', '', 'sp'),
+array(7086, '4399小游戏', '', '', 'sp'),
+array(7084, '点评&nbsp;中关村在线', '', '', 'sp'),
+array(7079, '数码系列&nbsp;中关村在线', '', '', 'sp'),
+array(7076, '详情页&nbsp;-&nbsp;中关村在线', '', '', 'sp'),
+array(7074, '菜谱优质结果', '', '', 'sp'),
+array(7072, '[猜]&nbsp;洛克王国&nbsp;4399', '', '', 'sp'),
+array(7032, '车次查询&nbsp;去哪儿', '', '', 'sp'),
+array(7027, '物品&nbsp;178游戏网', '', '', 'sp'),
+array(6899, '全国失信被执行人名单', '', '', 'sp'),
+array(6896, '股票行情&nbsp;东方财富网', '', '', 'sp'),
+array(6887, '百度阅读', '', '', 'sp'),
+array(6883, '百度应用', '', '', 'sp'),
+array(6882, '百度应用', '', '', 'sp'),
+array(6878, '百度糯米电影购票', '', '', 'sp'),
+array(6869, '影视新生态', '', '', 'sp'),
+array(6865, '汽车之家', '', '', 'sp'),
+array(6862, '电影&nbsp;知识图谱', '', '', 'sp'),
+array(6861, '电视剧&nbsp;知识图谱', '', '', 'sp'),
+array(6845, '小说', '', '', 'sp'),
+array(6841, '永乐票务', '', '', 'sp'),
+array(6835, '百度软件中心', '', '', 'sp'),
+array(6833, '百度百科&nbsp;多义词', '', '', 'sp'),
+array(6832, '旅游景点大全', '', '', 'sp'),
+array(6831, '知识图谱&nbsp;百度美食', '', '', 'sp'),
+array(6827, '由于失信已被列入国家失信被执行人名单', '', '', 'sp'),
+array(6826, '该企业已被列入全国失信被执行人名单中！', '', '', 'sp'),
+array(6819, '全国法院失信被执行人名单', '', '', 'sp'),
+array(6817, '百度视频', '', '', 'sp'),
+array(6811, '百度音乐', '', '', 'sp'),
+array(6804, '最新报价&nbsp;配置&nbsp;图片&nbsp;口碑&nbsp;油耗&nbsp;易车网', '', '', 'sp'),
+array(6801, '车型&nbsp;-&nbsp;易车网', '', '', 'sp'),
+array(6735, 'site特型', '', '', 'sp'),
+array(6727, '[猜]&nbsp;左侧动漫作品', '', '', 'sp'),
+array(6714, '最佳答案', '', '', 'sp'),
+array(6705, '电视剧榜单', '', '', 'sp'),
+array(6700, '电影&nbsp;-&nbsp;百度团购', '', '', 'sp'),
+array(6691, '歌曲&nbsp;-&nbsp;百度音乐', '', '', 'sp'),
+array(6690, '电影&nbsp;-&nbsp;百度视频', '', '', 'sp'),
+array(6680, '百度购物搜索', '', '', 'ec'),
+array(6677, '网页应用&nbsp;百度阿拉丁', '', '', 'sp'),
+array(6670, '百度团购', '', '', 'sp'),
+array(6666, '百度招聘搜索', '', '', 'sp'),
+array(6665, '百度招聘会搜索', '', '', 'sp'),
+array(6653, '[猜]&nbsp;百度知心最佳答案', '', '', 'sp'),
+array(6112, '[猜]&nbsp;电视剧&nbsp;百度视频', '', '', 'sp'),
+array(6018, '日历&nbsp;[1－3]', '', '', 'sp'),
+array(6017, '最新汇率&nbsp;[1－10]', '', '', 'sp'),
+array(6014, '提问到百度知道', '', '', 'sp'),
+array(6009, '万年历', '', '', 'sp'),
+array(6007, '计算器', '', '', 'sp'),
+array(6006, 'IP地址查询', '', '', 'sp'),
+array(6004, '手机归属地', '', '', 'sp'),
+array(4027, '查询&nbsp;火车票&nbsp;列车时刻表&nbsp;去哪儿网', '', '', 'sp'),
+array(4004, '快递查询&nbsp;快递100', '', '', 'ec'),
+array(4002, '单位换算&nbsp;百度阿拉丁', '', '', 'ec'),
+array(4001, '快递查询&nbsp;快递100', '', '', 'ec'),
+array(1599, '普通结果', '', '模版名2数据策略', 'as'),
+array(1581, '更多同站相关结果&gt;&gt;', '', '201412添加', 'as'),
+// 2015-09-25 Twitter - Wikipedia, the free encyclopedia // https://en.wikipedia.org/wiki/Twitter
+array(1553, '维基百科', '', '', 'as'),
+array(1552, '未知', '', '', 'as'),
+// 2015-06-23 如何在中国办理留学生学历认证 RED SCARF // www.honglingjin.co.uk/3023.html
+array(1551, '列表－模版', '', '201411添加&nbsp;QQ&nbsp;751476', 'as'),
+array(1550, '未知', '', '', 'as'),
+array(1549, '未知', '', '', 'as'),
+array(1548, '评分－结构化', '', '201408添加', 'as'),
+array(1547, $queryn.'&nbsp;相关百度百科词条', '', '[201407添加]', 'ec'),
+array(1546, '未知', '', '', 'as'),
+array(1545, '非正规相册', '', '201412添加&nbsp;QQ&nbsp;1724102740', 'as'),
+array(1544, '未知', '', '', 'as'),
+array(1543, '面包屑－结构化', '', '', 'as'),
+array(1542, $queryn.'&nbsp;百度学术', '', '', 'ec'),
+array(1541, '未知', '', '', 'as'),
+array(1540, '未知', '', '', 'as'),
+// 2015-01-08 搜外 搜外网 //www.seowhy.com/
+array(1539, '[官网]&nbsp;0－6&nbsp;个子链', '', '201405添加', 'as'),
+array(1538, '摘要－结构化', '', '', 'as'),
+array(1537, $queryn.'&nbsp;相关百度经验&nbsp;组图', '', '', 'ec'),
+array(1536, '一般答案&nbsp;百度知道', '', '', 'ec'),
+array(1535, '未知，模版采用&nbsp;se_com_image_s', '', '模版', 'as'),
+array(1534, '未知，模版采用&nbsp;se_com_default', '', '模版', 'as'),
+array(1533, '论坛帖子', '', '', 'as'),
+array(1532, '最佳答案&nbsp;百度知道', '', '', 'ec'),
+// 在原用户查询词的基础上，通过一定的方法和策略把与原查询词相关的词、词组添加到原查询中，组成新的、更能准确表达用户查询意图的查询词序列，然后用新查询对文档重新检索，从而提高信息检索中的查全率和查准率。 李晓明; 闫宏飞; 王继民. 附录 术语//搜索引擎——原理、技术与系统(第二版). 2013年5月第9次印刷. 北京: 科学. 2012.5: 第322–323页 ISBN 7-03-034258-4 (简体中文)
+array(1531, '查询扩展', '', '', 'as'),
+array(1530, '百度贴吧', '', '', 'as'),
+// 百度知道|搜狗问问(搜搜问问)|爱问知识人|39问医生|寻医问药网有问必答
+array(1529, '权威问答网站', '', '', 'as'),
+array(1528, '百度知道', '', '', 'as'),
+array(1527, '百度文库标签;', '', '', 'ec'),
+array(1526, '百度文库', '', '', 'as'),
+array(1525, '百度文库', '', '', 'as'),
+array(1524, '缩略图结果', '', '但非每个查询词展现图片', 'as'),
+array(1523, 'robots.txt&nbsp;存在限制', '', '', 'as'),
+array(1522, '百度经验带相册', '', '', 'as'),
+array(1521, '图片&nbsp;百度百科(与查询词内容相关度较高)', '', '', 'ec'),
+// 2015-01-08 无序的新世界 维普网 //www.cqvip.com/qk/95355X/200106/15044983.html
+array(1520, '期刊文献', '', '', 'as'),
+array(1519, '维基百科&nbsp;国际化', '', '', 'as'),
+array(1518, '软件下载&nbsp;国际化', '', '', 'as'),
+array(1517, '[图文]', '', '但并非每个查询词显示&nbsp;[图文]', 'as'),
+array(1516, '宗教&nbsp;国际化', '', '', 'as'),
+array(1515, '电影&nbsp;国际化', '', '', 'as'),
+array(1514, '在线文档－结构化', '', '', 'as'),
+array(1513, '软件下载－结构化', '', '', 'as'),
+array(1512, '单视频&nbsp;国际化', '', '', 'as'),
+array(1511, '[原创]', '', '星火计划', 'as'),
+array(1510, '子链&nbsp;国际化', '', '', 'as'),
+array(1509, '[官网]', '', '通常在 1－2 位', 'as'),
+array(1508, '单视频&nbsp;站点', '', '', 'as'),
+array(1507, '微博', '', '', 'as'),
+array(1506, '单视频', '', '', 'as'),
+array(1505, '百度知道&nbsp;高品质', '', '知道达人|权威专家|官方机构', 'as'),
+array(1504, '自动问答', '', '', 'as'),
+array(1503, '图片&nbsp;单视频', '', '', 'as'),
+array(1502, '百度百科', '', '', 'as'),
+array(1501, '评分－结构化', '', '', 'as'),
+array(1500, '无', '', '', 'as'),
+array(101, '[猜]&nbsp;沙盒保护', '', '', 'ec'),
+array(91, '百度百科', '', '多义词', 'sp'),
+array(85, '百度翻译|百度词典', '', '多义词', 'sp'),
+array(81, '百度百科_多义词', '', '', 'sp'),
+array(80, '百度百科专有名词', '', '', 'sp'),
+array(43, '去百度知道提问', '', '', 'ec'),
+array(37, $queryn.'&nbsp;最新图像', '', '', 'ec'),
+array(34, '最新微博结果', '', '', 'ec'),
+array(23, $queryn.'&nbsp;百度翻译', '', '', 'ec'),
+array(19, $queryn.'&nbsp;最新相关消息', '', '', 'ec'),
+array(10, '百度贴吧', '', '', 'sp'),
+array(5, '百度音乐', '', '', 'ec'),
+array(4, $queryn.'&nbsp;百度图片', '', '', 'ec'),
+array(1, $queryn.'&nbsp;百度视频', '', '', 'ec')
         );
 
         // 字数统计函数
@@ -1776,28 +1844,56 @@ if (strlen($s) > 0) {
         }
 
         $np = array (
+            '/(http:\/\/kgb.baidu.com)/',
+            '/(http:\/\/publichospital.health.vs-static.baidu.com)/',
+            '/(http:\/\/27018_aladdin.baidu.com\/src27018\/)/',
+            '/(http:\/\/plastic.health.vs-static.baidu.com)/',
+            '/(http:\/\/qaen.health.vs-static.baidu.com)/',
+            '/(http:\/\/qa.health.vs-static.baidu.com)/',
+            '/(http:\/\/symptomfilteranswer.health.vs-static.baidu.com\/)/',
+            '/(http:\/\/symptomanswer.health.vs-static.baidu.com\/)/',
+            '/(http:\/\/disease2.health.vs-static.baidu.com)/',
+            '/(http:\/\/disease.health.vs-static.baidu.com)/',
+            '/(http:\/\/med.symptom.health.vs-static.baidu.com)/',
             '/(http:\/\/vs-static.baidu.com\/shangmao\/[a-z]{2}\d{2}-dr-vsarch-ui\d{2}.[a-z]{2}\d{2}.baidu.com)/',
             '/(http:\/\/privatehospital.health.vs-static.baidu.com)/',
             '/(http:\/\/foodsearch.health.vs-static.baidu.com)/',
             '/(http:\/\/nourl.ubs.baidu.com\/291228)/',
             '/(http:\/\/fakeurl.baidu.com\/xueshu)/',
             '/(http:\/\/29163.baidu.com)/',
+            '/(http:\/\/29153.baidu.com)/',
+            '/(http:\/\/29134.baidu.com)/',
             '/(http:\/\/nourl.ubs.baidu.com\/29115)/',
             '/(http:\/\/nourl.ubs.baidu.com\/29114)/',
+            '/(http:\/\/tsm.nuomi.com\/28027\/)/',
             '/(http:\/\/tsm.nuomi.com\/28026\/)/',
             '/(http:\/\/tsm.nuomi.com\/28025\/)/',
             '/(http:\/\/jiaoyu.baidu.com)/',
             '/(http:\/\/fanyi.baidu.com)/',
             );
         $nr = array (
+            '//baike.baidu.com/search?word='.$query,
+            '//jiankang.baidu.com/juhe/index?key='.$query,
+            '//sou.autohome.com.cn/zonghe?q=',
+            '//jiankang.baidu.com/Plastic/search?key='.$query,
+            '//jiankang.baidu.com/jibing/card?wd='.$query,
+            '//jiankang.baidu.com/wenda/search?key='.$query,
+            '//muzhi.baidu.com/ask',
+            '//jiankang.baidu.com/wenda/search?key='.$query,
+            '//jiankang.baidu.com/jibing/card?key='.$query,
+            '//jiankang.baidu.com/jibing/card?key='.$query,
+            '//jiankang.baidu.com/jibing/card?key='.$query,
             '//shangmao.baidu.com/caigou/index?key='.$query,
             '//jiankang.baidu.com/juhe/index?aType=1&amp;wd='.$query,
             '//jiankang.baidu.com/Food/search?key='.$query,
             '//temai.baidu.com/Index/index?wd='.$query,
             '//xueshu.baidu.com/s?wd='.$query,
             '//iwan.baidu.com/search?searchquery='.$query,
+            '//iwan.baidu.com/mobilegame',
+            '//iwan.baidu.com/search?searchquery='.$query,
             '//temai.baidu.com/Index/index?wd='.$query,
             '//temai.baidu.com/Index/index?wd='.$query,
+            '//www.nuomi.com/search?ie=gbk&amp;k=',
             '//www.nuomi.com/search?ie=gbk&amp;k=',
             '//www.nuomi.com/?ie=gbk&amp;channel_content=',
             '//jiaoyu.baidu.com/query/juhe?originQuery='.$query,
@@ -1806,7 +1902,7 @@ if (strlen($s) > 0) {
 
         foreach ($n as $i => $v) {
             foreach ($srcid as $h => $v) {
-                if (@$n[$i][0] == $srcid[$h][0] && $srcid[$h][9] == 'as') {
+                if (@$n[$i][0] == $srcid[$h][0] && $srcid[$h][4] == 'as') {
                     echo '
                 <tr class="back-white">
                     <td>
@@ -1814,34 +1910,41 @@ if (strlen($s) > 0) {
                         <a href="'.$n[$i][3].'" rel="external nofollow noreferrer" target="_blank">
                             '.stripslashes($n[$i][1]).'
                         </a>
-                        '.$n[$i][4].$n[$i][5].$n[$i][6].$n[$i][7].'
+                        '.$n[$i][5].$n[$i][6].$n[$i][7].$n[$i][8].'
                     </td>
                     <td class="center">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($n[$i][1], ENT_QUOTES))).'</td>
-                    <td class="center">'.$srcid[$h][6].'</td>
+                    <td class="center" title="模板&nbsp;'.$n[$i][4].'">'.$srcid[$h][1].'</td>
                 </tr>';
                     unset($n[$i]);
                 }
-                elseif (@$n[$i][0] == $srcid[$h][0] && $srcid[$h][9] == 'sp') {
+                elseif (@$n[$i][0] == $srcid[$h][0] && $srcid[$h][4] == 'sp') {
                     echo '
                 <tr class="back-egg">
                     <td>
-                        '.$n[$i][2].'&nbsp;'.$srcid[$h][1].$srcid[$h][2].$srcid[$h][3].$srcid[$h][4].$srcid[$h][5].$srcid[$h][6].$srcid[$h][7].'
+                        '.$n[$i][2].'&nbsp;<a target="_blank" href="';
+                    if ($srcid[$h][0] == 8041 ) {
+                        echo '//sou.kuwo.cn/ws/NSearch?key='.$query;
+                    }
+                    else {
+                        echo $n[$i][3];
+                    }
+                    echo '" rel="external nofollow noreferrer">'.$n[$i][1].'&nbsp;'.$srcid[$h][1].'</a>
                     </td>
                     <td class="center">
-                        <a href="//www.weixingon.com/baidusp-srcid.php" target="_blank" rel="external nofollow noreferrer">'.$srcid[$h][9].'</a>
+                        <a href="//www.weixingon.com/baidusp-srcid.php" target="_blank" rel="external nofollow noreferrer">'.$srcid[$h][4].'</a>
                     </td>
                     <td class="center">
-                        <a target="_blank" href="//www.weixingon.com/baidusp-op.php?srcid='.$n[$i][0].'&amp;s='.preg_replace('/(\s+)/', '+', $n[$i][1]).'" rel="external nofollow noreferrer">'.$n[$i][0].'</a>
+                        <a target="_blank" href="//www.weixingon.com/baidusp-op.php?srcid='.$n[$i][0].'&amp;s='.preg_replace('/(\s+)/', '+', $n[$i][1]).'" rel="external nofollow noreferrer" title="模板&nbsp;'.$n[$i][4].'">'.$n[$i][0].'</a>
                     </td>
                 </tr>';
                     unset($n[$i]);
                 }
-                elseif (@$n[$i][0] == $srcid[$h][0] && $srcid[$h][9] == 'ec') {
-                    if ($srcid[$h][0] == 1 | $srcid[$h][0] == 4 | $srcid[$h][0] == 19 | $srcid[$h][0] == 23 | $srcid[$h][0] == 34 | $srcid[$h][0] == 101 | $srcid[$h][0] == 1521 | $srcid[$h][0] == 1527 | $srcid[$h][0] == 1532 | $srcid[$h][0] == 1537 | $srcid[$h][0] == 1547) {
+                elseif (@$n[$i][0] == $srcid[$h][0] && $srcid[$h][4] == 'ec') {
+                    if ($srcid[$h][0] == 1 | $srcid[$h][0] == 4 | $srcid[$h][0] == 19 | $srcid[$h][0] == 23 | $srcid[$h][0] == 34 | $srcid[$h][0] == 101 | $srcid[$h][0] == 1521 | $srcid[$h][0] == 1527 | $srcid[$h][0] == 1532 | $srcid[$h][0] == 1537 | $srcid[$h][0] == 1542 | $srcid[$h][0] == 1547 | $srcid[$h][0] == 4004) {
                         echo '
                 <tr class="back-egg">
                     <td>
-                        '.$n[$i][2].'&nbsp;'.$srcid[$h][1].preg_replace($np, $nr, $n[$i][3]).$srcid[$h][4].$srcid[$h][5].$srcid[$h][6].$srcid[$h][7].'
+                        '.$n[$i][2].'&nbsp;<a target="_blank" href="'.preg_replace($np, $nr, $n[$i][3]).'" rel="external nofollow noreferrer">'.$srcid[$h][1].'</a>
                     </td>
                     <td class="center">
                         sp';
@@ -1850,14 +1953,14 @@ if (strlen($s) > 0) {
                         echo '
                 <tr class="back-orange">
                     <td>
-                        '.$n[$i][2].'&nbsp;'.$srcid[$h][1].preg_replace($np, $nr, $n[$i][3]).$srcid[$h][4].$srcid[$h][5].$srcid[$h][6].$srcid[$h][7].'
+                        '.$n[$i][2].'&nbsp;<a target="_blank" href="'.preg_replace($np, $nr, $n[$i][3]).'" rel="external nofollow noreferrer">'.$srcid[$h][1].'</a>
                     </td>
                     <td class="center">
-                        <a href="//ask.seowhy.com/question/9186" target="_blank" rel="external nofollow noreferrer" title="为什么有的搜索结果会没有百度参数，这样的现象原因是什么">'.$srcid[$h][9].'</a>';
+                        <a href="//ask.seowhy.com/question/9186" target="_blank" rel="external nofollow noreferrer" title="为什么有的搜索结果会没有百度参数，这样的现象原因是什么">'.$srcid[$h][4].'</a>';
                     }
                     echo '
                     </td>
-                    <td class="center">'.$n[$i][0].'</td>
+                    <td class="center" title="模板&nbsp;'.$n[$i][4].'">'.$n[$i][0].'</td>
                 </tr>';
                     unset($n[$i]);
                 }
@@ -1868,7 +1971,7 @@ if (strlen($s) > 0) {
                     <td>'.$n[$i][2].'&nbsp;未收进资源库</td>
                     <td></td>
                     <td class="center">
-                        <a target="_blank" href="//www.weixingon.com/baidusp-op.php?srcid='.$n[$i][0].'&amp;s='.preg_replace('/(\s+)/', '+', $n[$i][1]).'" rel="external nofollow noreferrer">'.$n[$i][0].'</a>
+                        <a target="_blank" href="//www.weixingon.com/baidusp-op.php?srcid='.$n[$i][0].'&amp;s='.preg_replace('/(\s+)/', '+', $n[$i][1]).'" rel="external nofollow noreferrer" title="模板&nbsp;'.$n[$i][4].'">'.$n[$i][0].'</a>
                     </td>
                 </tr>';
             }
@@ -1883,20 +1986,10 @@ if (strlen($s) > 0) {
 
     if (preg_match_all("/(?<=&rs_src=[01]{1}&rsv_pq=[a-z0-9]{16}&rsv_t=)([\w\%]{50,64}\">)([\x80-\xff\w\s\.#\:\/\+\-]{0,32})(?=<\/a><\/th><)/", $se, $mrelated)) {
 
-        // 随机更换下拉框提示 IP
-        $sugip = array (
-            'http://115.239.211.11',
-            'http://115.239.211.12',
-            'http://180.97.33.72',
-            'http://180.97.33.73',
-            );
-        shuffle ($sugip);
-
         // 匹配百度搜索3种下拉框提示词
         $p3 = array ('/window\.baidu\.sug\({q:/', '/p:false,s:\[/', '/}\);/');
         $r3 = array ('[', '', '');
-        $sug1 = json_decode(file_get_contents($sugip[0].'/su?action=opensearch&ie=UTF-8&wd='.$query));
-        $sug2 = json_decode(file_get_contents($sugip[0].'/su?action=opensearch&ie=UTF-8&sugmode=2&wd='.$query));
+        $sug2 = json_decode(file_get_contents('http://'.$sugip[1].'/su?action=opensearch&ie=UTF-8&sugmode=2&wd='.$query));
         $sugunion = json_decode(preg_replace($p3, $r3, file_get_contents('http://unionsug.baidu.com/su?ie=UTF-8&wd='.$query)));
 
         echo '
@@ -1905,9 +1998,9 @@ if (strlen($s) > 0) {
             <thead>
                     <tr>
                         <th>相关搜索</th>
-                        <th>下拉框提示模式&nbsp;I</th>
+                        <th>下拉提示模式&nbsp;I</th>
                         <th>
-                            <a href="//ask.seowhy.com/article/109" rel="external nofollow noreferrer" target="_blank" title="百度相关提示与搜索结果标题">下拉框提示模式&nbsp;II</a>
+                            <a href="//ask.seowhy.com/article/109" rel="external nofollow noreferrer" target="_blank" title="百度相关提示与搜索结果标题">下拉提示模式&nbsp;II</a>
                         </th>
                         <th>搜索框提示</th>
                     </tr>
@@ -1987,7 +2080,7 @@ if (strlen($s) > 0) {
             foreach ($kk as $f => $v) {
                 if ($f % 4 == 0) {
                     echo '
-                <tr class="back-azure">';
+                <tr class="back-sky">';
                 }
                 echo '
                     <td>
@@ -2025,6 +2118,34 @@ if (strlen($s) > 0) {
         }
     }
 
+    $F[1] = '<span title="搜索结果标题|摘要与查询词的语义关联度">语义关联</span>';
+    $F[3] = '[猜]正规性';
+    $F[4] = '[猜]更新';
+    $F[5] = '[猜]实时度';
+    $F[6] = '<a href="//ask.seowhy.com/article/121" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果参数F第6位基于IP位置">基于IP位置</a>';
+    $F[7] = '网址';
+    $F[8] = '标题|网址|摘要';
+    $F1[1] = '第1位';
+    $F1[2] = '第2位';
+    $F1[4] = '[猜]实时动态';
+    $F1[5] = '[猜]匹配率';
+    $F1[7] = '[猜]网址权重';
+    $F1[8] = '第8位';
+    $F2[1] = '[猜]相关';
+    $F2[2] = '第2位';
+    $F2[3] = '第3位';
+    $F2[4] = '第4位';
+    $F2[5] = '第5位';
+    $F2[6] = '<span title="仅是这一刻的搜索结果目标页相对查询词的权重">[猜]内链数量</span>';
+    $F3[1] = '第1位';
+    $F3[2] = '第2位';
+    $F3[3] = '第3位';
+    $F3[4] = '<a href="//ask.seowhy.com/article/30" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果参数F3 - 域名选择与原创内容时效性">[猜]时效性</a>';
+    $F3[5] = '<a href="//ask.seowhy.com/article/46" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果参数F3 - 超越域名选择的含义">[猜]网址形式</a>';
+    $F3[6] = '第6位';
+    $F3[7] = '第7位';
+    $F3[8] = '[猜]相似度';
+
     // F
     if (strlen(@$mf[0][0]) > 0) {
         echo '
@@ -2043,10 +2164,8 @@ if (strlen($s) > 0) {
                 </tr>
             </thead>
             <tbody class="center">';
-
         foreach ($mf[3] as $i => $v) {
             $fvalue1 = $mf[3][$i];
-            $fvalue2 = $mf[4][$i];
             $fvalue3 = $mf[5][$i];
             $fvalue4 = $mf[6][$i];
             $fvalue5 = $mf[7][$i];
@@ -2055,7 +2174,6 @@ if (strlen($s) > 0) {
             $fvalue8 = $mf[10][$i];
             echo '
                 <tr>';
-
             if ($fvalue1 == '7') {
                 echo '
                     <td class="unit-darkseagreen">默认<br>7</td>';
@@ -2076,7 +2194,6 @@ if (strlen($s) > 0) {
                 echo '
                     <td>'.$fvalue1.'</td>';
             }
-
             if ($fvalue3 == '8') {
                 echo '
                     <td class="unit-mediumpurple">默认<br>8</td>';
@@ -2096,7 +2213,6 @@ if (strlen($s) > 0) {
                 echo '
                     <td>'.$fvalue3.'</td>';
             }
-
             if ($fvalue4 == '3') {
                 echo '
                     <td class="unit-violet">默认<br>3</td>';
@@ -2117,7 +2233,6 @@ if (strlen($s) > 0) {
                 echo '
                     <td>'.$fvalue4.'</td>';
             }
-
             if ($fvalue5 == '1') {
                 echo '
                     <td class="unit-gold">默认<br>1</td>';
@@ -2130,7 +2245,6 @@ if (strlen($s) > 0) {
                 echo '
                     <td>'.$fvalue5.'</td>';
             }
-
             if ($fvalue6 == '7') {
                 echo '
                     <td class="unit-darkseagreen">默认<br>7</td>';
@@ -2149,7 +2263,6 @@ if (strlen($s) > 0) {
                 echo '
                     <td>'.$fvalue6.'</td>';
             }
-
             if ($fvalue7 == 'E') {
                 echo '
                     <td class="unit-deepskyblue">默认<br>E</td>';
@@ -2168,7 +2281,6 @@ if (strlen($s) > 0) {
                 echo '
                     <td>'.$fvalue7.'</td>';
             }
-
             if ($fvalue8 == 'A') {
                 echo '
                     <td class="unit-aquamarine">精确匹配<br>A</td>';
@@ -2189,7 +2301,6 @@ if (strlen($s) > 0) {
                 echo '
                     <td>'.$fvalue8.'</td>';
             }
-
             echo '
                     <td class="back-pink">'.@$msrcid[3][$i].'</td>
                 </tr>';
@@ -2757,7 +2868,7 @@ if (strlen($s) > 0) {
     <table>
         <thead>
             <tr>
-                <th>摘要&nbsp;abstract</th>
+                <th><a href="//ask.seowhy.com/article/53" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果页参数y - 验证码与工具">摘要&nbsp;abstract</a></th>
             </tr>
         </thead>
         <tbody class="break">';
@@ -2772,58 +2883,9 @@ if (strlen($s) > 0) {
         </tbody>
     </table>';
     }
+}
 
-    // template
-
-    if (preg_match_all('/(?<=" tpl=")([0-9a-z_]{3,28})(?=")/', $se, $mtpl)) {
-
-        echo '
-    <div class="draglist" draggable="true">
-        <table>
-            <thead>
-                <tr>
-                    <th colspan="4">模版&nbsp;template</th>
-                </tr>
-            </thead>
-            <tbody class="break">';
-
-        foreach ($mtpl[1] as $i => $v) {
-            if ($i % 4 == 0) {
-                echo '
-                <tr class="back-sky">';
-            }
-            echo '
-                    <td>'.$mtpl[1][$i].'</td>';
-            $i++;
-            if ($i % 4 == 0) {
-                echo '
-                </tr>';
-            }
-        }
-        if ($i % 4 == 3)  {
-            echo '
-                    <td><a href="//ask.seowhy.com/article/53" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果页参数y - 验证码与工具">y&nbsp;验证码&nbsp;nonce</a></td>
-                </tr>';
-        }
-        if ($i % 4 == 2)  {
-            echo '
-                    <td><a href="//ask.seowhy.com/article/53" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果页参数y - 验证码与工具">y&nbsp;验证码&nbsp;nonce</a></td>
-                    <td></td>
-                </tr>';
-        }
-        if ($i % 4 == 1)  {
-            echo '
-                    <td><a href="//ask.seowhy.com/article/53" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果页参数y - 验证码与工具">y&nbsp;验证码&nbsp;nonce</a></td>
-                    <td></td>
-                    <td></td>
-                </tr>';
-        }
-        echo '
-            </tbody>
-        </table>
-    </div>';    
-    }
-
+if (strlen($s) > 0) {
     // 右侧知心打分
 
     $score = json_decode(file_get_contents
@@ -2936,7 +2998,7 @@ if (strlen($s) > 0) {
                     <a href="https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php" target="_blank" rel="external nofollow noreferrer">百度参数分析工具</a>
                 </td>
                 <td>
-                    <a href="//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">更新日志</a>
+                    <a href="//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a>
                 </td>
                 <td>
                     <a href="//www.weixingon.com/chaolianfenxi.html" target="_blank">超链分析</a>
@@ -2949,7 +3011,7 @@ if (strlen($s) > 0) {
                     <a href="https://github.com/ausdruck/baidu-prm/blob/master/baidu-f.php" target="_blank" rel="external nofollow noreferrer">百度参数分析工具</a>
                 </td>
                 <td>
-                    <a href="//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">更新日志</a>
+                    <a href="//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a>
                 </td>
             </tr>';
         }
