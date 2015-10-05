@@ -4,7 +4,7 @@
 <head>
 <meta charset="UTF-8">
 <?php
-// 自动生成标题 v2.7
+// 自动生成标题 v2.8
 
 // 请手动修改 url 对应网址、标题后缀、百度实时推送接口、伪静态、关于我
 $url = '//'.$_SERVER['HTTP_HOST'].'/baidu-f.php';
@@ -183,13 +183,36 @@ if (strlen($s) > 0) {
 
     $cache = new FCache();
 
-    if (strlen($cache->get(urlencode($querys))) > 0) {
+    // 字数统计函数
+    function wordcount($str, $encoding = 'UTF-8') {
+        if(strtolower($encoding) == 'gbk') {
+            $encoding = 'gb18030';
+        }
+
+        if(!is_string($str) || $str === '')
+            return false;
+
+            $subLen = 0;
+            for ($i = 0; $i < iconv_strlen($str, $encoding); $i++) {
+                strlen(iconv_substr($str, $i, 1, $encoding)) == 1 ? $subLen += 1 : $subLen += 2;
+            }
+            return $subLen;
+    }
+
+    $wpt = wordcount($pt);
+    $wz = wordcount(htmlspecialchars($z, ENT_QUOTES));
+    $wsug = wordcount(@$sug1[1][0]);
+    $wcache = wordcount($cache->get(urlencode($querys)));
+
+    if (strlen($cache->get(urlencode($querys))) > 0 && ($wcache + $wz) < 48) {
         echo $cache->get(urlencode($querys)).'_';
     }
     else {
         // 下拉框提示模式 I 第 1 位查询扩展作为主标题
         if (strlen(@$sug1[1][0]) > 0) {
-            echo $sug1[1][0].'_';
+            if (($wcache + $wz) < 48) {
+                echo $sug1[1][0].'_';
+            }
             $cache->add(urlencode($querys), $sug1[1][0]);
         }
 
@@ -209,22 +232,46 @@ if (strlen($s) > 0) {
     }
 
     // 引号转换为 HTML 实体的查询词作为副标题
-    echo htmlspecialchars($z, ENT_QUOTES).'_';
+    echo htmlspecialchars($z, ENT_QUOTES);
+    // 标题后缀，品牌名
+    if (($wcache + $wz + $wpt) < 49 | ($wsug + $wz + $wpt) < 49) {
+        echo '_'.$pt;
+    }
 }
-
-// 标题后缀，品牌名
-echo $pt.'</title>
-<meta content="还你一个没有百度推广、产品的搜索结果页。" name="description" />
+else {
+    echo $pt;
+}
+echo '</title>
+<meta content="';
+if (file_exists('stocke/'.urlencode($query).'-abs.txt')) {
+    echo file_get_contents('stocke/'.urlencode($query).'-abs.txt');
+}
+else {
+echo '还你一个没有百度推广、产品的搜索结果页。';
+}
+echo '" name="description" />
 ';
 
-// 下拉框提示词第 1 位，查询词作为 meta keywords
+// 下拉框提示词第 1 - 5 位，查询词作为 meta keywords
 echo '<meta content="';
 if (strlen($s) > 0) {
-    if (strlen($cache->get(urlencode($querys))) > 0) {
+    if (strlen($cache->get(urlencode($querys))) > 0 && $cache->get(urlencode($querys)) != $pt) {
         echo $cache->get(urlencode($querys)).',';
     }
-    elseif (strlen(@$sug1[1][0]) > 0) {
+    elseif (strlen(@$sug1[1][0]) > 0 && @$sug1[1][0] != $pt) {
         echo $sug1[1][0].',';
+    }
+    if (strlen(@$sug1[1][1]) > 0 && @$sug1[1][1] != $pt) {
+        echo $sug1[1][1].',';
+    }
+    if (strlen(@$sug1[1][2]) > 0 && @$sug1[1][2] != $pt) {
+        echo $sug1[1][2].',';
+    }
+    if (strlen(@$sug1[1][3]) > 0 && @$sug1[1][3] != $pt) {
+        echo $sug1[1][3].',';
+    }
+    if (strlen(@$sug1[1][4]) > 0 && @$sug1[1][4] != $pt) {
+        echo $sug1[1][4].',';
     }
     echo htmlspecialchars($z, ENT_QUOTES).',';
 }
@@ -234,7 +281,11 @@ if (strlen($s) > 0) {
     echo htmlspecialchars($z, ENT_QUOTES).'_'.$pt;
 }
 echo '" />
-<link rel="canonical" href="http:'.$url.$l.@$querys.'" />
+<link rel="canonical" href="http:'.$url;
+if (strlen(@$querys) > 0) {
+    echo $l;
+}
+echo @$querys.'" />
 ';
 ?>
 <meta name="renderer" content="webkit" />
@@ -950,7 +1001,7 @@ if (strlen(@$mnum[0]) > 0) {
                 // F2
                 if (preg_match_all("/(?<=F2':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $mf2)) {
                     foreach ($msrcid[3] as $i => $v) {
-                        // 同音词
+                        // 近音词
                         if ($mf[4][$i] == 'F') {
                             $homonym[$i] = '&nbsp;<span class="pinks" title="F0&nbsp;=&nbsp;xFxxxxxx&nbsp;多义词结果">多义词</span>';
                         }
@@ -978,22 +1029,22 @@ if (strlen(@$mnum[0]) > 0) {
                             $sug9[$i] = '&nbsp;<a class="pinks" href="//www.weixingon.com/baidusp-hot.php?s='.$query.'" title="F1&nbsp;=&nbsp;xxxxx5xx&nbsp;早先其他人还搜索的相关热门内容" target="_blank" rel="external nofollow noreferrer">老热门内容</a>';
                         }
                         // 标题类型
-                        elseif ($mf2[9][$i].$mf2[10][$i] == 'EB') {
+                        elseif (@$mf2[9][$i].@$mf2[10][$i] == 'EB') {
                             $title[$i] = '&nbsp;<span class="pinks" title="F2&nbsp;=&nbsp;xxxxxxEB&nbsp;锚文本&nbsp;-&nbsp;网页标题&nbsp;anchortext&nbsp;-&nbsp;title">锚文本&nbsp;-&nbsp;网页标题</span>';
                         }
-                        elseif ($mf2[9][$i].$mf2[10][$i] == 'EA') {
+                        elseif (@$mf2[9][$i].@$mf2[10][$i] == 'EA') {
                             $title[$i] = '&nbsp;<a class="pinks" href="//www.vuln.cn/813" title="F2&nbsp;=&nbsp;xxxxxxEA&nbsp;锚文本&nbsp;anchortext" target="_blank" rel="external nofollow noreferrer">锚文本</a>';
                         }
-                        elseif ($mf2[9][$i].$mf2[10][$i] == '6F') {
+                        elseif (@$mf2[9][$i].@$mf2[10][$i] == '6F') {
                             $title[$i] = '&nbsp;<a class="pinks" href="/wordcount/#exp" title="F2&nbsp;=&nbsp;xxxxxx6F&nbsp;大字标题&nbsp;-&nbsp;网页标题&nbsp;headline&nbsp;-&nbsp;title" target="_blank" rel="external nofollow noreferrer">大字标题&nbsp;-&nbsp;网页标题</a>';
                         }
-                        elseif ($mf2[9][$i].$mf2[10][$i] == '6E') {
+                        elseif (@$mf2[9][$i].@$mf2[10][$i] == '6E') {
                             $title[$i] = '&nbsp;<a class="pinks" href="//ask.seowhy.com/question/8411" title="F2&nbsp;=&nbsp;xxxxxx6E&nbsp;大字标题&nbsp;headline" target="_blank" rel="external nofollow noreferrer">大字标题</a>';
                         }
-                        elseif ($mf2[9][$i].$mf2[10][$i] == '6A') {
+                        elseif (@$mf2[9][$i].@$mf2[10][$i] == '6A') {
                             $title[$i] = '&nbsp;<span class="pinks" title="F2&nbsp;=&nbsp;xx2xxx6A&nbsp;标语&nbsp;slogan">标语</span>';
                         }
-                        elseif ($mf2[9][$i].$mf2[10][$i] == '68') {
+                        elseif (@$mf2[9][$i].@$mf2[10][$i] == '68') {
                             $title[$i] = '&nbsp;<span class="pinks" title="F2&nbsp;=&nbsp;xxxxxx68&nbsp;网址&nbsp;url">网址</span>';
                         }
                         $nsrcid[$i] = array ($msrcid[5][$i], $mserp[1][$i], $msrcid[3][$i], $mserp[3][$i], $msrcid[7][$i], @$title[$i], @$lm[$i], @$sug9[$i], @$homonym[$i]);
@@ -1083,8 +1134,10 @@ if (strlen(@$mnum[0]) > 0) {
         $rrr = array (' ', '');
         $queryn = htmlspecialchars(preg_replace($p, $rrr, $s));
         $srcid = array (
+array(29311, $queryn.'&nbsp;品牌特卖&nbsp;百度特卖', '', '', 'ec'),
 array(29308, $queryn.'&nbsp;综合采购&nbsp;百度商贸', '', '', 'ec'),
 array(29279, $queryn.'&nbsp;精选问答合集&nbsp;百度健康', '', '', 'ec'),
+array(29278, $queryn.'&nbsp;问答列表&nbsp;百度健康', '', '', 'ec'),
 array(29276, $queryn.'&nbsp;病症&nbsp;百度健康', '', '', 'ec'),
 array(29266, '向医生提问&nbsp;'.$queryn.'&nbsp;百度知道', '', '', 'ec'),
 array(29261, '问答&nbsp;百度健康', '', '', 'ec'),
@@ -1122,7 +1175,7 @@ array(29083, '药品频道&nbsp;寻医问药网&nbsp;百度健康', '', '', 'ec'
 array(29081, '手术&nbsp;百度健康', '', '', 'ec'),
 array(29080, $queryn.'&nbsp;知识图片&nbsp;百度健康', '', '', 'ec'),
 array(29070, '网页游戏&nbsp;百度爱玩', '', '', 'ec'),
-array(29051, '百度微购', '', '', 'ec'),
+array(29051, $queryn.'&nbsp;百度微购', '', '', 'ec'),
 array(29010, $queryn.'&nbsp;家装&nbsp;百度微购', '', '', 'ec'),
 array(28299, '知识图谱', '', '', 'ec'),
 array(28232, $queryn.'&nbsp;百度词典', '', '', 'sp'),
@@ -1199,6 +1252,7 @@ array(19979, '政府官网', '', '', 'sp'),
 array(19912, '新氧美容整形', '', '', 'sp'),
 array(19817, '系统之家', '', '', 'sp'),
 array(19792, '伊秀美容', '', '', 'sp'),
+array(19790, '伊秀服饰网', '', '', 'sp'),
 array(19788, '伊秀娱乐网', '', '', 'sp'),
 array(19787, '伊秀生活网', '', '', 'sp'),
 array(19786, '亲子&nbsp;伊秀生活网', '', '', 'sp'),
@@ -1212,9 +1266,11 @@ array(19674, '乐途旅游', '', '', 'sp'),
 array(19666, '中大网校', '', '', 'sp'),
 array(19568, '系统屋', '', '', 'sp'),
 array(19502, '蚂蜂窝', '', '', 'sp'),
+array(19412, '百度知心', '', '', 'sp'),
 array(19385, '授权经销商&nbsp;汽车之家', '', '', 'ec'),
 array(19303, '543小游戏', '', '', 'sp'),
 array(19255, '汽车之家', '', '', 'sp'),
+array(19254, '汽车之家', '', '', 'sp'),
 array(19165, '公务员考试网', '', '', 'sp'),
 array(19093, '游戏攻略&nbsp;18183手机游戏网', '', '', 'sp'),
 array(19081, '游戏攻略&nbsp;18183手机游戏网', '', '', 'sp'),
@@ -1249,6 +1305,7 @@ array(17518, '全国长途汽车时刻表及汽车票价查询&nbsp;携程汽车
 array(17502, '购买推荐&nbsp;慧聪网', '', '', 'sp'),
 array(17340, '法律快车网', '', '', 'sp'),
 array(17313, '症状库&nbsp;求医网', '', '', 'sp'),
+array(17312, '求医网', '', '', 'sp'),
 array(17306, '太平洋汽车网', '', '', 'sp'),
 array(17274, '游戏狗', '', '', 'sp'),
 array(17154, '齐家商城', '', '百度收购', 'sp'),
@@ -1282,6 +1339,7 @@ array(16524, '疑似推销', '', '', 'sp'),
 array(16502, 'CSDN博客', '', '', 'sp'),
 array(16499, '[猜]&nbsp;港股实时行情&nbsp;-&nbsp;东方财富网', '', '', 'sp'),
 array(16498, '[猜]&nbsp;股票实时行情&nbsp;-&nbsp;东方财富网', '', '', 'sp'),
+array(16494, '500彩票网', '', '', 'sp'),
 array(16488, '百度知道问律师', '', '', 'sp'),
 array(16450, '百度阿拉丁&nbsp;robots&nbsp;禁止抓取', '', '', 'sp'),
 array(16448, '性病科&nbsp;挂号网', '', '', 'sp'),
@@ -1291,6 +1349,7 @@ array(16387, '手机&nbsp;太平洋电脑网', '', '', 'sp'),
 array(16379, '百度旅游', '', '', 'sp'),
 array(16375, '91手游网', '', '', 'sp'),
 array(16369, '动漫之家', '', '', 'sp'),
+array(16360, '时时比分网', '', '', 'sp'),
 array(16355, '[猜]&nbsp;系统之家', '', '', 'sp'),
 array(16345, '[猜]&nbsp;世界杯&nbsp;网易体育', '', '', 'sp'),
 array(16343, '[猜]&nbsp;NBA赛季&nbsp;新浪体育', '', '', 'sp'),
@@ -1350,6 +1409,8 @@ array(15557, '[猜]&nbsp;中公教育', '', '', 'sp'),
 array(15547, '整形美容&nbsp;-&nbsp;悦美网', '', '', 'sp'),
 array(15516, '人人网同名搜索', '', '', 'sp'),
 array(15515, '人人网同名搜索', '', '', 'sp'),
+array(15494, '就医160网', '', '', 'sp'),
+array(15492, '北京市预约挂号统一平台', '', '', 'sp'),
 array(15460, '中国足彩网', '', '', 'sp'),
 array(15448, '慧聪商务搜索', '', '', 'sp'),
 array(15442, '疾病百科&nbsp;39健康网', '', '', 'sp'),
@@ -1360,6 +1421,7 @@ array(15352, '系统家园', '', '', 'sp'),
 array(15346, '精品课程&nbsp;百度文库', '', '', 'sp'),
 array(15295, '畛域_百度视频', '', '', 'sp'),
 array(15279, '客服电话&nbsp;[3－4]', '', '', 'sp'),
+array(15267, '英雄&nbsp;百度爱玩', '', '', 'sp'),
 array(15232, '百度轻应用', '', '', 'sp'),
 array(15213, '整形报价大全&nbsp;悦美整形网', '', '', 'sp'),
 array(15200, '豆瓣电影', '', '', 'sp'),
@@ -1406,6 +1468,7 @@ array(14434, '天极产品库', '', '', 'sp'),
 array(14427, '天极下载', '', '', 'sp'),
 array(14421, '时刻表&nbsp;发车间隔&nbsp;同程网', '', '', 'sp'),
 array(14412, '公司财报&nbsp;同花顺财经', '', '', 'sp'),
+array(14389, '第一比分网', '', '', 'sp'),
 array(14331, '百度经验【图文】', '', '', 'sp'),
 array(14330, 'pc6下载站', '', '', 'sp'),
 array(14324, '天气预报&nbsp;中国天气网', '', '', 'sp'),
@@ -1499,6 +1562,7 @@ array(12809, '综艺&nbsp;爱奇艺', '', '', 'sp'),
 array(12762, '蚂蜂窝', '', '', 'sp'),
 array(12729, '百度票务', '', '', 'sp'),
 array(12726, '医院&nbsp;好大夫在线', '', '', 'sp'),
+array(12658, '食谱&nbsp;太平洋亲子网', '', '', 'sp'),
 array(12645, '[猜]&nbsp;轿车&nbsp;易车网', '', '', 'sp'),
 array(12644, '软件排行榜&nbsp;太平洋下载', '', '', 'sp'),
 array(12643, '百度团购第&nbsp;2&nbsp;种起点', '', '', 'sp'),
@@ -1516,10 +1580,12 @@ array(12521, '开心网会员登录', '', '', 'sp'),
 array(12512, '录取分数线&nbsp;高考招生&nbsp;中国教育在线', '', '', 'sp'),
 array(12501, '育儿&nbsp;太平洋亲子网', '', '', 'sp'),
 array(12500, '育儿检测&nbsp;太平洋亲子网', '', '', 'sp'),
+array(12491, '怀孕&nbsp;太平洋亲子网', '', '', 'sp'),
 array(12403, '壹基金', '', '', 'sp'),
 array(12391, '装修&nbsp;齐家网', '', '', 'sp'),
 array(12360, '足球队&nbsp;新浪体育', '', '', 'sp'),
 array(12353, '快速问医生', '', '', 'sp'),
+array(12352, '最佳答案', '', '', 'sp'),
 array(12347, '产品导航&nbsp;手机&nbsp;太平洋电脑网', '', '', 'sp'),
 array(12346, '商户&nbsp;大众点评网', '', '', 'sp'),
 array(12345, '食品营养价值&nbsp;美食天下', '', '', 'sp'),
@@ -1545,6 +1611,7 @@ array(11952, '百度口碑', '', '', 'sp'),
 array(11940, '全国省份天气预报&nbsp;中国天气网', '', '', 'sp'),
 array(11939, '网页游戏开服表&nbsp;07073游戏网', '', '', 'sp'),
 array(11933, '中国易登网', '', '', 'sp'),
+array(11903, '易登网', '', '', 'sp'),
 array(11899, '[猜]&nbsp;维基百科|百度团购|百度杀毒', '', '', 'sp'),
 array(11898, '知名网站', '', '', 'sp'),
 array(11874, '九牛网', '', '', 'sp'),
@@ -1569,12 +1636,14 @@ array(11610, '成人高考报名时间_考试吧', '', '', 'sp'),
 array(11582, '中超&nbsp;新浪体育', '', '', 'sp'),
 array(11576, '搜狐焦点网', '', '', 'sp'),
 array(11547, '求医网', '', '', 'sp'),
+array(11540, '爱奇艺', '', '', 'sp'),
 array(11539, '足球联赛对战表&nbsp;新浪体育', '', '', 'sp'),
 array(11520, '观后感、评论&nbsp;豆瓣电影', '', '', 'sp'),
 array(11519, '影评、简介及基本信息&nbsp;豆瓣电影', '', '', 'sp'),
 array(11513, '最新港股财报&nbsp;同花顺', '', '', 'sp'),
 array(11512, '一游网', '', '', 'sp'),
 array(11501, 'hao123下载站', '', '', 'sp'),
+array(11492, '采集观点&nbsp;百度知道', '', '', 'sp'),
 array(11490, '国际原油期货价格&nbsp;国际石油网', '', '', 'sp'),
 array(11478, '间接确认的官网', '', '', 'sp'),
 array(11471, '国家授时中心标准时间', '', '', 'sp'),
@@ -1590,6 +1659,7 @@ array(11409, '公益咨询电话', '', '', 'sp'),
 array(11386, '百度贴吧', '', '', 'sp'),
 array(11358, '【携程酒店】', '', '', 'sp'),
 array(11353, '铁路客户服务中心官网', '', '', 'sp'),
+array(11342, '健康畛域&nbsp;百度健康', '', '', 'sp'),
 array(11314, '系统屋', '', '', 'sp'),
 array(11301, '人民网宏观经济数据库', '', '', 'sp'),
 array(11299, '手机中国', '', '', 'sp'),
@@ -1602,6 +1672,7 @@ array(11205, '新浪星座查询', '', '', 'sp'),
 array(11196, '12306&nbsp;官网', '', '', 'sp'),
 array(11175, '[猜]&nbsp;百度贴吧直播', '', '', 'sp'),
 array(11170, '太平洋下载中心', '', '', 'sp'),
+array(11140, '妈妈网百科', '', '', 'sp'),
 array(11129, '[猜]&nbsp;综艺节目联系方式', '', '', 'sp'),
 array(11098, '铁路订票电话 95105105&nbsp;外地订票需加拨出发地区号', '', '', 'sp'),
 array(11051, '3533手机世界', '', '', 'sp'),
@@ -1610,6 +1681,7 @@ array(10972, '汽车点评', '', '', 'sp'),
 array(10951, '妈妈网百科', '', '', 'sp'),
 array(10936, '英语四六级&nbsp;新浪教育', '', '', 'sp'),
 array(10927, '电视节目表', '', '', 'sp'),
+array(10908, 'hao123下载站', '', '', 'sp'),
 array(10904, '全国大学英语四六级考试(CET)官方成绩查询', '', '', 'sp'),
 array(10858, '高考分数线&nbsp;新浪高考', '', '', 'sp'),
 array(10827, '高考各省市录取分数线汇总&nbsp;新浪高考', '', '', 'sp'),
@@ -1626,6 +1698,7 @@ array(10764, '高考查分&nbsp;新浪高考', '', '', 'sp'),
 array(10744, '考研分数线查询&nbsp;新浪教育', '', '', 'sp'),
 array(10723, '考研真题试卷&nbsp;新浪教育', '', '', 'sp'),
 array(10693, '世界时间&nbsp;百度开放平台', '', '', 'sp'),
+array(10682, '客服电话', '', '', 'sp'),
 array(10678, '基金吧&nbsp;天天基金网', '', '', 'sp'),
 array(10654, '系统粉', '', '', 'sp'),
 array(10652, '实例&nbsp;聚合&nbsp;百度百科', '', '', 'sp'),
@@ -1633,6 +1706,7 @@ array(10646, '[猜]&nbsp;客船沉没', '', '', 'sp'),
 array(10639, '[猜]&nbsp;中国移动客服电话', '', '', 'sp'),
 array(10610, '百度招聘', '', '', 'sp'),
 array(10594, '飞翔游戏', '', '', 'sp'),
+array(10585, '百度爸妈搜索', '', '', 'sp'),
 array(10577, '网页游戏&nbsp;百度游戏', '', '', 'sp'),
 array(10543, 'AK军事网', '', '', 'sp'),
 array(10530, '药品通&nbsp;39健康网', '', '', 'sp'),
@@ -1667,6 +1741,7 @@ array(10197, '预约加号&nbsp;好大夫在线', '', '', 'sp'),
 array(10183, '时刻表&nbsp;票价&nbsp;同程网', '', '', 'sp'),
 array(10178, '展现多方观点&nbsp;百度知道', '', '', 'sp'),
 array(10175, '找好医院&nbsp;家庭医生在线', '', '', 'sp'),
+array(10169, '风行网', '', '', 'sp'),
 array(10162, '装修效果图大全&nbsp;齐家网', '', '', 'sp'),
 array(10161, '[猜]疾病&nbsp;寻医问药专家网', '', '', 'sp'),
 array(10139, '人民币利率&nbsp;和讯网', '', '', 'sp'),
@@ -1679,11 +1754,13 @@ array(10015, '[猜]&nbsp;时间轴新闻&nbsp;腾讯网|新浪网', '', '', 'sp'
 array(8047, '百度招聘', '', '', 'sp'),
 array(8041, '中国内地音乐网站聚合', '', '百度音乐|虾米音乐|QQ音乐|网易云音乐|酷我音乐|一听音乐', 'sp'),
 array(8003, '港股实时行情&nbsp;东方财富网', '', '', 'sp'),
+array(7148, '推荐医院&nbsp;好大夫在线', '', '', 'sp'),
 array(7136, '就医助手&nbsp;39健康网', '', '', 'sp'),
 array(7127, '百度药品', '', '', 'sp'),
 array(7123, '推荐医院&nbsp;好大夫在线', '', '', 'sp'),
 array(7092, '航班信息', '', '', 'sp'),
 array(7086, '4399小游戏', '', '', 'sp'),
+array(7085, '178游戏网', '', '', 'sp'),
 array(7084, '点评&nbsp;中关村在线', '', '', 'sp'),
 array(7079, '数码系列&nbsp;中关村在线', '', '', 'sp'),
 array(7076, '详情页&nbsp;-&nbsp;中关村在线', '', '', 'sp'),
@@ -1817,38 +1894,13 @@ array(4, $queryn.'&nbsp;百度图片', '', '', 'ec'),
 array(1, $queryn.'&nbsp;百度视频', '', '', 'ec')
         );
 
-        // 字数统计函数
-        function smarty_modifier_wordcount($str,$encoding = 'UTF-8') {
-
-            if(strtolower($encoding) == 'gbk') {
-                $encoding = 'gb18030';
-            }
-    
-            if(!is_string($str)||$str === '')
-                return false;
-
-            $mbLen = iconv_strlen($str, $encoding);
-            $subLen = 0;
-
-            for ($i = 0; $i < $mbLen; $i++) {
-                $mbChr = iconv_substr($str, $i, 1, $encoding);
-
-                if (1 == strlen($mbChr)) {
-                    $subLen += 1;
-                }
-                else {
-                    $subLen += 2;
-                }
-            }
-            return $subLen;
-        }
-
         $np = array (
             '/(http:\/\/kgb.baidu.com)/',
             '/(http:\/\/publichospital.health.vs-static.baidu.com)/',
             '/(http:\/\/27018_aladdin.baidu.com\/src27018\/)/',
             '/(http:\/\/plastic.health.vs-static.baidu.com)/',
             '/(http:\/\/qaen.health.vs-static.baidu.com)/',
+            '/(http:\/\/med.structuralWenda.health.vs-static.baidu.com)/',
             '/(http:\/\/qa.health.vs-static.baidu.com)/',
             '/(http:\/\/symptomfilteranswer.health.vs-static.baidu.com\/)/',
             '/(http:\/\/symptomanswer.health.vs-static.baidu.com\/)/',
@@ -1863,6 +1915,7 @@ array(1, $queryn.'&nbsp;百度视频', '', '', 'ec')
             '/(http:\/\/29163.baidu.com)/',
             '/(http:\/\/29153.baidu.com)/',
             '/(http:\/\/29134.baidu.com)/',
+            '/(http:\/\/nourl.ubs.baidu.com\/29311)/',
             '/(http:\/\/nourl.ubs.baidu.com\/29115)/',
             '/(http:\/\/nourl.ubs.baidu.com\/29114)/',
             '/(http:\/\/tsm.nuomi.com\/28027\/)/',
@@ -1877,6 +1930,7 @@ array(1, $queryn.'&nbsp;百度视频', '', '', 'ec')
             '//sou.autohome.com.cn/zonghe?q=',
             '//jiankang.baidu.com/Plastic/search?key='.$query,
             '//jiankang.baidu.com/jibing/card?wd='.$query,
+            '//jiankang.baidu.com/wenda/mining?key='.$query,
             '//jiankang.baidu.com/wenda/search?key='.$query,
             '//muzhi.baidu.com/ask',
             '//jiankang.baidu.com/wenda/search?key='.$query,
@@ -1891,6 +1945,7 @@ array(1, $queryn.'&nbsp;百度视频', '', '', 'ec')
             '//iwan.baidu.com/search?searchquery='.$query,
             '//iwan.baidu.com/mobilegame',
             '//iwan.baidu.com/search?searchquery='.$query,
+            '//temai.baidu.com/Index/index?wd='.$query,
             '//temai.baidu.com/Index/index?wd='.$query,
             '//temai.baidu.com/Index/index?wd='.$query,
             '//www.nuomi.com/search?ie=gbk&amp;k=',
@@ -1912,7 +1967,7 @@ array(1, $queryn.'&nbsp;百度视频', '', '', 'ec')
                         </a>
                         '.$n[$i][5].$n[$i][6].$n[$i][7].$n[$i][8].'
                     </td>
-                    <td class="center">'.smarty_modifier_wordcount(stripslashes(htmlspecialchars_decode($n[$i][1], ENT_QUOTES))).'</td>
+                    <td class="center">'.wordcount(stripslashes(htmlspecialchars_decode($n[$i][1], ENT_QUOTES))).'</td>
                     <td class="center" title="模板&nbsp;'.$n[$i][4].'">'.$srcid[$h][1].'</td>
                 </tr>';
                     unset($n[$i]);
@@ -2873,15 +2928,18 @@ array(1, $queryn.'&nbsp;百度视频', '', '', 'ec')
         </thead>
         <tbody class="break">';
 
-        foreach ($mabs[1] as $i => $v) {
+        foreach ($mabs[0] as $i => $v) {
             echo '
             <tr class="back-gold">
-                <td>'.strip_tags($mabs[1][$i]).'</td>
+                <td>'.strip_tags($mabs[0][$i]).'</td>
             </tr>';
         }
         echo '
         </tbody>
     </table>';
+    }
+    if (strlen($mabs[0][0]) > 0 && file_exists('stock/'.urlencode($query).'-abs.txt') == false) {
+        file_put_contents('stock/'.urlencode($query).'-abs.txt', strip_tags($mabs[0][0]), LOCK_EX);
     }
 }
 
