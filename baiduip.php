@@ -1,9 +1,9 @@
 <?php header ('Cache-Control: max-age=2592000');?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-cmn-Hans" xml:lang="zh-cmn-Hans">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="cmn-Hans" xml:lang="cmn-Hans">
 <head>
 <meta name="renderer" content="webkit" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 <meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0,minimal-ui" />
 <meta name="apple-mobile-web-app-title" content="百度的IP地址是多少" />
 <meta name="apple-mobile-web-app-capable" content="yes" />
@@ -13,6 +13,7 @@
 <title>百度的IP地址是多少</title>
 <meta content="百度,ip,地址,地理位置,运营商" name="keywords" />
 <meta content="百度的IP地址是多少？" name="description" />
+<link rel="alternate" type="application/rss+xml" title="百度搜索结果参数 RSS Feed" href="//www.weixingon.com/feed.xml" />
 <style type="text/css">
 body,div,h1{
 margin:0;
@@ -85,7 +86,6 @@ $ip = array
     array('61.135.185.31', '北京市', '联通'),
     array('61.135.185.32', '北京市', '联通'),
     array('61.135.169.103', '北京市', '联通'),
-    array('61.135.169.105', '北京市', '联通'),
     array('61.135.169.107', '北京市', '联通'),
     array('61.135.169.113', '北京市', '联通'),
     array('61.135.169.114', '北京市', '联通'),
@@ -137,10 +137,6 @@ $ip = array
     array('180.149.132.168', '北京市', '电信'),
     array('202.108.22.5', '北京市', '联通'),
     array('202.108.22.142', '北京市', '联通'),
-    array('220.181.6.6', '北京市', '电信'),
-    array('220.181.6.18', '北京市', '电信'),
-    array('220.181.6.19', '北京市', '电信'),
-    array('220.181.6.175', '北京市', '电信'),
     array('220.181.37.55', '北京市', '电信'),
     array('220.181.111.22', '北京市', '电信'),
     array('220.181.111.37', '北京市', '电信'),
