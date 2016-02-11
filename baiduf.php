@@ -2512,7 +2512,7 @@ array(1, $queryn.'&nbsp;百度视频', 'sp', '', 'ec')
         foreach ($n as $i => $v) {
             foreach ($srcid as $h => $v) {
                 if (@$n[$i][0] == $srcid[$h][0]) {
-                    $nn[$i] = ($srcid[$h]);
+                    @$nn[$i] = ($srcid[$h]);
                     break;
                 }
             }
@@ -2520,17 +2520,17 @@ array(1, $queryn.'&nbsp;百度视频', 'sp', '', 'ec')
                 echo '
                 <tr class="back-white">
                     <td>'.$n[$i][2].'&nbsp;<a itemprop="url" href="'.$n[$i][3].'" rel="external nofollow noreferrer" target="_blank" title="'.wordcount(stripslashes(htmlspecialchars_decode($n[$i][1], ENT_QUOTES))).'">'.str_replace($pp, $rp, stripslashes($n[$i][1])).'</a>'.$n[$i][5].$n[$i][6].$n[$i][7].$n[$i][8].$n[$i][9];
-                if ($nn[$i][0] == 1599 || $nn[$i][0] == 1539 || $nn[$i][0] == 1538 || $nn[$i][0] == 1529 || $nn[$i][0] == 1526 || $nn[$i][0] == 1525 || $nn[$i][0] == 1524 || $nn[$i][0] == 1509) {
-                    echo '<br><span class="tiny">'.(str_replace($pp, $rp, strip_tags($mabs[3][@$jj + 0]))).'</span>';
+                if (@$nn[$i][0] == 1599 || @$nn[$i][0] == 1539 || @$nn[$i][0] == 1538 || @$nn[$i][0] == 1529 || $nn[$i][0] == @1526 || @$nn[$i][0] == 1525 || @$nn[$i][0] == 1524 || @$nn[$i][0] == 1509) {
+                    echo '<br><span class="tiny">'.(str_replace($pp, $rp, strip_tags(@$mabs[3][@$jj + 0]))).'</span>';
                     @$jj += 1;
                 }
                 echo '</td>
                     <td class="center" title="模板&nbsp;'.$n[$i][4].'">';
                 if (strlen(@$n[$i][10]) > 0) {
-                    echo '<a itemprop="url" href="'.$n[$i][10].'" target="_blank" rel="external nofollow noreferrer">'.$nn[$i][1].'</a>';
+                    echo '<a itemprop="url" href="'.$n[$i][10].'" target="_blank" rel="external nofollow noreferrer">'.@$nn[$i][1].'</a>';
                 }
                 else
-                    echo $nn[$i][1];
+                    echo @$nn[$i][1];
                 echo '</td>
                 </tr>';
                 unset($n[$i]);
@@ -2539,16 +2539,16 @@ array(1, $queryn.'&nbsp;百度视频', 'sp', '', 'ec')
                 echo '
                 <tr class="back-egg">
                     <td>'.$n[$i][2].'&nbsp;<a itemprop="url" target="_blank" href="';
-                if ($nn[$i][0] == 8041 ) {
+                if (@$nn[$i][0] == 8041 ) {
                     echo '//sou.kuwo.cn/ws/NSearch?key='.$query;
                 }
-                elseif ($nn[$i][0] == 6006 ) {
+                elseif (@$nn[$i][0] == 6006 ) {
                     echo '//www.ip138.com/ips138.asp?ip='.$n[$i][1];
                 }
                 else {
                     echo $n[$i][3];
                 }
-                echo '" rel="external nofollow noreferrer" title="'.$nn[$i][4].'">'.$n[$i][1].'&nbsp;'.$nn[$i][1].'</a></td>
+                echo '" rel="external nofollow noreferrer" title="'.@$nn[$i][4].'">'.$n[$i][1].'&nbsp;'.@$nn[$i][1].'</a></td>
                     <td class="center"><a itemprop="url" target="_blank" href="//www.weixingon.com/baidusp-op.php?srcid='.$n[$i][0].'&amp;s='.preg_replace('/(\s+)/', '+', $n[$i][1]).'" rel="external nofollow noreferrer" title="模板&nbsp;'.$n[$i][4].'">'.$n[$i][0].'</a></td>
                 </tr>';
                 unset($n[$i]);
@@ -2557,7 +2557,7 @@ array(1, $queryn.'&nbsp;百度视频', 'sp', '', 'ec')
                 if ($osp == 'on' || ($oas != 'on' && $osp != 'on' && $oec != 'on')) {
                     echo '
                 <tr class="back-egg">
-                    <td>'.$n[$i][2].'&nbsp;<a itemprop="url" target="_blank" href="'.preg_replace($np, $nr, $n[$i][3]).'" rel="external nofollow noreferrer" title="sp">'.$nn[$i][1].'</a></td>
+                    <td>'.$n[$i][2].'&nbsp;<a itemprop="url" target="_blank" href="'.preg_replace($np, $nr, $n[$i][3]).'" rel="external nofollow noreferrer" title="sp">'.@$nn[$i][1].'</a></td>
                     <td class="center" title="模板&nbsp;'.$n[$i][4].'">'.$n[$i][0].'</td>
                 </tr>';
                 }
@@ -2567,7 +2567,7 @@ array(1, $queryn.'&nbsp;百度视频', 'sp', '', 'ec')
                 if ($oec == 'on' || ($oas != 'on' && $osp != 'on' && $oec != 'on')) {
                     echo '
                 <tr class="back-orange">
-                    <td>'.$n[$i][2].'&nbsp;<a itemprop="url" target="_blank" href="'.preg_replace($np, $nr, $n[$i][3]).'" rel="external nofollow noreferrer" title="'.$nn[$i][4].'">'.$nn[$i][1].'</a></td>
+                    <td>'.$n[$i][2].'&nbsp;<a itemprop="url" target="_blank" href="'.preg_replace($np, $nr, $n[$i][3]).'" rel="external nofollow noreferrer" title="'.@$nn[$i][4].'">'.@$nn[$i][1].'</a></td>
                     <td class="center" title="模板&nbsp;'.$n[$i][4].'">'.$n[$i][0].'</td>
                 </tr>';
                 }
@@ -2579,10 +2579,6 @@ array(1, $queryn.'&nbsp;百度视频', 'sp', '', 'ec')
                     <td>'.$n[$i][2].'&nbsp;未收进资源库</td>
                     <td class="center"><a itemprop="url" target="_blank" href="//www.weixingon.com/baidusp-op.php?srcid='.$n[$i][0].'&amp;s='.preg_replace('/(\s+)/', '+', $n[$i][1]).'" rel="external nofollow noreferrer" title="模板&nbsp;'.$n[$i][4].'">'.$n[$i][0].'</a></td>
                 </tr>';
-                if (!file_exists('stock/')) {
-                    mkdir('stock/', 0755);
-                }
-                file_put_contents('stock/'.urlencode($n[$i][0].'_'.$query).'.txt', $query.'_'.$n[$i][1].'_'.$n[$i][3].'_'.$n[$i][4], LOCK_EX);
             }
         }
         echo '
