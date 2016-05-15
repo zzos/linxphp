@@ -82,15 +82,15 @@ $nf =  array($seg1);
 // 垃圾词二维数组转为一维数组
 foreach ($sf as $k => $v) {
     foreach ($sf[$k] as $i => $v) {
-        $sff[$u] = $sf[$k][$i];
-        $u++;
+        $sff[@$u] = $sf[$k][$i];
+        @$u++;
     }
 }
 // 正常词二维数组转为一维数组
 foreach ($nf as $k => $v) {
     foreach ($nf[$k] as $i => $v) {
-        $nff[$w] = $nf[$k][$i];
-        $w++;
+        $nff[@$w] = $nf[$k][$i];
+        @$w++;
     }
 }
 // 按数组所有值出现的次数精简
@@ -136,7 +136,7 @@ foreach ($cc as $k => $v) {
 // 正常词数组中每个词的垃圾和正常概率
 foreach ($dd as $k => $v) {
     foreach ($cc as $i => $v) {
-        if ($dd[$k][0] == $cc[$i][0]) {
+        if (@$dd[$k][0] == $cc[$i][0]) {
             unset($dd[$k]);
         }
     }
