@@ -13,7 +13,7 @@
 // 配置区
 
 $dir = '/'; // 自定义文件所在目录，例如想把文件放在根目录下 a 目录，'/' 改为 '/a/'
-$cp  = 0;   // 想展现百度图片请把 0 改为 1，保存百度图片请改为 2(不推荐使用)
+$cp  = 1;   // 想展现百度图片请把 0 改为 1，保存百度图片请改为 2(不推荐使用)
 $adr = 0;   // 想用绝对地址请把 0 改为 1
 $flo = 0;   // 想用页脚友情链接请把 0 改为 1
 $link = 0;  // 改为 1 启用伪静态(不推荐使用)
@@ -26,9 +26,59 @@ $pt  = '百度搜索结果参数'; // 自定义标题后缀
 $stk = 'stock/'; // 缓存目录
 $len = 48; // 自定义标题字数上限(48 相当于 24 个汉字长度)
 $des = '还你一个没有百度推广、产品的搜索结果页'; // 默认元描述
-$proxy = array(
-    '',
-); // 代理 IP，用于反百度自动屏蔽机制(建议至少添加 1 个中国内地 IP)
+$token = ''; // 使用自动更新代理 IP 功能请先关注 天香空城 微信号 ulisse 免费申请校验码，然后将校验码填进单引号内保存
+if (strlen($token) == 0) {
+    // 手动添加代理 IP，用于反百度自动屏蔽机制(建议至少添加 1 个中国内地 IP)
+    $proxy = array(
+        '',
+    );
+}
+else {
+    $timer = 'updatetimer/';
+    if (!file_exists($timer)) {
+        mkdir($timer, 0755);
+    }
+    if (!file_exists($timer.'cache')) {
+        file_put_contents($timer.'cache', '', LOCK_EX);
+    }
+    if ((time() - filemtime($timer.'cache') + 1) > 86400) {
+        unlink($timer.'cache');
+        $rand = rand();
+        $time = time();
+        $biz = sha1($token.$rand.$time);
+        $data = array (
+            'biz' => $biz,
+            'nonce' => $rand,
+            'timestamp' => $time,
+        );
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_HEADER, 0);
+        curl_setopt($c, CURLOPT_POST, 1);
+        curl_setopt($c, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 8);
+        curl_setopt($c, CURLOPT_TIMEOUT, 8);
+        curl_setopt($c, CURLOPT_URL, 'http://www.weixingon.com/px.php');
+        $up = curl_exec($c);
+        curl_close($c);
+        file_put_contents($timer.'cache', '', LOCK_EX);
+        file_put_contents($token, $up, LOCK_EX);
+    }
+    $pxz = json_decode(file_get_contents($token), 1);
+    $chao = $pxz['chaos'];
+    $seria = array (3, 9, 7, 4, ':', 5, 8, 2, 6, 1, '.', 0);
+    foreach ($pxz['px'] as $k_k => $v) {
+        for ($i_z = 0; $i_z < strlen($pxz['px'][$k_k]); $i_z++) {
+            $pz[$k_k][$i_z] = substr($pxz['px'][$k_k], $i_z, 1);
+            foreach ($chao as $kr => $v) {
+                if ($pz[$k_k][$i_z] == $chao[$kr]) {
+                    $npxz['px'][$k_k].= $seria[$kr];
+                }
+            }
+        }
+    }
+    $proxy  = $npxz['px'];
+}
 // 可在数组里添加或删除友链
 $fl = array(
     array('http://www.apple.com/cn/', '苹果'),
