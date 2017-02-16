@@ -4,6 +4,11 @@
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/0aed14e485524ca4b3efadfdccdd2fee)](https://www.codacy.com/app/maasdruck/baidu-prm)
 ##更新日志
 
+###百度搜索结果参数分析工具 v1.36
+2017-02-16
+
+首页关键词列表更新为实时热点
+
 ###百度搜索结果参数分析工具 v1.35
 2016-12-21
 
