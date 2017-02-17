@@ -588,9 +588,6 @@ if (strlen($s) == 0) {
 
     // 百度搜索实时热点
 
-    if (!file_exists($rhc) && file_exists($shl)) {
-        file_put_contents($rhc, '', LOCK_EX);
-    }
     if ((time() - filemtime($rhc) + 1) > $ct) {
         unlink($rhc);
         $c = curl_init();
@@ -607,6 +604,9 @@ if (strlen($s) == 0) {
         else {
             touch($shl);
         }
+    }
+    if (!file_exists($rhc) && file_exists($shl)) {
+        file_put_contents($rhc, '', LOCK_EX);
     }
     $sls = json_decode(file_get_contents($shl), 1);
     if ($sls['st'] > 0) {
@@ -638,7 +638,7 @@ if (strlen($s) == 0) {
             <td><a itemprop="url" href="//www.weixingon.com/chaolianfenxi.html" target="_blank" rel="nofollow noreferrer">超链分析</a></td>
             </tr>';
         }
-        if (count($hwd) % 4 == 2) {
+        elseif (count($hwd) % 4 == 2) {
             echo '
             <td><a itemprop="url" href="https://github.com/ausdruck/baidu-prm" target="_blank" rel="external nofollow noreferrer">百度参数分析</a></td>
             <td><a itemprop="url" href="//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
