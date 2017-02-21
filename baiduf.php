@@ -29,6 +29,13 @@ $rhc = 'bdsrthwc'; // 百度实时搜索热点更新记号
 $shl = 'baiduseacrchrealtimehotwords'; // 百度实时搜索热点列表名字
 $len = 48; // 自定义标题字数上限(48 相当于 24 个汉字长度)
 $des = '还你一个没有百度推广、产品的搜索结果页'; // 默认元描述
+$https = 0; // 如果是 https 网站 请把 0 改为 1
+if ($https == 1) {
+    $tps = 's';
+}
+else {
+    $tps = '';
+}
 $token = ''; // 使用自动更新代理 IP 功能请先关注 天香空城 微信号 ulisse 免费申请校验码，然后将校验码填进单引号内保存
 if (strlen($token) == 0) {
     // 手动添加代理 IP，用于反百度自动屏蔽机制(建议至少添加 1 个中国内地 IP)
@@ -61,7 +68,7 @@ else {
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 8);
         curl_setopt($c, CURLOPT_TIMEOUT, 8);
-        curl_setopt($c, CURLOPT_URL, 'http://www.weixingon.com/px.php');
+        curl_setopt($c, CURLOPT_URL, 'https://www.weixingon.com/px.php');
         $up = curl_exec($c);
         curl_close($c);
         file_put_contents($timer.'cache', '', LOCK_EX);
@@ -379,7 +386,7 @@ echo '" name="apple-mobile-web-app-title">
 <meta content="black" name="apple-mobile-web-app-status-bar-style">
 <meta content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0,minimal-ui" name="viewport">
 <?php
-echo '<link href="http://'.$_SERVER['HTTP_HOST'].$url;
+echo '<link href="http'.$tps.'://'.$_SERVER['HTTP_HOST'].$url;
 if (strlen(@$querys) > 0) {
     echo $l;
 }
