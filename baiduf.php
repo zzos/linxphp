@@ -3699,12 +3699,12 @@ if (strlen($s) > 0 && ($cp == 0 || $cp == 1 || $cp == 2)) {
     $pic = @$cpic['data'][0]['objURL'];
     if ($cpic['displayNum'] > 0) {
         if ($cp == 0) {
-            echo '<p><a href="//shitu.baidu.com/n/search?queryImageUrl='.$pic.'" rel="external nofollow noreferrer" target="_blank" title="'.@$query.'">识别相关图片</a></p>
+            echo '<p><a href="//image.baidu.com/n/pc_search?queryImageUrl='.$pic.'" rel="external nofollow noreferrer" target="_blank" title="'.@$query.'">识别相关图片</a></p>
 ';
         }
 
         if ($cp == 1) {
-            echo '<a href="//shitu.baidu.com/n/search?queryImageUrl='.$pic.'" rel="external nofollow noreferrer" target="_blank"><img src="'.$pic.'" alt="'.$query.'" width="112"></a>
+            echo '<a href="//image.baidu.com/n/pc_search?queryImageUrl='.$pic.'" rel="external nofollow noreferrer" target="_blank"><img src="'.$pic.'" alt="'.$query.'" width="112"></a>
 ';
         }
 
@@ -3744,7 +3744,7 @@ if (strlen($s) > 0 && ($cp == 0 || $cp == 1 || $cp == 2)) {
                 unlink($g);
             }
             else
-                echo '<a href="//shitu.baidu.com/n/search?queryImageUrl='.$pic.'" rel="external nofollow noreferrer" target="_blank"><img src="//'.$_SERVER['HTTP_HOST'].$dir.$g.'"  alt="'.$query.'" width="112"></a>
+                echo '<a href="//image.baidu.com/n/pc_search?queryImageUrl='.$pic.'" rel="external nofollow noreferrer" target="_blank"><img src="//'.$_SERVER['HTTP_HOST'].$dir.$g.'"  alt="'.$query.'" width="112"></a>
 ';
         }
     }
