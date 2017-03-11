@@ -1,7 +1,10 @@
 #baidu-prm 百度参数
-吴星个人网站 <a href="http://www.weixingon.com/" target="_blank">weixingon.com</a>
+吴星个人网站 <a href="https://www.weixingon.com/" target="_blank">weixingon.com</a>
 
-[![Codacy Badge](https://api.codacy.com/project/badge/grade/0aed14e485524ca4b3efadfdccdd2fee)](https://www.codacy.com/app/maasdruck/baidu-prm)
+[![Codacy Badge](https://api.codacy.com/project/badge/grade/0aed14e485524ca4b3efadfdccdd2fee)](https://www.codacy.com/app/maasdruck/linxphp)
+
+##<a href="https://www.weixingon.com/daili.php" target="_blank">代理 ip</a>
+
 ##更新日志
 
 ###百度搜索结果参数分析工具 v1.36
