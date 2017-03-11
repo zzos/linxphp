@@ -3,7 +3,7 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/0aed14e485524ca4b3efadfdccdd2fee)](https://www.codacy.com/app/maasdruck/linxphp)
 
-##<a href="https://www.weixingon.com/daili.php" target="_blank">代理 ip</a>
+##<a href="https://www.weixingon.com/daili.php" target="_blank">最新可用代理 ip 列表</a>
 
 ##更新日志
 
