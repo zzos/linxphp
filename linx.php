@@ -24,9 +24,9 @@ else
     $l = '?s=';
 $pt  = '百度搜索结果参数'; // 自定义标题后缀
 $stk = 'stock/'; // 缓存目录
-$ct  = 14400; // 每隔2小时更新一次 360 热词列表
-$rhc = 'rthwc'; // 360 热词更新记号
-$shl = 'realtimehotwords'; // 360 热词列表名字
+$ct  = 14400; // 每隔2小时更新一次搜狗热词列表
+$rhc = 'rthwc'; // 搜狗热词更新记号
+$shl = 'realtimehotwords'; // 搜狗热词列表名字
 $len = 48; // 自定义标题字数上限(48 相当于 24 个汉字长度)
 $des = '还你一个没有百度推广、产品的搜索结果页'; // 默认元描述
 $https = 0; // 如果是 https 网站 请把 0 改为 1
@@ -593,7 +593,7 @@ if (strlen($s) == 0) {
         <hr>
 ';
 
-    // 360 热词
+    // 搜狗热词
 
     if ((time() - filemtime($rhc) + 1) > $ct) {
         unlink($rhc);
@@ -602,18 +602,11 @@ if (strlen($s) == 0) {
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 8);
         curl_setopt($c, CURLOPT_TIMEOUT, 8);
-        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($c, CURLOPT_URL, 'https://www.so.com/zt/api/hotword.js');
+        curl_setopt($c, CURLOPT_URL, 'http://changyan.sohu.com/api/2/topic/sogou_hotword');
         $soh = curl_exec($c);
         curl_close($c);
         if (strlen($soh) > 0) {
-            $so2 = explode('q=', $soh);
-            array_shift($so2);
-            foreach ($so2 as $so3) {
-                $so4 = explode('",', $so3);
-                $so5[] = $so4[0];
-            }
-            file_put_contents($shl, implode("\n", $so5), LOCK_EX);
+            file_put_contents($shl, $soh, LOCK_EX);
         }
         else {
             touch($shl);
@@ -622,18 +615,18 @@ if (strlen($s) == 0) {
     if (!file_exists($rhc) && file_exists($shl)) {
         file_put_contents($rhc, '', LOCK_EX);
     }
-    $sls = explode("\n", file_get_contents($shl));
-    if (strlen($sls[0]) > 0) {
+    $sls = json_decode(file_get_contents($shl), 1);
+    if (strlen($sls['sogou_hot_words'][0]) > 0) {
         echo '    <table>
         <tbody class="back-yellow">';
-        shuffle($sls);
-        foreach ($sls as $i => $v) {
-            $hwd[$i] = strtolower($sls[$i]);
+        shuffle($sls['sogou_hot_words']);
+        foreach ($sls['sogou_hot_words'] as $i => $v) {
+            $hwd[$i] = strtolower($sls['sogou_hot_words'][$i]);
             if ($i % 4 == 0) {
                 echo '<tr>';
             }
             echo '
-            <td><a itemprop="url" href="'.$url.$l.preg_replace('/(\s+)/', '%20', $hwd[$i]).'" target="_blank">'.urldecode($hwd[$i]).'</a></td>';
+            <td><a itemprop="url" href="'.$url.$l.preg_replace('/(\s+)/', '%20', $hwd[$i]).'" target="_blank">'.$hwd[$i].'</a></td>';
             $i++;
             if ($i % 4 == 0) {
                 echo '
