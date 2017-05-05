@@ -5,8 +5,8 @@
 /**
   * @file 可以改成任意后缀为 .php 的文件名
   * @author maas(maasdruck@gmail.com)
-  * @date 2017/02/16
-  * @version v1.36
+  * @date 2017/05/05
+  * @version v1.37
   * @brief 百度搜索结果参数分析工具
   */
 
@@ -24,9 +24,9 @@ else
     $l = '?s=';
 $pt  = '百度搜索结果参数'; // 自定义标题后缀
 $stk = 'stock/'; // 缓存目录
-$ct  = 14400; // 每隔2小时更新一次百度实时搜索热点列表
-$rhc = 'bdsrthwc'; // 百度实时搜索热点更新记号
-$shl = 'baiduseacrchrealtimehotwords'; // 百度实时搜索热点列表名字
+$ct  = 14400; // 每隔2小时更新一次 360 热词列表
+$rhc = 'rthwc'; // 360 热词更新记号
+$shl = 'realtimehotwords'; // 360 热词列表名字
 $len = 48; // 自定义标题字数上限(48 相当于 24 个汉字长度)
 $des = '还你一个没有百度推广、产品的搜索结果页'; // 默认元描述
 $https = 0; // 如果是 https 网站 请把 0 改为 1
@@ -593,20 +593,27 @@ if (strlen($s) == 0) {
         <hr>
 ';
 
-    // 百度搜索实时热点
+    // 360 热词
 
     if ((time() - filemtime($rhc) + 1) > $ct) {
         unlink($rhc);
         $c = curl_init();
         curl_setopt($c, CURLOPT_HEADER, 0);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 3);
-        curl_setopt($c, CURLOPT_TIMEOUT, 3);
-        curl_setopt($c, CURLOPT_URL, 'http://entry.baidu.com/rp/api?di=api100002&qnum=40');
+        curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 8);
+        curl_setopt($c, CURLOPT_TIMEOUT, 8);
+        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($c, CURLOPT_URL, 'https://www.so.com/zt/api/hotword.js');
         $soh = curl_exec($c);
         curl_close($c);
         if (strlen($soh) > 0) {
-            file_put_contents($shl, $soh, LOCK_EX);
+            $so2 = explode('q=', $soh);
+            array_shift($so2);
+            foreach ($so2 as $so3) {
+                $so4 = explode('",', $so3);
+                $so5[] = $so4[0];
+            }
+            file_put_contents($shl, implode("\n", $so5), LOCK_EX);
         }
         else {
             touch($shl);
@@ -615,40 +622,35 @@ if (strlen($s) == 0) {
     if (!file_exists($rhc) && file_exists($shl)) {
         file_put_contents($rhc, '', LOCK_EX);
     }
-    $sls = json_decode(file_get_contents($shl), 1);
-    if ($sls['st'] > 0) {
+    $sls = explode("\n", file_get_contents($shl));
+    if (strlen($sls[0]) > 0) {
         echo '    <table>
         <tbody class="back-yellow">';
-        shuffle($sls['data']['recommends']);
-        foreach ($sls['data']['recommends'] as $i => $v) {
-            if ($sls['data']['recommends'][$i]['type'] == 109) {
-                $hwd[$i] = strtolower($sls['data']['recommends'][$i]['word']);
-                if ($i % 4 == 0) {
-                    echo '<tr>';
-                }
-                echo '
-            <td><a itemprop="url" href="'.$url.$l.preg_replace('/(\s+)/', '%20', $hwd[$i]).'" target="_blank">'.$hwd[$i].'</a></td>';
-                $i++;
-                if ($i % 4 == 0) {
-                    echo '
-            </tr>';
-                }
+        shuffle($sls);
+        foreach ($sls as $i => $v) {
+            $hwd[$i] = strtolower($sls[$i]);
+            if ($i % 4 == 0) {
+                echo '<tr>';
             }
-            else {
-                unlink($sls['data']['recommends'][$i]);
+            echo '
+            <td><a itemprop="url" href="'.$url.$l.preg_replace('/(\s+)/', '%20', $hwd[$i]).'" target="_blank">'.urldecode($hwd[$i]).'</a></td>';
+            $i++;
+            if ($i % 4 == 0) {
+                echo '
+            </tr>';
             }
         }
         if (count($hwd) % 4 == 1) {
             echo '
             <td><a itemprop="url" href="https://github.com/ausdruck/baidu-prm" target="_blank" rel="external nofollow noreferrer">百度参数分析</a></td>
-            <td><a itemprop="url" href="//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
-            <td><a itemprop="url" href="//www.weixingon.com/chaolianfenxi.html" target="_blank" rel="nofollow noreferrer">超链分析</a></td>
+            <td><a itemprop="url" href="https//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
+            <td><a itemprop="url" href="https//www.weixingon.com/chaolianfenxi.html" target="_blank" rel="nofollow noreferrer">超链分析</a></td>
             </tr>';
         }
         elseif (count($hwd) % 4 == 2) {
             echo '
             <td><a itemprop="url" href="https://github.com/ausdruck/baidu-prm" target="_blank" rel="external nofollow noreferrer">百度参数分析</a></td>
-            <td><a itemprop="url" href="//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
+            <td><a itemprop="url" href="https//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
             </tr>';
         }
         elseif (count($hwd) % 4 == 3) {
@@ -3630,14 +3632,14 @@ if (strlen($s) > 0 && strlen(@$mnum[0]) == 0) {
         if (count($maround[0]) % 4 == 1)  {
             echo '
                 <td><a itemprop="url" href="https://github.com/ausdruck/baidu-prm" target="_blank" rel="external nofollow noreferrer">百度参数分析</a></td>
-                <td><a itemprop="url" href="//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
-                <td><a itemprop="url" href="//www.weixingon.com/chaolianfenxi.html" target="_blank" rel="nofollow noreferrer">超链分析</a></td>
+                <td><a itemprop="url" href="https//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
+                <td><a itemprop="url" href="https//www.weixingon.com/chaolianfenxi.html" target="_blank" rel="nofollow noreferrer">超链分析</a></td>
             </tr>';
         }
         elseif (count($maround[0]) % 4 == 2)  {
             echo '
                 <td><a itemprop="url" href="https://github.com/ausdruck/baidu-prm" target="_blank" rel="external nofollow noreferrer">百度参数分析</a></td>
-                <td><a itemprop="url" href="//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
+                <td><a itemprop="url" href="https//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
             </tr>';
         }
         elseif (count($maround[0]) % 4 == 3)  {
