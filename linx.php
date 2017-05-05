@@ -24,9 +24,9 @@ else
     $l = '?s=';
 $pt  = '百度搜索结果参数'; // 自定义标题后缀
 $stk = 'stock/'; // 缓存目录
-$ct  = 14400; // 每隔2小时更新一次搜狗热词列表
-$rhc = 'rthwc'; // 搜狗热词更新记号
-$shl = 'realtimehotwords'; // 搜狗热词列表名字
+$ct  = 14400; // 每隔2小时更新一次豆瓣最新电影列表
+$rhc = 'rthwc'; // 豆瓣最新电影更新记号
+$shl = 'realtimehotwords'; // 豆瓣最新电影列表名字
 $len = 48; // 自定义标题字数上限(48 相当于 24 个汉字长度)
 $des = '还你一个没有百度推广、产品的搜索结果页'; // 默认元描述
 $https = 0; // 如果是 https 网站 请把 0 改为 1
@@ -593,16 +593,17 @@ if (strlen($s) == 0) {
         <hr>
 ';
 
-    // 搜狗热词
+    // 豆瓣最新电影
 
     if ((time() - filemtime($rhc) + 1) > $ct) {
         unlink($rhc);
         $c = curl_init();
         curl_setopt($c, CURLOPT_HEADER, 0);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
-        curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 8);
-        curl_setopt($c, CURLOPT_TIMEOUT, 8);
-        curl_setopt($c, CURLOPT_URL, 'http://changyan.sohu.com/api/2/topic/sogou_hotword');
+        curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 4);
+        curl_setopt($c, CURLOPT_TIMEOUT, 4);
+        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($c, CURLOPT_URL, 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E6%9C%80%E6%96%B0&page_limit=40');
         $soh = curl_exec($c);
         curl_close($c);
         if (strlen($soh) > 0) {
@@ -616,12 +617,12 @@ if (strlen($s) == 0) {
         file_put_contents($rhc, '', LOCK_EX);
     }
     $sls = json_decode(file_get_contents($shl), 1);
-    if (strlen($sls['sogou_hot_words'][0]) > 0) {
+    if (strlen($sls['subjects'][0]['title']) > 0) {
         echo '    <table>
         <tbody class="back-yellow">';
-        shuffle($sls['sogou_hot_words']);
-        foreach ($sls['sogou_hot_words'] as $i => $v) {
-            $hwd[$i] = strtolower($sls['sogou_hot_words'][$i]);
+        shuffle($sls['subjects']);
+        foreach ($sls['subjects'] as $i => $v) {
+            $hwd[$i] = strtolower($sls['subjects'][$i]['title']);
             if ($i % 4 == 0) {
                 echo '<tr>';
             }
