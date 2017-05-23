@@ -5,8 +5,8 @@
 /**
   * @file 可以改成任意后缀为 .php 的文件名
   * @author maas(maasdruck@gmail.com)
-  * @date 2017/05/05
-  * @version v1.37
+  * @date 2017/05/23
+  * @version v1.38
   * @brief 百度搜索结果参数分析工具
   */
 
@@ -20,13 +20,17 @@ $link = 0;  // 改为 1 启用伪静态(不推荐使用)
 if ($link == 1) {
     $l = ''; // 如果会修改服务器配置和写伪静态规则，在这里修改对应的伪静态网址
 }
-else
+else {
     $l = '?s=';
+}
 $pt  = '百度搜索结果参数'; // 自定义标题后缀
 $stk = 'stock/'; // 缓存目录
-$ct  = 14400; // 每隔2小时更新一次豆瓣最新电影列表
-$rhc = 'rthwc'; // 豆瓣最新电影更新记号
-$shl = 'realtimehotwords'; // 豆瓣最新电影列表名字
+$ct  = 14400; // 每隔2小时更新一次首页关键词列表
+$rhc = 'cwhtr'; // 首页更新记号
+$shlbaidu = 'yizhiwangnanfangkai'; // 百度搜索实时热点
+$shl163 = 'ruguohaiyoumingtian'; // 网易音乐
+$shlsogou = 'haikuotiankong'; // 搜狗热搜榜
+$shldouban = 'the+mass'; // 豆瓣最新电影
 $len = 48; // 自定义标题字数上限(48 相当于 24 个汉字长度)
 $des = '还你一个没有百度推广、产品的搜索结果页'; // 默认元描述
 $https = 0; // 如果是 https 网站 请把 0 改为 1
@@ -593,61 +597,135 @@ if (strlen($s) == 0) {
         <hr>
 ';
 
-    // 豆瓣最新电影
-
     if ((time() - filemtime($rhc) + 1) > $ct) {
         unlink($rhc);
+        // 百度搜索实时热点
         $c = curl_init();
         curl_setopt($c, CURLOPT_HEADER, 0);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 4);
         curl_setopt($c, CURLOPT_TIMEOUT, 4);
-        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
-        curl_setopt($c, CURLOPT_URL, 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E6%9C%80%E6%96%B0&page_limit=40');
-        $soh = curl_exec($c);
+        curl_setopt($c, CURLOPT_URL, 'http://entry.baidu.com/rp/api?di=api100002&qnum=40');
+        $ikbaidu = json_decode(curl_exec($c), 1);
         curl_close($c);
-        if (strlen($soh) > 0) {
-            file_put_contents($shl, $soh, LOCK_EX);
+        if ($ikbaidu['st'] > 0) {
+            ob_start();
+            foreach ($ikbaidu['data']['recommends'] as $ikbaidu1) {
+                if ($ikbaidu1['type'] == 109) {
+                    echo strtolower($ikbaidu1['word'])."\n";
+                }
+                else {
+                    unlink($ikbaidu1);
+                }
+            }
+            $ikbaidu0 = ob_get_contents();
+            ob_end_clean();
+            file_put_contents($shlbaidu, $ikbaidu0, LOCK_EX);
         }
         else {
-            touch($shl);
+            touch($shlbaidu);
+        }
+        // 网易音乐
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_HEADER, 0);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 4);
+        curl_setopt($c, CURLOPT_TIMEOUT, 4);
+        curl_setopt($c, CURLOPT_URL, 'http://music.163.com/api/playlist/detail?id=2884035');
+        $ik163 = json_decode(curl_exec($c), 1);
+        curl_close($c);
+        if ($ik163['code'] == 200) {
+            ob_start();
+            foreach ($ik163['result']['tracks'] as $ik1631) {
+                echo strtolower(rtrim($ik1631['name']))."\n";
+            }
+            $ik1630 = ob_get_contents();
+            ob_end_clean();
+            file_put_contents($shl163, $ik1630, LOCK_EX);
+        }
+        else {
+            touch($shl163);
+        }
+        // 搜狗热搜榜
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_HEADER, 0);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 4);
+        curl_setopt($c, CURLOPT_TIMEOUT, 4);
+        curl_setopt($c, CURLOPT_URL, 'http://changyan.sohu.com/api/3/topic/sogou_hotword');
+        $iksogou = json_decode(curl_exec($c), 1);
+        curl_close($c);
+        if (isset($iksogou['sogou_hot_words'][0])) {
+            ob_start();
+            foreach ($iksogou['sogou_hot_words'] as $iksogou1) {
+                echo strtolower($iksogou1)."\n";
+            }
+            $iksogou0 = ob_get_contents();
+            ob_end_clean();
+            file_put_contents($shlsogou, $iksogou0, LOCK_EX);
+        }
+        else {
+            touch($shlsogou);
+        }
+        // 豆瓣最新电影
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_HEADER, 0);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 8);
+        curl_setopt($c, CURLOPT_TIMEOUT, 8);
+        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($c, CURLOPT_URL, 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E6%9C%80%E6%96%B0&page_limit=500');
+        $ikdouban = json_decode(curl_exec($c), 1);
+        curl_close($c);
+        if (isset($ikdouban['subjects'][0]['rate'])) {
+            ob_start();
+            foreach ($ikdouban['subjects'] as $ikdouban1) {
+                echo strtolower(rtrim($ikdouban1['title']))."\n";
+            }
+            $ikdouban0 = ob_get_contents();
+            ob_end_clean();
+            file_put_contents($shldouban, $ikdouban0, LOCK_EX);
+        }
+        else {
+            touch($shldouban);
         }
     }
-    if (!file_exists($rhc) && file_exists($shl)) {
+    if (!file_exists($rhc) && (file_exists($shlbaidu) || file_exists($shl163) || file_exists($shlsogou) || file_exists($shldouban))) {
         file_put_contents($rhc, '', LOCK_EX);
     }
-    $sls = json_decode(file_get_contents($shl), 1);
-    if (strlen($sls['subjects'][0]['title']) > 0) {
+    $slsbaidu = file_get_contents($shlbaidu);
+    $sls163 = file_get_contents($shl163);
+    $slssogou = file_get_contents($shlsogou);
+    $slsdouban = file_get_contents($shldouban);
+    $sls0 = $slsbaidu.$sls163.$slssogou.$slsdouban;
+    $sls = explode("\n", $sls0);
+    array_pop($sls);
+    if (strlen($sls[0]) > 0) {
         echo '    <table>
         <tbody class="back-yellow">';
-        shuffle($sls['subjects']);
-        foreach ($sls['subjects'] as $i => $v) {
-            $hwd[$i] = strtolower($sls['subjects'][$i]['title']);
-            if ($i % 4 == 0) {
+        shuffle($sls);
+        foreach ($sls as $i => $v) {
+            if ($i % 3 == 0) {
                 echo '<tr>';
             }
             echo '
-            <td><a itemprop="url" href="'.$url.$l.preg_replace('/(\s+)/', '%20', $hwd[$i]).'" target="_blank">'.$hwd[$i].'</a></td>';
+            <td><a itemprop="url" href="'.$url.$l.preg_replace('/(\s+)/', '%20', $sls[$i]).'" target="_blank">'.$sls[$i].'</a></td>';
             $i++;
-            if ($i % 4 == 0) {
+            if ($i % 3 == 0) {
                 echo '
             </tr>';
             }
+            if ($i > 38) {
+                break;
+            }
         }
-        if (count($hwd) % 4 == 1) {
-            echo '
-            <td><a itemprop="url" href="https://github.com/ausdruck/baidu-prm" target="_blank" rel="external nofollow noreferrer">百度参数分析</a></td>
-            <td><a itemprop="url" href="https//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
-            <td><a itemprop="url" href="https//www.weixingon.com/chaolianfenxi.html" target="_blank" rel="nofollow noreferrer">超链分析</a></td>
-            </tr>';
-        }
-        elseif (count($hwd) % 4 == 2) {
+        if ($i % 3 == 1) {
             echo '
             <td><a itemprop="url" href="https://github.com/ausdruck/baidu-prm" target="_blank" rel="external nofollow noreferrer">百度参数分析</a></td>
             <td><a itemprop="url" href="https//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
             </tr>';
         }
-        elseif (count($hwd) % 4 == 3) {
+        elseif ($i % 3 == 2) {
             echo '
             <td><a itemprop="url" href="https://github.com/ausdruck/baidu-prm" target="_blank" rel="external nofollow noreferrer">百度参数分析</a></td>
             </tr>';
