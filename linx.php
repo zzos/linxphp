@@ -5,13 +5,11 @@
 /**
   * @file 可以改成任意后缀为 .php 的文件名
   * @author maas(maasdruck@gmail.com)
-  * @date 2017/05/23
+  * @date 2017/06/06
   * @version v1.38
   * @brief 百度搜索结果参数分析工具
   */
-
 // 配置区
-
 $dir = '/'; // 自定义文件所在目录，例如想把文件放在根目录下 a 目录，'/' 改为 '/a/'
 $cp  = 1;   // 想展现百度图片请把 0 改为 1，保存百度图片请改为 2(不推荐使用)
 $adr = 0;   // 想用绝对地址请把 0 改为 1
@@ -98,14 +96,10 @@ $fl = array(
     array('http://www.apple.com/cn/', '苹果'),
     array('https://www.tmall.com/', '天猫'),
     );
-
 // 反垃圾
-
-$pp = array(0=>'翻墙',1=>'vpn',2=>'在线代理',3=>'fqrouter',4=>'goagent',5=>'淫',6=>'套服务',7=>'大鸟',8=>'色',9=>'荒岛女儿国',10=>'av资源',11=>'推拿',12=>'wujie',13=>'漏鸟',14=>'仓井空',15=>'三肖',16=>'shadowsock',17=>'骚',18=>'露鸟',19=>'成人',20=>'包夜',21=>'蜜桃仙子',22=>'全裸',23=>'草榴',24=>'丝袜',25=>'投注',26=>'身透视',27=>'幼女',28=>'姦',29=>'百家乐',30=>'幼交',31=>'idbd下载',32=>'扑克',33=>'分析仪',34=>'网页代理',35=>'军妓',36=>'kayden',37=>'太阳城',38=>'av下载',39=>'蒙汗药',40=>'换妻',41=>'迷晕药',42=>'xingjiao',43=>'老虎机',44=>'日在',45=>'超级学生',46=>'六合',47=>'黄se',48=>'博彩',49=>'刘春玲',50=>'三宝局',51=>'性交',52=>'内射',53=>'人体',54=>'一条龙',55=>'小姐',56=>'深喉',57=>'娱乐城',58=>'g片免费下',59=>'ed2k',60=>'性爱',61=>'肉棒',62=>'乳',63=>'狠狠',64=>'狼人干',65=>'泷泽萝拉',66=>'桑拿',67=>'偷拍自拍',68=>'oldmanxinhen',69=>'丝足',70=>'彩坛',71=>'楼凤',72=>'撸',73=>'新农夫',74=>'r级',75=>'莞',76=>'跟踪定位',77=>'爽片',78=>'sex',79=>'av天堂',80=>'妹',81=>'咪咪',82=>'h版',83=>'性欲',84=>'露阴',85=>'特码',86=>'bt搜索',87=>'乱欲',88=>'轮盘',89=>'五月婷',90=>'ons',91=>'肉蒲',92=>'潮吹',93=>'一夜情',94=>'露奶',95=>'仁科百华',96=>'中特',97=>'一肖',98=>'胴',99=>'被插',100=>'六和',101=>'晨勃',102=>'口交',103=>'阴茎',104=>'阴毛',105=>'射精',106=>'鸡巴',107=>'肛交',108=>'保健',109=>'黄网',110=>'赌',111=>'爽图',112=>'露b',113=>'露B',114=>'自慰',115=>'奶子',116=>'苍蝇水',117=>'葡京',118=>'破解',119=>'裸体',120=>'裸聊',121=>'大奶',122=>'奸',123=>'裸照',124=>'援交',125=>'特服',126=>'动态图',127=>'三级',128=>'勃起',129=>'luoliao',130=>'越狱',131=>'手机定位',132=>'蜘蛛磁力',133=>'波霸',134=>'屄',135=>'少妇白洁',136=>'九九热',137=>'fuck',138=>'技师',139=>'a片',140=>'gv',141=>'上门',142=>'猥琐',143=>'做爱',144=>'报码',145=>'灯草和尚',146=>'野结衣',147=>'阴蒂',148=>'无套',149=>'吸奶',150=>'颜射',151=>'口爆',152=>'全集完结',153=>'特马',154=>'磁力链接',155=>'尻',156=>'祼体',157=>'肛',158=>'大尺度',159=>'吃精',160=>'阴道',161=>'liuhecai',162=>'大屌',163=>'舔',164=>'东方心经',165=>'ssh',166=>'无界',167=>'影梭',168=>'干姐',169=>'侦探',170=>'情药',171=>'春药',172=>'魂药',173=>'下药',174=>'hunk',175=>'bt森林',176=>'按摩',177=>'千金点特',178=>'毛主席',179=>'少妇熟女',180=>'6合',181=>'港马会',182=>'freegate',183=>'摸奶门',184=>'untitled',185=>'官人我要',186=>'京香julia',187=>'无码',188=>'激情视频',189=>'spycall',190=>'义母',191=>'手拉鸡',192=>'钢珠',193=>'气枪',194=>'zm52',195=>'newhalfclub',196=>'蜜桃成熟时3d电影',197=>'收养',198=>'徐明',199=>'绳刑',200=>'tktx麻药',201=>'黑社会',202=>'后台很硬',203=>'政变',204=>'毒品',205=>'av电影bt',206=>'博娱乐',207=>'socks代理',208=>'露鲍',209=>'av天堂',210=>'av种子',211=>'少妇乱伦',212=>'举报',213=>'一起happy下载',214=>'招聘公主',215=>'彩票',216=>'母鸡',217=>'sm女王',218=>'娱乐场',219=>'yaligaq',220=>'即时盘',221=>'工口动漫',222=>'白姐图库',223=>'大麻',224=>'香烟',225=>'罗清泉',226=>'av大帝',227=>'乐博',228=>'滚出',229=>'e世博',230=>'esball',231=>'张定发',232=>'跳楼',233=>'出轨',234=>'socks5',235=>'注册机',236=>'google%20chrome',237=>'squid+log',238=>'卵蛋'); // 添加要过滤的关键字
-$rp = array(0=>'围墙',1=>'vps',2=>'在线游戏',3=>'eqrout',4=>'bob',5=>'圣',6=>'为人民牺牲',7=>'屌丝',8=>'涩',9=>'山海经',10=>'正版电影',11=>'健身',12=>'youjie',13=>'隐匿',14=>'罗玉凤',15=>'三小',16=>'brightsock',17=>'纯',18=>'隐匿',19=>'大众',20=>'日常',21=>'鸭梨仙子',22=>'铠甲',23=>'绿网',24=>'袜子',25=>'投资',26=>'无法直视',27=>'老太婆',28=>'兄贵',29=>'万家哭',30=>'老交',31=>'id上传',32=>'卡牌',33=>'文言文',34=>'网页游戏',35=>'军人',36=>'katherine',37=>'月亮城',38=>'图片上传',39=>'矿泉水',40=>'换老公',41=>'牛肉粉丝汤',42=>'jiehe',43=>'猫咪机',44=>'学在',45=>'超级老师',46=>'八卦',47=>'绿',48=>'慈善',49=>'刘玲',50=>'七宝',51=>'进出',52=>'太监',53=>'野生',54=>'一只狗',55=>'女神',56=>'喉咙',57=>'避风塘',58=>'正版电影',59=>'ed1k',60=>'拉勾',61=>'骨棒',62=>'泌',63=>'静静',64=>'出家化缘',65=>'黑泽明',66=>'蒸房',67=>'不拍',68=>'oldman',69=>'长腿',70=>'公益论坛',71=>'潘金莲',72=>'抽',73=>'老工人',74=>'一级',75=>'完',76=>'海市蜃楼',77=>'纪录片',78=>'x',79=>'地狱',80=>'姊',81=>'蓬头',82=>'笑版',83=>'无欲',84=>'抽',85=>'凡号',86=>'淘宝搜索',87=>'无欲',88=>'轮转',89=>'六月雪',90=>'sno',91=>'骨床',92=>'吹牛',93=>'搞基',94=>'隐身',95=>'仁义道德',96=>'企鹅',97=>'公益',98=>'铜',99=>'被拉',100=>'八卦新闻',101=>'不举',102=>'口吃',103=>'萝卜',104=>'森林',105=>'和谐',106=>'茄子',107=>'股',108=>'保护',109=>'输',110=>'阉割',111=>'名画',112=>'藏匿',113=>'藏匿',114=>'治愈',115=>'奶瓶',116=>'蚊子水',117=>'西京',118=>'加密',119=>'艺术照',120=>'约会',121=>'大奶瓶',122=>'幻',123=>'裹照',124=>'读书',125=>'普服',126=>'静止画',127=>'一级',128=>'不举',129=>'约会',130=>'加密',131=>'盲人导航',132=>'蚂蚁电感应',133=>'球霸',134=>'牝',135=>'贵妇白荷',136=>'长长冷',137=>'拉扯',138=>'司机',139=>'纪录片',140=>'宦官',141=>'旅游',142=>'萎靡',143=>'打坐',144=>'慈善捐款',145=>'和尚',146=>'东尼大木',147=>'眼睛',148=>'装甲',149=>'吃奶',150=>'美颜',151=>'口吃',152=>'从良',153=>'赤兔马',154=>'电感应文本',155=>'股',156=>'盛装',157=>'股',158=>'纯洁',159=>'吃惊',160=>'牝道',161=>'八卦新闻',162=>'屌丝',163=>'擦',164=>'西方哲学',165=>'游戏',166=>'有界',167=>'亮剑',168=>'兄贵',169=>'学者',170=>'可乐',171=>'果汁',172=>'神饭',173=>'上菜',174=>'oldman',175=>'沙漠',176=>'敲打',177=>'千两黄金',178=>'最高领导',179=>'老妇',180=>'八卦',181=>'猫捉老鼠',182=>'freedom',183=>'健身',184=>'defined',185=>'不要不要',186=>'小泽征尔',187=>'马赛克',188=>'无欲无求',189=>'skype',190=>'老干妈',191=>'黄焖鸡',192=>'咸蛋',193=>'手机',194=>'1688',195=>'originall',196=>'请支持正版电影',197=>'又在非法拐卖',198=>'魏忠贤',199=>'跳绳',200=>'腾讯游戏',201=>'小学',202=>'清廉为民',203=>'上班',204=>'食品',205=>'动画片',206=>'道观',207=>'端口',208=>'夹腿',209=>'佛祖圣地',210=>'动物世界',211=>'校园青春',212=>'表扬',213=>'一起娱乐',214=>'包时多少钱',215=>'慈善',216=>'鸭子',217=>'天使',218=>'避难所',219=>'udun',220=>'延时游戏',221=>'动画',222=>'佛经',223=>'煎饼',224=>'香水',225=>'珞珈山',226=>'大流士',227=>'输',228=>'热爱',229=>'世博会',230=>'football',231=>'张文远',232=>'信仰之跃',233=>'虔诚',234=>'usb',235=>'付费版',236=>'google',237=>'squid',238=>'鸡蛋'); // 替换对应数字的敏感词
-
+$pp = array(0=>'翻墙',1=>'vpn',2=>'在线代理',3=>'fqrouter',4=>'goagent',5=>'淫',6=>'套服务',7=>'大鸟',8=>'色',9=>'荒岛女儿国',10=>'av资源',11=>'推拿',12=>'wujie',13=>'漏鸟',14=>'仓井空',15=>'三肖',16=>'shadowsock',17=>'骚',18=>'露鸟',19=>'成人',20=>'包夜',21=>'蜜桃仙子',22=>'全裸',23=>'草榴',24=>'丝袜',25=>'投注',26=>'身透视',27=>'幼女',28=>'姦',29=>'百家乐',30=>'幼交',31=>'idbd下载',32=>'扑克',33=>'分析仪',34=>'网页代理',35=>'军妓',36=>'kayden',37=>'太阳城',38=>'av下载',39=>'蒙汗药',40=>'换妻',41=>'迷晕药',42=>'xingjiao',43=>'老虎机',44=>'日在',45=>'超级学生',46=>'六合',47=>'黄se',48=>'博彩',49=>'刘春玲',50=>'三宝局',51=>'性交',52=>'内射',53=>'人体',54=>'一条龙',55=>'小姐',56=>'深喉',57=>'娱乐城',58=>'g片免费下',59=>'ed2k',60=>'性爱',61=>'肉棒',62=>'乳',63=>'狠狠',64=>'狼人干',65=>'泷泽萝拉',66=>'桑拿',67=>'偷拍自拍',68=>'oldmanxinhen',69=>'丝足',70=>'彩坛',71=>'楼凤',72=>'撸',73=>'新农夫',74=>'r级',75=>'莞',76=>'跟踪定位',77=>'爽片',78=>'sex',79=>'av天堂',80=>'妹',81=>'咪咪',82=>'h版',83=>'性欲',84=>'露阴',85=>'特码',86=>'bt搜索',87=>'乱欲',88=>'轮盘',89=>'五月婷',90=>'ons',91=>'肉蒲',92=>'潮吹',93=>'一夜情',94=>'露奶',95=>'仁科百华',96=>'中特',97=>'一肖',98=>'胴',99=>'被插',100=>'六和',101=>'晨勃',102=>'口交',103=>'阴茎',104=>'阴毛',105=>'射精',106=>'鸡巴',107=>'肛交',108=>'保健',109=>'黄网',110=>'赌',111=>'爽图',112=>'露b',113=>'露B',114=>'自慰',115=>'奶子',116=>'苍蝇水',117=>'葡京',118=>'破解',119=>'裸体',120=>'裸聊',121=>'大奶',122=>'奸',123=>'裸照',124=>'援交',125=>'特服',126=>'动态图',127=>'三级',128=>'勃起',129=>'luoliao',130=>'越狱',131=>'手机定位',132=>'蜘蛛磁力',133=>'波霸',134=>'屄',135=>'少妇白洁',136=>'九九热',137=>'fuck',138=>'技师',139=>'a片',140=>'gv',141=>'上门',142=>'猥琐',143=>'做爱',144=>'报码',145=>'灯草和尚',146=>'野结衣',147=>'阴蒂',148=>'无套',149=>'吸奶',150=>'颜射',151=>'口爆',152=>'全集完结',153=>'特马',154=>'磁力链接',155=>'尻',156=>'祼体',157=>'肛',158=>'大尺度',159=>'吃精',160=>'阴道',161=>'liuhecai',162=>'大屌',163=>'舔',164=>'东方心经',165=>'ssh',166=>'无界',167=>'影梭',168=>'干姐',169=>'侦探',170=>'情药',171=>'春药',172=>'魂药',173=>'下药',174=>'hunk',175=>'bt森林',176=>'按摩',177=>'千金点特',178=>'毛主席',179=>'少妇熟女',180=>'6合',181=>'港马会',182=>'freegate',183=>'摸奶门',184=>'untitled',185=>'官人我要',186=>'京香julia',187=>'无码',188=>'激情视频',189=>'spycall',190=>'义母',191=>'手拉鸡',192=>'钢珠',193=>'气枪',194=>'zm52',195=>'newhalfclub',196=>'蜜桃成熟时3d电影',197=>'收养',198=>'徐明',199=>'绳刑',200=>'tktx麻药',201=>'黑社会',202=>'后台很硬',203=>'政变',204=>'毒品',205=>'av电影bt',206=>'博娱乐',207=>'socks代理',208=>'露鲍',209=>'av天堂',210=>'av种子',211=>'少妇乱伦',212=>'举报',213=>'一起happy下载',214=>'招聘公主',215=>'彩票',216=>'母鸡',217=>'sm女王',218=>'娱乐场',219=>'yaligaq',220=>'即时盘',221=>'工口动漫',222=>'白姐图库',223=>'大麻',224=>'香烟',225=>'罗清泉',226=>'av大帝',227=>'乐博',228=>'滚出',229=>'e世博',230=>'esball',231=>'张定发',232=>'跳楼',233=>'出轨',234=>'socks5',235=>'注册机',236=>'google%20chrome',237=>'squid+log',238=>'卵蛋',239=>'谁日过',240=>'紫阳'); // 添加要过滤的关键字
+$rp = array(0=>'围墙',1=>'vps',2=>'在线游戏',3=>'eqrout',4=>'bob',5=>'圣',6=>'为人民牺牲',7=>'屌丝',8=>'涩',9=>'山海经',10=>'正版电影',11=>'健身',12=>'youjie',13=>'隐匿',14=>'罗玉凤',15=>'三小',16=>'brightsock',17=>'纯',18=>'隐匿',19=>'大众',20=>'日常',21=>'鸭梨仙子',22=>'铠甲',23=>'绿网',24=>'袜子',25=>'投资',26=>'无法直视',27=>'老太婆',28=>'兄贵',29=>'万家哭',30=>'老交',31=>'id上传',32=>'卡牌',33=>'文言文',34=>'网页游戏',35=>'军人',36=>'katherine',37=>'月亮城',38=>'图片上传',39=>'矿泉水',40=>'换老公',41=>'牛肉粉丝汤',42=>'jiehe',43=>'猫咪机',44=>'学在',45=>'超级老师',46=>'八卦',47=>'绿',48=>'慈善',49=>'刘玲',50=>'七宝',51=>'进出',52=>'太监',53=>'野生',54=>'一只狗',55=>'女神',56=>'喉咙',57=>'避风塘',58=>'正版电影',59=>'ed1k',60=>'拉勾',61=>'骨棒',62=>'泌',63=>'静静',64=>'出家化缘',65=>'黑泽明',66=>'蒸房',67=>'不拍',68=>'oldman',69=>'长腿',70=>'公益论坛',71=>'潘金莲',72=>'抽',73=>'老工人',74=>'一级',75=>'完',76=>'海市蜃楼',77=>'纪录片',78=>'x',79=>'地狱',80=>'姊',81=>'蓬头',82=>'笑版',83=>'无欲',84=>'抽',85=>'凡号',86=>'淘宝搜索',87=>'无欲',88=>'轮转',89=>'六月雪',90=>'sno',91=>'骨床',92=>'吹牛',93=>'搞基',94=>'隐身',95=>'仁义道德',96=>'企鹅',97=>'公益',98=>'铜',99=>'被拉',100=>'八卦新闻',101=>'不举',102=>'口吃',103=>'萝卜',104=>'森林',105=>'和谐',106=>'茄子',107=>'股',108=>'保护',109=>'输',110=>'阉割',111=>'名画',112=>'藏匿',113=>'藏匿',114=>'治愈',115=>'奶瓶',116=>'蚊子水',117=>'西京',118=>'加密',119=>'艺术照',120=>'约会',121=>'大奶瓶',122=>'幻',123=>'裹照',124=>'读书',125=>'普服',126=>'静止画',127=>'一级',128=>'不举',129=>'约会',130=>'加密',131=>'盲人导航',132=>'蚂蚁电感应',133=>'球霸',134=>'牝',135=>'贵妇白荷',136=>'长长冷',137=>'拉扯',138=>'司机',139=>'纪录片',140=>'宦官',141=>'旅游',142=>'萎靡',143=>'打坐',144=>'慈善捐款',145=>'和尚',146=>'东尼大木',147=>'眼睛',148=>'装甲',149=>'吃奶',150=>'美颜',151=>'口吃',152=>'从良',153=>'赤兔马',154=>'电感应文本',155=>'股',156=>'盛装',157=>'股',158=>'纯洁',159=>'吃惊',160=>'牝道',161=>'八卦新闻',162=>'屌丝',163=>'擦',164=>'西方哲学',165=>'游戏',166=>'有界',167=>'亮剑',168=>'兄贵',169=>'学者',170=>'可乐',171=>'果汁',172=>'神饭',173=>'上菜',174=>'oldman',175=>'沙漠',176=>'敲打',177=>'千两黄金',178=>'最高领导',179=>'老妇',180=>'八卦',181=>'猫捉老鼠',182=>'freedom',183=>'健身',184=>'defined',185=>'不要不要',186=>'小泽征尔',187=>'马赛克',188=>'无欲无求',189=>'skype',190=>'老干妈',191=>'黄焖鸡',192=>'咸蛋',193=>'手机',194=>'1688',195=>'originall',196=>'请支持正版电影',197=>'又在非法拐卖',198=>'魏忠贤',199=>'跳绳',200=>'腾讯游戏',201=>'小学',202=>'清廉为民',203=>'上班',204=>'食品',205=>'动画片',206=>'道观',207=>'端口',208=>'夹腿',209=>'佛祖圣地',210=>'动物世界',211=>'校园青春',212=>'表扬',213=>'一起娱乐',214=>'包时多少钱',215=>'慈善',216=>'鸭子',217=>'天使',218=>'避难所',219=>'udun',220=>'延时游戏',221=>'动画',222=>'佛经',223=>'煎饼',224=>'香水',225=>'珞珈山',226=>'大流士',227=>'输',228=>'热爱',229=>'世博会',230=>'football',231=>'张文远',232=>'信仰之跃',233=>'虔诚',234=>'usb',235=>'付费版',236=>'google',237=>'squid',238=>'鸡蛋',239=>'谁迷恋过',240=>'红光'); // 替换对应数字的敏感词
 // 代码区
-
 if (basename(__FILE__) == 'index.php') {
     $uri = $dir;
 }
@@ -118,35 +112,27 @@ if ($adr == 1) {
 else {
     $url = $uri;
 }
-
-
 // 云体检通用漏洞防护补丁 v1.1
-
 $url_arr  = array (
     'xss' => "\\=\\+\\/v(?:8|9|\\+|\\/)|\\%0acontent\\-(?:id|location|type|transfer\\-encoding)",
 );
-
 $args_arr = array (
     'xss' => "[\\'\\\"\\;\\*\\<\\>].*\\bon[a-zA-Z]{3,15}[\\s\\r\\n\\v\\f]*\\=|\\b(?:expression)\\(|\\<script[\\s\\\\\\/]|\\<\\!\\[cdata\\[|\\b(?:eval|alert|prompt|msgbox)\\s*\\(|url\\((?:\\#|data|javascript)",
     'sql' => "[^\\{\\s]{1}(\\s|\\b)+(?:select\\b|update\\b|insert(?:(\\/\\*.*?\\*\\/)|(\\s)|(\\+))+into\\b).+?(?:from\\b|set\\b)|[^\\{\\s]{1}(\\s|\\b)+(?:create|delete|drop|truncate|rename|desc)(?:(\\/\\*.*?\\*\\/)|(\\s)|(\\+))+(?:table\\b|from\\b|database\\b)|into(?:(\\/\\*.*?\\*\\/)|\\s|\\+)+(?:dump|out)file\\b|\\bsleep\\([\\s]*[\\d]+[\\s]*\\)|benchmark\\(([^\\,]*)\\,([^\\,]*)\\)|(?:declare|set|select)\\b.*@|union\\b.*(?:select|all)\\b|(?:select|update|insert|create|delete|drop|grant|truncate|rename|exec|desc|from|table|database|set|where)\\b.*(charset|ascii|bin|char|uncompress|concat|concat_ws|conv|export_set|hex|instr|left|load_file|locate|mid|sub|substring|oct|reverse|right|unhex)\\(|(?:master\\.\\.sysdatabases|msysaccessobjects|msysqueries|sysmodules|mysql\\.db|sys\\.database_name|information_schema\\.|sysobjects|sp_makewebtask|xp_cmdshell|sp_oamethod|sp_addextendedproc|sp_oacreate|xp_regread|sys\\.dbms_export_extension)",
     'other' => "\\.\\.[\\\\\\/].*\\%00([^0-9a-fA-F]|$)|%00[\\'\\\"\\.]");
-
 $referer = empty($_SERVER['HTTP_REFERER']) ? array() : array($_SERVER['HTTP_REFERER']);
 $query_string = empty($_SERVER["QUERY_STRING"]) ? array() : array($_SERVER["QUERY_STRING"]);
-
 check_data($query_string, $url_arr);
 check_data($_GET, $args_arr);
 check_data($_POST, $args_arr);
 check_data($_COOKIE, $args_arr);
 check_data($referer, $args_arr);
-
 function W_log($log) {
     $logpath = $_SERVER["DOCUMENT_ROOT"]."/log.txt";
     $log_f = fopen($logpath, "a+");
     fputs($log_f, $log."\r\n");
     fclose($log_f);
 }
-
 function check_data($arr, $v) {
     foreach($arr as $key => $value) {
         if (!is_array($key)) {
@@ -162,7 +148,6 @@ function check_data($arr, $v) {
         }
     }
 }
-
 function check($str, $v) {
     foreach($v as $key => $value) {
         if (preg_match("/".$value."/is", $str) == 1 || preg_match("/".$value."/is", urlencode($str)) == 1) {
@@ -171,14 +156,10 @@ function check($str, $v) {
         }
     }
 }
-
 // 自动生成标题 v3.1
-
 echo '<title>';
-
 // 取得搜索词
 $s = @$_GET['s'];
-
 // 过滤字符串
 if (strlen($s) > 0) {
     $p = array ('/(\s+)/', '/(http:\/\/)/', '/(&)/', '/(https:\/\/)/');
@@ -187,9 +168,7 @@ if (strlen($s) > 0) {
     $querys = str_replace($pp, $rp, htmlspecialchars(preg_replace($p, $r, $s)));
     $rr = array ('+', '', '%26');
     $query = htmlspecialchars(str_replace($pp, $rp, preg_replace($p, $rr, $s)));
-
     // 调用百度搜索框下拉模式 1 提示词
-
     $sugip = array ('115.239.211.11', '115.239.211.12', '180.97.33.72', '180.97.33.73');
     shuffle ($sugip);
     $c = curl_init();
@@ -199,11 +178,8 @@ if (strlen($s) > 0) {
     curl_setopt($c, CURLOPT_URL, 'http://'.$sugip[0].'/su?action=opensearch&ie=UTF-8&wd='.$query);
     $sug1 = json_decode(curl_exec($c));
     curl_close($c);
-
     // 缓存
-
     class FCache {
-
         public function __construct($cache_path = 'stock/', $cache_time = 86400, $cache_extension = '.stk') {
             $this->cache_path = $cache_path;
             $this->cache_time = $cache_time;
@@ -212,17 +188,14 @@ if (strlen($s) > 0) {
                 mkdir($this->cache_path, 0777);
             }
         }
-
         public function add($key, $value) {
             $filename = $this->_get_cache_file($key);
             file_put_contents($filename, serialize($value), LOCK_EX);
         }
-
         public function delete($key) {
             $filename = $this->_get_cache_file($key);
             unlink($filename);
         }
-
         public function get($key) {
             if ($this->_has_cache($key)) {
                 $filename = $this->_get_cache_file($key);
@@ -233,7 +206,6 @@ if (strlen($s) > 0) {
                 return unserialize($value);
             }
         }
-
         public function flush() {
             $fp = opendir($this->cache_path);
             while(!false == ($fn = readdir($fp))) {
@@ -243,7 +215,6 @@ if (strlen($s) > 0) {
                 unlink($this->cache_path . $fn);
             }
         }
-
         private function _has_cache($key) {
             $filename = $this->_get_cache_file($key);
             if(file_exists($filename) && (filemtime($filename) + $this->cache_time >= time())) {
@@ -251,33 +222,26 @@ if (strlen($s) > 0) {
             }
             return false;
         }
-
         private function _is_valid_key($key) {
             if ($key != null) {
                 return true;
             }
             return false;
         }
-
         private function _safe_filename($key) {
             if ($this->_is_valid_key($key)) {
                 return md5($key);
             }
             return 'unvalid_cache_key';
         }
-
         private function _get_cache_file($key) {
             return $this->cache_path . $this->_safe_filename($key) . $this->cache_extension;
         }
     }
-
     $cache = new FCache();
-
     // 当缓存过多影响服务器，可以删除下行的双斜杠并保存，约4分钟后即可自动清空所有缓存，最后在原有位置恢复双斜杠并保存
     // $cache->flush();
-
     // 字数统计函数
-
     function wordcount($str, $encoding = 'UTF-8') {
         if(strtolower($encoding) == 'gbk') {
             $encoding = 'gb18030';
@@ -290,12 +254,10 @@ if (strlen($s) > 0) {
             }
             return $subLen;
     }
-
     $wpt    = wordcount($pt);
     $wz     = wordcount(htmlspecialchars($z, ENT_QUOTES));
     $wsug   = wordcount(@$sug1[1][0]);
     $wcache = wordcount($cache->get(urlencode($querys)));
-
     if (strlen($cache->get(urlencode($querys))) > 0 && ($wcache + $wz) < $len) {
         echo $cache->get(urlencode($querys)).'_';
     }
@@ -338,7 +300,6 @@ else {
 }
 echo '" name="description">
 ';
-
 // 百度搜索框下拉模式 1 第 1 - 5 位查询词作为 meta keywords
 echo '<meta content="';
 if (strlen($s) > 0) {
@@ -588,15 +549,12 @@ echo '
         </form>
     </div>
 ';
-
 // 打开网页显示相关资料
-
 if (strlen($s) == 0) {
     echo '    <div class="back-yellow" style="padding: 1em;">
         <h1 class="center bold" itemprop="name">'.$pt.'</h1>
         <hr>
 ';
-
     if ((time() - filemtime($rhc) + 1) > $ct) {
         unlink($rhc);
         // 百度搜索实时热点
@@ -733,7 +691,6 @@ if (strlen($s) == 0) {
         echo '</tbody>
     </table>';
     }
-
     if (strlen(@$fl[0][0]) > 0 && $flo == 1) {
         echo '
         <p>';
@@ -746,7 +703,6 @@ if (strlen($s) == 0) {
     </div>
 ';
 }
-
 if (strlen($s) > 0) {
     $pn   = @$_GET['pn'];
     $rn   = @$_GET['rn'];
@@ -766,7 +722,6 @@ if (strlen($s) > 0) {
     $os   = @$_GET['os'];
     $pr   = @$_GET['pr'];
     $oall = @$_GET['oall'];
-
     if ($pr == 'on') {
         $baidu = 'http://www.baidu.com/s?sort=pagerank&wd=';
     }
@@ -806,11 +761,8 @@ if (strlen($s) > 0) {
     else {
         $se = file_get_contents($baidu.$query);
     }
-
     // 搜索结果数量
-
     if (preg_match('/(?<=百度为您找到相关结果约)([0-9,]{1,11})(?=个<\/div>)/', @$se, $mnum));
-
     if (strlen(@$mnum[0]) == 0) {
         if  (strlen(@$proxy[0]) > 0) {
             shuffle($proxy);
@@ -826,35 +778,28 @@ if (strlen($s) > 0) {
         }
     }
 }
-
 if (strlen(@$mnum[0]) > 0 && $os == 'on' && $oall != 'on' || (strlen(@$mnum[0]) > 0 && $os != 'on' && $ore != 'on' && $ocrq != 'on' && $of0 != 'on' && $of1 != 'on' && $of2 != 'on' && $of3 != 'on' && $osc != 'on' && $oall != 'on')) {
-
     // 确定时间
     date_default_timezone_set('PRC');
-
     echo '    <div class="white break center">
         <h1 style="display: inline;" itemprop="name" title="'.$mnum[0].' 条结果">'.htmlspecialchars($z, ENT_QUOTES).'</h1>
         <a itemprop="url" class="noa" href="//open.baidu.com/special/time/" target="_blank" rel="external nofollow noreferrer" title="现在几点">'.date('Y-m-d H:i:s', time()).'</a>
     </div>';
-
     // 冇收录
     if (preg_match('/(?<=<p>很抱歉，没有找到与<span style="font-family:宋体">“<\/span><em>)(.+)(?=<\/em><span style="font-family:宋体">”<\/span>相关的网页。<\/p>)/', @$se, $mno)) {
         echo '
 <p><a itemprop="url" class="noa" href="//'.$mno[1].'" target="_blank" rel="external nofollow noreferrer" title="直接访问&nbsp;'.@$mno[2].'">很抱歉，没有找到与“<span class="red">'.$mno[1].'</span>”相关的网页。</a></p>
 <p class="white">如网页存在，请<a itemprop="url" class="noa" href="//zhanzhang.baidu.com/linksubmit/url?sitename=http%3A%2F%2F'.$mno[1].'" target="_blank" rel="external nofollow noreferrer" title="您可以提交想被百度收录的url">提交网址</a>给我们</p>';
     }
-
     // 冇收录，但有其他搜索结果
     if (preg_match('/(?<=<font class="c-gray">没有找到该URL。您可以直接访问&nbsp;<\/font><a href=")(.+)(?=" target="_blank" onmousedown)/', @$se, $mno2)) {
         echo '
 <p class="white">没有找到该URL。您可以直接访问&nbsp;<span class="red"><a itemprop="url" class="noa" href="'.$mno2[1].'" target="_blank" rel="external nofollow noreferrer" title="直接访问 '.$mno2[1].'">'.$mno2[1].'</a></span>，还可<a itemprop="url" class="noa" href="//zhanzhang.baidu.com/sitesubmit/index?sitename='.$mno2[1].'" target="_blank" rel="external nofollow noreferrer" title="您可以提交想被百度收录的url">提交网址</a>给我们。</p>';
     }
-
     // 字数限制
     if (preg_match('/(?<=><strong>)(.+)(?=&nbsp;及其后面的字词均被忽略，因为百度的查询限制在38个汉字以内。<\/strong><)/', @$se, $mlimit)) {
         echo '<p class="white">'.$mlimit[1].'&nbsp;及其后面的字词均被忽略，因为百度的查询限制在38个汉字以内。</p>';
     }
-
     // site 特型
     if (preg_match('/(([\w\-\x80-\xff]{1,63}\.)*[\w\-\x80-\xff]{1,63}\.(com|cn|club|red|loan|bid|wang|ren|xyz|news|video|top|net|site|online|website|space|biz|win|date|click|link|pics|cc|tech|xin|photo|party|trade|science|pub|rocks|band|market|help|gift|press|wiki|design|software|social|lawyer|engineer|live|studio|org|me|name|info|tv|mobi|asia|co|io|gov|edu|uk|jp|la|sg|我爱你|中国|公司|网络|集团))/', @$query, $msite)) {
         $site = json_decode(file_get_contents('http://opendata.baidu.com/api.php?resource_id=6735&oe=utf-8&query=site:'.@$msite[1]), true);
@@ -864,21 +809,13 @@ if (strlen(@$mnum[0]) > 0 && $os == 'on' && $oall != 'on' || (strlen(@$mnum[0]) 
         }
     }
 }
-
 if (strlen(@$mnum[0]) > 0) {
-
     if ($oas == 'on' || ($oas != 'on' && $osp != 'on' && $oec != 'on')) {
-
         // 搜索结果
-
         if (preg_match_all("/(?<=\" data\-tools=\'{\"title\":\")([^\"]+)(\",\"url\":\"http:)(\/\/www.baidu.com\/link\?url=[a-zA-Z0-9_\-]{43,640})(?=\"}'><a class=\"c-tip-icon\"><i class=\"c-icon c-icon-triangle-down-g\"><\/i><\/a><\/div>)/", @$se, $mserp));
-
         // 百度快照
-
         if (preg_match_all('/(?<=>&nbsp;-&nbsp;<a data-click="{\'rsv_snapshot\':\'1\'}" href="http:)(\/\/cache.baiducontent.com\/c\?m=[\da-f]+)(&p=[\da-f]+)(&newp=[\da-f]+)(&user=)(.+)(&p1=)(\d{1,3})(?=")/', @$se, $mcache));
-
         // 摘要
-
         if ($oabs != 'on') {
             if (preg_match_all('/(?<=<div class="c-abstract)( c-abstract-en)*(">)(.*)(?=<\/div><div class="f13">)/', @$se, $mabs)) {
                 if (strlen(@$mabs[3][0]) > 0 && file_exists($stk.'abs-'.urlencode(@$query).'.txt') == false) {
@@ -886,9 +823,7 @@ if (strlen(@$mnum[0]) > 0) {
                 }
             }
         }
-
         // 搜索结果页资源
-
         if (preg_match_all('/(?<=<div class="result c-container)( ?)(" id=")(\d{1,3})(" srcid=")(15\d{2})(" tpl=")(\w{2,28})(?=" ( ?)data-click="{)/', @$se, $msrcid)) {
             // F0
             if (preg_match_all("/(?<=F':)(\s?)(')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $mf)) {
@@ -965,7 +900,6 @@ if (strlen(@$mnum[0]) > 0) {
             }
         }
     }
-
     if ($osp == 'on' || ($oas != 'on' && $osp != 'on' && $oec != 'on')) {
         // fetch key
         if (preg_match_all('/(?<="  srcid=")(\d{1,5})("  fk=")([\d_]{0,6}?)([^_]{1,64})(" id=")(\d{1,2})(" tpl=")(\w{2,28})(" mu=")(.+)(?=" data-op="{\'y\':\'[a-zA-Z0-9]{8}\'}")/', @$se, $mfk)) {
@@ -974,16 +908,13 @@ if (strlen(@$mnum[0]) > 0) {
             }
         }
     }
-
     // search product
     if (preg_match_all('/(?<="  srcid=")(\d{1,5})("  id=")(\d{1,2})(" tpl=")(\w{2,28})(" mu=")(.+)(?=" data-op="{\'y\':\'[a-zA-Z0-9]{8}\'}")/', @$se, $msp)) {
         foreach ($msp[3] as $i => $v) {
             $nsp[$i] = array ($msp[1][$i], '', $msp[3][$i], $msp[7][$i], $msp[5][$i]);
         }
     }
-
     // 三位一体
-
     if (strlen(@$nsrcid[0][0]) > 0) {
         if (strlen(@$nfk[0][0]) > 0) {
             if (strlen(@$nsp[0][0]) > 0) {
@@ -1013,14 +944,12 @@ if (strlen(@$mnum[0]) > 0) {
     }
     else
         $n = '';
-
     if ($n != '') {
         foreach ($n as $i => $v) {
             $i2[$i] = $v[2];
         }
         array_multisort($i2, $n);
     }
-
     if (@$mnum[0] != 0 && $osr != 'on') {
         echo '
     <div class="draglist">
@@ -1030,7 +959,6 @@ if (strlen(@$mnum[0]) > 0) {
                 <th><a itemprop="url" href="//ask.seowhy.com/article/79" target="_blank" rel="external nofollow noreferrer" title="百度左侧搜索结果来源分类srcid - 教你精准区分百度搜索产品">srcid</a></th>
             </tr></thead>
             <tbody class="break">';
-
         $rrr = array (' ', '');
         $queryn = htmlspecialchars(str_replace($pp, $rp, preg_replace($p, $rrr, $s)));
         $srcid = array (
@@ -2536,7 +2464,6 @@ array(5, $queryn.'&nbsp;百度音乐', 'sp', '', 'ec'),
 array(4, $queryn.'&nbsp;百度图片', 'sp', '', 'ec'),
 array(1, $queryn.'&nbsp;百度视频', 'sp', '', 'ec')
         ); // 已收集 1500 个资源号
-
         $np = array (
 '/(http:\/\/29302_life-hunshasheying.left.vs-static.baidu.com)/',
 '/(http:\/\/29521_life-hunshasheying.left.vs-static.baidu.com)/',
@@ -2604,7 +2531,6 @@ array(1, $queryn.'&nbsp;百度视频', 'sp', '', 'ec')
 '/(http:\/\/fanyi.baidu.com)/',
 '/(http:\/\/chess_card_game_left.vs-static.baidu.com)/',
 );
-
         $nr = array (
 '//hunqing.baidu.com/hunshapic/index?key='.$query,
 '//hunqing.baidu.com/hunshasheying/index?key='.$query,
@@ -2672,7 +2598,6 @@ array(1, $queryn.'&nbsp;百度视频', 'sp', '', 'ec')
 '//fanyi.baidu.com/#auto/zh/'.$query,
 '//iwan.baidu.com/qipai',
 );
-
         foreach ($n as $i => $v) {
             foreach ($srcid as $h => $v) {
                 if (@$n[$i][0] == $srcid[$h][0]) {
@@ -2751,11 +2676,8 @@ array(1, $queryn.'&nbsp;百度视频', 'sp', '', 'ec')
     </div>';
     }
 }
-
 if (strlen(@$mnum[0]) > 0 && @$ore == 'on' && @$oall != 'on' || (@$os != 'on' && @$ore != 'on' && @$ocrq != 'on' && @$of0 != 'on' && @$of1 != 'on' && @$of2 != 'on' && @$of3 != 'on' && @$osc != 'on' && @$oall != 'on')) {
-
     // 相关搜索 正则有很大概率无法匹配出
-
     if (preg_match_all("/(?<=&rs_src=[01]{1}&rsv_pq=[a-z0-9]{16}&rsv_t=)([\w\%]{50,64}\">)([\x80-\xff\w\s\.#\:\/\+\-&;]{0,32})(?=<\/a><\/th><)/", @$se, $mrelated)) {
         // 匹配 2 种下拉框提示词
         $p3 = array ('window.baidu.sug({q:', 'p:false,s:[', '});');
@@ -2769,22 +2691,17 @@ if (strlen(@$mnum[0]) > 0 && @$ore == 'on' && @$oall != 'on' || (@$os != 'on' &&
         curl_setopt($c, CURLOPT_URL, 'https://suggest.taobao.com/sug?code=utf-8&q='.$query);
         $sugtb = json_decode(curl_exec($c), true);
         curl_close($c);
-
         $mrelatedp = array ('/(\s+)/', '/(&amp;)/');
         $mrelatedr = array ('%20', '%26');
-
         echo '
     <div class="draglist">
         <table>
             <thead><tr>';
-
         if (count(@$mrelated[2]) > 0 && (count(@$sug1[1]) + count(@$sugunion) + count(@$sugtb[result])) == 0) {
             echo '<th colspan="3">相关搜索</th></tr></thead>
             <tbody class="break back-azure">';
-
             foreach (@$mrelated[2] as $i => $v) {
                 if ($i % 3 == 0) {
-
                     echo '<tr>';
                 }
                 echo '
@@ -2795,7 +2712,6 @@ if (strlen(@$mnum[0]) > 0 && @$ore == 'on' && @$oall != 'on' || (@$os != 'on' &&
                 </tr>';
                 }
             }
-
             if (count($mrelated[2]) % 3 == 1)  {
                 echo '
                 <td><a itemprop="url" href="//www.zhihu.com/question/29778227/answer/45587654" target="_blank" rel="external nofollow noreferrer">能百度出多少页</a></td>
@@ -2808,7 +2724,6 @@ if (strlen(@$mnum[0]) > 0 && @$ore == 'on' && @$oall != 'on' || (@$os != 'on' &&
                 </tr>';
             }
         }
-
         else {
             $mcrqp = array ('/(\s+)/', '/(&)/');
             $mcrqr = array ('+', '%26');
@@ -2823,7 +2738,6 @@ if (strlen(@$mnum[0]) > 0 && @$ore == 'on' && @$oall != 'on' || (@$os != 'on' &&
             echo '
                 </tr></thead>
             <tbody class="break back-azure">';
-
             for ($i = 0; $i < (max(count(@$mrelated[2]), count(@$sug1[1]), count(@$sugunion), count(@$sugtb[result])) - 1); $i++) {
                 echo '<tr>
                     <td>';
@@ -2863,13 +2777,9 @@ if (strlen(@$mnum[0]) > 0 && @$ore == 'on' && @$oall != 'on' || (@$os != 'on' &&
     </div>';
     }
 }
-
 if (strlen(@$mnum[0]) > 0 && @$ocrq == 'on' && @$oall != 'on' || (@$os != 'on' && @$ore != 'on' && @$ocrq != 'on' && @$of0 != 'on' && @$of1 != 'on' && @$of2 != 'on' && @$of3 != 'on' && @$osc != 'on' && @$oall != 'on')) {
-
     // 为您推荐
-
     if (preg_match_all('/(?<=<\/div><div class="c-gap-top c-recommend" style="display:none;" data-extquery=")(.+)(?="><i class="c-icon c-icon-bear-circle c-gap-right-small">)/', @$se, $mcrq)) {
-
         if (!is_null(@$mcrq)) {
             $mcrqp = array ('/(\s+)/', '/(&)/');
             $mcrqr = array ('+', '%26');
@@ -2878,14 +2788,12 @@ if (strlen(@$mnum[0]) > 0 && @$ocrq == 'on' && @$oall != 'on' || (@$os != 'on' &
         <table>
             <thead><tr><th colspan="4">为您推荐</th></tr></thead>
             <tbody class="break back-sky">';
-
             foreach ($mcrq as $v) {
                 $v = join('&nbsp;', $v);
                 $temp[] = $v;
             }
             $kz = explode('&nbsp;', str_replace('&nbsp;&nbsp;', '&nbsp;', $temp[0]));
             $kk = array_unique($kz);
-
             array_pop($kk);
             shuffle($kk);
             foreach ($kk as $f => $v) {
@@ -2925,7 +2833,6 @@ if (strlen(@$mnum[0]) > 0 && @$ocrq == 'on' && @$oall != 'on' || (@$os != 'on' &
     }
 }
 if (strlen(@$mnum[0]) > 0 && @$of0 == 'on' && @$oall != 'on' || (@$os != 'on' && @$ore != 'on' && @$ocrq != 'on' && @$of0 != 'on' && @$of1 != 'on' && @$of2 != 'on' && @$of3 != 'on' && @$osc != 'on' && @$oall != 'on')) {
-
     $F[1] = '<span title="搜索结果标题|摘要与查询词的语义关联度">语义关联</span>';
     $F[3] = '[猜]正规性';
     $F[4] = '第4位';
@@ -2933,7 +2840,6 @@ if (strlen(@$mnum[0]) > 0 && @$of0 == 'on' && @$oall != 'on' || (@$os != 'on' &&
     $F[6] = '<a itemprop="url" href="//ask.seowhy.com/article/121" target="_blank" rel="external nofollow noreferrer" title="百度搜索结果参数F第6位基于IP地理位置">地理位置</a>';
     $F[7] = '网址';
     $F[8] = '标题|网址|摘要';
-
     // F
     if (strlen(@$mf[0][0]) > 0) {
         echo '
@@ -3092,14 +2998,12 @@ if (strlen(@$mnum[0]) > 0 && @$of0 == 'on' && @$oall != 'on' || (@$os != 'on' &&
     }
 }
 if (strlen(@$mnum[0]) > 0 && @$of1 == 'on' && @$oall != 'on' || (@$os != 'on' && @$ore != 'on' && @$ocrq != 'on' && @$of0 != 'on' && @$of1 != 'on' && @$of2 != 'on' && @$of3 != 'on' && @$osc != 'on' && @$oall != 'on')) {
-
     $F1[1] = '第1位';
     $F1[2] = '第2位';
     $F1[4] = '[猜]实时动态';
     $F1[5] = '第5位';
     $F1[7] = '第7位';
     $F1[8] = '第8位';
-
     // F1
     if (strlen(@$mf1[0][0]) > 0) {
         echo '
@@ -3229,14 +3133,12 @@ if (strlen(@$mnum[0]) > 0 && @$of1 == 'on' && @$oall != 'on' || (@$os != 'on' &&
     }
 }
 if (strlen(@$mnum[0]) > 0 && @$of2 == 'on' && @$oall != 'on' || (@$os != 'on' && @$ore != 'on' && @$ocrq != 'on' && @$of0 != 'on' && @$of1 != 'on' && @$of2 != 'on' && @$of3 != 'on' && @$osc != 'on' && @$oall != 'on')) {
-
     $F2[1] = '[猜]相关';
     $F2[2] = '第2位';
     $F2[3] = '第3位';
     $F2[4] = '第4位';
     $F2[5] = '第5位';
     $F2[6] = '<span title="仅是这一刻的搜索结果目标页相对查询词的权重">[猜]内链数</span>';
-
     // F2
     if (strlen(@$mf2[0][0]) > 0) {
         echo '
@@ -3344,7 +3246,6 @@ if (strlen(@$mnum[0]) > 0 && @$of2 == 'on' && @$oall != 'on' || (@$os != 'on' &&
                 echo '
                 <td>'.$f2value5.'</td>';
             }
-
             if ($f2value6 == 'D') {
                 echo '
                 <td class="unit-mediumseagreen" title="D">略</td>';
@@ -3375,7 +3276,6 @@ if (strlen(@$mnum[0]) > 0 && @$of2 == 'on' && @$oall != 'on' || (@$os != 'on' &&
     }
 }
 if (strlen(@$mnum[0]) > 0 && @$of3 == 'on' && @$oall != 'on' || (@$os != 'on' && @$ore != 'on' && @$ocrq != 'on' && @$of0 != 'on' && @$of1 != 'on' && @$of2 != 'on' && @$of3 != 'on' && @$osc != 'on' && @$oall != 'on')) {
-
     $F3[1] = '第1位';
     $F3[2] = '第2位';
     $F3[3] = '第3位';
@@ -3384,7 +3284,6 @@ if (strlen(@$mnum[0]) > 0 && @$of3 == 'on' && @$oall != 'on' || (@$os != 'on' &&
     $F3[6] = '第6位';
     $F3[7] = '第7位';
     $F3[8] = '[猜]相似度';
-
     // F3
     if (strlen(@$mf3[0][0]) > 0) {
         echo '
@@ -3424,7 +3323,6 @@ if (strlen(@$mnum[0]) > 0 && @$of3 == 'on' && @$oall != 'on' || (@$os != 'on' &&
                 echo '
                 <td>'.$f3value1.'</td>';
             }
-
             if ($f3value2 == '4') {
                 echo '
                 <td class="unit-tomato" title="4">略</td>';
@@ -3594,13 +3492,9 @@ if (strlen(@$mnum[0]) > 0 && @$of3 == 'on' && @$oall != 'on' || (@$os != 'on' &&
     </div>';
     }
 }
-
 if (strlen(@$mnum[0]) > 0 && @$osc == 'on' && @$oall != 'on' || (strlen(@$mnum[0]) > 0 && @$os != 'on' && @$ore != 'on' && @$ocrq != 'on' && @$of0 != 'on' && @$of1 != 'on' && @$of2 != 'on' && @$of3 != 'on' && @$osc != 'on' && @$oall != 'on')) {
-
     // 右侧知心打分
-
     $score = json_decode(file_get_contents('http://opendata.baidu.com/api.php?resource_id=21028&oe=utf-8&query='.@$query), true);
-
     if (is_array(@$score['data'][0]['card'][0]['unit'])) {
         $scorep = array ('/(\s+)/', '/(&)/');
         $scorer = array ('+', '%26');
@@ -3611,7 +3505,6 @@ if (strlen(@$mnum[0]) > 0 && @$osc == 'on' && @$oall != 'on' || (strlen(@$mnum[0
                 <tr><th colspan="3">右侧知心推荐打分</th></tr>
             </thead>
             <tbody class="center">';
-
         foreach ($score['data'][0]['card'] as $i => $v) {
             foreach ($score['data'][0]['card'][$i]['unit'] as $j => $o) {
                 if ($j % 3 == 0) {
@@ -3621,7 +3514,6 @@ if (strlen(@$mnum[0]) > 0 && @$osc == 'on' && @$oall != 'on' || (strlen(@$mnum[0
                 <td><a itemprop="url" href="'.$url.$l.str_replace($pp, $rp, preg_replace($scorep, $scorer, $score['data'][0]['card'][$i]['unit'][$j]['name'])).'" title="';
                 // 对齐分值
                 $scores = ((preg_replace('/(score=)/', '', @$score['data'][0]['card'][$i]['unit'][$j]['uri_drsv'])) * 10000);
-
                 if (preg_match('/-(\d){4}/', $scores)) {
                     echo '-'.preg_replace('/-/', '', $scores);
                 }
@@ -3649,9 +3541,7 @@ if (strlen(@$mnum[0]) > 0 && @$osc == 'on' && @$oall != 'on' || (strlen(@$mnum[0
                 else {
                     echo $scores;
                 }
-
                 echo '" target="_blank">'.$score['data'][0]['card'][$i]['unit'][$j]['name'].'</a></td>';
-
                 $j++;
                 if ($j % 3 == 0) {
                     echo '
@@ -3676,9 +3566,7 @@ if (strlen(@$mnum[0]) > 0 && @$osc == 'on' && @$oall != 'on' || (strlen(@$mnum[0
 ';
     }
 }
-
 if (strlen($s) > 0 && strlen(@$mnum[0]) == 0) {
-
     // 周围人都在搜
     if (preg_match_all('/(?<=&r_type=text&r_key=hot-1&r_wd=)(.{1,50})(?=" class=link data-type=hl-mod-link target=)/', file_get_contents('http://entry.baidu.com/ur/scun?di=contentunion4170'), $maround)) {
         echo '    <div class="draglist">
@@ -3687,7 +3575,6 @@ if (strlen($s) > 0 && strlen(@$mnum[0]) == 0) {
                 <tr><th colspan="4">周围人都在搜</th></tr>
             </thead>
             <tbody>';
-
         foreach ($maround[0] as $i => $v) {
             if ($i % 4 == 0) {
                 echo '<tr class="back-azure">';
@@ -3700,7 +3587,6 @@ if (strlen($s) > 0 && strlen(@$mnum[0]) == 0) {
                 </tr>';
             }
         }
-
         if (count($maround[0]) % 4 == 1)  {
             echo '
                 <td><a itemprop="url" href="https://github.com/ausdruck/baidu-prm" target="_blank" rel="external nofollow noreferrer">百度参数分析</a></td>
@@ -3719,18 +3605,14 @@ if (strlen($s) > 0 && strlen(@$mnum[0]) == 0) {
                 <td><a itemprop="url" href="https://github.com/ausdruck/baidu-prm" target="_blank" rel="external nofollow noreferrer">百度参数分析</a></td>
             </tr>';
         }
-
         echo '</tbody>
         </table>
     </div>
 ';
     }
 }
-
 if (strlen(@$mnum[0]) > 0) {
-
     // 翻页
-
     $pni = array(750, 740, 730, 720, 50, 40, 30, 20, 10);
     echo '    <br><table class="center back-white"><tbody><tr>';
     if ($pn + 1 > 10) {
@@ -3767,7 +3649,6 @@ if (strlen(@$mnum[0]) > 0) {
         <div class="right">
 <?php
 // 抓取百度图片
-
 if (strlen($s) > 0 && ($cp == 0 || $cp == 1 || $cp == 2)) {
     $cpic = json_decode(file_get_contents('http://image.baidu.com/search/acjson?tn=resultjson&ipn&rn=1&wd='.$query), true);
     $pic = @$cpic['data'][0]['objURL'];
@@ -3776,18 +3657,15 @@ if (strlen($s) > 0 && ($cp == 0 || $cp == 1 || $cp == 2)) {
             echo '<p><a href="//image.baidu.com/n/pc_search?queryImageUrl='.$pic.'" rel="external nofollow noreferrer" target="_blank" title="'.@$query.'">识别相关图片</a></p>
 ';
         }
-
         if ($cp == 1) {
             echo '<a href="//image.baidu.com/n/pc_search?queryImageUrl='.$pic.'" rel="external nofollow noreferrer" target="_blank"><img src="'.$pic.'" alt="'.$query.'" width="112"></a>
 ';
         }
-
         if ( $cp == 2) {
             $ist = 'pique/';
             if (!file_exists($ist)) {
                 mkdir($ist, 0755);
             }
-
             if (preg_match('/(\.png)/is', $pic) == true) {
                 $g = $ist.md5($query).'.png';
             }
@@ -3800,7 +3678,6 @@ if (strlen($s) > 0 && ($cp == 0 || $cp == 1 || $cp == 2)) {
             else {
                 $g = $ist.md5($query).'.jpg';
             }
-
             if (file_exists($g) == false) {
                 $c=curl_init();
                 curl_setopt($c, CURLOPT_URL, $pic);
@@ -3808,12 +3685,10 @@ if (strlen($s) > 0 && ($cp == 0 || $cp == 1 || $cp == 2)) {
                 curl_setopt($c, CURLOPT_TIMEOUT, 8);
                 $o = curl_exec($c);
                 curl_close($c);
-
                 $w = @fopen($g,'a');
                 fwrite($w, $o);
                 fclose($w);
             }
-
             if (filesize($g) < 5120 || filesize($g) > 1048576) {
                 unlink($g);
             }
@@ -3888,6 +3763,5 @@ function cp() {
     e.select();
     document.execCommand('copy');
 }
-
 // 清空搜索框
 function clearInput(){document.getElementById('js-in').value='';}</script></body></html>
