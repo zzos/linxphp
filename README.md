@@ -3,14 +3,9 @@
 
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/0aed14e485524ca4b3efadfdccdd2fee)](https://www.codacy.com/app/maasdruck/linxphp)
 
-##<a href="https://www.weixingon.com/daili.php" target="_blank">最新可用代理 ip 列表</a>
+##<a href="https://www.weixingon.com/daili.html" target="_blank">最新可用代理 ip 列表</a>
 
 ##更新日志
-
-###百度搜索结果参数分析工具 v1.38
-2017-05-23
-
-统和百度网盟搜索热点，网易音乐，豆瓣电影，搜狗热搜榜接口
 
 ###百度搜索结果参数分析工具 v1.37
 2017-05-05
