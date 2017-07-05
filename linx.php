@@ -708,7 +708,7 @@ if (strlen($s) == 0) {
         if ($i % 3 == 1) {
             echo '
             <td><a itemprop="url" href="https://github.com/ausdruck/baidu-prm" target="_blank" rel="external nofollow noreferrer">百度参数分析</a></td>
-            <td><a itemprop="url" href="https//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
+            <td><a itemprop="url" href="https://www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
             </tr>';
         }
         elseif ($i % 3 == 2) {
@@ -3618,14 +3618,14 @@ if (strlen($s) > 0 && strlen(@$mnum[0]) == 0) {
         if (count($maround[0]) % 4 == 1)  {
             echo '
                 <td><a itemprop="url" href="https://github.com/ausdruck/baidu-prm" target="_blank" rel="external nofollow noreferrer">百度参数分析</a></td>
-                <td><a itemprop="url" href="https//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
-                <td><a itemprop="url" href="https//www.weixingon.com/chaolianfenxi.html" target="_blank" rel="nofollow noreferrer">超链分析</a></td>
+                <td><a itemprop="url" href="https://www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
+                <td><a itemprop="url" href="https://www.weixingon.com/chaolianfenxi.html" target="_blank" rel="nofollow noreferrer">超链分析</a></td>
             </tr>';
         }
         elseif (count($maround[0]) % 4 == 2)  {
             echo '
                 <td><a itemprop="url" href="https://github.com/ausdruck/baidu-prm" target="_blank" rel="external nofollow noreferrer">百度参数分析</a></td>
-                <td><a itemprop="url" href="https//www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
+                <td><a itemprop="url" href="https://www.weixingon.com/feed.xml" target="_blank" rel="nofollow noreferrer">feed&nbsp;订阅更新日志</a></td>
             </tr>';
         }
         elseif (count($maround[0]) % 4 == 3)  {
