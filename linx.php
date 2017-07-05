@@ -32,6 +32,7 @@ $shldouban = 'the+mass'; // 豆瓣最新电影
 $len = 48; // 自定义标题字数上限(48 相当于 24 个汉字长度)
 $des = '还你一个没有百度推广、产品的搜索结果页'; // 默认元描述
 $https = 0; // 如果是 https 网站 请把 0 改为 1
+$clear = 0; // 当缓存过多影响服务器，可以将 0 改为 1 并保存，约4分钟后即可自动清空所有缓存，最后在原有位置恢复 0
 if ($https == 1) {
     $tps = 's';
 }
@@ -53,7 +54,7 @@ else {
     if (!file_exists($timer.'cache')) {
         file_put_contents($timer.'cache', '', LOCK_EX);
     }
-    if ((time() - filemtime($timer.'cache') + 1) > 86400) {
+    if ((time() - filemtime($timer.'cache') + 1) > 1) {
         unlink($timer.'cache');
         $rand = rand();
         $time = time();
@@ -265,8 +266,9 @@ if (strlen($s) > 0) {
         }
     }
     $cache = new FCache();
-    // 当缓存过多影响服务器，可以删除下行的双斜杠并保存，约4分钟后即可自动清空所有缓存，最后在原有位置恢复双斜杠并保存
-    // $cache->flush();
+    if ($clear == 1) {
+        $cache->flush();
+    }
     // 字数统计函数
     function wordcount($str, $encoding = 'UTF-8') {
         if(strtolower($encoding) == 'gbk') {
@@ -311,7 +313,7 @@ else {
 }
 echo '</title>
 <meta content="';
-$bk = json_decode(file_get_contents('http://baike.baidu.com/api/openapi/BaikeLemmaCardApi?format=json&appid=379020&bk_key='.@$query), true);
+$bk = json_decode(file_get_contents('http://baike.baidu.com/api/openapi/BaikeLemmaCardApi?format=json&appid=379020&bk_key='.@$query), 1);
 if (file_exists($stk.'abs-'.urlencode(@$query).'.txt')) {
     echo file_get_contents($stk.'abs-'.urlencode($query).'.txt');
 }
@@ -657,7 +659,7 @@ if (strlen($s) == 0) {
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 8);
         curl_setopt($c, CURLOPT_TIMEOUT, 8);
-        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($c, CURLOPT_URL, 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E6%9C%80%E6%96%B0&page_limit=500');
         $ikdouban = json_decode(curl_exec($c), 1);
         curl_close($c);
@@ -828,7 +830,7 @@ if (strlen(@$mnum[0]) > 0 && $os == 'on' && $oall != 'on' || (strlen(@$mnum[0]) 
     }
     // site 特型
     if (preg_match('/(([\w\-\x80-\xff]{1,63}\.)*[\w\-\x80-\xff]{1,63}\.(com|cn|club|red|loan|bid|wang|ren|xyz|news|video|top|net|site|online|website|space|biz|win|date|click|link|pics|cc|tech|xin|photo|party|trade|science|pub|rocks|band|market|help|gift|press|wiki|design|software|social|lawyer|engineer|live|studio|org|me|name|info|tv|mobi|asia|co|io|gov|edu|uk|jp|la|sg|我爱你|中国|公司|网络|集团))/', @$query, $msite)) {
-        $site = json_decode(file_get_contents('http://opendata.baidu.com/api.php?resource_id=6735&oe=utf-8&query=site:'.@$msite[1]), true);
+        $site = json_decode(file_get_contents('http://opendata.baidu.com/api.php?resource_id=6735&oe=utf-8&query=site:'.@$msite[1]), 1);
         if (strlen(@$site[data][0][domain][0][append_text]) > 0) {
             echo '
     <p class="white"><a class="pink" href="'.$url.$l.'site:'.@$msite[1].'">索引量&nbsp;'.@$site[data][0][domain][0][append_text].'</a>&nbsp;更新&nbsp;'.date('Y-m-d H:i:s', @$site[data][0][_update_time]).'</p>';
@@ -2710,12 +2712,12 @@ if (strlen(@$mnum[0]) > 0 && @$ore == 'on' && @$oall != 'on' || (@$os != 'on' &&
         $r3 = array ('[', '', '');
         $sugunion = json_decode(str_replace($p3, $r3, file_get_contents('http://unionsug.baidu.com/su?ie=UTF-8&wd='.$query)));
         $c = curl_init();
-        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
         curl_setopt($c, CURLOPT_HEADER, 0);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($c, CURLOPT_TIMEOUT, 3);
         curl_setopt($c, CURLOPT_URL, 'https://suggest.taobao.com/sug?code=utf-8&q='.$query);
-        $sugtb = json_decode(curl_exec($c), true);
+        $sugtb = json_decode(curl_exec($c), 1);
         curl_close($c);
         $mrelatedp = array ('/(\s+)/', '/(&amp;)/');
         $mrelatedr = array ('%20', '%26');
@@ -3520,7 +3522,7 @@ if (strlen(@$mnum[0]) > 0 && @$of3 == 'on' && @$oall != 'on' || (@$os != 'on' &&
 }
 if (strlen(@$mnum[0]) > 0 && @$osc == 'on' && @$oall != 'on' || (strlen(@$mnum[0]) > 0 && @$os != 'on' && @$ore != 'on' && @$ocrq != 'on' && @$of0 != 'on' && @$of1 != 'on' && @$of2 != 'on' && @$of3 != 'on' && @$osc != 'on' && @$oall != 'on')) {
     // 右侧知心打分
-    $score = json_decode(file_get_contents('http://opendata.baidu.com/api.php?resource_id=21028&oe=utf-8&query='.@$query), true);
+    $score = json_decode(file_get_contents('http://opendata.baidu.com/api.php?resource_id=21028&oe=utf-8&query='.@$query), 1);
     if (is_array(@$score['data'][0]['card'][0]['unit'])) {
         $scorep = array ('/(\s+)/', '/(&)/');
         $scorer = array ('+', '%26');
@@ -3676,7 +3678,7 @@ if (strlen(@$mnum[0]) > 0) {
 <?php
 // 抓取百度图片
 if (strlen($s) > 0 && ($cp == 0 || $cp == 1 || $cp == 2)) {
-    $cpic = json_decode(file_get_contents('http://image.baidu.com/search/acjson?tn=resultjson&ipn&rn=1&wd='.$query), true);
+    $cpic = json_decode(file_get_contents('http://image.baidu.com/search/acjson?tn=resultjson&ipn&rn=1&wd='.$query), 1);
     $pic = @$cpic['data'][0]['objURL'];
     if ($cpic['displayNum'] > 0) {
         if ($cp == 0) {
@@ -3730,35 +3732,35 @@ echo '<p><a href="'.$url.'?s='.@$query.'&amp;gpc=stf%3D'.(time() - 86400).'%2C'.
 <a href="'.$url.'?s='.@$query.'&amp;gpc=stf%3D'.(time() - 31536000).'%2C'.time().'%7Cstftype%3D1" rel="nofollow">最近1年</a><br>
 <a href="https://www.google.com/#q='.@$query.'" rel="external nofollow noreferrer" target="_blank">谷歌搜索</a><br>
 <a href="https://www.baidu.com/s?wd='.@$query.'" rel="external nofollow noreferrer" target="_blank">百度一下</a><br>
-<a href="//www.sogou.com/web?query='.@$query.'" rel="external nofollow noreferrer" target="_blank">搜狗搜索</a><br>
-<a href="//s.weibo.com/weibo/'.@$query.'" rel="external nofollow noreferrer" target="_blank">微博搜索</a><br>
+<a href="http://www.sogou.com/web?query='.@$query.'" rel="external nofollow noreferrer" target="_blank">搜狗搜索</a><br>
+<a href="http://s.weibo.com/weibo/'.@$query.'" rel="external nofollow noreferrer" target="_blank">微博搜索</a><br>
 ';
 ?>
-<a href="https://web.archive.org/web/" rel="external nofollow noreferrer" target="_blank">Internet Archive</a><br>
+<a href="https://web.archive.org/" rel="external nofollow noreferrer" target="_blank">Internet Archive</a><br>
 <a href="https://mail.google.com/mail/u/0/#inbox" rel="external nofollow noreferrer" target="_blank">Gmail 邮箱</a><br>
 <a href="https://validator.w3.org/unicorn/check?ucn_uri=" rel="external nofollow noreferrer" target="_blank">W3C 统一验证</a><br>
 <a href="https://developers.google.com/speed/pagespeed/insights/" rel="external nofollow noreferrer" target="_blank">PageSpeed</a><br>
-<a href="//www.aizhan.com/" rel="external nofollow noreferrer" target="_blank">爱站网</a><br>
-<a href="//www.5118.com/" rel="external nofollow noreferrer" target="_blank">5118 站长大数据</a><br>
-<a href="//www.bejson.com/" rel="external nofollow noreferrer" target="_blank">JSON校验工具</a><br>
-<a href="//zh.numberempire.com/texequationeditor/equationeditor.php" rel="external nofollow noreferrer" target="_blank">LaTeX公式编辑器</a><br>
-<a href="//opendata.baidu.com/post/" rel="external nofollow noreferrer" target="_blank">邮编查询</a><br>
-<a href="//tool.chinaz.com/Tools/unixtime.aspx" rel="external nofollow noreferrer" target="_blank">Unix 时间戳</a><br>
-<a href="//fanyi.baidu.com/#auto/zh/" rel="external nofollow noreferrer" target="_blank">百度翻译</a><br>
-<a href="//www.zdic.net" rel="external nofollow noreferrer" target="_blank">汉典字典</a><br>
-<a href="//deerchao.net/tutorials/regex/regex.htm" rel="external nofollow noreferrer" target="_blank">正则表达式入门</a><br>
+<a href="http://www.aizhan.com/" rel="external nofollow noreferrer" target="_blank">爱站网</a><br>
+<a href="http://www.5118.com/" rel="external nofollow noreferrer" target="_blank">5118 站长大数据</a><br>
+<a href="http://www.bejson.com/" rel="external nofollow noreferrer" target="_blank">JSON校验工具</a><br>
+<a href="http://zh.numberempire.com/texequationeditor/equationeditor.php" rel="external nofollow noreferrer" target="_blank">LaTeX公式编辑器</a><br>
+<a href="http://opendata.baidu.com/post/" rel="external nofollow noreferrer" target="_blank">邮编查询</a><br>
+<a href="http://tool.chinaz.com/Tools/unixtime.aspx" rel="external nofollow noreferrer" target="_blank">Unix 时间戳</a><br>
+<a href="http://fanyi.baidu.com/#auto/zh/" rel="external nofollow noreferrer" target="_blank">百度翻译</a><br>
+<a href="http://www.zdic.net" rel="external nofollow noreferrer" target="_blank">汉典字典</a><br>
+<a href="https://deerchao.net/tutorials/regex/regex.htm" rel="external nofollow noreferrer" target="_blank">正则表达式入门</a><br>
 <a href="https://github.com/ausdruck/spec" rel="external nofollow noreferrer" target="_blank">百度内部编码规范</a><br>
-<a href="//schema.org/docs/full.html" rel="external nofollow noreferrer" target="_blank">微数据层级</a><br>
-<a href="https://www.google.com/webmasters/tools/home?hl=zh" rel="external nofollow noreferrer" target="_blank">谷歌网管工具</a><br>
-<a href="//cn.bing.com/webmaster/" rel="external nofollow noreferrer" target="_blank">必应网管工具</a><br>
-<a href="//zhanzhang.baidu.com/site/index" rel="external nofollow noreferrer" target="_blank">百度站长平台</a><br>
-<a href="//zhanzhang.so.com" rel="external nofollow noreferrer" target="_blank">好搜站长平台</a><br>
-<a href="//zhanzhang.sogou.com/index.php/dashboard/index" rel="external nofollow noreferrer" target="_blank">搜狗站长平台</a><br>
-<a href="//mp.weixin.qq.com/" rel="external nofollow noreferrer" target="_blank">微信公众平台登录</a><br>
-<a href="//index.baidu.com/" rel="external nofollow noreferrer" target="_blank">百度指数</a><br>
-<a href="//i.baidu.com/my/history" rel="external nofollow noreferrer" target="_blank">百度搜索历史记录</a><br>
-<a href="//www.smashingmagazine.com/tag/wallpapers/" rel="external nofollow noreferrer" target="_blank">Wallpaper</a><br>
-<a href="//googlewebmastercentral.blogspot.com" rel="external nofollow noreferrer" target="_blank">谷歌网管中心</a></p>
+<a href="http://schema.org/docs/full.html" rel="external nofollow noreferrer" target="_blank">微数据层级</a><br>
+<a href="https://www.google.com/webmasters/tools/home?hl=zh" rel="external nofollow noreferrer" target="_blank">谷歌搜索控制台</a><br>
+<a href="http://cn.bing.com/webmaster/" rel="external nofollow noreferrer" target="_blank">必应网管工具</a><br>
+<a href="http://zhanzhang.baidu.com/site/index" rel="external nofollow noreferrer" target="_blank">百度站长平台</a><br>
+<a href="http://zhanzhang.so.com" rel="external nofollow noreferrer" target="_blank">好搜站长平台</a><br>
+<a href="http://zhanzhang.sogou.com/index.php/dashboard/index" rel="external nofollow noreferrer" target="_blank">搜狗站长平台</a><br>
+<a href="https://mp.weixin.qq.com/" rel="external nofollow noreferrer" target="_blank">微信公众平台登录</a><br>
+<a href="http://index.baidu.com/" rel="external nofollow noreferrer" target="_blank">百度指数</a><br>
+<a href="http://i.baidu.com/my/history" rel="external nofollow noreferrer" target="_blank">百度搜索历史记录</a><br>
+<a href="https://www.smashingmagazine.com/tag/wallpapers/" rel="external nofollow noreferrer" target="_blank">Wallpaper</a><br>
+<a href="https://webmasters.googleblog.com/" rel="external nofollow noreferrer" target="_blank">谷歌网管中心</a></p>
 <p><a class="pink space" href="#">&nbsp;回顶部</a></p>
         </div>
     </div>
