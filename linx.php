@@ -54,7 +54,7 @@ else {
     if (!file_exists($timer.'cache')) {
         file_put_contents($timer.'cache', '', LOCK_EX);
     }
-    if ((time() - filemtime($timer.'cache') + 1) > 1) {
+    if ((time() - filemtime($timer.'cache') + 86400) > 1) {
         unlink($timer.'cache');
         $rand = rand();
         $time = time();
@@ -118,6 +118,7 @@ else {
         );
     }
 }
+var_export($proxy);
 // 可在数组里添加或删除友链
 $fl = array(
     array('http://www.apple.com/cn/', '苹果'),
