@@ -78,7 +78,7 @@ else {
         file_put_contents($timer.'cache', '', LOCK_EX);
         file_put_contents($token, $up, LOCK_EX);
     }
-    if (strlen($up) > 0) {
+    if (file_exists($token)) {
         $px = json_decode(file_get_contents($token), 1);
         $ipx = $px['ip'];
         $strx = $px['str'];
