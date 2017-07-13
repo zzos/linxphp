@@ -6,11 +6,10 @@
 <title>百度的IP地址是多少</title>
 <meta content="百度,ip,地址,地理位置,运营商" name="keywords">
 <meta content="百度的IP地址是多少？" name="description">
-<meta content="百度的IP地址是多少" name="apple-mobile-web-app-title">';
+<meta content="百度的IP地址是多少" name="apple-mobile-web-app-title">
 <?php
 $http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
-echo '
-<link href="'.$http_type.$_SERVER['HTTP_HOST'].$_SERVER["PHP_SELF"].'" rel="canonical">
+echo '<link href="'.$http_type.$_SERVER['HTTP_HOST'].$_SERVER["PHP_SELF"].'" rel="canonical">
 ';
 ?>
 <meta content="webkit" name="renderer">
