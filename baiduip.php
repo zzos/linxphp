@@ -1,19 +1,24 @@
 <?php header ('Cache-Control: max-age=2592000');?>
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" lang="cmn-Hans" xml:lang="cmn-Hans">
+<html xmlns="http://www.w3.org/1999/xhtml" lang="zh-Hans" xml:lang="zh-Hans">
 <head>
-<meta name="renderer" content="webkit" />
-<meta http-equiv="X-UA-Compatible" content="IE=edge" />
-<meta name="viewport" content="width=device-width,initial-scale=1.0,maximum-scale=1.0,user-scalable=0,minimal-ui" />
-<meta name="apple-mobile-web-app-title" content="百度的IP地址是多少" />
-<meta name="apple-mobile-web-app-capable" content="yes" />
-<meta name="apple-mobile-web-app-status-bar-style" content="black" />
-<meta name="format-detection" content="telephone=no" />
-<meta content="text/html;charset=UTF-8" http-equiv="Content-Type" />
+<meta name="apple-mobile-web-app-title" content="百度的IP地址是多少">
 <title>百度的IP地址是多少</title>
-<meta content="百度,ip,地址,地理位置,运营商" name="keywords" />
-<meta content="百度的IP地址是多少？" name="description" />
-<link rel="alternate" type="application/rss+xml" title="百度搜索结果参数 RSS Feed" href="//www.weixingon.com/feed.xml" />
+<meta content="百度,ip,地址,地理位置,运营商" name="keywords">
+<meta content="百度的IP地址是多少？" name="description">
+<meta content="百度的IP地址是多少" name="apple-mobile-web-app-title">';
+<?php
+$http_type = ((isset($_SERVER['HTTPS']) && $_SERVER['HTTPS'] == 'on') || (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] == 'https')) ? 'https://' : 'http://';
+echo '
+<link href="'.$http_type.$_SERVER['HTTP_HOST'].$_SERVER["PHP_SELF"].'" rel="canonical">
+';
+?>
+<meta content="webkit" name="renderer">
+<meta content="telephone=no" name="format-detection">
+<meta content="IE=edge" http-equiv="X-UA-Compatible">
+<meta content="yes" name="apple-mobile-web-app-capable">
+<meta content="black" name="apple-mobile-web-app-status-bar-style">
+<meta content="width=device-width,initial-scale=1.0,user-scalable=0,minimal-ui" name="viewport">
 <style type="text/css">
 body,div,h1{
 margin:0;
@@ -76,7 +81,8 @@ text-decoration:none;
 <body>
 <div class="detail">
 <?php
-echo '<div class="header"><h1 class="bold">百度的IP地址是多少</h1></div>';
+echo '<div class="header">
+<h1 class="bold">百度的IP地址是多少</h1></div>';
 $ip = array
     (
     array('14.215.177.37', '广东省&nbsp;广州市', '电信'),
@@ -122,10 +128,6 @@ $ip = array
     array('119.75.218.70', '北京市', '联通'),
     array('119.75.218.77', '北京市', '联通'),
     array('119.75.218.143', '北京市', '联通'),
-    array('123.125.65.78', '北京市', '联通'),
-    array('123.125.65.82', '北京市', '联通'),
-    array('123.125.65.88', '北京市', '联通'),
-    array('123.125.65.90', '北京市', '联通'),
     array('123.125.114.107', '北京市', '联通'),
     array('123.125.114.220', '北京市', '联通'),
     array('123.125.114.238', '北京市', '联通'),
@@ -159,7 +161,8 @@ $ip = array
     );
 echo '<h2 class="bold">百度 ip 地址，地理位置，运营商</h2>';
     foreach ($ip as $k => $v) {
-    echo '<p><a href="http://'.$ip[$k][0].'" rel="external nofollow noreferrer" target="_blank">'.$ip[$k][0].'</a>&nbsp;'.$ip[$k][1].'&nbsp;'.$ip[$k][2].'</p>';
+    echo '
+    <p><a href="http://'.$ip[$k][0].'" rel="external nofollow noreferrer" target="_blank">'.$ip[$k][0].'</a>&nbsp;'.$ip[$k][1].'&nbsp;'.$ip[$k][2].'</p>';
     };?>
 </div>
 </body>
