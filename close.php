@@ -31,17 +31,17 @@ else {
 
 $crawl = 2;        // 0 较少抓取 1 中等抓取 2 较多抓取 3 全面抓取
 $dir = '/';        // 自定义文件所在目录，例如想把文件放在根目录下 a 目录，'/' 改为 '/a/'
-$ist = 'picstore/'; // 自定义存储图片目录
+$ist = './picstore/'; // 自定义存储图片目录
 $cp  = 1;          // 想展现百度图片请把 0 改为 1
 $adr = 0;          // 想用绝对地址请把 0 改为 1
 $len = 63;         // 自定义标题字数上限(48 相当于 24 个汉字长度)
 $pt  = '热搜榜'; // 自定义标题后缀
 $des = '热搜榜'; // 默认元描述
-$stk = 'stc/';   // 临时缓存目录
+$stk = './stc/';   // 临时缓存目录
 $ct  = 2592000;     // 缓存时间 以秒数计算 如 1分钟=60 1天=86400 1周=604800 30天=2592000
 $lk  = 0;          // 改为 1 启用伪静态(不推荐使用)
 $noad = 0;         // 改为 1 启用特定时间段不展现广告
-$st1 = 'z409tgfq0w94fh0q934yr980q34r0q3s/';
+$st1 = './z409tgfq0w94fh0q934yr980q34r0q3s/';
 if (!file_exists($st1)) {
     mkdir($st1, 0755);
 }
@@ -1050,7 +1050,7 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
         if ((!isset($bk['card']) && !isset($lrc['title']) && !isset($tte[0])) || @$pn != null || @$rn != null) {
             if (preg_match_all("/(?<=F':)(\s?')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $f)) {
                 if (strlen(@$f[0][0]) > 0) {
-                    echo '    <div class="draglist tiny"><table><thead><tr><th title="搜索结果标题|摘要与查询词的语义关联度">语义关联</th><th>近似词</th><th>猜&nbsp;正规性</th><th>4</th><th>5</th><th title="百度搜索结果参数F第6位基于IP地理位置">地理位置</th><th>网址</th><th>标题|网址|摘要</th><th>F0</th></tr></thead><tbody class="center">';
+                    echo '    <div class="draglist tiny"><table><thead><tr><th title="搜索结果标题|摘要与查询词的语义关联度">出自</th><th>近似词</th><th>猜&nbsp;正规性</th><th>权威性</th><th>5</th><th title="百度搜索结果参数F第6位基于IP地理位置">地理位置</th><th>网址</th><th>标题|网址|摘要</th><th>F0</th></tr></thead><tbody class="center">';
                     foreach ($f[2] as $i => $v) {
                         echo '<tr>';
                         if ($f[2][$i] == 7) {echo '<td class="darkseagreen" title="7">略</td>';}
