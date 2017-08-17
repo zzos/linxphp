@@ -173,7 +173,9 @@ else {
     $u = $uri;
 }
 
-shuffle($px);
+if (isset($px[0])) {
+    shuffle($px);
+}
 
 echo '<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" lang="zh-Hans" xml:lang="zh-Hans">
@@ -1582,5 +1584,5 @@ echo $ft;
 if (stripos($_SERVER['HTTP_USER_AGENT'], 'yunguance') > 0 || stripos($_SERVER['HTTP_USER_AGENT'], 'sogou') > 0 || stripos($_SERVER['HTTP_USER_AGENT'], 'google') > 0 || stripos($_SERVER['HTTP_USER_AGENT'], 'spider') > 0 || stripos($_SERVER['HTTP_USER_AGENT'], 'msn') > 0 || stripos($_SERVER['HTTP_USER_AGENT'], 'bot') > 0 || stripos($_SERVER['HTTP_USER_AGENT'], 'Slurp') > 0) {
 }
 else {
-    file_put_contents($tongji.'txt', date('Y-m-d H:i:s', time())."\t".$q."\t".$_SERVER["REMOTE_ADDR"]."\t".$_SERVER["HTTP_USER_AGENT"]."\n", FILE_APPEND | LOCK_EX);
+    file_put_contents($tongji.'.txt', date('Y-m-d H:i:s', time())."\t".$q."\t".$_SERVER["REMOTE_ADDR"]."\t".$_SERVER["HTTP_USER_AGENT"]."\n", FILE_APPEND | LOCK_EX);
 }
