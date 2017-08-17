@@ -31,7 +31,7 @@ else {
 
 $crawl = 2;        // 0 较少抓取 1 中等抓取 2 较多抓取 3 全面抓取
 $dir = '/';        // 自定义文件所在目录，例如想把文件放在根目录下 a 目录，'/' 改为 '/a/'
-$ist = './picstore/'; // 自定义存储图片目录
+$ist = 'picstore/'; // 自定义存储图片目录
 $cp  = 1;          // 想展现百度图片请把 0 改为 1
 $adr = 0;          // 想用绝对地址请把 0 改为 1
 $len = 63;         // 自定义标题字数上限(48 相当于 24 个汉字长度)
@@ -619,13 +619,13 @@ if (strlen($s) > 0) {
                 mkdir($ist, 0755);
             }
             if (preg_match('/(\.png)/is', @$pic) == true) {
-                $g = str_replace('./', '', $ist).md5($q).'.png';
+                $g = $ist.md5($q).'.png';
             }
             elseif (preg_match('/(\.gif)/is', @$pic) == true) {
-                $g = str_replace('./', '', $ist).md5($q).'.gif';
+                $g = $ist.md5($q).'.gif';
             }
             else {
-                $g = str_replace('./', '', $ist).md5($q).'.jpg';
+                $g = $ist.md5($q).'.jpg';
             }
             if (!file_exists($g)) {
                 $c=curl_init();
@@ -736,13 +736,13 @@ if (strlen($s) > 0) {
                 mkdir($ist, 0755);
                 }
                 if (preg_match('/(\.png)/is', @$pic2) == true) {
-                    $g2 = str_replace('./', '', $ist).md5($q).'2.png';
+                    $g2 = $ist.md5($q).'2.png';
                 }
                 elseif (preg_match('/(\.gif)/is', @$pic2) == true) {
-                    $g2 = str_replace('./', '', $ist).md5($q).'2.gif';
+                    $g2 = $ist.md5($q).'2.gif';
                 }
                 else {
-                    $g2 = str_replace('./', '', $ist).md5($q).'2.jpg';
+                    $g2 = $ist.md5($q).'2.jpg';
                 }
                 if (!file_exists($g2)) {
                     $c=curl_init();
