@@ -64,10 +64,85 @@ if (strlen($ws) > 0) {
 else {
     $si = '';
 }
-// 代理 IP，用于反百度自动屏蔽机制(建议至少添加 1 个中国内地 IP)
-$px = array(
-    '',
-);
+$token = ''; // 使用自动更新代理 IP 功能请先关注 天香空城 微信号 ulisse 免费申请注册码，然后将注册码填进单引号内保存
+if (strlen($token) == 0) {
+    // 手动添加代理 IP，用于反百度自动屏蔽机制(建议至少添加 1 个中国内地 IP)
+    $proxy = array(
+        '',
+    );
+}
+else {
+    $timer = 'updatetimer/';
+    if (!file_exists($timer)) {
+        mkdir($timer, 0755);
+    }
+    if (!file_exists($timer.'cache')) {
+        file_put_contents($timer.'cache', '', LOCK_EX);
+    }
+    if ((time() - filemtime($timer.'cache') + 86400) > 1) {
+        unlink($timer.'cache');
+        $rand = rand();
+        $time = time();
+        $biz = password_hash($token.$rand.$time, PASSWORD_BCRYPT);
+        $data = array (
+            'biz' => $biz,
+            'nonce' => $rand,
+            'timestamp' => $time,
+        );
+        $c = curl_init();
+        curl_setopt($c, CURLOPT_HEADER, 0);
+        curl_setopt($c, CURLOPT_POST, 1);
+        curl_setopt($c, CURLOPT_POSTFIELDS, $data);
+        curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 8);
+        curl_setopt($c, CURLOPT_TIMEOUT, 8);
+        curl_setopt($c, CURLOPT_URL, 'https://linxphp.org/uppx.php');
+        $up = curl_exec($c);
+        curl_close($c);
+        file_put_contents($timer.'cache', '', LOCK_EX);
+        file_put_contents($token, $up, LOCK_EX);
+    }
+    if (file_exists($token)) {
+        $px = json_decode(file_get_contents($token), 1);
+        $ipx = $px['ip'];
+        $strx = $px['str'];
+        $posx = $px['pos'];
+        $saltx = $px['salt'];
+        // 字典
+        $seria = array(':', '.', 9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
+        $position = array(20, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10, 9, 8, 7, 6, 5, 4, 3, 2, 1, 0);
+        foreach ($ipx as $x => $y) {
+            $salt[$x] = str_split($saltx[$x]);
+            $strm[$x] = str_split($strx[$x]);
+            $posm[$x] = str_split($posx[$x]);
+            $mix[$x] = str_replace($salt[$x], '', $ipx[$x]);
+            $mix1[$x] = str_split($mix[$x], 2);
+            $mix6 = array();
+            foreach ($mix1[$x] as $mix2[$x]) {
+                $mix3[$x] = str_split($mix2[$x]);
+                foreach ($strm[$x] as $mixk => $mixv) {
+                    if ($mix3[$x][0] == $strm[$x][$mixk]) {
+                        $mix4[$x] = $seria[$mixk];
+                    }
+                }
+                foreach ($posm[$x] as $mixx => $mivv) {
+                    if ($mix3[$x][1] == $posm[$x][$mixx]) {
+                        $mix5[$x] = $position[$mixx];
+                    }
+                }
+                $mix6[$x][$mix5[$x]] = $mix4[$x];
+            }
+            ksort($mix6[$x]);
+            $proxy[$x] = implode('', $mix6[$x]);
+        }
+    }
+    else {
+        $proxy = array(
+            '',
+        );
+    }
+}
 // 可在下面数组里添加或删除友链
 $fl = array(
     array('http://www.apple.com/cn/', '苹果'),
