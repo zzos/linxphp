@@ -1053,10 +1053,10 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
                     echo '    <div class="draglist tiny"><table><thead><tr><th title="搜索结果标题|摘要与查询词的语义关联度">出自</th><th>近似词</th><th>猜&nbsp;正规性</th><th>权威性</th><th>5</th><th title="百度搜索结果参数F第6位基于IP地理位置">地理位置</th><th>网址</th><th>标题|网址|摘要</th><th>F0</th></tr></thead><tbody class="center">';
                     foreach ($f[2] as $i => $v) {
                         echo '<tr>';
-                        if ($f[2][$i] == 7) {echo '<td class="darkseagreen" title="7">略</td>';}
+                        if ($f[2][$i] == 7) {echo '<td class="darkseagreen" title="7">内容</td>';}
                         elseif ($f[2][$i] == 'F') {echo '<td class="lightskyblue" title="F">穿透</td>';}
-                        elseif ($f[2][$i] == 5) {echo '<td class="lavender" title="5">中</td>';}
-                        else {echo '<td class="violet" title="3">高</td>';}
+                        elseif ($f[2][$i] == 5) {echo '<td class="lavender" title="5">[猜]标题</td>';}
+                        else {echo '<td class="violet" title="3">[猜]锚文本</td>';}
                         if ($f[3][$i] == 7) {echo '<td class="darkseagreen" title="7">略</td>';}
                         elseif ($f[3][$i] == 3) {echo '<td class="violet" title="3">近似词</td>';}
                         else {echo '<td class="lightskyblue" title="F">多义词</td>';}
@@ -1067,7 +1067,7 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
                         if ($f[5][$i] == 3) {echo '<td class="violet" title="3">略</td>';}
                         elseif ($f[5][$i] == 'F') {echo '<td class="lightskyblue" title="F">快</td>';}
                         elseif ($f[5][$i] == 'B') {echo '<td class="springgreen" title="B">较快</td>';}
-                        else {echo '<td class="darkseagreen" title="7">中</td>';}
+                        else {echo '<td class="darkseagreen" title="7">提权</td>';}
                         echo $f[6][$i] == 1 ? '<td class="gold" title="1">略</td>' : '<td class="violet" title="3">最新资讯</td>';
                         if ($f[7][$i] == 7) {echo '<td class="darkseagreen" title="7">略</td>';}
                         elseif ($f[7][$i] == 5) {echo '<td class="lavender" title="5">基于&nbsp;IP&nbsp;地理位置</td>';}
@@ -1140,10 +1140,10 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
                         else {echo '<td class="gold" title="2">标语<br>slogan</td>';}
                         echo $f2[5][$i] == 6 ? '<td class="silver" title="6">略</td>' : '<td class="darkseagreen" title="7">猜&nbsp;使用百度排名点击器(搜easy)出现</td>';
                         echo $f2[6][$i] == 'D' ? '<td class="mediumseagreen" title="D">略</td>' : '<td class="darkturquoise">C</td>';
-                        if ($f2[7][$i] == 'D') {echo '<td class="mediumseagreen" title="D">略</td>';}
+                        if ($f2[7][$i] == 'D') {echo '<td class="mediumseagreen" title="D">元描述</td>';}
                         elseif ($f2[7][$i] == 'F') {echo '<td class="lightskyblue" title="F">人工提交</td>';}
                         elseif ($f2[7][$i] == 'E') {echo '<td class="deepskyblue" title="E">正文</td>';}
-                        else {echo '<td class="darkturquoise" title="C">元描述</td>';}
+                        else {echo '<td class="darkturquoise" title="C">正文描述</td>';}
                         echo $f2[8][$i] == 6 ? '<td class="silver" title="6">略</td>' : '<td class="deepskyblue" title="E&nbsp;anchortext">锚文本</td>';
                         if ($f2[9][$i] == 'A') {echo '<td class="aquamarine" title="A">略</td>';}
                         elseif ($f2[9][$i] == 'B') {echo '<td class="springgreen" title="B&nbsp;tagtitle">网页标题</td>';}
@@ -1158,10 +1158,10 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
             if (preg_match_all("/(?<=F3':)(\s?')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $f3)) {
                 if (strlen(@$f3[0][0]) > 0) {
                     echo '
-    <div class="draglist tiny"><table><thead><tr><th>1</th><th>2</th><th>3</th><th>原创</th><th>猜&nbsp;网址形式</th><th>6</th><th>相关词</th><th>猜&nbsp;相似度</th><th>F3</th></tr></thead><tbody class="center">';
+    <div class="draglist tiny"><table><thead><tr><th>结果</th><th>2</th><th>3</th><th>原创</th><th>猜&nbsp;网址形式</th><th>6</th><th>相关词</th><th>猜&nbsp;相似度</th><th>F3</th></tr></thead><tbody class="center">';
                     foreach ($f3[2] as $i => $v) {
                         echo '<tr>';
-                        echo $f3[2][$i] == 5 ? '<td class="lavender" title="5">略</td>' : '<td class="mediumseagreen">D</td>';
+                        echo $f3[2][$i] == 5 ? '<td class="lavender" title="5">略</td>' : '<td class="mediumseagreen">[猜]站点或目录</td>';
                         echo '<td class="tomato" title="4">略</td>';
                         echo $f3[4][$i] == 'E' ? '<td class="deepskyblue" title="E">略</td>' : '<td class="lightskyblue">F</td>';
                         if ($f3[5][$i] == 5) {echo '<td class="lavender" title="5">略</td>';}
@@ -1187,7 +1187,7 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
                         elseif ($f3[8][$i] == 2) {echo '<td class="orange">召回</td>';}
                         else {echo '<td class="gold">1</td>';}
                         if ($f3[9][$i] == 'F') {echo '<td class="lightskyblue" title="F">精确匹配</td>';}
-                        elseif ($f3[9][$i] == 'E') {echo '<td class="deepskyblue" title="E">近义词匹配</td>';}
+                        elseif ($f3[9][$i] == 'E') {echo '<td class="deepskyblue" title="E">同义词</td>';}
                         elseif ($f3[9][$i] == 'D') {echo '<td class="mediumseagreen">D</td>';}
                         elseif ($f3[9][$i] == 'C') {echo '<td class="darkturquoise">C</td>';}
                         elseif ($f3[9][$i] == 7) {echo '<td class="darkseagreen" title="7">匹配网址</td>';}
