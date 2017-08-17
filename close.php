@@ -1165,49 +1165,6 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
                 }
             }
         }
-
-        if (preg_match_all('/(?<=<\/div><div class="c-gap-top c-recommend" style="display:none;" data-extquery=")(.+)(?="><i class="c-icon c-icon-bear-circle c-gap-right-small">)/', @$se, $mq)) {
-            if (!is_null(@$mq)) {
-                foreach ($mq as $v) {
-                    $v = join('&nbsp;', $v);
-                    $temp[] = $v;
-                }
-                $kz = explode('&nbsp;', str_replace('&nbsp;&nbsp;', '&nbsp;', $temp[0]));
-                $kk = array_unique($kz);
-                array_pop($kk);
-                shuffle($kk);
-                foreach ($kk as $i => $v) {
-                    if ($i % 4 == 0) {
-                        echo '<tr class="break back-sky">';
-                    }
-                    echo '
-                <td><a itemprop="url" href="'.$u.$l.str_replace($pp, $rp, preg_replace($mp, $mr, $kk[$i])).'" target="_blank">'.str_replace($pp, $rp, $kk[$i]).'</a></td>';
-                    $i++;
-                    if ($i % 4 == 0) {
-                        echo '
-                </tr>';
-                    }
-                }
-                if ($i % 4 == 3) {
-                    echo '
-                <td></td>
-                </tr>';
-                }
-                elseif ($i % 4 == 2) {
-                    echo '
-                <td></td>
-                <td></td>
-                </tr>';
-                }
-                elseif ($i % 4 == 1) {
-                    echo '
-                <td></td>
-                <td></td>
-                <td></td>
-                </tr>';
-                }
-            }
-        }
         echo '</tbody>
         </table>
     </div>
