@@ -619,13 +619,13 @@ if (strlen($s) > 0) {
                 mkdir($ist, 0755);
             }
             if (preg_match('/(\.png)/is', @$pic) == true) {
-                $g = $ist.md5($q).'.png';
+                $g = str_replace('./', '', $ist).md5($q).'.png';
             }
             elseif (preg_match('/(\.gif)/is', @$pic) == true) {
-                $g = $ist.md5($q).'.gif';
+                $g = str_replace('./', '', $ist).md5($q).'.gif';
             }
             else {
-                $g = $ist.md5($q).'.jpg';
+                $g = str_replace('./', '', $ist).md5($q).'.jpg';
             }
             if (!file_exists($g)) {
                 $c=curl_init();
@@ -736,13 +736,13 @@ if (strlen($s) > 0) {
                 mkdir($ist, 0755);
                 }
                 if (preg_match('/(\.png)/is', @$pic2) == true) {
-                    $g2 = $ist.md5($q).'2.png';
+                    $g2 = str_replace('./', '', $ist).$ist.md5($q).'2.png';
                 }
                 elseif (preg_match('/(\.gif)/is', @$pic2) == true) {
-                    $g2 = $ist.md5($q).'2.gif';
+                    $g2 = str_replace('./', '', $ist).$ist.md5($q).'2.gif';
                 }
                 else {
-                    $g2 = $ist.md5($q).'2.jpg';
+                    $g2 = str_replace('./', '', $ist).$ist.md5($q).'2.jpg';
                 }
                 if (!file_exists($g2)) {
                     $c=curl_init();
