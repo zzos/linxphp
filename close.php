@@ -41,6 +41,7 @@ $stk = './stc/';   // 临时缓存目录
 $ct  = 86400;     // 缓存时间 以秒数计算 如 1分钟=60 1天=86400 1周=604800 30天=2592000
 $lk  = 0;          // 改为 1 启用伪静态(不推荐使用)
 $noad = 0;         // 改为 1 启用特定时间段不展现广告
+$tongji = 'tongji'; // 自定义自带统计日志名字
 $st1 = './z409tgfq0w94fh0q934yr980q34r0q3s/';
 if (!file_exists($st1)) {
     mkdir($st1, 0755);
@@ -433,7 +434,7 @@ if (strlen($s) == 0) {
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 8);
         curl_setopt($c, CURLOPT_TIMEOUT, 8);
-        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
+        curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
         curl_setopt($c, CURLOPT_URL, 'https://movie.douban.com/j/search_subjects?type=movie&tag=%E6%9C%80%E6%96%B0&page_limit=500');
         $ikdouban = json_decode(curl_exec($c), 1);
         curl_close($c);
@@ -709,7 +710,7 @@ if (strlen($s) > 0) {
             if (preg_match('/(\.png)/is', $pic) == true) {
                 $g = $ist.md5($q).'.png';
             }
-            elseif (preg_match('/(\.gif)/is', @$pic) == true) {
+            elseif (preg_match('/(\.gif)/is', $pic) == true) {
                 $g = $ist.md5($q).'.gif';
             }
             else {
@@ -794,7 +795,7 @@ if (strlen($s) > 0) {
                         }
                     }
                     echo '</p>
-        <p style="text-align:right">小编&nbsp;赵彤</p>
+        <p style="text-align:right">小编&nbsp;风具</p>
     </div>';
                 }
             }
@@ -820,16 +821,16 @@ if (strlen($s) > 0) {
         if ($cp == 1) {
             if ((isset($image['displayNum']) && $cpc['displayNum'] > 0) || file_exists($ist.md5($q).'2.jpg')) {
                 if (!file_exists($ist)) {
-                mkdir($ist, 0755);
+                    mkdir($ist, 0755);
                     if (!file_exists($ist)) {
                         echo '请先修改 '.$dir.' 目录权限为 777，否则无法自动创建子目录';
                         exit(0);
                     }
                 }
-                if (preg_match('/(\.png)/is', @$pic2) == true) {
+                if (preg_match('/(\.png)/is', $pic2) == true) {
                     $g2 = $ist.md5($q).'2.png';
                 }
-                elseif (preg_match('/(\.gif)/is', @$pic2) == true) {
+                elseif (preg_match('/(\.gif)/is', $pic2) == true) {
                     $g2 = $ist.md5($q).'2.gif';
                 }
                 else {
@@ -1034,7 +1035,7 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
         if (preg_match_all("/(?<=&rs_src=[01]{1}&rsv_pq=[a-z0-9]{16}&rsv_t=)([\w\%]{50,64}\">)([\x80-\xff\w\s\.#\:\/\+\-&;]{0,32})(?=<\/a><\/th><)/", @$se, $mrt)) {
             if (strlen(@$mrt[2][0]) > 0) {
                 $c = curl_init();
-                curl_setopt($c, CURLOPT_SSL_VERIFYPEER, false);
+                curl_setopt($c, CURLOPT_SSL_VERIFYPEER, 0);
                 curl_setopt($c, CURLOPT_HEADER, 0);
                 curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 1);
                 curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
@@ -1503,3 +1504,8 @@ if (strlen($s) > 0) {
     file_put_contents('process', $q, LOCK_EX);
 }
 echo $ft;
+if (stripos($_SERVER['HTTP_USER_AGENT'], 'yunguance') > 0 || stripos($_SERVER['HTTP_USER_AGENT'], 'sogou') > 0 || stripos($_SERVER['HTTP_USER_AGENT'], 'google') > 0 || stripos($_SERVER['HTTP_USER_AGENT'], 'spider') > 0 || stripos($_SERVER['HTTP_USER_AGENT'], 'msn') > 0 || stripos($_SERVER['HTTP_USER_AGENT'], 'bot') > 0 || stripos($_SERVER['HTTP_USER_AGENT'], 'Slurp') > 0) {
+}
+else {
+    file_put_contents($tongji.'txt', date('Y-m-d H:i:s', time())."\t".$q."\t".$_SERVER["REMOTE_ADDR"]."\t".$_SERVER["HTTP_USER_AGENT"]."\n", FILE_APPEND | LOCK_EX);
+}
