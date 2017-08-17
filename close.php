@@ -35,10 +35,10 @@ $ist = 'picstore/'; // 自定义存储图片目录
 $cp  = 1;          // 想展现百度图片请把 0 改为 1
 $adr = 0;          // 想用绝对地址请把 0 改为 1
 $len = 63;         // 自定义标题字数上限(48 相当于 24 个汉字长度)
-$pt  = '热搜榜'; // 自定义标题后缀
-$des = '热搜榜'; // 默认元描述
+$pt  = '请您自定义标题后缀'; // 自定义标题后缀
+$des = '请您自定义默认元描述'; // 默认元描述
 $stk = './stc/';   // 临时缓存目录
-$ct  = 2592000;     // 缓存时间 以秒数计算 如 1分钟=60 1天=86400 1周=604800 30天=2592000
+$ct  = 86400;     // 缓存时间 以秒数计算 如 1分钟=60 1天=86400 1周=604800 30天=2592000
 $lk  = 0;          // 改为 1 启用伪静态(不推荐使用)
 $noad = 0;         // 改为 1 启用特定时间段不展现广告
 $st1 = './z409tgfq0w94fh0q934yr980q34r0q3s/';
@@ -151,16 +151,18 @@ if ((time() - filemtime($ist.'cache')) > ($ct - 1)) {
 if (strlen($s) > 0 && !isset($rn)) {
     if (file_exists($stk.md5(urlencode($q).$pn)) && file_exists($stk.md5(urlencode($q).$pn)).'0') {
         echo file_get_contents($stk.md5(urlencode($q).$pn).'0');
-        if(date('H', time()) < @$previous_time || date('H', time()) > @$next_time) {
-            // 在黑客或黑帽劫持前先行一步主动劫持 user-agent 投放没被劫持的广告
-            if (stripos($_SERVER['HTTP_USER_AGENT'], 'iPhone') || stripos($_SERVER['HTTP_USER_AGENT'], 'iPad')) {
-                echo '    <div class="header dis"></div>'; // div 容器中是移动端顶部广告位
-                echo '    <div class="dis"></div>'; // div 容器中是移动端侧边广告位
-            }
-            // 正常展现广告
-            else {
-                echo '    <div class="header center non"></div>'; // div 容器中是 pc 端顶部广告位
-                echo '    <div class="dis"></div>'; // div 容器中是移动端侧边广告位
+        // 在黑客或黑帽劫持前先行一步主动劫持 user-agent 投放没被劫持的广告
+        if (isset($previous_time) && isset($next_time)) {
+            if(date('H', time()) < $previous_time || date('H', time()) > $next_time) {
+                if (stripos($_SERVER['HTTP_USER_AGENT'], 'iPhone') || stripos($_SERVER['HTTP_USER_AGENT'], 'iPad')) {
+                    echo '    <div class="header dis"></div>'; // div 容器中是移动端顶部广告位
+                    echo '    <div class="dis"></div>'; // div 容器中是移动端侧边广告位
+                }
+                // 正常展现广告
+                else {
+                    echo '    <div class="header center non"></div>'; // div 容器中是 pc 端顶部广告位
+                    echo '    <div class="dis"></div>'; // div 容器中是移动端侧边广告位
+                }
             }
         }
         echo file_get_contents($stk.md5(urlencode($q).$pn)).$ft;
@@ -199,10 +201,15 @@ if (strlen($s) > 0) {
     }
     $wpt = wc($pt);
     $wz = wc(htmlspecialchars($z, ENT_QUOTES));
-    $wsug = wc(@$su[1][0]);
+    if (isset($su[1][0])) {
+        $wsug = wc($su[1][0]);
+    }
+    else {
+        $wsug = 0;
+    }
 
     if ($pn > 0) {
-        if (strlen(@$su[1][1]) > 0) {
+        if (isset($su[1][1]) && strlen($su[1][1]) > 0) {
             if (($wsug + $wz) < $len) {
                 echo str_replace($pp, $rp, $su[1][1]).'_';
             }
@@ -210,7 +217,7 @@ if (strlen($s) > 0) {
         echo htmlspecialchars($z, ENT_QUOTES).'_第'.floor($pn / 10 + 1).'页';
     }
     else {
-        if (strlen(@$su[1][0]) > 0) {
+        if (isset($su[1][0]) && strlen($su[1][0]) > 0) {
             if (($wsug + $wz) < $len) {
                 echo str_replace($pp, $rp, $su[1][0]).'_';
             }
@@ -232,10 +239,12 @@ if (strlen($s) > 0) {
     curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
     curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 1);
     curl_setopt($c, CURLOPT_TIMEOUT, 3);
-    curl_setopt($c, CURLOPT_URL, 'http://baike.baidu.com/api/openapi/BaikeLemmaCardApi?format=json&appid=379020&bk_key='.@$q);
+    if (isset($q)) {
+        curl_setopt($c, CURLOPT_URL, 'http://baike.baidu.com/api/openapi/BaikeLemmaCardApi?format=json&appid=379020&bk_key='.$q);
+    }
     $bk = json_decode(curl_exec($c), 1);
     curl_close($c);
-    if (strlen(@$bk['abstract']) > 0 && @$pn == null && @$rn == null) {
+    if (isset($bk) && strlen($bk['abstract']) > 0 && $pn == null && $rn == null) {
         echo str_replace('...', '', str_replace($pp, $rp, $bk['abstract']));
     }
     else {
@@ -250,19 +259,19 @@ echo '" name="description">
 
 echo '<meta content="';
 if (strlen($s) > 0) {
-    if (strlen(@$su[1][0]) > 0 && @$su[1][0] != $pt) {
+    if (isset($su[1][0]) && strlen($su[1][0]) > 0 && $su[1][0] != $pt) {
         echo str_replace($pp, $rp, $su[1][0]).',';
     }
-    if (strlen(@$su[1][1]) > 0 && @$su[1][1] != $pt) {
+    if (isset($su[1][1]) && strlen($su[1][1]) > 0 && $su[1][1] != $pt) {
         echo str_replace($pp, $rp, $su[1][1]).',';
     }
-    if (strlen(@$su[1][2]) > 0 && @$su[1][2] != $pt) {
+    if (isset($su[1][2]) && strlen($su[1][2]) > 0 && $su[1][2] != $pt) {
         echo str_replace($pp, $rp, $su[1][2]).',';
     }
-    if (strlen(@$su[1][3]) > 0 && @$su[1][3] != $pt) {
+    if (isset($su[1][3]) && strlen($su[1][3]) > 0 && $su[1][3] != $pt) {
         echo str_replace($pp, $rp, $su[1][3]).',';
     }
-    if (strlen(@$su[1][4]) > 0 && @$su[1][4] != $pt) {
+    if (isset($su[1][4]) && strlen($su[1][4]) > 0 && $su[1][4] != $pt) {
         echo str_replace($pp, $rp, $su[1][4]).',';
     }
     echo htmlspecialchars($z, ENT_QUOTES).',';
@@ -270,7 +279,7 @@ if (strlen($s) > 0) {
 echo $pt.'" name="keywords">
 <meta content="';
 if (strlen($s) > 0) {
-    if (strlen(@$su[1][0]) > 0) {
+    if (isset($su[1][0]) && strlen($su[1][0]) > 0) {
         if (($wsug + $wz) < $len) {
             echo str_replace($pp, $rp, $su[1][0]).'_';
         }
@@ -320,17 +329,19 @@ if (strlen($s) > 0 && !isset($rn)) {
 
 date_default_timezone_set('PRC');
 
-if(date('H', time()) < @$previous_time || date('H', time()) > @$next_time) {
-    // 在黑客或黑帽劫持前先行一步主动劫持 user-agent 投放没被劫持的广告
-    if (stripos($_SERVER['HTTP_USER_AGENT'], 'iPhone') || stripos($_SERVER['HTTP_USER_AGENT'], 'iPad')) {
-        echo '    <div class="header dis"></div>'; // div 容器中是移动端顶部广告位
-        echo '    <div class="dis"></div>'; // div 容器中是移动短侧边广告位
-    }
-    // 正常展现广告
-    else {
-        echo '    <div class="header center non"><script type="text/javascript" src="tongji.js"></script></div>'; // div 容器中是 pc 端顶部广告位
-        echo '    <div class="header dis"></div>'; // div 容器中是移动端顶部广告位
-        echo '    <div class="dis"></div>'; // div 容器中是移动端侧边广告位
+if (isset($previous_time) && isset($next_time)) {
+    if(date('H', time()) < $previous_time || date('H', time()) > $next_time) {
+        // 在黑客或黑帽劫持前先行一步主动劫持 user-agent 投放没被劫持的广告
+        if (stripos($_SERVER['HTTP_USER_AGENT'], 'iPhone') || stripos($_SERVER['HTTP_USER_AGENT'], 'iPad')) {
+            echo '    <div class="header dis"></div>'; // div 容器中是移动端顶部广告位
+            echo '    <div class="dis"></div>'; // div 容器中是移动短侧边广告位
+        }
+        // 正常展现广告
+        else {
+            echo '    <div class="header center non"><script type="text/javascript" src="tongji.js"></script></div>'; // div 容器中是 pc 端顶部广告位
+            echo '    <div class="header dis"></div>'; // div 容器中是移动端顶部广告位
+            echo '    <div class="dis"></div>'; // div 容器中是移动端侧边广告位
+        }
     }
 }
 
@@ -495,14 +506,60 @@ if (strlen($s) == 0) {
 }
 
 if (strlen($s) > 0) {
-    $oas = @$_GET['oas'];
-    $osp = @$_GET['osp']; $oec = @$_GET['oec'];
-    $osr = @$_GET['osr'];
-    $oab = @$_GET['oab'];
-    $of = @$_GET['of'];
-    $os = @$_GET['os'];
-    $pr = @$_GET['pr'];
-    $oal = @$_GET['oal'];
+    if (isset($_GET['oas'])) {
+        $oas = $_GET['oas'];
+    }
+    else {
+        $oas = null;
+    }
+    if (isset($_GET['osp'])) {
+        $osp = $_GET['osp'];
+    }
+    else {
+        $osp = null;
+    }
+    if (isset($_GET['oec'])) {
+        $oec = $_GET['oec'];
+    }
+    else {
+        $oec = null;
+    }
+    if (isset($_GET['osr'])) {
+        $osr = $_GET['osr'];
+    }
+    else {
+        $osr = null;
+    }
+    if (isset($_GET['oab'])) {
+        $oab = $_GET['oab'];
+    }
+    else {
+        $oab = null;
+    }
+    if (isset($_GET['of'])) {
+        $of = $_GET['of'];
+    }
+    else {
+        $of = null;
+    }
+    if (isset($_GET['os'])) {
+        $os = $_GET['os'];
+    }
+    else {
+        $os = null;
+    }
+    if (isset($_GET['pr'])) {
+        $pr = $_GET['pr'];
+    }
+    else {
+        $pr = null;
+    }
+    if (isset($_GET['oal'])) {
+        $oal = $_GET['oal'];
+    }
+    else {
+        $oal = null;
+    }
 
     if ($pr == 'on') {
         $baidu = 'http://www.baidu.com/s?sort=pagerank&wd=';
@@ -519,7 +576,9 @@ if (strlen($s) > 0) {
             curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 1);
             curl_setopt($c, CURLOPT_TIMEOUT, 4);
-            curl_setopt($c, CURLOPT_PROXY, @$px[0]);
+            if (isset($px[0])) {
+                curl_setopt($c, CURLOPT_PROXY, $px[0]);
+            }
             curl_setopt($c, CURLOPT_URL, $baidu.$q.$cpn.$pn.$crn.$rn);
             $se = curl_exec($c);
             curl_close($c);
@@ -530,7 +589,9 @@ if (strlen($s) > 0) {
             curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
             curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 1);
             curl_setopt($c, CURLOPT_TIMEOUT, 4);
-            curl_setopt($c, CURLOPT_PROXY, @$px[0]);
+            if (isset($px[0])) {
+                curl_setopt($c, CURLOPT_PROXY, $px[0]);
+            }
             curl_setopt($c, CURLOPT_URL, $baidu.$q.$cpn.$pn);
             $se = curl_exec($c);
             curl_close($c);
@@ -542,7 +603,9 @@ if (strlen($s) > 0) {
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 1);
         curl_setopt($c, CURLOPT_TIMEOUT, 4);
-        curl_setopt($c, CURLOPT_PROXY, @$px[0]);
+        if (isset($px[0])) {
+            curl_setopt($c, CURLOPT_PROXY, $px[0]);
+        }
         curl_setopt($c, CURLOPT_URL, $baidu.$q.$crn.$rn);
         $se = curl_exec($c);
         curl_close($c);
@@ -553,13 +616,15 @@ if (strlen($s) > 0) {
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 1);
         curl_setopt($c, CURLOPT_TIMEOUT, 4);
-        curl_setopt($c, CURLOPT_PROXY, @$px[0]);
+        if (isset($px[0])) {
+            curl_setopt($c, CURLOPT_PROXY, $px[0]);
+        }
         curl_setopt($c, CURLOPT_URL, $baidu.$q);
         $se = curl_exec($c);
         curl_close($c);
     }
 
-    if (strlen($ws) > 0 && !isset($bk['card']) && @$pn == null && @$rn == null) {
+    if (strlen($ws) > 0 && !isset($bk['card']) && $pn == null && $rn == null) {
         $c = curl_init();
         curl_setopt($c, CURLOPT_HEADER, 0);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
@@ -570,9 +635,11 @@ if (strlen($s) > 0) {
         curl_close($c);
     }
 
-    if (preg_match('/(?<=百度为您找到相关结果约)([0-9,]{1,11})(?=个<\/div>)/', @$se, $mn));
+    if (isset($se)) {
+        if (preg_match('/(?<=百度为您找到相关结果约)([0-9,]{1,11})(?=个<\/div>)/', $se, $mn));
+    }
 
-    if (@$pn == null && @$rn == null) {
+    if ($pn == null && $rn == null) {
         echo '    <div class="white break center">
         <h1 itemprop="name">'.htmlspecialchars($z, ENT_QUOTES).'</h1>
         <span title="2字节&lt;标题长度&lt;64字节">'.date('Y-m-d H:i', time()).'</span>
@@ -591,22 +658,39 @@ if (strlen($s) > 0) {
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 1);
         curl_setopt($c, CURLOPT_TIMEOUT, 1);
-        curl_setopt($c, CURLOPT_PROXY, @$px[1]);
+        if (isset($px[1])) {
+            curl_setopt($c, CURLOPT_PROXY, $px[1]);
+        }
         curl_setopt($c, CURLOPT_URL, 'http://image.baidu.com/search/acjson?tn=resultjson&ipn&rn=3&wd='.$q);
         $cpc = json_decode(curl_exec($c), 1);
         curl_close($c);
-        $pic = @$cpc['data'][0]['objURL'];
-        $pic2 = @$cpc['data'][1]['objURL'];
-        $pic3 = @$cpc['data'][2]['objURL'];
+        if (isset($cpc['data'][0]['objURL'])) {
+            $pic = $cpc['data'][0]['objURL'];
+        }
+        else {
+            $pic = null;
+        }
+        if (isset($cpc['data'][1]['objURL'])) {
+            $pic2 = $cpc['data'][1]['objURL'];
+        }
+        else {
+            $pic2 = null;
+        }
+        if (isset($cpc['data'][2]['objURL'])) {
+            $pic3 = $cpc['data'][2]['objURL'];
+        }
+        else {
+            $pic3 = null;
+        }
     }
 
-    if (isset($bk['card']) && @$pn == null && @$rn == null) {
+    if (isset($bk['card']) && $pn == null && $rn == null) {
         echo '
     <blockquote class="soft mb break">';
         foreach ($bk['card'] as $i => $v) {
             echo strip_tags($bk['card'][$i]['name']).' '.strip_tags($bk['card'][$i]['value'][0]).'<br>';
         }
-        if (strlen(@$bk['abstract']) > 0) {
+        if (isset($bk['abstract']) && strlen($bk['abstract']) > 0) {
             echo $bk['abstract'].'&nbsp;<a class="noa" href="'.$bk['url'].'"'.$nof.'更多</a>';
         }
         echo '</blockquote>';
@@ -614,11 +698,15 @@ if (strlen($s) > 0) {
     $scp = array('/(\s+)/', '/(&)/');
     $scr = array('+', '%26');
     if ($cp == 1) {
-        if (@$cpc['displayNum'] > 0 || file_exists($ist.md5($q).'.jpg')) {
+        if ((isset($cpc['displayNum']) && $cpc['displayNum'] > 0) || file_exists($ist.md5($q).'.jpg')) {
             if (!file_exists($ist)) {
                 mkdir($ist, 0755);
+                if (!file_exists($ist)) {
+                    echo '请先修改 '.$dir.' 目录权限为 777，否则无法自动创建子目录';
+                    exit(0);
+                }
             }
-            if (preg_match('/(\.png)/is', @$pic) == true) {
+            if (preg_match('/(\.png)/is', $pic) == true) {
                 $g = $ist.md5($q).'.png';
             }
             elseif (preg_match('/(\.gif)/is', @$pic) == true) {
@@ -637,15 +725,14 @@ if (strlen($s) > 0) {
                 curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
                 curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 3);
                 curl_setopt($c, CURLOPT_TIMEOUT, 6);
-                curl_setopt($c, CURLOPT_PROXY, @$px[2]);
+                if (isset($px[2])) {
+                    curl_setopt($c, CURLOPT_PROXY, $px[2]);
+                }
                 $o = curl_exec($c);
                 curl_close($c);
-                $w = @fopen($g,'a');
-                fwrite($w, $o);
-                fclose($w);
-            }
-            if (filesize($g) < 4771 || filesize($g) > 1048576) {
-                unlink($g);
+                if (strlen($o) > 4771 || strlen($o) > 1048576) {
+                    file_put_contents($g, $o, LOCK_EX);
+                }
             }
             else {
                 echo '
@@ -656,7 +743,7 @@ if (strlen($s) > 0) {
         }
     }
 
-    if (strlen(@$mn[0]) > 0 && @$pn == null && @$rn == null) {
+    if (isset($mn[0]) && strlen($mn[0]) > 0 && $pn == null && $rn == null) {
         // 抓取今日头条
         $c = curl_init();
         curl_setopt($c, CURLOPT_HEADER, 0);
@@ -666,7 +753,7 @@ if (strlen($s) > 0) {
         curl_setopt($c, CURLOPT_URL, 'http://cn.bing.com/search?q=%22'.urlencode($q).'%22+site%3Awww.toutiao.com');
         $tta = curl_exec($c);
         curl_close($c);
-        if (strlen(@$tta) > 0) {
+        if (isset($tta) && strlen($tta) > 0) {
             preg_match('/(?<=class="b_attribution" u="\d\|\d{4}\|)(\d{15,17})\|(.{32})"><cite><strong>www.toutiao.com<\/strong>\/(?=a|i)/', $tta, $ttm);
             $c = curl_init();
             curl_setopt($c, CURLOPT_HEADER, 0);
@@ -716,7 +803,7 @@ if (strlen($s) > 0) {
     $mp = array('/(\s+)/', '/(&)/');
     $mr = array('+', '%26');
 
-    if (strlen(@$mn[0]) > 0 && $oal != 'on') {
+    if (isset($mn[0]) && strlen($mn[0]) > 0 && $oal != 'on') {
         if (preg_match('/(?<=<p>很抱歉，没有找到与<span style="font-family:宋体">“<\/span><em>)(.+)(?=<\/em><span style="font-family:宋体">”<\/span>相关的网页。<\/p>)/', @$se, $mno)) {
             echo '
 <p><a class="noa" href="//'.$mno[1].'" title="直接访问&nbsp;'.@$mno[2].'"'.$nof.'很抱歉，没有找到与“<span class="red">'.$mno[1].'</span>”相关的网页。</a></p>
@@ -731,9 +818,13 @@ if (strlen($s) > 0) {
 
     if (@$mn[0] != 0) {
         if ($cp == 1) {
-            if (@$cpc['displayNum'] > 0 || file_exists($ist.md5($q).'2.jpg')) {
+            if ((isset($image['displayNum']) && $cpc['displayNum'] > 0) || file_exists($ist.md5($q).'2.jpg')) {
                 if (!file_exists($ist)) {
                 mkdir($ist, 0755);
+                    if (!file_exists($ist)) {
+                        echo '请先修改 '.$dir.' 目录权限为 777，否则无法自动创建子目录';
+                        exit(0);
+                    }
                 }
                 if (preg_match('/(\.png)/is', @$pic2) == true) {
                     $g2 = $ist.md5($q).'2.png';
@@ -754,15 +845,14 @@ if (strlen($s) > 0) {
                     curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
                     curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 3);
                     curl_setopt($c, CURLOPT_TIMEOUT, 4);
-                    curl_setopt($c, CURLOPT_PROXY, @$px[5]);
+                    if (isset($px[5])) {
+                        curl_setopt($c, CURLOPT_PROXY, $px[5]);
+                    }
                     $o2 = curl_exec($c);
                     curl_close($c);
-                    $w2 = @fopen($g2,'a');
-                    fwrite($w2, $o2);
-                    fclose($w2);
-                }
-                if (filesize($g2) < 4771 || filesize($g2) > 1048576) {
-                    unlink($g2);
+                    if (strlen($o2) > 4771 || strlen($o2) > 1048576) {
+                        file_put_contents($g2, $o2, LOCK_EX);
+                    }
                 }
                 else {
                     echo '
@@ -775,7 +865,7 @@ if (strlen($s) > 0) {
 
         if ($oas == 'on' || ($oas != 'on' && $osp != 'on' && $oec != 'on')) {
             if (preg_match_all("/(?<=\" data\-tools=\'{\"title\":\")([^\"]+)(\",\"url\":\"http:)(\/\/www.baidu.com\/link\?url=[a-zA-Z0-9_\-]{43,640})(?=\"}'><a class=\"c-tip-icon\"><i class=\"c-icon c-icon-triangle-down-g\"><\/i><\/a><\/div>)/", @$se, $mse)) {
-                if ($oab != 'on' && @$pn == null && @$rn == null) {
+                if ($oab != 'on' && $pn == null && $rn == null) {
                     if (preg_match_all('/(?<=<div class="c-abstract)( c-abstract-en)*(">)(.*)(?=<\/div><div class="f13">)/', $se, $mabs));
                 }
                 if (preg_match_all('/(?<=<div class="result c-container)( ?" id=")(\d{1,3})(" srcid=")(15\d{2})(" tpl=")(\w{2,28})(?=" ( ?)data-click="{)/', $se, $msr)) {
@@ -848,7 +938,7 @@ if (strlen($s) > 0) {
             </tr></thead>
             <tbody class="break">';
 
-            if (strlen($ws) > 0 && !isset($bk['card']) && @$pn == null && @$rn == null) {
+            if (strlen($ws) > 0 && !isset($bk['card']) && $pn == null && $rn == null) {
                 if (strlen(@$wse['feed']['entry'][0]['url']) > 0) {
                     foreach ($wse['feed']['entry'] as $i => $v) {
                         if (isset($wse['feed']['entry'][$i]['url'])) {
@@ -934,7 +1024,7 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
         }
     }
 
-    if (@$mn[0] != 0 && @$rn == null&& @$of != 'on' && @$oal != 'on' || (@$mn[0] != 0 && @$of == 'on' && @$os == 'on' && @$pn == null && @$rn == null && @$oal != 'on')) {
+    if (@$mn[0] != 0 && $rn == null&& $of != 'on' && $oal != 'on' || (@$mn[0] != 0 && $of == 'on' && $os == 'on' && $pn == null && $rn == null && $oal != 'on')) {
         echo '
         <div>
         <table>
@@ -1046,10 +1136,10 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
 ';
     }
 
-    if (@$mn[0] != 0 && @$of == 'on' && @$oal != 'on' || (@$os != 'on' && @$oal != 'on' && isset($se))) {
-        if ((!isset($bk['card']) && !isset($lrc['title']) && !isset($tte[0])) || @$pn != null || @$rn != null) {
+    if (@$mn[0] != 0 && $of == 'on' && $oal != 'on' || ($os != 'on' && $oal != 'on' && isset($se))) {
+        if ((!isset($bk['card']) && !isset($lrc['title']) && !isset($tte[0])) || $pn != null || $rn != null) {
             if (preg_match_all("/(?<=F':)(\s?')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $f)) {
-                if (strlen(@$f[0][0]) > 0) {
+                if (isset($f[0][0]) && strlen($f[0][0]) > 0) {
                     echo '    <div class="draglist tiny"><table><thead><tr><th title="搜索结果标题|摘要与查询词的语义关联度">出自</th><th>近似词</th><th>猜&nbsp;正规性</th><th>权威性</th><th>5</th><th title="百度搜索结果参数F第6位基于IP地理位置">地理位置</th><th>网址</th><th>标题|网址|摘要</th><th>F0</th></tr></thead><tbody class="center">';
                     foreach ($f[2] as $i => $v) {
                         echo '<tr>';
@@ -1085,7 +1175,7 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
                 }
             }
             if (preg_match_all("/(?<=F1':)(\s?')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $f1)) {
-                if (strlen(@$f1[0][0]) > 0) {
+                if (isset($f1[0][0]) && strlen($f1[0][0]) > 0) {
                     echo '
     <div class="draglist tiny"><table><thead><tr><th>1</th><th>2</th><th>时间限制</th><th>猜&nbsp;实时动态</th><th>5</th><th>相关检索词</th><th>泛时效性</th><th>8</th><th>F1</th></tr></thead><tbody class="center">';
                     foreach ($f1[2] as $i => $v) {
@@ -1121,7 +1211,7 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
                 }
             }
             if (preg_match_all("/(?<=F2':)(\s?')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $f2)) {
-                if (strlen(@$f2[0][0]) > 0) {
+                if (isset($f2[0][0]) && strlen($f2[0][0]) > 0) {
                     echo '
     <div class="draglist tiny"><table><thead><tr><th>url</th><th>2</th><th>3</th><th>4</th><th>5</th><th>摘要</th><th>前标题</th><th>后标题</th><th>F2</th></tr></thead><tbody class="center">';
                     foreach ($f2[2] as $i => $v) {
@@ -1156,7 +1246,7 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
                 }
             }
             if (preg_match_all("/(?<=F3':)(\s?')([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})([0-9A-F]{1})(?=',)/", $se, $f3)) {
-                if (strlen(@$f3[0][0]) > 0) {
+                if (isset($f3[0][0]) && strlen($f3[0][0]) > 0) {
                     echo '
     <div class="draglist tiny"><table><thead><tr><th>结果</th><th>2</th><th>3</th><th>原创</th><th>猜&nbsp;网址形式</th><th>6</th><th>相关词</th><th>猜&nbsp;相似度</th><th>F3</th></tr></thead><tbody class="center">';
                     foreach ($f3[2] as $i => $v) {
@@ -1209,7 +1299,9 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 1);
         curl_setopt($c, CURLOPT_TIMEOUT, 2);
-        curl_setopt($c, CURLOPT_PROXY, @$px[7]);
+        if (isset($px[7])) {
+            curl_setopt($c, CURLOPT_PROXY, $px[7]);
+        }
         curl_setopt($c, CURLOPT_URL, 'http://entry.baidu.com/rp/home?di=1000059&rsi0=666&title='.$q);
         $ard = curl_exec($c);
         curl_close($c);
@@ -1286,7 +1378,14 @@ echo '    <div class="header center non">
         <form method="get" action="'.$u.'">
             <a itemprop="url" href="'.$u.'" rel="nofollow"><canvas id="myCanvas" width="52" height="26">no canvas</canvas></a>
             <script>var canvas=document.getElementById("myCanvas");if(canvas.getContext){var ctx=canvas.getContext("2d");ctx.font="22px Helvetica Neue";ctx.fillStyle="#FF6347";ctx.fillText("搜索",0,24);};</script>
-            <input class="text" type="text" value="'.substr(htmlspecialchars(@$_GET['s'], ENT_QUOTES), 0, 128).'" name="s" autocomplete="off" maxlength="76" id="sug" placeholder="请输入查询词" onmouseover="this.focus()" onfocus="this.select()"';
+            <input class="text" type="text" value="'.substr(htmlspecialchars(@$_GET['s'], ENT_QUOTES), 0, 128).'" name="s" autocomplete="off" maxlength="76" id="sug" placeholder="';
+if (file_exists('process')) {
+    echo '其他人搜过 '.file_get_contents('process');
+}
+else {
+    echo '请输入查询词';
+}
+echo '" onmouseover="this.focus()" onfocus="this.select()"';
 if (strlen($s) > 0) {
     echo '>
 ';
@@ -1354,7 +1453,14 @@ echo '
     </div>
     <div class="header center dis">
         <form method="get" action="'.$u.'">
-            <input class="text" type="text" id="js-in" value="'.substr(htmlspecialchars(@$_GET['s'], ENT_QUOTES), 0, 128).'" name="s" autocomplete="off" maxlength="76" su="1" placeholder="请输入查询词" onmouseover="this.focus()" onfocus="this.select()"';
+            <input class="text" type="text" id="js-in" value="'.substr(htmlspecialchars(@$_GET['s'], ENT_QUOTES), 0, 128).'" name="s" autocomplete="off" maxlength="76" su="1" placeholder="';
+if (file_exists('process')) {
+    echo '其他人搜过 '.file_get_contents('process');
+}
+else {
+    echo '请输入查询词';
+}
+echo '" onmouseover="this.focus()" onfocus="this.select()"';
 if (strlen($s) > 0) {
     echo '>
             <span style="margin-left:-4em;cursor:pointer" onclick="clearInput()">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;X&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -1394,5 +1500,6 @@ if (strlen($s) > 0) {
             unlink($stk.md5(urlencode($q).$pn));
         }
     }
+    file_put_contents('process', $q, LOCK_EX);
 }
 echo $ft;
