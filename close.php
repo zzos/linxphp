@@ -2,8 +2,8 @@
 /**
   * @file 可以改成任意后缀为 .php 的文件名
   * @author maas(maasdruck@gmail.com)
-  * @date 2017/08/17
-  * @version v1.40
+  * @date 2017/09/06
+  * @version v1.41
   * @brief 百度搜索结果参数分析工具
   */
 
@@ -42,7 +42,7 @@ $ct  = 86400;     // 缓存时间 以秒数计算 如 1分钟=60 1天=86400 1周
 $lk  = 0;          // 改为 1 启用伪静态(不推荐使用)
 $noad = 0;         // 改为 1 启用特定时间段不展现广告
 $tongji = 'tongji'; // 自定义自带统计日志名字
-$st1 = './z409tgfq0w94fh0q934yr980q34r0q3s/';
+$st1 = './cwhtr/'; // 首页更新记号
 if (!file_exists($st1)) {
     mkdir($st1, 0755);
 }
@@ -443,18 +443,18 @@ if (strlen($s) == 0) {
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 4);
         curl_setopt($c, CURLOPT_TIMEOUT, 4);
-        curl_setopt($c, CURLOPT_URL, 'http://entry.baidu.com/rp/api?di=api100002&qnum=40');
-        $ikbaidu = json_decode(curl_exec($c), 1);
+        curl_setopt($c, CURLOPT_URL, 'http://www.5118.com/');
+        $ikbaidu = curl_exec($c);
         curl_close($c);
-        if ($ikbaidu['st'] > 0) {
+        if (isset($ikbaidu) && strlen($ikbaidu) > 0) {
+            $ikbaidu1 = explode('<div class="main">', $ikbaidu);
+            $ikbaidu2 = explode('</ul>', $ikbaidu1[1], 2);
+            $ikbaidu3 = explode('nofollow">', $ikbaidu2[0]);
+            array_shift($ikbaidu3);
             ob_start();
-            foreach ($ikbaidu['data']['recommends'] as $ikbaidu1) {
-                if ($ikbaidu1['type'] == 109) {
-                    echo strtolower($ikbaidu1['word'])."\n";
-                }
-                else {
-                    unlink($ikbaidu1);
-                }
+            foreach ($ikbaidu3 as $ikbaidu4) {
+                $ikbaidu5 = explode('</a></div>', $ikbaidu4);
+                echo $ikbaidu5[0]."\n";
             }
             $ikbaidu0 = ob_get_contents();
             ob_end_clean();
