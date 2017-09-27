@@ -416,7 +416,7 @@ if (isset($previous_time) && isset($next_time)) {
         }
         // 正常展现广告
         else {
-            echo '    <div class="header center non"><script type="text/javascript" src="tongji.js"></script></div>'; // div 容器中是 pc 端顶部广告位
+            echo '    <div class="header center non"></div>'; // div 容器中是 pc 端顶部广告位
             echo '    <div class="header dis"></div>'; // div 容器中是移动端顶部广告位
             echo '    <div class="dis"></div>'; // div 容器中是移动端侧边广告位
         }
