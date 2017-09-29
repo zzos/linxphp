@@ -2,7 +2,7 @@
 /**
   * @file 可以改成任意后缀为 .php 的文件名
   * @author maas(maasdruck@gmail.com)
-  * @date 2017/09/27
+  * @date 2017/09/28
   * @version v1.43
   * @brief 百度搜索结果参数分析工具
   */
@@ -730,7 +730,7 @@ if (strlen($s) > 0) {
     </div>';
     }
 
-    if ($cp == 1 && !file_exists($ist.md5($q).'.jpg')) {
+    if ($cp == 1 && !file_exists('/'.$ist.md5($q).'.jpg')) {
         $c = curl_init();
         curl_setopt($c, CURLOPT_HEADER, 0);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
@@ -776,7 +776,7 @@ if (strlen($s) > 0) {
     $scp = array('/(\s+)/', '/(&)/');
     $scr = array('+', '%26');
     if ($cp == 1) {
-        if ((isset($cpc['displayNum']) && $cpc['displayNum'] > 0) || file_exists($ist.md5($q).'.jpg')) {
+        if ((isset($cpc['displayNum']) && $cpc['displayNum'] > 0) || file_exists('/'.$ist.md5($q).'.jpg')) {
             if (!file_exists($ist)) {
                 mkdir($ist, 0755);
                 if (!file_exists($ist)) {
@@ -896,7 +896,7 @@ if (strlen($s) > 0) {
 
     if (@$mn[0] != 0) {
         if ($cp == 1) {
-            if ((isset($image['displayNum']) && $cpc['displayNum'] > 0) || file_exists($ist.md5($q).'2.jpg')) {
+            if ((isset($cpc['displayNum']) && $cpc['displayNum'] > 0) || file_exists('/'.$ist.md5($q).'2.jpg')) {
                 if (!file_exists($ist)) {
                     mkdir($ist, 0755);
                     if (!file_exists($ist)) {
