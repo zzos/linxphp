@@ -158,4 +158,4 @@ linx php
 修复若干错误
 
 <h2>License</h2>
-<p>Linx is released under the <a href="https://opensource.org/licenses/MIT" target="_blank>MIT License</a>.</p>
+<p>Linx is released under the <a href="https://opensource.org/licenses/MIT" target="_blank">MIT License</a>.</p>
