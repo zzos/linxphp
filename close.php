@@ -2,8 +2,8 @@
 /**
   * @file 可以改成任意后缀为 .php 的文件名
   * @author maas(maasdruck@gmail.com)
-  * @date 2017/09/28
-  * @version v1.43
+  * @date 2017/10/27
+  * @version v1.44
   * @brief 百度搜索结果参数分析工具
   */
 
@@ -1329,6 +1329,8 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
     }
 
     if (@$mn[0] == 0 && $crawl > 0) {
+        $scorep = array('/(\s+)/', '/(&)/');
+        $scorer = array('+', '%26');
         $c = curl_init();
         curl_setopt($c, CURLOPT_HEADER, 0);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
@@ -1337,42 +1339,45 @@ $nr=array('//hunqing.baidu.com/hunshapic/index?key='.$q,'//hunqing.baidu.com/hun
         if (isset($px[7])) {
             curl_setopt($c, CURLOPT_PROXY, $px[7]);
         }
-        curl_setopt($c, CURLOPT_URL, 'http://entry.baidu.com/rp/home?di=1000059&rsi0=666&title='.$q);
-        $ard = curl_exec($c);
+        curl_setopt($c, CURLOPT_URL, 'http://14.215.177.43/api.php?resource_id=21028&oe=utf-8&query='.$q);
+        $score = json_decode(curl_exec($c), 1);
         curl_close($c);
-        if (preg_match_all('/(?<={"title":")(.{1,24})(?=","displayType":"","recommtype":")/', $ard, $mar)) {
+        if (is_array(@$score['data'][0]['card'][0]['unit'])) {
             echo '
     <table><thead><tr><th colspan="4" class="topr">为您推荐</th></tr></thead>
         <tbody>';
-            foreach ($mar[0] as $i => $v) {
-                if ($i % 4 == 0) {
-                    echo '<tr class="back-azure">';
-                }
-                echo '
-            <td><a itemprop="url" href="'.$u.$l.preg_replace('/(\s+)/', '%20', $mar[0][$i]).'" target="_blank">'.$mar[0][$i].'</a></td>';
-                $i++;
-                if ($i % 4 == 0) {
+            foreach ($score['data'][0]['card'] as $i => $v) {
+                foreach ($score['data'][0]['card'][$i]['unit'] as $j => $o) {
+                    if ($j % 4 == 0) {
+                        echo '<tr class="break back-egg">';
+                    }
                     echo '
-            </tr>';
+                <td><a href="'.$u.$l.str_replace($pp, $rp, preg_replace($scorep, $scorer, $score['data'][0]['card'][$i]['unit'][$j]['name']));
+                    echo '" target="_blank">'.str_replace($pp, $rp, $score['data'][0]['card'][$i]['unit'][$j]['name']).'</a></td>';
+                    $j++;
+                    if ($j % 4 == 0) {
+                        echo '
+                </tr>';
+                    }
                 }
-            }
-            if (count($mar[0]) % 4 == 1)  {
-                echo '
-            <td></td>
-            <td></td>
-            <td></td>
-            </tr>';
-            }
-            elseif (count($mar[0]) % 4 == 2)  {
-                echo '
-            <td></td>
-            <td></td>
-            </tr>';
-            }
-            elseif (count($mar[0]) % 4 == 3)  {
-                echo '
-            <td></td>
-            </tr>';
+                if ($j % 4 == 1)  {
+                    echo '
+                <td></td>
+                <td></td>
+                <td></td>
+                </tr>';
+                }
+                if ($j % 4 == 2)  {
+                    echo '
+                <td></td>
+                <td></td>
+                </tr>';
+                }
+                elseif ($j % 4 == 3)  {
+                    echo '
+                <td></td>
+                </tr>';
+                }
             }
             echo '</tbody>
     </table>
