@@ -1,8 +1,8 @@
 <?php
 /**
   * @file 可以改成任意后缀为 .php 的文件名
-  * @author maas(maasdruck@gmail.com)
-  * @date 2017/10/27
+  * @author maas(ausdruck@163.com)
+  * @date 2017/10/30
   * @version v1.44
   * @brief 百度搜索结果参数分析工具
   */
