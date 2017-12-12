@@ -2,8 +2,8 @@
 /**
   * @file 可以改成任意后缀为 .php 的文件名
   * @author maas(ausdruck@163.com)
-  * @date 2017/10/30
-  * @version v1.44
+  * @date 2017/12/12
+  * @version v1.45
   * @brief 百度搜索结果参数分析工具
   */
 
@@ -437,7 +437,7 @@ if (strlen($s) == 0) {
     $shldouban = 'the+mass'; // 豆瓣最新电影
     if ((time() - filemtime($st1.$c2) + 1) > $ct2) {
         unlink($st1.$c2);
-        // 百度搜索实时热点
+        // 5118事件热点词
         $c = curl_init();
         curl_setopt($c, CURLOPT_HEADER, 0);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
@@ -447,14 +447,13 @@ if (strlen($s) == 0) {
         $ikbaidu = curl_exec($c);
         curl_close($c);
         if (isset($ikbaidu) && strlen($ikbaidu) > 0) {
-            $ikbaidu1 = explode('<div class="main">', $ikbaidu);
-            $ikbaidu2 = explode('</ul>', $ikbaidu1[1], 2);
-            $ikbaidu3 = explode('nofollow">', $ikbaidu2[0]);
-            array_shift($ikbaidu3);
+            $ikbaidu1 = explode('<div class="link"><span class="s-span">', $ikbaidu);
+            array_pop($ikbaidu1);
+            array_shift($ikbaidu1);
             ob_start();
-            foreach ($ikbaidu3 as $ikbaidu4) {
-                $ikbaidu5 = explode('</a></div>', $ikbaidu4);
-                echo $ikbaidu5[0]."\n";
+            foreach ($ikbaidu1 as $ikbaidu2) {
+                $ikbaidu3 = explode('</span>', $ikbaidu2, 2);
+                echo $ikbaidu3[0]."\n";
             }
             $ikbaidu0 = ob_get_contents();
             ob_end_clean();
@@ -463,19 +462,19 @@ if (strlen($s) == 0) {
         else {
             touch($shlbaidu);
         }
-        // 网易音乐
+        // 百度音乐新歌榜
         $c = curl_init();
         curl_setopt($c, CURLOPT_HEADER, 0);
         curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
         curl_setopt($c, CURLOPT_CONNECTTIMEOUT, 4);
         curl_setopt($c, CURLOPT_TIMEOUT, 4);
-        curl_setopt($c, CURLOPT_URL, 'http://music.163.com/api/playlist/detail?id=2884035');
+        curl_setopt($c, CURLOPT_URL, 'http://tingapi.ting.baidu.com/v1/restserver/ting?method=baidu.ting.billboard.billList&type=1');
         $ik163 = json_decode(curl_exec($c), 1);
         curl_close($c);
-        if ($ik163['code'] == 200) {
+        if ($ik163['song_list'][0]['song_id'] > 0) {
             ob_start();
-            foreach ($ik163['result']['tracks'] as $ik1631) {
-                echo strtolower(rtrim($ik1631['name']))."\n";
+            foreach ($ik163['song_list'] as $ik1631) {
+                echo $ik1631['title']."\n";
             }
             $ik1630 = ob_get_contents();
             ob_end_clean();
