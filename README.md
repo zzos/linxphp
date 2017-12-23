@@ -3,11 +3,23 @@ linx php
 
 [![Codacy Badge](https://api.codacy.com/project/badge/grade/0aed14e485524ca4b3efadfdccdd2fee)](https://www.codacy.com/app/maasdruck/linxphp)
 
-<a href="https://www.weixingon.com/daili.html" target="_blank">最新可用代理 ip 列表</a>
-
 更新日志
 
-<h3>百度搜索结果参数分析工具 v1.44</h3>
+<h3>百度搜索结果参数分析工具 v1.46</h3>
+
+2017-12-23
+
+改进了统计功能
+
+百度搜索结果参数分析工具 v1.45
+
+2017-12-12
+
+百度实时热点更新为抓取 5118 事件热点词
+
+网易音乐原创音乐榜更改为抓取百度音乐新歌榜
+
+百度搜索结果参数分析工具 v1.44
 
 2017-10-30
 
